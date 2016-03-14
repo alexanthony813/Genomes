@@ -21,3 +21,5 @@ class User(db.Model):
         self.picture_url_small = picture_url_small
         self.picture_url_medium = picture_url_medium
         self.picture_url_large = picture_url_large
+
+db.create_all()
