@@ -4,7 +4,7 @@ Genetic visualization application
 Built with Python/Flask, React, PostgreSQL/SQLAlchemy
 
 ```
-cd api-example-flask && virtualenv .
+virtualenv .
 source bin/activate
 ```
 
