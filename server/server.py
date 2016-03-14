@@ -1,16 +1,12 @@
 import requests
 import flask
-# import process
 from flask import Flask, request, render_template, jsonify, redirect
 from flask.ext.sqlalchemy import SQLAlchemy
 from logging import Formatter, FileHandler
+import userModel
 
 app = Flask(__name__)
 app.config.from_object('config')
-
-db = SQLAlchemy(app)
-# db.create_all()
-
 
 @app.route('/')
 def home():
