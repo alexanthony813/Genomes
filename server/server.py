@@ -45,11 +45,11 @@ def home():
 @app.route('/receive_code/')
 def receive_code():
     parameters = {
-        'client_id': app.config.get('CLIENT_ID'),
-        'client_secret': app.config.get('CLIENT_SECRET'),
+        'client_id': CLIENT_ID,
+        'client_secret': CLIENT_SECRET,
         'grant_type': 'authorization_code',
         'code': request.args.get('code'),
-        'redirect_uri': app.config.get('REDIRECT_URI'),
+        'redirect_uri': REDIRECT_URI,
         'scope': DEFAULT_SCOPE
     }
     response = requests.post(
@@ -69,6 +69,7 @@ def receive_code():
                                          headers=headers,
                                          verify=False)
         if genotype_response.status_code == 200:
+            print 'IM GETTING CALLED!!!!!', genotype_response.json()
             return flask.render_template('receive_code.html', response_json = genotype_response.json())
         else:
             reponse_text = genotype_response.text

@@ -33,6 +33,9 @@ class User(Base):
         self.picture_url_medium = picture_url_medium
         self.picture_url_large = picture_url_large
 
+    # def create_new_user(): 
+        
+
 class Snp(Base):
     __tablename__ = 'snps'
     id = Column(Integer(), primary_key=True)
