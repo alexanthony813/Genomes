@@ -34,4 +34,17 @@ class User(Base):
         self.picture_url_medium = picture_url_medium
         self.picture_url_large = picture_url_large
 
+class Snp(Base):
+    __tablename__ = 'snps'
+    id = Column(Integer(), primary_key=True)
+    rs_id = Column(String(255), unique=True)
+    pair_one = Column(String(255))
+    pair_two = Column(String(255))
+    pair_three = Column(String(255))
+    pair_four = Column(String(255))
+    result_one = Column(String(255))
+    result_two = Column(String(255))
+    result_three = Column(String(255))
+    result_four = Column(String(255))
+
 Base.metadata.create_all(engine)

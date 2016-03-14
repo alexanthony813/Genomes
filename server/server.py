@@ -3,7 +3,7 @@ import flask
 from flask import Flask, request, render_template, jsonify, redirect
 from flask.ext.sqlalchemy import SQLAlchemy
 from logging import Formatter, FileHandler
-import userModel
+import models
 
 app = Flask(__name__)
 app.config.from_object('config')
