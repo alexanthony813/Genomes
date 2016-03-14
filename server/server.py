@@ -5,6 +5,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from logging import Formatter, FileHandler
 from optparse import OptionParser
 import models
+import json
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -20,7 +21,7 @@ CLIENT_ID = app.config.get('CLIENT_ID')
 CLIENT_SECRET = app.config.get('CLIENT_SECRET')
 REDIRECT_URI = app.config.get('REDIRECT_URI')
 SNPS = ["rs12913832"]
-DEFAULT_SCOPE = "names basic %s" % (" ".join(SNPS))
+DEFAULT_SCOPE = "names basic email ancestry %s" % (" ".join(SNPS))
 
 
 
@@ -59,7 +60,7 @@ def receive_code():
     )
 
     if response.status_code == 200:
-        
+
         access_token = response.json()['access_token']
         print "Access token: %s\n" % (access_token)
 
@@ -68,8 +69,13 @@ def receive_code():
                                          params = {'locations': ' '.join(SNPS)},
                                          headers=headers,
                                          verify=False)
+        user_response = requests.get("%s%s" % (BASE_API_URL, "1/user/?email=true"),
+                                         headers=headers,
+                                         verify=False)
         if genotype_response.status_code == 200:
-            print 'IM GETTING CALLED!!!!!', genotype_response.json()
+            user_data = genotype_response.json().pop()
+            user_names = user_response.json()
+            print 'IM GETTING CALLED!!!!!', user_names
             return flask.render_template('receive_code.html', response_json = genotype_response.json())
         else:
             reponse_text = genotype_response.text
