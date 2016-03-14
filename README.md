@@ -15,4 +15,4 @@ pip install -r requirements.txt
 
 You're good to go. Start it with:
 ```
-python client.py
+python server/server.py
