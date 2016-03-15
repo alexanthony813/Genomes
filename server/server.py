@@ -59,10 +59,7 @@ def receive_code():
     )
 
     if response.status_code == 200:
-
         access_token = response.json()['access_token']
-        print "Access token: %s\n" % (access_token)
-
         headers = {'Authorization': 'Bearer %s' % access_token}
         genotype_response = requests.get("%s%s" % (BASE_API_URL, "1/genotype/"),
                                          params = {'locations': ' '.join(SNPS)},
@@ -87,22 +84,23 @@ def receive_code():
                 user_first_name = name_response.json()['first_name']
                 user_last_name = name_response.json()['last_name']
                 new_user = models.User(user_profile_id, user_email['email'], user_first_name, user_last_name, None, None, None, None)
-                # models.db_session.add(new_user)
-                # models.db_session.commit()
 
-
-                # #api call to get user relatives
+                # api call to get user relatives
                 relatives_response = requests.get("%s%s" % (BASE_API_URL, "1/relatives/%s" % user_profile_id),
-                                         params = {'limit': 20, 'offset': 0},
+                                         params = {'limit': 20, 'offset': 1},
                                          headers=headers,
                                          verify=False)
-                #add relatives to relatives db if user has not been added to db yet
+
+                # add relatives to relatives db if user has not been added to db yet
                 for relative in relatives_response.json()['relatives']:
+                
                     new_relative = models.Relatives(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], None)
-                    
+                    # Appending each relative to the user's relative property
                     new_user.relatives.append(new_relative)
+
                     models.db_session.add(new_relative)
 
+                # Add the user to the database and commit it 
                 models.db_session.add(new_user)
                 models.db_session.commit()
                 return flask.render_template('receive_code.html', response_json = genotype_response.json())

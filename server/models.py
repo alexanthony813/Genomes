@@ -12,7 +12,7 @@ Base.query = db_session.query_property()
 
 print 'User model initializing...'
 
-
+# Join table between users and relatives, see User model relatives property
 user_relatives = Table('user_relatives',
     Base.metadata,
     Column('user_profile_id', String(255), ForeignKey('users.profile_id')),
@@ -20,7 +20,6 @@ user_relatives = Table('user_relatives',
     )
 
 
-# Relatives.user = relationship('User', secondary=user_relatives, backref=backref('dogs', lazy='dynamic'))
 class Relatives(Base):
     __tablename__ = 'relatives'
     id = Column(Integer(), primary_key=True)
@@ -33,13 +32,9 @@ class Relatives(Base):
     maternal_side = Column(Boolean())
     paternal_side = Column(Boolean())
     picture_url = Column(String(255), nullable=True)
-    # user_id = Column(String(255), ForeignKey("users.profile_id"))
-    # user_relative = relationship('User', foreign_keys='[user_id]')
 
     # add userId to init
     def __init__(self, email, first_name, last_name, sex, residence, similarity, maternal_side, paternal_side, picture_url):
-        print 'relative created'
-        # self.user_id = user_id
         self.email = email
         self.first_name = first_name
         self.last_name = last_name
@@ -50,10 +45,10 @@ class Relatives(Base):
         self.paternal_side = paternal_side
         self.picture_url = picture_url
 
+
 class User(Base):
     __tablename__ = 'users'
     profile_id = Column(String(255), primary_key=True, unique=True)
-    # id = Column(Integer(), primary_key=True)
     email = Column(String(255), unique=True)
     first_name = Column(String(255))
     last_name = Column(String(255))
@@ -64,8 +59,6 @@ class User(Base):
     # Setting up the relationship to the relatives table and user_relatives join table
     relatives = relationship('Relatives', secondary=user_relatives, backref=backref('users', lazy='dynamic'))
     
-
-    # reorganize the order so that profile_id is first 
     def __init__(self, profile_id, email, first_name, last_name, location, picture_url_small, picture_url_medium, picture_url_large):
         self.profile_id = profile_id
         self.email = email
@@ -75,8 +68,6 @@ class User(Base):
         self.picture_url_small = picture_url_small
         self.picture_url_medium = picture_url_medium
         self.picture_url_large = picture_url_large
-        # Will add relatives after the relative api call, should not be included in init
-        # relatives = db_session.relationship('Relatives')
 
     def create_new_user(profile_id, email,  first_name, last_name, location, picture_url_small, picture_url_medium, picture_url_large):
         # Refactor this later to use kwargs
@@ -86,7 +77,6 @@ class User(Base):
 
 class Snp(Base):
     __tablename__ = 'snps'
-    # id = Column(Integer(), )
     rs_id = Column(String(255), primary_key=True, unique=True)
     pair_one = Column(String(255))
     pair_two = Column(String(255))
@@ -107,5 +97,6 @@ class Snp(Base):
         self.result_two = result_two
         self.result_three = result_three
         self.result_four = result_four
+
 
 Base.metadata.create_all(engine)
