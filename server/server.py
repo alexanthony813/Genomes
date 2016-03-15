@@ -92,10 +92,15 @@ def receive_code():
 
                 # #api call to get user relatives
                 relatives_response = requests.get("%s%s" % (BASE_API_URL, "1/relatives/%s" % user_profile_id),
-                                         params = {'limit': 10, 'offset': 0},
+                                         params = {'limit': 20, 'offset': 0},
                                          headers=headers,
                                          verify=False)
-                #add relatives to relatives db
+                #add relatives to relatives db if user has not been added to db yet
+                for relative in relatives_response.json()['relatives']:
+                    new_relative = models.Relatives(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], None)
+                    print new_relative
+                    models.db_session.add(new_relative)
+                    models.db_session.commit()
                 return flask.render_template('receive_code.html', response_json = genotype_response.json())
         else:
             reponse_text = genotype_response.text

@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.orm import scoped_session, sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean
+from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean, ForeignKey
 # from server import db
 
 engine = create_engine('postgres://localhost/genome', convert_unicode=True)
@@ -76,13 +76,14 @@ class Relatives(Base):
     similarity = Column(Float())
     maternal_side = Column(Boolean())
     paternal_side = Column(Boolean())
-    picture_url_small = Column(String(255), nullable=True)
-    picture_url_medium = Column(String(255), nullable=True)
-    picture_url_large = Column(String(255), nullable=True)
+    picture_url = Column(String(255), nullable=True)
+
+    # user_id = Column(String(255), ForeignKey("users.profile_id"))
+    # user_relative = relationship('User', foreign_keys='[user_id]')
 
 
-    def __init__(self, email, first_name, last_name, sex, residence, similarity, maternal_side, paternal_side, picture_url_small, picture_url_medium, picture_url_large):
-        print 'user created', email
+    def __init__(self, email, first_name, last_name, sex, residence, similarity, maternal_side, paternal_side, picture_url):
+        print 'relative created'
         self.email = email
         self.first_name = first_name
         self.last_name = last_name
@@ -91,8 +92,20 @@ class Relatives(Base):
         self.similarity = similarity
         self.maternal_side = maternal_side
         self.paternal_side = paternal_side
-        self.picture_url_small = picture_url_small
-        self.picture_url_medium = picture_url_medium
-        self.picture_url_large = picture_url_large
+        self.picture_url = picture_url
+
+# class User_Relatives(Base):
+#     __tablename__ = 'user_relatives'
+#     id = Column(Integer(), primary_key=True)
+#     user_id = Column(String(255), ForeignKey("users.profile_id"))
+#     relative_id = Column(Integer(), ForeignKey("relatives.id"))
+
+#     user = relationship("Address", foreign_keys=[billing_address_id])
+#     shipping_address = relationship("Address", foreign_keys=[shipping_address_id])
+
+#     def __init__(self, user_id, relative_id):
+#         print 'user_relatives created'
+#         self.user_id = user_id
+#         self.relative_id = relative_id
 
 Base.metadata.create_all(engine)
