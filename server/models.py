@@ -18,11 +18,11 @@ class User(Base):
     email = Column(String(255), unique=True)
     first_name = Column(String(255))
     last_name = Column(String(255))
-    location = Column(String(255))
+    location = Column(String(255), nullable=True)
     profile_id = Column(String(255), unique=True)
-    picture_url_small = Column(String(255))
-    picture_url_medium = Column(String(255))
-    picture_url_large = Column(String(255))
+    picture_url_small = Column(String(255), nullable=True)
+    picture_url_medium = Column(String(255), nullable=True)
+    picture_url_large = Column(String(255), nullable=True)
 
     def __init__(self, email, first_name, last_name, location, profile_id, picture_url_small, picture_url_medium, picture_url_large):
         print 'user created', email
