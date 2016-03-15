@@ -20,7 +20,7 @@ CLIENT_ID = app.config.get('CLIENT_ID')
 CLIENT_SECRET = app.config.get('CLIENT_SECRET')
 REDIRECT_URI = app.config.get('REDIRECT_URI')
 SNPS = ["rs12913832"]
-DEFAULT_SCOPE = "names basic email ancestry %s" % (" ".join(SNPS))
+DEFAULT_SCOPE = "names basic email ancestry relatives %s" % (" ".join(SNPS))
 
 
 
@@ -76,8 +76,10 @@ def receive_code():
             user_email = user_response.json()
             user_profile_id = user_data['id']
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
+                #if user already exists in database, render the html and do not re-add user to database
                 return flask.render_template('receive_code.html', response_json = genotype_response.json())
             else:
+                # add new user to database if they have never logged in before
                 name_response = requests.get("%s%s" % (BASE_API_URL, "1/names/%s" % user_profile_id),
                                                  headers=headers,
                                                  verify=False)
@@ -86,6 +88,19 @@ def receive_code():
                 new_user = models.User(user_email['email'], user_first_name, user_last_name, None, user_profile_id, None, None, None)
                 models.db_session.add(new_user)
                 models.db_session.commit()
+
+
+                # #api call to get user relatives
+                relatives_response = requests.get("%s%s" % (BASE_API_URL, "1/relatives/%s" % user_profile_id),
+                                         params = {'limit': 20, 'offset': 0},
+                                         headers=headers,
+                                         verify=False)
+                #add relatives to relatives db if user has not been added to db yet
+                for relative in relatives_response.json()['relatives']:
+                    new_relative = models.Relatives(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], None)
+                    print new_relative
+                    models.db_session.add(new_relative)
+                    models.db_session.commit()
                 return flask.render_template('receive_code.html', response_json = genotype_response.json())
         else:
             reponse_text = genotype_response.text
