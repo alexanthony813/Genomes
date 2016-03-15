@@ -31,6 +31,7 @@ export function request({ url, data, params = {} }) {
 }
 
 export function get(url) {
+  console.log(' a get request is astorming!! ', url);
   return request({ url });
 }
 

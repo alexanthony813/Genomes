@@ -21,7 +21,7 @@ export default class Index extends Component {
       <div className="InitialLoad">
       <h1> Hello World! </h1>
 
-      <RaisedButton onClick={logIn()} label="Sign in with 23AndMe" />
+      <RaisedButton onClick={logIn} label="Sign in with 23AndMe" />
       </div>
     )
   }

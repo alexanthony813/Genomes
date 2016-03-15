@@ -9,8 +9,7 @@ const addUser = (state, action) => ([
 
 export default function users (state = DEFAULT_STATE, action) {
   return ({
-    [actionTypes.USER_LOGIN_SUCCESS]: addUser,
-    [actionTypes.USER_LOGIN_FAILURE]: addUser
+    [actionTypes.USER_LOGIN_SUCCESS]: addUser
   }[action.type] || ( s => s ))(state, action);
 }
 
