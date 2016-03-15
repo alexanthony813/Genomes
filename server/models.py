@@ -69,8 +69,8 @@ class Relatives(Base):
     __tablename__ = 'relatives'
     id = Column(Integer(), primary_key=True)
     email = Column(String(255), unique=True, nullable=True)
-    first_name = Column(String(255))
-    last_name = Column(String(255))
+    first_name = Column(String(255), default='Anonymous')
+    last_name = Column(String(255), default='')
     sex = Column(String(255))
     residence = Column(String(255), nullable=True)
     similarity = Column(Float())
