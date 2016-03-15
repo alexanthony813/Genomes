@@ -1,0 +1,30 @@
+{
+  "name": "thesis",
+  "version": "1.0.0",
+  "description": "Genome sequence visualizer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeeGar/Genomes.git"
+  },
+  "keywords": [
+    "React",
+    "Redux",
+    "Python",
+    "Flask",
+    "SQLAlchemy",
+    "PostgreSQL"
+  ],
+  "author": "Gar Lee, Peter Lollo, Chris Bassano, Alex Anthony",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LeeGar/Genomes/issues"
+  },
+  "homepage": "https://github.com/LeeGar/Genomes#readme",
+  "dependencies": {
+    "webpack": "^1.12.14"
+  }
+}
