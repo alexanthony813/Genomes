@@ -1,7 +1,8 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker, relationship
+from sqlalchemy.orm import scoped_session, sessionmaker, relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean, ForeignKey, Table
+from flask_sqlalchemy import SQLAlchemy
 # from server import db
 
 engine = create_engine('postgres://localhost/genome', convert_unicode=True)
@@ -11,39 +12,72 @@ Base.query = db_session.query_property()
 
 print 'User model initializing...'
 
+# Join table between users and relatives, see User model relatives property
+user_relatives = Table('user_relatives',
+    Base.metadata,
+    Column('user_profile_id', String(255), ForeignKey('users.profile_id')),
+    Column('relative_id', Integer, ForeignKey('relatives.id'))
+    )
+
+
+class Relatives(Base):
+    __tablename__ = 'relatives'
+    id = Column(Integer(), primary_key=True)
+    email = Column(String(255), unique=True, nullable=True)
+    first_name = Column(String(255), default='Anonymous')
+    last_name = Column(String(255), default='')
+    sex = Column(String(255))
+    residence = Column(String(255), nullable=True)
+    similarity = Column(Float())
+    maternal_side = Column(Boolean())
+    paternal_side = Column(Boolean())
+    picture_url = Column(String(255), nullable=True)
+
+    # add userId to init
+    def __init__(self, email, first_name, last_name, sex, residence, similarity, maternal_side, paternal_side, picture_url):
+        self.email = email
+        self.first_name = first_name
+        self.last_name = last_name
+        self.sex = sex
+        self.residence = residence
+        self.similarity = similarity
+        self.maternal_side = maternal_side
+        self.paternal_side = paternal_side
+        self.picture_url = picture_url
+
 
 class User(Base):
     __tablename__ = 'users'
-    id = Column(Integer(), primary_key=True)
+    profile_id = Column(String(255), primary_key=True, unique=True)
     email = Column(String(255), unique=True)
     first_name = Column(String(255))
     last_name = Column(String(255))
     location = Column(String(255), nullable=True)
-    profile_id = Column(String(255), unique=True)
     picture_url_small = Column(String(255), nullable=True)
     picture_url_medium = Column(String(255), nullable=True)
     picture_url_large = Column(String(255), nullable=True)
-
-    def __init__(self, email, first_name, last_name, location, profile_id, picture_url_small, picture_url_medium, picture_url_large):
-        print 'user created', email
+    # Setting up the relationship to the relatives table and user_relatives join table
+    relatives = relationship('Relatives', secondary=user_relatives, backref=backref('users', lazy='dynamic'))
+    
+    def __init__(self, profile_id, email, first_name, last_name, location, picture_url_small, picture_url_medium, picture_url_large):
+        self.profile_id = profile_id
         self.email = email
         self.first_name = first_name
         self.last_name = last_name
         self.location = location
-        self.profile_id = profile_id
         self.picture_url_small = picture_url_small
         self.picture_url_medium = picture_url_medium
         self.picture_url_large = picture_url_large
 
-    def create_new_user(email, first_name, last_name, location, profile_id, picture_url_small, picture_url_medium, picture_url_large):
-        # refactor this later to use kwargs
-        new_user = User(email, first_name, last_name, location, profile_id, picture_url_small, picture_url_medium, picture_url_large)
+    def create_new_user(profile_id, email,  first_name, last_name, location, picture_url_small, picture_url_medium, picture_url_large):
+        # Refactor this later to use kwargs
+        # Refactor to get or create user
+        new_user = User(profile_id, email, first_name, last_name, location, picture_url_small, picture_url_medium, picture_url_large)
 
 
 class Snp(Base):
     __tablename__ = 'snps'
-    id = Column(Integer(), primary_key=True)
-    rs_id = Column(String(255), unique=True)
+    rs_id = Column(String(255), primary_key=True, unique=True)
     pair_one = Column(String(255))
     pair_two = Column(String(255))
     pair_three = Column(String(255))
@@ -64,48 +98,5 @@ class Snp(Base):
         self.result_three = result_three
         self.result_four = result_four
 
-
-class Relatives(Base):
-    __tablename__ = 'relatives'
-    id = Column(Integer(), primary_key=True)
-    email = Column(String(255), unique=True, nullable=True)
-    first_name = Column(String(255), default='Anonymous')
-    last_name = Column(String(255), default='')
-    sex = Column(String(255))
-    residence = Column(String(255), nullable=True)
-    similarity = Column(Float())
-    maternal_side = Column(Boolean())
-    paternal_side = Column(Boolean())
-    picture_url = Column(String(255), nullable=True)
-
-    # user_id = Column(String(255), ForeignKey("users.profile_id"))
-    # user_relative = relationship('User', foreign_keys='[user_id]')
-
-
-    def __init__(self, email, first_name, last_name, sex, residence, similarity, maternal_side, paternal_side, picture_url):
-        print 'relative created'
-        self.email = email
-        self.first_name = first_name
-        self.last_name = last_name
-        self.sex = sex
-        self.residence = residence
-        self.similarity = similarity
-        self.maternal_side = maternal_side
-        self.paternal_side = paternal_side
-        self.picture_url = picture_url
-
-# class User_Relatives(Base):
-#     __tablename__ = 'user_relatives'
-#     id = Column(Integer(), primary_key=True)
-#     user_id = Column(String(255), ForeignKey("users.profile_id"))
-#     relative_id = Column(Integer(), ForeignKey("relatives.id"))
-
-#     user = relationship("Address", foreign_keys=[billing_address_id])
-#     shipping_address = relationship("Address", foreign_keys=[shipping_address_id])
-
-#     def __init__(self, user_id, relative_id):
-#         print 'user_relatives created'
-#         self.user_id = user_id
-#         self.relative_id = relative_id
 
 Base.metadata.create_all(engine)

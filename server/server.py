@@ -59,10 +59,7 @@ def receive_code():
     )
 
     if response.status_code == 200:
-
         access_token = response.json()['access_token']
-        print "Access token: %s\n" % (access_token)
-
         headers = {'Authorization': 'Bearer %s' % access_token}
         genotype_response = requests.get("%s%s" % (BASE_API_URL, "1/genotype/"),
                                          params = {'locations': ' '.join(SNPS)},
@@ -75,6 +72,7 @@ def receive_code():
             user_data = genotype_response.json().pop()
             user_email = user_response.json()
             user_profile_id = user_data['id']
+            #  Refactor IF statement to be inside the models.create new user function
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
                 #if user already exists in database, render the html and do not re-add user to database
                 return flask.render_template('receive_code.html', response_json = genotype_response.json())
@@ -85,22 +83,26 @@ def receive_code():
                                                  verify=False)
                 user_first_name = name_response.json()['first_name']
                 user_last_name = name_response.json()['last_name']
-                new_user = models.User(user_email['email'], user_first_name, user_last_name, None, user_profile_id, None, None, None)
-                models.db_session.add(new_user)
-                models.db_session.commit()
+                new_user = models.User(user_profile_id, user_email['email'], user_first_name, user_last_name, None, None, None, None)
 
-
-                # #api call to get user relatives
+                # api call to get user relatives
                 relatives_response = requests.get("%s%s" % (BASE_API_URL, "1/relatives/%s" % user_profile_id),
-                                         params = {'limit': 20, 'offset': 0},
+                                         params = {'limit': 20, 'offset': 1},
                                          headers=headers,
                                          verify=False)
-                #add relatives to relatives db if user has not been added to db yet
+
+                # add relatives to relatives db if user has not been added to db yet
                 for relative in relatives_response.json()['relatives']:
+                
                     new_relative = models.Relatives(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], None)
-                    print new_relative
+                    # Appending each relative to the user's relative property
+                    new_user.relatives.append(new_relative)
+
                     models.db_session.add(new_relative)
-                    models.db_session.commit()
+
+                # Add the user to the database and commit it 
+                models.db_session.add(new_user)
+                models.db_session.commit()
                 return flask.render_template('receive_code.html', response_json = genotype_response.json())
         else:
             reponse_text = genotype_response.text
