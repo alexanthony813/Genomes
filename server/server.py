@@ -20,7 +20,7 @@ CLIENT_ID = app.config.get('CLIENT_ID')
 CLIENT_SECRET = app.config.get('CLIENT_SECRET')
 REDIRECT_URI = app.config.get('REDIRECT_URI')
 SNPS = ["rs12913832"]
-DEFAULT_SCOPE = "names basic email ancestry %s" % (" ".join(SNPS))
+DEFAULT_SCOPE = "names basic email ancestry relatives %s" % (" ".join(SNPS))
 
 
 
@@ -90,8 +90,12 @@ def receive_code():
                 models.db_session.commit()
 
 
-                #api call to get user relatives
-
+                # #api call to get user relatives
+                relatives_response = requests.get("%s%s" % (BASE_API_URL, "1/relatives/%s" % user_profile_id),
+                                         params = {'limit': 10, 'offset': 0},
+                                         headers=headers,
+                                         verify=False)
+                #add relatives to relatives db
                 return flask.render_template('receive_code.html', response_json = genotype_response.json())
         else:
             reponse_text = genotype_response.text
