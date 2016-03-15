@@ -68,6 +68,31 @@ class Snp(Base):
 class Relatives(Base):
     __tablename__ = 'relatives'
     id = Column(Integer(), primary_key=True)
+    email = Column(String(255), unique=True, nullable=True)
+    first_name = Column(String(255))
+    last_name = Column(String(255))
+    sex = Column(String(255))
+    residence = Column(String(255), nullable=True)
+    similarity = Column(Float())
+    maternal_side = Column(Boolean())
+    paternal_side = Column(Boolean())
+    picture_url_small = Column(String(255), nullable=True)
+    picture_url_medium = Column(String(255), nullable=True)
+    picture_url_large = Column(String(255), nullable=True)
 
+
+    def __init__(self, email, first_name, last_name, sex, residence, similarity, maternal_side, paternal_side, picture_url_small, picture_url_medium, picture_url_large):
+        print 'user created', email
+        self.email = email
+        self.first_name = first_name
+        self.last_name = last_name
+        self.sex = sex
+        self.residence = residence
+        self.similarity = similarity
+        self.maternal_side = maternal_side
+        self.paternal_side = paternal_side
+        self.picture_url_small = picture_url_small
+        self.picture_url_medium = picture_url_medium
+        self.picture_url_large = picture_url_large
 
 Base.metadata.create_all(engine)
