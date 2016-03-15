@@ -6,8 +6,8 @@
     "gunicorn": "gunicorn $GUNICORN_PARAMS --chdir server entry:app",
     "start": "webpack-dev-server",
     "test": "NODE_ENV=test BABEL_JEST_STAGE=0 jest",
-    "dist": "NODE_ENV=production webpack -p"
-    // "postinstall": "npm run dist"
+    "dist": "NODE_ENV=production webpack -p",
+    "postinstall": "npm run dist"
   },
   "repository": {
     "type": "git",
