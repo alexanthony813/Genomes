@@ -1,6 +1,6 @@
 import requests
 import flask
-from flask import Flask, request, render_template, jsonify, redirect
+from flask import Flask, request, render_template, jsonify, redirect, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from logging import Formatter, FileHandler
 from optparse import OptionParser
@@ -32,6 +32,7 @@ DEFAULT_SCOPE = "names basic email ancestry relatives %s" % (" ".join(SNPS))
 
 
 
+
 parser = OptionParser(usage = "usage: %prog -i CLIENT_ID [options]")
 parser.add_option("-i", "--client_id", dest="client_id",
         help="Your client_id [REQUIRED]", default ='')
@@ -45,13 +46,25 @@ parser.add_option("-a", "--api_server", dest="api_server",
 (options, args) = parser.parse_args()
 BASE_API_URL = "https://%s/" % options.api_server
 
+global auth_url
+auth_url = "%sauthorize/?response_type=code&redirect_uri=%s&client_id=%s&scope=%s" % (BASE_API_URL, REDIRECT_URI, CLIENT_ID, DEFAULT_SCOPE)
+
 @app.route('/')
 def home():
-    auth_url = "%sauthorize/?response_type=code&redirect_uri=%s&client_id=%s&scope=%s" % (BASE_API_URL, REDIRECT_URI, CLIENT_ID, DEFAULT_SCOPE)
     return render_template('index.html', auth_url=auth_url)
+
+@app.route('/login/', methods=['GET'])
+def getToken():
+    return flask.redirect('http://www.google.com')
+
+@app.route('/get_info/')
+def getUser():
+    return 
+   #  look into database, query for user information then return response with all of user's data
 
 @app.route('/receive_code/')
 def receive_code():
+    print 'receive_code is being called'
     parameters = {
         'client_id': CLIENT_ID,
         'client_secret': CLIENT_SECRET,
@@ -83,7 +96,7 @@ def receive_code():
             #  Refactor IF statement to be inside the models.create new user function
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
                 #if user already exists in database, render the html and do not re-add user to database
-                return flask.render_template('receive_code.html', response_json = genotype_response.json())
+                return flask.render_template('main.html', response_json = genotype_response.json())
             else:
                 # add new user to database if they have never logged in before
                 name_response = requests.get("%s%s" % (BASE_API_URL, "1/names/%s" % user_profile_id),
@@ -111,7 +124,7 @@ def receive_code():
                 # Add the user to the database and commit it 
                 models.db_session.add(new_user)
                 models.db_session.commit()
-                return flask.render_template('receive_code.html', response_json = genotype_response.json())
+                return flask.render_template('main.html', response_json = genotype_response.json())
         else:
             reponse_text = genotype_response.text
             response.raise_for_status()
