@@ -46,16 +46,11 @@ parser.add_option("-a", "--api_server", dest="api_server",
 (options, args) = parser.parse_args()
 BASE_API_URL = "https://%s/" % options.api_server
 
-global auth_url
-auth_url = "%sauthorize/?response_type=code&redirect_uri=%s&client_id=%s&scope=%s" % (BASE_API_URL, REDIRECT_URI, CLIENT_ID, DEFAULT_SCOPE)
 
 @app.route('/')
 def home():
+    auth_url = "%sauthorize/?response_type=code&redirect_uri=%s&client_id=%s&scope=%s" % (BASE_API_URL, REDIRECT_URI, CLIENT_ID, DEFAULT_SCOPE)
     return render_template('index.html', auth_url=auth_url)
-
-@app.route('/login/', methods=['GET'])
-def getToken():
-    return flask.redirect('http://www.google.com')
 
 @app.route('/get_info/')
 def getUser():
