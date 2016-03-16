@@ -19,12 +19,6 @@ user_relatives = Table('user_relatives',
     Column('relative_id', Integer, ForeignKey('relatives.id'))
     )
 
-user_snps = Table('user_snps',
-    Base.metadata,
-    Column('user_profile_id', String(255), ForeignKey('users.profile_id')),
-    Column('rs_id', String(255), ForeignKey('snps.rs_id'))
-    )
-
 class Relative(Base):
     __tablename__ = 'relatives'
     id = Column(Integer(), primary_key=True)
@@ -63,7 +57,6 @@ class User(Base):
     picture_url_large = Column(String(255), nullable=True)
     # Setting up the relationship to the relatives table and user_relatives join table
     relatives = relationship('Relative', secondary=user_relatives, backref=backref('user', lazy='dynamic'))
-    snps = relationship('Snp', secondary=user_snps, backref=backref('user', lazy='dynamic'))
 
     def __init__(self, profile_id, email, first_name, last_name, location, picture_url_small, picture_url_medium, picture_url_large):
         self.profile_id = profile_id
