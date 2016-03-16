@@ -30,9 +30,6 @@ REDIRECT_URI = app.config.get('REDIRECT_URI')
 SNPS = ["rs12913832"]
 DEFAULT_SCOPE = "names basic email ancestry relatives %s" % (" ".join(SNPS))
 
-
-
-
 parser = OptionParser(usage = "usage: %prog -i CLIENT_ID [options]")
 parser.add_option("-i", "--client_id", dest="client_id",
         help="Your client_id [REQUIRED]", default ='')
