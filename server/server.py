@@ -5,8 +5,16 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from logging import Formatter, FileHandler
 from optparse import OptionParser
 import models
+from flask_webpack import Webpack
+from os import path
+
+here = path.abspath(path.dirname(__file__))
+
 
 app = Flask(__name__)
+app.config["WEBPACK_MANIFEST_PATH"] = path.join(here, "manifest.json")
+webpack = Webpack()
+webpack.init_app(app)
 app.config.from_object('config')
 
 # This is the format to retreive from config.py
@@ -40,7 +48,7 @@ BASE_API_URL = "https://%s/" % options.api_server
 @app.route('/')
 def home():
     auth_url = "%sauthorize/?response_type=code&redirect_uri=%s&client_id=%s&scope=%s" % (BASE_API_URL, REDIRECT_URI, CLIENT_ID, DEFAULT_SCOPE)
-    return render_template('index.html', auth_url = auth_url)
+    return render_template('index.html', auth_url=auth_url)
 
 @app.route('/receive_code/')
 def receive_code():
