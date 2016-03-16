@@ -5,6 +5,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from logging import Formatter, FileHandler
 from optparse import OptionParser
 import models
+import controller
 from flask_webpack import Webpack
 from os import path
 
@@ -83,8 +84,7 @@ def receive_code():
                                          headers=headers,
                                          verify=False)
         if user_response.status_code == 200 and genotype_response.status_code == 200:
-            user_genotype_data = genotype_response.json().pop()
-            user_email = user_response.json()
+            user_data = genotype_response.json().pop()
             user_profile_id = user_data['id']
             #  Refactor IF statement to be inside the models.create new user function
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
@@ -95,9 +95,6 @@ def receive_code():
                 name_response = requests.get("%s%s" % (BASE_API_URL, "1/names/%s" % user_profile_id),
                                                  headers=headers,
                                                  verify=False)
-                user_first_name = name_response.json()['first_name']
-                user_last_name = name_response.json()['last_name']
-                new_user = models.User(user_profile_id, user_email['email'], user_first_name, user_last_name, None, None, None, None, user_genotype_data)
 
                 # api call to get user relatives
                 relatives_response = requests.get("%s%s" % (BASE_API_URL, "1/relatives/%s" % user_profile_id),
@@ -105,18 +102,9 @@ def receive_code():
                                          headers=headers,
                                          verify=False)
 
-                # add relatives to relatives db if user has not been added to db yet
-                for relative in relatives_response.json()['relatives']:
-                    new_relative = models.Relative(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], None)
+                #will call createNewUser from controller and add_relatives
+                controller.createNewUser(name_response, relatives_response, user_data, user_response)
 
-                    # Appending each relative to the user's relative property
-                    new_user.relatives.append(new_relative)
-
-                    models.db_session.add(new_relative)
-
-                # Add the user to the database and commit it
-                models.db_session.add(new_user)
-                models.db_session.commit()
                 return flask.render_template('main.html', response_json = genotype_response.json())
         else:
             reponse_text = genotype_response.text
