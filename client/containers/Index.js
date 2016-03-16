@@ -1,26 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import RaisedButton from 'material-ui/lib/raised-button';
-import { logIn } from '../actions/login.js';
+import { actions } from '../actions/actions.js';
 // import component for viewing 
 
 export default class Index extends Component {
   componentDidMount () {
     //execute a function from this.props here ex. this.props.requestLogIn
     //this.props.requestLogIn will be imported from actions
+
+    //immediately render getUser from actions
+      //do something with his data
+      //this.props.getUser()
   }
 
-  handleSubmit () {
-    console.log('this : ', this);
-    console.log('yay submit!');
-  }
+  //fancy d3 functions here
 
   render () {
     return (
       <div className="InitialLoad">
       <h1> Hello World! </h1>
-
-      <RaisedButton onClick={this.props.logIn} label="Sign in with 23AndMe" />
       </div>
     )
   }
@@ -28,6 +26,6 @@ export default class Index extends Component {
 
 export default connect(
   () => ({}),
-  { logIn }
+  { actions }
   // connect redux to actions being imported into container
 )(Index);

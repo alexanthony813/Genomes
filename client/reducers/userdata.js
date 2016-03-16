@@ -1,4 +1,4 @@
-import * as actionTypes from '../actionTypes/login';
+import * as actionTypes from '../actionTypes/actionTypes';
 
 const DEFAULT_STATE = [];
 
@@ -9,7 +9,7 @@ const addUser = (state, action) => ([
 
 export default function users (state = DEFAULT_STATE, action) {
   return ({
-    [actionTypes.USER_LOGIN_SUCCESS]: addUser
+    [actionTypes.USER_DATA_SUCCESS]: addUser
   }[action.type] || ( s => s ))(state, action);
 }
 
