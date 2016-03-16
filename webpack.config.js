@@ -1,10 +1,9 @@
-var ManifestPlugin = require('webpack-manifest-plugin')
-var webpack = require('webpack');
-​
+var ManifestPlugin = require('webpack-manifest-plugin');
+var webpack = require('Webpack');
 module.exports = {
-  entry: "./client/entry",
+  entry: "./client/entry.js",
   output: {
-    path: __dirname + '/public',
+    path: __dirname + '/server/static/scripts',
     filename: 'main.js',
   },
   module: {

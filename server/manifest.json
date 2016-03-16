@@ -1,4 +1,4 @@
 {
-  "publicPath" : "http://localhost:5000",
+  "publicPath" : "http://localhost:5000/",
   "assets": {}
 }

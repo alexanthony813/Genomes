@@ -9,6 +9,9 @@ __pycache__/
 #Node modules
 node_modules/
 
+#unwanted files
+server/static/scripts/main.js
+
 # Distribution / packaging
 .Python
 env/
