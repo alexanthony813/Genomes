@@ -78,6 +78,7 @@ def receive_code():
                                          params = {'locations': ' '.join(SNPS)},
                                          headers=headers,
                                          verify=False)
+        print 'genotype_response',genotype_response.json()
         user_response = requests.get("%s%s" % (BASE_API_URL, "1/user/?email=true"),
                                          headers=headers,
                                          verify=False)
@@ -107,7 +108,7 @@ def receive_code():
                 # add relatives to relatives db if user has not been added to db yet
                 for relative in relatives_response.json()['relatives']:
                 
-                    new_relative = models.Relatives(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], None)
+                    new_relative = models.Relative(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], None)
                     # Appending each relative to the user's relative property
                     new_user.relatives.append(new_relative)
 
