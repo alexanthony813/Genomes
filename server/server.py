@@ -71,44 +71,44 @@ def receive_code():
         data = parameters,
         verify=False
     )
-
+    #get access token from 23andMe
     if response.status_code == 200:
         access_token = response.json()['access_token']
         headers = {'Authorization': 'Bearer %s' % access_token}
+        #Begin API calls to 23andMe to get all scoped user data
         genotype_response = requests.get("%s%s" % (BASE_API_URL, "1/genotype/"),
                                          params = {'locations': ' '.join(SNPS)},
                                          headers=headers,
                                          verify=False)
-        print 'genotype_response',genotype_response.json()
         user_response = requests.get("%s%s" % (BASE_API_URL, "1/user/?email=true"),
                                          headers=headers,
                                          verify=False)
+        #if both API calls are successful, process user data
         if user_response.status_code == 200 and genotype_response.status_code == 200:
-            user_data = genotype_response.json().pop()
             user_profile_id = user_data['id']
-            #  Refactor IF statement to be inside the models.create new user function
+            #if user already exists in database, render the html and do not re-add user to database
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
-                #if user already exists in database, render the html and do not re-add user to database
                 return flask.render_template('main.html', response_json = genotype_response.json())
+            # otherwise, add new user to database if they have never logged in before
             else:
-                # add new user to database if they have never logged in before
+                #Begin API calls to 23andMe to get additional user data
                 name_response = requests.get("%s%s" % (BASE_API_URL, "1/names/%s" % user_profile_id),
                                                  headers=headers,
                                                  verify=False)
-
-                # api call to get user relatives
                 relatives_response = requests.get("%s%s" % (BASE_API_URL, "1/relatives/%s" % user_profile_id),
                                          params = {'limit': 20, 'offset': 1},
                                          headers=headers,
                                          verify=False)
 
-                #will call createNewUser from controller and add_relatives
-                controller.createNewUser(name_response, relatives_response, user_data, user_response)
+                #call createNewUser from controller to add User and User relatives to the database
+                controller.createNewUser(name_response, relatives_response, genotype_response, user_response)
 
                 return flask.render_template('main.html', response_json = genotype_response.json())
+        #error handling if api calls for additional user data to 23andMe fail
         else:
             reponse_text = genotype_response.text
             response.raise_for_status()
+    #error handling if initial api calls to 23andMe fail
     else:
         response.raise_for_status()
 

@@ -1,7 +1,8 @@
 import models
 
-def createNewUser(name_response, relatives_response, user_data, user_response):
+def createNewUser(name_response, relatives_response, genotype_response, user_response):
     #To Do: Grab the dnaPair for each SNP out of the user_data param and insert it into approproate column in user model
+    user_data = genotype_response.json().pop()
     user_first_name = name_response.json()['first_name']
     user_last_name = name_response.json()['last_name']
     user_profile_id = user_data['id']
