@@ -80,12 +80,13 @@ def receive_code():
                                          params = {'locations': ' '.join(SNPS)},
                                          headers=headers,
                                          verify=False)
+        print 'GENOTYPE RESPONSE FROM CREATE NEW USER FN', genotype_response.json()
         user_response = requests.get("%s%s" % (BASE_API_URL, "1/user/?email=true"),
                                          headers=headers,
                                          verify=False)
         #if both API calls are successful, process user data
         if user_response.status_code == 200 and genotype_response.status_code == 200:
-            user_profile_id = user_data['id']
+            user_profile_id = genotype_response.json().pop()['id']
             #if user already exists in database, render the html and do not re-add user to database
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
                 return flask.render_template('main.html', response_json = genotype_response.json())
