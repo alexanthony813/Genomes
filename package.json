@@ -4,7 +4,7 @@
   "description": "Genome sequence visualizer",
   "scripts": {
     "gunicorn": "gunicorn $GUNICORN_PARAMS --chdir server entry:app",
-    "start": "python server/server.py",
+    "start": "webpack && python server/server.py",
     "test": "NODE_ENV=test BABEL_JEST_STAGE=0 jest"
   },
   "repository": {
