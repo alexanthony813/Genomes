@@ -1,8 +1,23 @@
-require('babel-polyfill');
-
-var isProduction = process.env.NODE_ENV === 'production';
-var config = isProduction ?
-  require('./webpack.prod.config.js') :
-  require('./webpack.dev.config.js');
-
-module.exports = config;
+var ManifestPlugin = require('webpack-manifest-plugin')
+var webpack = require('webpack');
+​
+module.exports = {
+  entry: "./client/entry",
+  output: {
+    path: __dirname + '/public',
+    filename: 'main.js',
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loaders: ['react-hot', 'babel'],
+      }
+    ]
+  },
+  plugins: [
+    new ManifestPlugin(),
+    new webpack.NoErrorsPlugin()
+  ]
+};
