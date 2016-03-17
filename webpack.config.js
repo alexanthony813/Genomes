@@ -35,3 +35,5 @@ module.exports = {
     new webpack.NoErrorsPlugin()
   ]
 };
+
+// TODO: Expand this to handle dev and production environments
