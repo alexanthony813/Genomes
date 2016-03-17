@@ -19,7 +19,7 @@ A "Thunk" basically allows functions to be created that can later be executed.
 Essentially, a thunk is a function that returns a function that. This allows for asynchronous functions to be 
 dispatched as if they were synchronous! 
 
- * @see https://github.com/gaearon/redux-thunk for further information
+ * @see {@link https://github.com/gaearon/redux-thunk} for further information
 **/
 
 const createStoreWithMiddleware = applyMiddleware(
