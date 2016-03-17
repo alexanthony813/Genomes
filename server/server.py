@@ -7,12 +7,27 @@ import models
 import controller
 from os import path
 
+# choade
+from psycopg2 import connect
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+con = None
+con = connect(dbname='postgres', user='alexanthony', host='localhost', password='gfksealgzarzaMF13')
+
+#separate into if statement and check if db is already thurrrr
+con.set_isolation_level()
+cur = con.cursor()
+dbname = 'genome'
+cur.execute('CREATE DATABASE ' + dbname)
+cur.close()
+con.close()
+#
+
 #Initialize Flask application
 app = Flask(__name__)
 PORT = 5000
+app.config.from_object('config')
 
 #Gather data from config.py
-app.config.from_object('config')
 
 #Declaration of all necessary variables needed to perform 23AndMe API Call
 API_SERVER = "api.23andme.com"

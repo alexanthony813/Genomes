@@ -5,16 +5,20 @@ import server
 
 class userCreation(unittest.TestCase):
 
-    @classmethod
-    def setUpClass(cls):
-        app = 
+    # @classmethod
+    # def setUpClass(cls):
+    #     pass
+
+
+    def test_equal_numbers(self):
+        self.assertEqual(2, 2)
+
+    def test_equal_numbers(self):
+        self.assertEqual(2, 2)
 
     @classmethod
     def tearDownClass(cls):
-        pass
-
-
-
+        models.db_session.remove()
 
 
 
