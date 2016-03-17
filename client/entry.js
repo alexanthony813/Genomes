@@ -14,8 +14,8 @@ import promise from 'redux-promise';
 Store brings actions, action creators, and reducers all together. They hold the current application state, update 
 the state with dispatch, and registers listeners. 
 
-We use middleware "thunk" so that action creators can return
-functions, rather than actions. A "Thunk" basically allows functions to be created that can later be executed.
+We use middleware "thunk" so that action creators can return functions, rather than actions. 
+A "Thunk" basically allows functions to be created that can later be executed.
 Essentially, a thunk is a function that returns a function that. This allows for asynchronous functions to be 
 dispatched as if they were synchronous! 
 Refer here for more on Thunk: https://github.com/gaearon/redux-thunk
