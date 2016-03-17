@@ -6,16 +6,13 @@ from logging import Formatter, FileHandler
 from optparse import OptionParser
 import models
 import controller
-from flask_webpack import Webpack
+# from flask_webpack import Webpack
 from os import path
 
 here = path.abspath(path.dirname(__file__))
 
 
 app = Flask(__name__)
-app.config["WEBPACK_MANIFEST_PATH"] = path.join(here, "manifest.json")
-webpack = Webpack()
-webpack.init_app(app)
 app.config.from_object('config')
 
 # This is the format to retreive from config.py

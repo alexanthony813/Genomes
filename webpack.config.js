@@ -1,5 +1,6 @@
 var ManifestPlugin = require('webpack-manifest-plugin');
 var webpack = require('Webpack');
+
 module.exports = {
   entry: "./client/entry.js",
   output: {
