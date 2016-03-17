@@ -87,8 +87,7 @@
     "mkdirp": "0.5.1",
     "react-transform-hmr": "1.0.1",
     "string-replace-webpack-plugin": "0.0.3",
-    "webpack-dev-server": "1.14.1",
-    "webpack-hot-middleware": "^2.10.0"
+    "webpack-dev-server": "1.14.1"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
