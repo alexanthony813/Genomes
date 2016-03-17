@@ -1,4 +1,8 @@
+
+
 .splash {
+  display: flex;
+  justify-content: center;
   padding: 100px 0px 100px 0px;
   margin-right: 0px;
   margin-left: 0px;
