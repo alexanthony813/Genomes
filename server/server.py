@@ -13,9 +13,6 @@ here = path.abspath(path.dirname(__file__))
 
 
 app = Flask(__name__)
-# app.config["WEBPACK_MANIFEST_PATH"] = path.join(here, "manifest.json")
-# webpack = Webpack()
-# webpack.init_app(app)
 app.config.from_object('config')
 
 # This is the format to retreive from config.py

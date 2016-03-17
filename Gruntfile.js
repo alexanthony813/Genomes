@@ -49,31 +49,3 @@ module.exports = function(grunt) {
   grunt.registerTask('build_server', ['jshint']);
   grunt.registerTask('terminate_server', ['jshint']);
 };
-
-
-  // grunt.initConfig({
-  //   webpack : {
-  //     entry: [
-  //       "webpack-hot-middleware/client",
-  //       "./client/entry.js"
-  //     ],
-  //     output: {
-  //       path: __dirname + '/server/static/scripts',
-  //       filename: 'main.js',
-  //     },
-  //     module: {
-  //       loaders: [
-  //         {
-  //           test: /\.js$/,
-  //           exclude: /node_modules/,
-  //           loaders: ['react-hot', 'babel'],
-  //         }
-  //       ]
-  //     },
-  //     plugins: [
-  //       new webpack.HotModuleReplacementPlugin(),
-  //       new ManifestPlugin(),
-  //       new webpack.NoErrorsPlugin()
-  //     ]
-  //   }
-  // });
