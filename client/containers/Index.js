@@ -7,27 +7,27 @@ import Footer from '../components/Footer.js';
 // import component for viewing 
 
 export default class Index extends Component {
-  componentDidMount () {
-    //execute a function from this.props here ex. this.props.requestLogIn
-    //this.props.requestLogIn will be imported from actions
+  componentDidMount() {
+    // execute a function from this.props here ex. this.props.requestLogIn
+    // this.props.requestLogIn will be imported from actions
 
-    //immediately render getUserData from actions
-      //do something with his data
-      //this.props.getUserData()
+    // immediately render getUserData from actions
+      // do something with his data
+      // this.props.getUserData()
   }
 
-  //fancy d3 functions here
+  // fancy d3 functions here
 
-  render () {
+  render() {
     return (
       <div className='InitialLoad'>
       <Header />
       <h1> Hello World! asdfds sddfsdffsd HI </h1>
       <Footer />
       </div>
-    )
+    );
   }
-};
+}
 
 export default connect(
   () => ({}),
