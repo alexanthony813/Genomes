@@ -1,7 +1,10 @@
 var ManifestPlugin = require('webpack-manifest-plugin');
 var webpack = require('Webpack');
 module.exports = {
-  entry: "./client/entry.js",
+  entry: [
+    "webpack-hot-middleware/client",
+    "./client/entry.js"
+  ],
   output: {
     path: __dirname + '/server/static/scripts',
     filename: 'main.js',
@@ -16,6 +19,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new ManifestPlugin(),
     new webpack.NoErrorsPlugin()
   ]

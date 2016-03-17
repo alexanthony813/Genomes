@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from '../actions/actions.js';
+import Header from '../components/Header.js';
+import Footer from '../components/Footer.js';
+
 // import component for viewing 
 
 export default class Index extends Component {
@@ -17,8 +20,10 @@ export default class Index extends Component {
 
   render () {
     return (
-      <div className="InitialLoad">
-      <h1> Hello World! </h1>
+      <div className='InitialLoad'>
+      <Header />
+      <h1> Hello World! HI </h1>
+      <Footer />
       </div>
     )
   }
