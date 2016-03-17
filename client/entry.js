@@ -18,7 +18,8 @@ We use middleware "thunk" so that action creators can return functions, rather t
 A "Thunk" basically allows functions to be created that can later be executed.
 Essentially, a thunk is a function that returns a function that. This allows for asynchronous functions to be 
 dispatched as if they were synchronous! 
-Refer here for more on Thunk: https://github.com/gaearon/redux-thunk
+
+ * @see https://github.com/gaearon/redux-thunk for further information
 **/
 
 const createStoreWithMiddleware = applyMiddleware(

@@ -13,6 +13,9 @@ export const requestUserData = () {
   }
 }
 
+/**
+  * Receive data from fetch
+**/ 
 export const receiveUserData = () {
   return {
     type: actionTypes.GET_USER_SUCCESS,
@@ -20,6 +23,9 @@ export const receiveUserData = () {
   }
 }
 
+/**
+  * Fetch current user's information
+**/
 export const getUserData = () => {
   return (dispatch) => {
     dispatch(requestUserData)
