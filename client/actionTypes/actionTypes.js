@@ -1,3 +1,3 @@
-export const USER_DATA = 'USER_DATA';
-export const USER_DATA_SUCCESS = 'USER_DATA_SUCCESS';
-export const USER_DATA_FAILURE = 'USER_DATA_FAILURE';
+export const GET_USER = 'GET_USER';
+export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
+export const GET_USER_FAILURE = 'GET_USER_FAILURE';

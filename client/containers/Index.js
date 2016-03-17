@@ -11,9 +11,9 @@ export default class Index extends Component {
     //execute a function from this.props here ex. this.props.requestLogIn
     //this.props.requestLogIn will be imported from actions
 
-    //immediately render getUser from actions
+    //immediately render getUserData from actions
       //do something with his data
-      //this.props.getUser()
+      //this.props.getUserData()
   }
 
   //fancy d3 functions here
