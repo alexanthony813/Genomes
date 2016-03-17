@@ -3,22 +3,18 @@ import flask
 from flask import Flask, request, render_template, jsonify, redirect, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from logging import Formatter, FileHandler
-from optparse import OptionParser
 import models
 import controller
-# from flask_webpack import Webpack
 from os import path
 
-here = path.abspath(path.dirname(__file__))
-
-
+#Initialize Flask application
 app = Flask(__name__)
+PORT = 5000
+
+#Gather data from config.py
 app.config.from_object('config')
 
-# This is the format to retreive from config.py
-# print app.config.get('CLIENT_ID')
-
-PORT = 5000
+#Declaration of all necessary variables needed to perform 23AndMe API Call
 API_SERVER = "api.23andme.com"
 BASE_CLIENT_URL = 'http://localhost:%s/'% PORT
 DEFAULT_REDIRECT_URI = '%sreceive_code/'  % BASE_CLIENT_URL
@@ -27,19 +23,7 @@ CLIENT_SECRET = app.config.get('CLIENT_SECRET')
 REDIRECT_URI = app.config.get('REDIRECT_URI')
 SNPS = ["rs12913832"]
 DEFAULT_SCOPE = "names basic email ancestry relatives %s" % (" ".join(SNPS))
-
-parser = OptionParser(usage = "usage: %prog -i CLIENT_ID [options]")
-parser.add_option("-i", "--client_id", dest="client_id",
-        help="Your client_id [REQUIRED]", default ='')
-parser.add_option("-s", "--scope", dest="scope",
-        help="Your requested scope [%s]" % DEFAULT_SCOPE, default = DEFAULT_SCOPE)
-parser.add_option("-r", "--redirect_uri", dest="redirect_uri",
-        help="Your client's redirect_uri [%s]" % DEFAULT_REDIRECT_URI, default = DEFAULT_REDIRECT_URI)
-parser.add_option("-a", "--api_server", dest="api_server",
-        help="Almost always: [api.23andme.com]", default = API_SERVER)
-
-(options, args) = parser.parse_args()
-BASE_API_URL = "https://%s/" % options.api_server
+BASE_API_URL = "https://%s/" % API_SERVER
 
 
 @app.route('/')
@@ -77,7 +61,6 @@ def receive_code():
                                          params = {'locations': ' '.join(SNPS)},
                                          headers=headers,
                                          verify=False)
-        print 'GENOTYPE RESPONSE FROM CREATE NEW USER FN', genotype_response.json()
         user_response = requests.get("%s%s" % (BASE_API_URL, "1/user/?email=true"),
                                          headers=headers,
                                          verify=False)
@@ -94,10 +77,9 @@ def receive_code():
                                                  headers=headers,
                                                  verify=False)
                 relatives_response = requests.get("%s%s" % (BASE_API_URL, "1/relatives/%s" % user_profile_id),
-                                         params = {'limit': 20, 'offset': 1},
-                                         headers=headers,
-                                         verify=False)
-
+                                                   params = {'limit': 20, 'offset': 1},
+                                                   headers=headers,
+                                                   verify=False)
                 #call createNewUser from controller to add User and User relatives to the database
                 controller.createNewUser(name_response, relatives_response, genotype_response, user_response)
 
@@ -111,7 +93,7 @@ def receive_code():
         response.raise_for_status()
 
 
-
+#Initialize python server on port 
 if __name__ == '__main__':
-  print 'Server has been initialized on port 5000'
-  app.run(debug=True, port=5000)
+  print 'Server has been initialized'
+  app.run(debug=True, port=PORT)
