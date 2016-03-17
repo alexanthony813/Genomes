@@ -13,7 +13,6 @@ module.exports = function(grunt) {
     },
     webpack : {
       entry: [
-        "webpack-hot-middleware/client",
         "./client/entry.js"
       ],
       output: {

@@ -6,7 +6,7 @@ from logging import Formatter, FileHandler
 from optparse import OptionParser
 import models
 import controller
-from flask_webpack import Webpack
+# from flask_webpack import Webpack
 from os import path
 
 here = path.abspath(path.dirname(__file__))
