@@ -16,3 +16,7 @@ pip install -r requirements.txt
 You're good to go. Start it with:
 ```
 python server/server.py
+```
+
+Dev:
+```npm run dev``` to start the webpack dev server
