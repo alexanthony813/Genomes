@@ -25,11 +25,12 @@ export default class Index extends Component {
   // fancy d3 functions here
 
   render() {
+    const { results } = this.props;
     return (
       <div className='InitialLoad'>
       <Header />
-      <h1> Hello World! asdfds sddfsdffsd HI </h1>
-      <Pool />
+      <h1> Hello World!</h1>
+      <Pool results={ this.context.redux.getState() } />
       <Footer />
       </div>
     );
