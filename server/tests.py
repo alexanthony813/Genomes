@@ -1,30 +1,30 @@
-import unittest
-import models
-import controller
-import server
+# import unittest
 
-class userCreation(unittest.TestCase):
+# import controller
+# import server
 
-    # @classmethod
-    # def setUpClass(cls):
-    #     pass
+# class userCreation(unittest.TestCase):
 
-
-    def test_equal_numbers(self):
-        self.assertEqual(2, 2)
-
-    def test_equal_numbers(self):
-        self.assertEqual(2, 2)
-
-    @classmethod
-    def tearDownClass(cls):
-        models.db_session.remove()
+#     # @classmethod
+#     # def setUpClass(cls):
+#     #     pass
 
 
+#     def test_equal_numbers(self):
+#         self.assertEqual(2, 2)
+
+#     def test_equal_numbers(self):
+#         self.assertEqual(2, 2)
+
+#     @classmethod
+#     def tearDownClass(cls):
+#         models.db_session.remove()
 
 
 
 
 
-if __name__ == '__main__':
-    unittest.main()
+
+
+# if __name__ == '__main__':
+#     unittest.main()
