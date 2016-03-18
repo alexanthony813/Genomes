@@ -1,4 +1,13 @@
+html {
+  overflow: hidden;
+}
 
+body {
+  display: inline-block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 
 .splash {
   display: flex;
@@ -6,6 +15,7 @@
   position: relative;
   overflow: hidden;
   justify-content: center;
+  width: 100%;
   padding: 60px 0px 60px 0px;
 }
 
