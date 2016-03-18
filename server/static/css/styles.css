@@ -1,4 +1,13 @@
+html {
+  overflow: hidden;
+}
 
+body {
+  display: inline-block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 
 .splash {
   display: flex;
@@ -6,6 +15,7 @@
   position: relative;
   overflow: hidden;
   justify-content: center;
+  width: 100%;
   padding: 60px 0px 60px 0px;
 }
 
@@ -16,7 +26,7 @@
   top: 0;
   height: auto;
   width: 100%;
-  opacity: 0.6;
+  opacity: 0.8;
   transition: left 0.5s;
 }
 
@@ -33,8 +43,8 @@
   transition: left 0.5s;
   color: #D0F8FF;
   text-shadow: 0 0 5px #A5F1FF, 0 0 10px #A5F1FF,
-           0 0 20px #A5F1FF, 0 0 30px #A5F1FF,
-           0 0 40px #A5F1FF;
+               0 0 20px #A5F1FF, 0 0 30px #A5F1FF,
+               0 0 40px #A5F1FF;
 }
 .hipsterCircleBackground {
   background-color: #FF990A;
@@ -78,8 +88,10 @@
   text-decoration: none !important;
   color: #D0F8FF;
   text-shadow: 0 0 5px #A5F1FF, 0 0 10px #A5F1FF,
-           0 0 20px #A5F1FF, 0 0 30px #A5F1FF,
-           0 0 40px #A5F1FF;
+               0 0 20px #A5F1FF, 0 0 30px #A5F1FF,
+               0 0 40px #A5F1FF;
+  opacity: 1;
+  transition: all 0.3s ease 0s;
 }
 .login-btn:hover {
   background: #3cb0fd;
@@ -89,6 +101,8 @@
   background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
   background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
   text-decoration: none;
+  opacity: 0.75;
+  transition: all 0.3s ease 0s;
 }
 
 @media (max-width: 500px){

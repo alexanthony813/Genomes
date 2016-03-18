@@ -5,6 +5,7 @@ from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean, Foreig
 from flask_sqlalchemy import SQLAlchemy
 from psycopg2 import connect
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+from server import app
 
 #Initialize postgreSQL genome database
 engine = create_engine('postgres://localhost/genome', convert_unicode=True)

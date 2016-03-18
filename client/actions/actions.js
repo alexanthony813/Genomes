@@ -7,9 +7,10 @@ Action creators will send information to the 'store', by going through reducers,
  state based on the action type. Action creators (i.e. getUserData) are executable in containers
 that use Redux's 'connect' helper. 'bindActionCreators()' binds action creators to dispatch */
 
-export const requestUserData = () => {
+export const requestUserData = (data) => {
   return {
     type: actionTypes.GET_USER,
+    data,
   }
 }
 
