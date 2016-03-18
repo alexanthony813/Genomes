@@ -7,13 +7,15 @@ Action creators will send information to the 'store', by going through reducers,
  state based on the action type. Action creators (i.e. getUserData) are executable in containers
 that use Redux's 'connect' helper. 'bindActionCreators()' binds action creators to dispatch */
 
+/** 
+  *Default request handler
+**/
 export const requestUserData = (data) => {
   return {
     type: actionTypes.GET_USER,
     data,
   }
 }
-
 
 /**
   * Receive data from fetch
@@ -22,6 +24,16 @@ export const receiveUserData = (data) => {
   return {
     type: actionTypes.GET_USER_SUCCESS,
     results: data,
+  }
+}
+
+/**
+  *Error handling for failed fetch
+**/
+export const failedFetch = (err) => {
+  return {
+    type: actionTypes.GET_USER_FAILURE,
+    err
   }
 }
 
@@ -35,13 +47,8 @@ export const getUserData = () => {
 
     return fetch('/get_info/', {
       method: 'get',
-      mode: 'no-cors',
     }).then(res => res.json())
     .then(json => dispatch(receiveUserData(json)))
-    .catch(err => dispatch({
-      type: actionTypes.GET_USER_FAILURE,
-      results: err,
-    }))
-
+    .catch(err => dispatch(failedFetch(err)))
   }
 }
