@@ -35,6 +35,7 @@ def home():
 
 @app.route('/get_info/')
 def getUser():
+    print 'GET INFO ROUTE is being called ===============>>>>>>'
     return
    #  look into database, query for user information then return response with all of user's data
 
@@ -95,7 +96,7 @@ def receive_code():
         response.raise_for_status()
 
 
-#Initialize python server on port 
+#Initialize python server on port
 if __name__ == '__main__':
   print 'Server has been initialized'
   app.run(debug=False, port=PORT)

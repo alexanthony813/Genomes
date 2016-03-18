@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import userdata from './userdata';
+import getData from './userdata.js';
 
 /** REDUCERS ***
 Reducers change state based on the execution of an actionCreator. State is described in an object, which changes
@@ -7,7 +7,7 @@ based on user interactions. Reducers should not mutate its' arguments or perform
 Using Object.assign(), we are able to create a copy of state, and change the previous 'state' to the new 'spread' state (...state)*/
 
 const reducers = combineReducers({
-  userdata
+  getData: getData,
 });
 
 export default reducers;

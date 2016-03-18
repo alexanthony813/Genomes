@@ -9,15 +9,15 @@ that use Redux's 'connect' helper. 'bindActionCreators()' binds action creators 
 
 export const requestUserData = () => {
   return {
-    type: actionTypes.GET_USER 
+    type: actionTypes.GET_USER,
   }
 }
 
 
 /**
   * Receive data from fetch
-**/ 
-export const receiveUserData = () => {
+**/
+export const receiveUserData = (data) => {
   return {
     type: actionTypes.GET_USER_SUCCESS,
     results: data,
@@ -28,6 +28,7 @@ export const receiveUserData = () => {
   * Fetch current user's information
 **/
 export const getUserData = () => {
+  console.log('INSIDE GET USER DATA FUNCTION');
   return (dispatch) => {
     dispatch(requestUserData)
 
@@ -37,7 +38,8 @@ export const getUserData = () => {
     }).then(res => res.json())
     .then(json => dispatch(receiveUserData(json)))
     .catch(err => dispatch({
-      type: actionTypes.USER_DATA_FAILURE,
+      type: actionTypes.GET_USER_FAILURE,
+      results: err,
     }))
 
   }
