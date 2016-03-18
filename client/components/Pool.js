@@ -8,7 +8,7 @@ export default class Pool extends Component {
   }
   render() {
     return (
-      <h1>Big Face</h1>
+      <h1>Big Face + results { this.props.results }</h1>
     );
   }
 }
