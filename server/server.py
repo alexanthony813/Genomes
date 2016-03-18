@@ -6,6 +6,8 @@ from logging import Formatter, FileHandler
 import models
 import controller
 from os import path
+import models
+
 
 #Initialize Flask application
 app = Flask(__name__)
@@ -96,4 +98,4 @@ def receive_code():
 #Initialize python server on port 
 if __name__ == '__main__':
   print 'Server has been initialized'
-  app.run(debug=True, port=PORT)
+  app.run(debug=False, port=PORT)

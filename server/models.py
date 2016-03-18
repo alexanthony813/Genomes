@@ -3,12 +3,29 @@ from sqlalchemy.orm import scoped_session, sessionmaker, relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean, ForeignKey, Table
 from flask_sqlalchemy import SQLAlchemy
+from psycopg2 import connect
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 #Initialize postgreSQL genome database
 engine = create_engine('postgres://localhost/genome', convert_unicode=True)
-db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
+session_factory = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+db_session = scoped_session(session_factory)
 Base = declarative_base()
 Base.query = db_session.query_property()
+
+
+try:
+    #connect to database if it exissts
+    connection = connect(dbname='genome', user='alexanthony', host='localhost', password='gfksealgzarzaMF13')
+except:
+    #create database if it does not already exist
+    connection = connect(user='alexanthony', host='localhost', password='gfksealgzarzaMF13')
+    connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+    cursor = connection.cursor()
+    cursor.execute("CREATE DATABASE genome")
+    cursor.close()
+    connection.close()
+
 
 # Join table between users and relatives, see User model relatives property
 user_relatives = Table('user_relatives',
@@ -16,7 +33,7 @@ user_relatives = Table('user_relatives',
     Column('user_profile_id', String(255), ForeignKey('users.profile_id')),
     Column('relative_id', Integer, ForeignKey('relatives.id'))
     )
-#User model Schema 
+#User model Schema
 class User(Base):
     __tablename__ = 'users'
     profile_id = Column(String(255), primary_key=True, unique=True)
