@@ -5,6 +5,7 @@ from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean, Foreig
 from flask_sqlalchemy import SQLAlchemy
 from psycopg2 import connect
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+from server import app
 
 #Initialize postgreSQL genome database
 engine = create_engine('postgres://localhost/genome', convert_unicode=True)
@@ -16,10 +17,10 @@ Base.query = db_session.query_property()
 
 try:
     #connect to database if it exissts
-    connection = connect(dbname='genome', user='alexanthony', host='localhost', password='gfksealgzarzaMF13')
+    connection = connect(dbname='genome', user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
 except:
     #create database if it does not already exist
-    connection = connect(user='alexanthony', host='localhost', password='gfksealgzarzaMF13')
+    connection = connect(user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
     connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cursor = connection.cursor()
     cursor.execute("CREATE DATABASE genome")
