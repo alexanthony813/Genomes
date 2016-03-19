@@ -35,7 +35,6 @@ def home():
 
 @app.route('/get_info/')
 def getUser():
-<<<<<<< b93fac84bd11c37a82838ce985509373f235dcea
     return render_template('index.html')
 
 #Refactor this route to take a userProfileID after the trailing slash with some syntax like: '<%s UserID >''
@@ -51,13 +50,14 @@ def getRelatives():
         result.append(rel.serialize())
     #The return value requires dictionary rather than list format
     obj = {'relativeList': result}
-    return jsonify(obj)
-=======
+    # return jsonify(obj)
+
     response = make_response(render_template('index.html'))
     response.set_cookie('user_profile_id', request.cookies.get('user_profile_id'))
+    response.set_cookie('relative_list', 'dog')
     return response
     #  look into database, query for user information then return response with all of user's data
->>>>>>> added user_profile_id to cookies, req+res on get-info route
+
 
 @app.route('/receive_code/')
 def receive_code():
@@ -95,7 +95,7 @@ def receive_code():
             #if user already exists in database, render the html and do not re-add user to database
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
                 # return flask.render_template('main.html', response_json = genotype_response.json())
-                resp = make_response(redirect(url_for('getUser')))
+                resp = make_response(redirect(url_for('getRelatives')))
                 resp.set_cookie('user_profile_id', user_profile_id)
                 return resp
             # otherwise, add new user to database if they have never logged in before
@@ -112,7 +112,7 @@ def receive_code():
                 controller.createNewUser(name_response, relatives_response, genotype_response, user_response)
 
                 # EDIT HEADERS/COOKIES ON THE 302???
-                resp = make_response(redirect(url_for('getUser')))
+                resp = make_response(redirect(url_for('getRelatives')))
                 resp.set_cookie('user_profile_id', user_profile_id)
                 return resp
         #error handling if api calls for additional user data to 23andMe fail

@@ -1,6 +1,27 @@
-angular.module('genome', ['genome.pool', 'genome.self', 'genome.relatives', 'ngRoute', 'genome.d3Service'])
+var app = angular.module('genome', [
+  'genome.pool', 
+  'genome.self', 
+  'genome.relatives', 
+  'genome.d3Service',
+  'genome.auth',
+  'ngRoute',
+  'ngCookies'
+])
+
 .config(function($routeProvider){
   $routeProvider
+  .when('/signin', {
+    templateUrl: '/static/app/auth/signin.html',
+    controller: 'AuthController'
+  })
+  .when('/signout', {
+    templateUrl: '/static/app/auth/signout.html',
+    controller: 'AuthController'
+  })
+  .when('/pool', {
+    templateUrl: '/static/app/pool/pool.html',
+    controller: 'PoolController'
+  })
   .when('/', {
     templateUrl: '/static/app/pool/pool.html',
     controller: 'PoolController'
