@@ -61,10 +61,18 @@ class User(Base):
         self.picture_url_large = picture_url_large
         self.rs12913832 = rs12913832
 
-    def create_new_user(profile_id, email,  first_name, last_name, location, picture_url_small, picture_url_medium, picture_url_large):
-        # Refactor this later to use kwargs
-        # Refactor to get or create user
-        new_user = User(profile_id, email, first_name, last_name, location, picture_url_small, picture_url_medium, picture_url_large)
+    def serialize(self):
+        return {
+            'profile_id': self.profile_id,
+            'email': self.email,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'location': self.location,
+            'picture_url_small': self.picture_url_small,
+            'picture_url_medium': self.picture_url_medium,
+            'picture_url_large': self.picture_url_large,
+            'rs12913832': self.rs12913832
+        }
 
 
 #Relative schema
@@ -119,6 +127,13 @@ class Snp(Base):
         self.rs_id = rs_id
         self.dnaPair = dnaPair
         self.outcome = outcome
+
+    def serialize(self):
+        return {
+            'rs_id': self.rs_id,
+            'dnaPair': self.dnaPair,
+            'outcome': self.outcome
+        }
 
 
 Base.metadata.create_all(engine)
