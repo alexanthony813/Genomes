@@ -10,7 +10,8 @@ __pycache__/
 node_modules/
 
 #unwanted files
-server/static/scripts/main.js
+/config.py
+config.py
 
 config.py
 
