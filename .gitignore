@@ -13,6 +13,8 @@ node_modules/
 /config.py
 config.py
 npm-debug.log
+server/static/scripts/main.js
+config.py
 
 # Distribution / packaging
 .Python
