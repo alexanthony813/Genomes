@@ -10,9 +10,14 @@ __pycache__/
 node_modules/
 
 #unwanted files
+<<<<<<< HEAD
 /config.py
 config.py
 npm-debug.log
+=======
+server/static/scripts/main.js
+config.py
+>>>>>>> Deleted old config
 
 # Distribution / packaging
 .Python
