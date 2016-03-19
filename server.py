@@ -1,6 +1,6 @@
 import requests
 import flask
-from flask import Flask, request, render_template, jsonify, redirect, url_for
+from flask import Flask, request, render_template, jsonify, redirect, url_for, make_response
 from flask.ext.sqlalchemy import SQLAlchemy
 from logging import Formatter, FileHandler
 import models
@@ -17,7 +17,7 @@ PORT = 5000
 app.config.from_object('config')
 
 #Declaration of all necessary variables needed to perform 23AndMe API Call
-API_SERVER = "api.23andme.com"
+# API_SERVER = "api.23andme.com"
 BASE_CLIENT_URL = 'http://localhost:%s/'% PORT
 DEFAULT_REDIRECT_URI = '%sreceive_code/'  % BASE_CLIENT_URL
 CLIENT_ID = app.config.get('CLIENT_ID')
@@ -25,7 +25,7 @@ CLIENT_SECRET = app.config.get('CLIENT_SECRET')
 REDIRECT_URI = app.config.get('REDIRECT_URI')
 SNPS = ["rs12913832"]
 DEFAULT_SCOPE = "names basic email ancestry relatives %s" % (" ".join(SNPS))
-BASE_API_URL = "https://%s/" % API_SERVER
+BASE_API_URL = "https://api.23andme.com/"
 
 
 @app.route('/')
@@ -35,6 +35,7 @@ def home():
 
 @app.route('/get_info/')
 def getUser():
+<<<<<<< b93fac84bd11c37a82838ce985509373f235dcea
     return render_template('index.html')
 
 #Refactor this route to take a userProfileID after the trailing slash with some syntax like: '<%s UserID >''
@@ -51,6 +52,12 @@ def getRelatives():
     #The return value requires dictionary rather than list format
     obj = {'relativeList': result}
     return jsonify(obj)
+=======
+    response = make_response(render_template('index.html'))
+    response.set_cookie('user_profile_id', request.cookies.get('user_profile_id'))
+    return response
+    #  look into database, query for user information then return response with all of user's data
+>>>>>>> added user_profile_id to cookies, req+res on get-info route
 
 @app.route('/receive_code/')
 def receive_code():
@@ -68,6 +75,7 @@ def receive_code():
         data = parameters,
         verify=False
     )
+
     #get access token from 23andMe
     if response.status_code == 200:
         access_token = response.json()['access_token']
@@ -80,13 +88,16 @@ def receive_code():
         user_response = requests.get("%s%s" % (BASE_API_URL, "1/user/?email=true"),
                                          headers=headers,
                                          verify=False)
+
         #if both API calls are successful, process user data
         if user_response.status_code == 200 and genotype_response.status_code == 200:
             user_profile_id = genotype_response.json().pop()['id']
             #if user already exists in database, render the html and do not re-add user to database
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
                 # return flask.render_template('main.html', response_json = genotype_response.json())
-                return redirect(url_for('getUser'))
+                resp = make_response(redirect(url_for('getUser')))
+                resp.set_cookie('user_profile_id', user_profile_id)
+                return resp
             # otherwise, add new user to database if they have never logged in before
             else:
                 #Begin API calls to 23andMe to get additional user data
@@ -100,7 +111,10 @@ def receive_code():
                 #call createNewUser from controller to add User and User relatives to the database
                 controller.createNewUser(name_response, relatives_response, genotype_response, user_response)
 
-                return redirect(url_for('getUser'))
+                # EDIT HEADERS/COOKIES ON THE 302???
+                resp = make_response(redirect(url_for('getUser')))
+                resp.set_cookie('user_profile_id', user_profile_id)
+                return resp
         #error handling if api calls for additional user data to 23andMe fail
         else:
             reponse_text = genotype_response.text

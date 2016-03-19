@@ -12,17 +12,22 @@ angular.module('genome.auth', [])
     }, 2000);
   };
 
-  
-
 })
   
  
-.factory('AuthFactory', function($http) {
+.factory('AuthFactory', function($http, $cookies) {
 
-
+  var isAuth = function() {
+    return !!$cookies.get('user_id');
+  };
 
   var signOut = function() {
     // Remove cookies
   };
 
+  // Nothing has access to the functions in factory unless we return an object with references to those functions
+  return {
+    signOut: signOut,
+    isAuth: isAuth
+  }
 })
