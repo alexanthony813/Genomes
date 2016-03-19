@@ -10,8 +10,8 @@
     
     <div ng-view></div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-    <script src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js'></script>
+    <script src="{{ url_for('node_modules/angular', filename='angular.js') }}"></script>
+    <script src="{{ url_for('node_modules/angular-route', filename='angular-route.js') }}"></script>
     <script src='../static/client/app.js'></script>
   </body>
 
