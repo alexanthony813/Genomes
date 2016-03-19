@@ -18,7 +18,8 @@ angular.module('genome.auth', [])
 .factory('AuthFactory', function($http, $cookies) {
 
   var isAuth = function() {
-    return !!$cookies.get('user_id');
+    console.log($cookies.get('user_profile_id'))
+    return !!$cookies.get('user_profile_id');
   };
 
   var signOut = function() {
