@@ -48,11 +48,11 @@ body {
 }
 
 .hipsterCircleBackground {
-  
+  max-width: 100%;
   z-index: -1;
 }
 .hipsterCircles {
-
+  max-width: 100%;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -67,6 +67,14 @@ body {
   margin-top: 20px;
   margin-bottom: 20px;
   z-index: 2;
+}
+
+.hipsterDescriptions {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+
+  word-wrap: normal;
 }
 
 .loginFooter {
@@ -139,7 +147,7 @@ body {
   }
 
   .hipsterCircles {
-    margin-left: -130px;
+    margin-left: 0px;
     align-content: flex-start;
     position: relative;
     flex-direction: column;
@@ -148,6 +156,7 @@ body {
   }
 
   .hipsterCircles img {
+    padding-right: 10px;
     padding-left: 0px;
     max-width: 100%;
     max-height: 100px;
