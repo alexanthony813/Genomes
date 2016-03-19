@@ -70,10 +70,11 @@ body {
 }
 
 .loginFooter {
+  margin-top: 5px;
+  margin-bottom: 15px;
   text-align: center;
 }
 .login-btn {
-  margin-top: 50px;
   max-width: 100%;
   background: #3498db;
   background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
@@ -152,6 +153,7 @@ body {
     max-height: 100px;
     margin: auto;
     display: block;
+    z-index: auto;
   }
   .hipsterCircleBackground {
     width: 100%;
