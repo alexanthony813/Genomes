@@ -39,6 +39,18 @@ def getUser():
     return render_template('index.html')
    #  look into database, query for user information then return response with all of user's data
 
+@app.route('/api/relatives/')
+def getRelatives():
+    print 'in the getRelatives route =================================>>>>>>>>>>>>>>>>>>>>>>'
+    relatives = models.db_session.query(models.Relative).all()
+    print 'RELATIVES ======================>>>>>>>>>>>>>>>>>>>>>', relatives
+    result = []
+    for rel in relatives:
+        result.append(str(rel.first_name))
+    obj = {'relativeList': result}
+    print 'RESULT =====================>>>>>>>>>>>>>>>>>>>>>>>>>>', obj
+    return jsonify(obj)
+
 @app.route('/receive_code/')
 def receive_code():
     print 'receive_code is being called'

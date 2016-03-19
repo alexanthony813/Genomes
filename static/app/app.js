@@ -1,4 +1,4 @@
-angular.module('genome', ['genome.pool', 'ngRoute'])
+angular.module('genome', ['genome.pool', 'genome.self', 'genome.relatives', 'ngRoute'])
 .config(function($routeProvider){
   $routeProvider
   .when('/', {
