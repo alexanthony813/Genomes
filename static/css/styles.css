@@ -11,7 +11,10 @@ body {
   background-image: -o-linear-gradient(top, #ffffff, #999999);
   background-image: linear-gradient(to bottom, #ffffff, #999999);
 }
-
+.hipsterdata {
+  margin-left: 10%;
+  margin-right: 10%;
+}
 .splash {
   display: flex;
   flex-shrink: 1;
@@ -46,15 +49,6 @@ body {
   text-shadow: 0 0 5px #A5F1FF, 0 0 10px #A5F1FF,
                0 0 20px #A5F1FF, 0 0 30px #A5F1FF,
                0 0 40px #A5F1FF;
-}
-
-.hipsterData {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  max-width: 100%;
-  margin-left: 10px;
-  margin-right: 10px;
 }
 
 .hipsterCircles {
@@ -145,21 +139,40 @@ body {
     font-size: 3em;
     left:0;
   }
-  .hipsterData {
-    width: 100%;
+  .hipsterdata {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    margin: 0px 0px 0px 0px;
   }
   .hipsterCircles {
     display: flex;
+    flex: 1 0 0;
     flex-direction: column;
     justify-content: space-between;
-    align-items: flex-start;
+    align-content: center;
+    align-self: flex-start;
     margin: 0px 0px 0px 0px;
-    max-width: 30%;
+    max-width: 20%;
   }
   .hipsterCircles img {
     max-width: 100%;
     max-height: 100%;
     display: block;
+  }
+  .hipsterDescriptions {
+    display: flex;
+    flex: auto;
+    flex-direction: column;
+    justify-content: space-between;
+    align-self: flex-end;
+    align-content: center;
+    margin-left: auto;
+    width: 15rem;
+  }
+  .choicewords {
+    padding: 10px 20px 10px 0px;
   }
 
   .login-btn {
