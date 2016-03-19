@@ -1,5 +1,0 @@
-REDIRECT_URI = 'http://localhost:5000/receive_code/'
-CLIENT_ID = 'fa431a127dcefc9e83b43db11f6b18f7'
-CLIENT_SECRET = '6bfd4276e702dfe709e1638a31ce2216'
-DATABASE_USERNAME='ChrisBassano'
-DATABASE_PASSWORD='Jy8wa6gt'
