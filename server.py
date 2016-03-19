@@ -42,9 +42,10 @@ def getUser():
 @app.route('/api/relatives/')
 #return all the relatives. Refactor to only return the relatives specific to the current User
 def getRelatives():
-   #filter this by userID
+    #filter this by userID
     relatives = models.db_session.query(models.Relative).all()
     result = []
+
     for rel in relatives:
         result.append(rel.serialize())
     #The return value requires dictionary rather than list format
