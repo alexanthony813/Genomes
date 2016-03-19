@@ -1,7 +1,7 @@
 # Genomes
 Genetic visualization application
 
-Built with Python/Flask, React, PostgreSQL/SQLAlchemy
+Built with Python/Flask, Angular, PostgreSQL/SQLAlchemy
 
 ```
 virtualenv .
