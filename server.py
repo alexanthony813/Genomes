@@ -43,10 +43,10 @@ def getUser():
 #return all the relatives. Refactor to only return the relatives specific to the current User
 def getRelatives():
    #filter this by userID
-    relatives = models.db_session.query(models.Relative).all()
+    relatives = models.db_session.query(models.Relative).all().decode('utf-8')
     result = []
     for rel in relatives:
-        result.append(str(rel.first_name))
+        result.append(rel)
     #The return value seems to require object rather than array format
     obj = {'relativeList': result}
     return jsonify(obj)

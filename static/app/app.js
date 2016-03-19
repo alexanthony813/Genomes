@@ -3,14 +3,13 @@ angular.module('genome', ['genome.pool', 'genome.self', 'genome.relatives', 'ngR
   $routeProvider
   .when('/', {
     templateUrl: '/static/app/pool/pool.html',
-    controller: 'PoolController',
-    authenticate : true
+    controller: 'PoolController'
   })
   .when('/self/', {
     templateUrl : '/static/app/self/self.html',
     controller : 'SelfController'
   })
   .otherwise({
-    redirectTo : 'www.google.com'
+    redirectTo : '/'
   });
 });
