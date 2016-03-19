@@ -31,7 +31,7 @@ BASE_API_URL = "https://%s/" % API_SERVER
 @app.route('/')
 def home():
     auth_url = "%sauthorize/?response_type=code&redirect_uri=%s&client_id=%s&scope=%s" % (BASE_API_URL, REDIRECT_URI, CLIENT_ID, DEFAULT_SCOPE)
-    return render_template('index.html', auth_url=auth_url)
+    return render_template('landing.html', auth_url=auth_url)
 
 @app.route('/get_info/')
 def getUser():
