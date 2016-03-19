@@ -11,7 +11,7 @@ node_modules/
 
 #unwanted files
 server/static/scripts/main.js
-build/
+
 # Distribution / packaging
 .Python
 env/
@@ -53,19 +53,3 @@ nosetests.xml
 coverage.xml
 *,cover
 .hypothesis/
-
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-target/
-
-#Ipython Notebook
-.ipynb_checkpoints
