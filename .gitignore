@@ -12,6 +12,8 @@ node_modules/
 #unwanted files
 server/static/scripts/main.js
 
+config.py
+
 # Distribution / packaging
 .Python
 env/
