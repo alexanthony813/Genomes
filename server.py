@@ -46,7 +46,7 @@ def getRelatives():
     relatives = models.db_session.query(models.Relative).all()
     result = []
     for rel in relatives:
-        result.append(rel)
+        result.append(str(rel.first_name))
     #The return value seems to require object rather than array format
     obj = {'relativeList': result}
     return jsonify(obj)
