@@ -131,7 +131,7 @@ body {
 }
 
 
-@media (max-width: 600px) {
+@media (max-width: 500px) {
   .splash {
     padding: 0px 0px 60px 0px;
   }
@@ -160,6 +160,9 @@ body {
     max-width: 100%;
     max-height: 100%;
     display: block;
+    padding-top: 20%;
+    padding-bottom: 20%;
+    padding-left: 10%;
   }
   .hipsterDescriptions {
     display: flex;
@@ -169,13 +172,15 @@ body {
     align-self: flex-end;
     align-content: center;
     margin-left: auto;
-    width: 15rem;
+    width: 20rem;
   }
   .choicewords {
-    padding: 10px 20px 10px 0px;
+    padding-top: 10px;
   }
 
-  .login-btn {
-
+  .loginFooter {
+    margin-top: 20%;
+    margin-bottom: 25px;
+    text-align: center;
   }
 }
