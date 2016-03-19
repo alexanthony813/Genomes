@@ -35,20 +35,20 @@ def home():
 
 @app.route('/get_info/')
 def getUser():
-    print 'in the get info route=========================>>>>>>>>>>>>>>>>>>'
     return render_template('index.html')
-   #  look into database, query for user information then return response with all of user's data
 
+#Refactor this route to take a userProfileID after the trailing slash with some syntax like: '<%s UserID >''
+#i.e. the equivalent of '/:userId' with node/express servers
 @app.route('/api/relatives/')
+#return all the relatives. Refactor to only return the relatives specific to the current User
 def getRelatives():
-    print 'in the getRelatives route =================================>>>>>>>>>>>>>>>>>>>>>>'
+   #filter this by userID
     relatives = models.db_session.query(models.Relative).all()
-    print 'RELATIVES ======================>>>>>>>>>>>>>>>>>>>>>', relatives
     result = []
     for rel in relatives:
         result.append(str(rel.first_name))
+    #The return value seems to require object rather than array format
     obj = {'relativeList': result}
-    print 'RESULT =====================>>>>>>>>>>>>>>>>>>>>>>>>>>', obj
     return jsonify(obj)
 
 @app.route('/receive_code/')
