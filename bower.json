@@ -1,0 +1,32 @@
+{
+  "name": "Genomes",
+  "description": "Genome sequence visualizer",
+  "main": "",
+  "authors": [
+    "Gar Lee",
+    "Peter Lollo",
+    "Chris Bassano",
+    "Alex Anthony"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Python",
+    "Flask",
+    "PostgreSQL"
+  ],
+  "homepage": "https://github.com/Peterlollo/Genomes",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.16",
+    "angular-route": "~1.3.16",
+    "angular-mocks": "~1.3.16",
+    "jQuery": "^2.2.0"
+  }
+}
