@@ -36,7 +36,7 @@ def home():
 @app.route('/get_info/')
 def getUser():
     print 'in the get info route=========================>>>>>>>>>>>>>>>>>>'
-    return jsonify({'hello': 'hello from the server side!'})
+    return render_template('index.html')
    #  look into database, query for user information then return response with all of user's data
 
 @app.route('/receive_code/')
@@ -72,7 +72,8 @@ def receive_code():
             user_profile_id = genotype_response.json().pop()['id']
             #if user already exists in database, render the html and do not re-add user to database
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
-                return flask.render_template('main.html', response_json = genotype_response.json())
+                # return flask.render_template('main.html', response_json = genotype_response.json())
+                return redirect(url_for('getUser'))
             # otherwise, add new user to database if they have never logged in before
             else:
                 #Begin API calls to 23andMe to get additional user data
@@ -86,7 +87,7 @@ def receive_code():
                 #call createNewUser from controller to add User and User relatives to the database
                 controller.createNewUser(name_response, relatives_response, genotype_response, user_response)
 
-                return flask.render_template('main.html', response_json = genotype_response.json())
+                return redirect(url_for('getUser'))
         #error handling if api calls for additional user data to 23andMe fail
         else:
             reponse_text = genotype_response.text
