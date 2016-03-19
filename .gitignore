@@ -12,8 +12,7 @@ node_modules/
 #unwanted files
 /config.py
 config.py
-
-config.py
+npm-debug.log
 
 # Distribution / packaging
 .Python
