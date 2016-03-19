@@ -8,7 +8,7 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from server import app
 
 #Initialize postgreSQL genome database
-engine = create_engine('postgres://localhost/genome')
+engine = create_engine('postgres://localhost/genome', convert_unicode=True)
 session_factory = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 db_session = scoped_session(session_factory)
 Base = declarative_base()
