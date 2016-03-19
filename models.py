@@ -95,17 +95,18 @@ class Relative(Base):
 
     def serialize(self):
         return {
-            'email' : self.email,
-            'first_name' : self.first_name,
+            'email': self.email,
+            'first_name': self.first_name,
             'last_name': self.last_name,
-            'sex' : self.sex,
-            'residence' : self.residence,
-            'similarity' : self.similarity,
-            'maternal_side' : self.maternal_side,
-            'paternal_side' : self.paternal_side,
-            'picture_url' : self.picture_url
+            'sex': self.sex,
+            'residence': self.residence,
+            'similarity': self.similarity,
+            'maternal_side': self.maternal_side,
+            'paternal_side': self.paternal_side,
+            'picture_url': self.picture_url
         }
-        
+
+
 #Snp data schema
 class Snp(Base):
     __tablename__ = 'snps'
