@@ -8,7 +8,7 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from server import app
 
 #Initialize postgreSQL genome database
-engine = create_engine('postgres://localhost/genome', convert_unicode=True)
+engine = create_engine('postgres://localhost/genome')
 session_factory = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 db_session = scoped_session(session_factory)
 Base = declarative_base()
@@ -66,6 +66,7 @@ class User(Base):
         # Refactor to get or create user
         new_user = User(profile_id, email, first_name, last_name, location, picture_url_small, picture_url_medium, picture_url_large)
 
+
 #Relative schema
 class Relative(Base):
     __tablename__ = 'relatives'
@@ -92,6 +93,19 @@ class Relative(Base):
         self.paternal_side = paternal_side
         self.picture_url = picture_url
 
+    def serialize(self):
+        return {
+            'email' : self.email,
+            'first_name' : self.first_name,
+            'last_name': self.last_name,
+            'sex' : self.sex,
+            'residence' : self.residence,
+            'similarity' : self.similarity,
+            'maternal_side' : self.maternal_side,
+            'paternal_side' : self.paternal_side,
+            'picture_url' : self.picture_url
+        }
+        
 #Snp data schema
 class Snp(Base):
     __tablename__ = 'snps'
