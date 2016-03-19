@@ -45,15 +45,15 @@ def getUser():
 #return all the relatives. Refactor to only return the relatives specific to the current User
 def getRelatives():
     #filter this by userID
-    print request.cookies.get('user_profile_id')
-    relatives = models.db_session.query(models.Relative).all()
+    user_profile_id = request.cookies.get('user_profile_id')
+    relatives = models.db_session.query(models.User).filter(models.User.profile_id==user_profile_id).all()
     result = []
 
-    for rel in relatives:
-        result.append(rel.serialize())
+    # for rel in relatives:
+    #     result.append(rel.serialize())
     #The return value requires dictionary rather than list format
     obj = {'relativeList': result}
-    return jsonify(obj)
+    return jsonify(relatives)
 
     #  look into database, query for user information then return response with all of user's data
 
