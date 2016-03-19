@@ -1,5 +1,6 @@
 import models
 
+
 #CreateNewUser will be called in server.py when a user logging in has not been found in database
 def createNewUser(name_response, relatives_response, genotype_response, user_response):
     #Grab the dnaPair for each SNP out of the user_data param
