@@ -35,8 +35,8 @@ def home():
 
 @app.route('/get_info/')
 def getUser():
-    print 'GET INFO ROUTE is being called ===============>>>>>>'
-    return
+    print 'in the get info route=========================>>>>>>>>>>>>>>>>>>'
+    return jsonify({'hello': 'hello from the server side!'})
    #  look into database, query for user information then return response with all of user's data
 
 @app.route('/receive_code/')
@@ -99,4 +99,4 @@ def receive_code():
 #Initialize python server on port
 if __name__ == '__main__':
   print 'Server has been initialized'
-  app.run(debug=False, port=PORT)
+  app.run(debug=True, port=PORT)

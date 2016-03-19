@@ -12,7 +12,7 @@ export default class Index extends Component {
   constructor(props) {
     super(props)
   }
-  componentDidMount() {
+  componentWillMount() {
     // execute a function from this.props here ex. this.props.requestLogIn
     // this.props.requestLogIn will be imported from actions
 
@@ -25,11 +25,12 @@ export default class Index extends Component {
   // fancy d3 functions here
 
   render() {
+    const { results } = this.props;
     return (
       <div className='InitialLoad'>
       <Header />
-      <h1> Hello World! asdfds sddfsdffsd HI </h1>
-      <Pool />
+      <h1> Hello World!</h1>
+      <Pool results={ results } />
       <Footer />
       </div>
     );
