@@ -1,11 +1,18 @@
 angular.module('genome.sideNav', [])
 
-.controller('sideNavController', function ($scope, $rootScope, $location, sideNavFactory) {
-	//Build out functions that manipulate page render based on option
-	//This should be in correspondence with just the pages rendered after landing
-	
-})
+.directive('dstSideNav', function () {
+	return {
 
-.factory('sideNavFactory', function ($http) {
-	
-})
+		controller: function ($scope, Auth) {
+			$scope.expand = false;
+			$scope.target;
+
+			$scope.toggleSideNav = function (ev) {
+				if (!(ev.type === 'mouseleave' && $scope.lastEventType === 'click')) {
+            $scope.expand = !$scope.expand;
+           }
+         $scope.lastEventType = ev.type;
+				}
+		 }
+	}
+});

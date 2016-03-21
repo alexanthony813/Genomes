@@ -5,7 +5,12 @@ angular.module('genome.self', [])
  	//$scope.snps will hold each snp as the key, and a string of detailed information regarding each snp
  	$scope.snps = {};
 
+ 	$scope.getSnps = function () {
+ 		SelfFactory.getSnps('USER ID HERE');
+ 	}
   
+  $scope.getSnps();
+
 })
 
 .factory('SelfFactory', function ($http) {
@@ -16,7 +21,7 @@ angular.module('genome.self', [])
 	var getSnps = function (userId) {
 		return $http({
 			method: 'POST',
-			url: '/api/snpsdata'
+			url: '/api/snpsdata',
 			data: userId
 		}).then(function (snps) {
 			//do something with the snps retrieved here
