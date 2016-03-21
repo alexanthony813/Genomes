@@ -65,6 +65,18 @@ def getRelatives():
     #  look into database, query for user information then return response with all of user's data
 
 
+@app.route('/api/getsnps')
+def getSnps():
+    print 'GET SNPS IS CALLED !!!! @@@@@@'
+    snps = models.db_session.query(models.Snps).all()
+    result = []
+
+    # for snp in snps:
+    #     result.append(snp, info)
+    # snpData = {
+    #     'RSID': info
+    # }
+
 @app.route('/receive_code/')
 def receive_code():
     print 'receive_code is being called'

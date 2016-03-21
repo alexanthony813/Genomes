@@ -4,44 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Genome Sequence Visualizer</title>
-    <style>
-    .chart {
-        background: #eee;
-        padding: 3px;
-    }
-
-    .chart div {
-      width: 0;
-      transition: all 1s ease-out;
-      -moz-transition: all 1s ease-out;
-      -webkit-transition: all 1s ease-out;
-    }
-
-    .chart div {
-      font: 10px sans-serif;
-      background-color: steelblue;
-      text-align: right;
-      padding: 3px;
-      margin: 5px;
-      color: white;
-      box-shadow: 2px 2px 2px #666;
-    }
-    </style>
+    <link rel="stylesheet" href="/static/css/mainstyles.css" />
   </head>
+  
   <body>
     <h1> ACTUAL PAGE </h1>
+    <dst-side-nav></dst-side-nav>
 
     <div ng-view></div>
     <a href="/#/self/" ui-sref="signup" class="button">Who am I???</a>
     <script src='../static/lib/angular/angular.js'></script>
     <script src='../static/lib/angular-route/angular-route.js'></script>
     <script src='../static/lib/angular-cookies/angular-cookies.js'></script>
+
+    <script src='../static/app/app.js'></script>
     <script src='../static/app/services/relatives.js'></script>
     <script src='../static/app/services/d3Service.js'></script>
-    <script src='../static/app/self/self.js'></script>
-    <script src='../static/app/auth/auth.js'></script>
+    <script src='../static/app/sideNav/sideNav.html'></script>
     <script src='../static/app/pool/pool.js'></script>
     <script src='../static/app/self/self.js'></script>
-    <script src='../static/app/app.js'></script>
+    <script src='../static/app/auth/auth.js'></script>
   </body>
 </html>
