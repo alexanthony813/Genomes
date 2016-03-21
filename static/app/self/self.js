@@ -1,16 +1,13 @@
 angular.module('genome.self', [])
 
-.controller('SelfController', function ($scope, $rootScope, $location, SelfFactory) {
+.controller('SelfController', function ($scope, $rootScope, $cookies, $location, SelfFactory) {
  	//Build out retreival functions to send out request on initialization for SNPs
  	//$scope.snps will hold each snp as the key, and a string of detailed information regarding each snp
  	$scope.snps = {};
 
- 	$scope.getSnps = function () {
- 		SelfFactory.getSnps('USER ID HERE');
+ 	$rootScope.getSnps = function () {
+ 		SelfFactory.getSnps($rootScope.user_profile_id);
  	}
-  
-  //$scope.getSnps();
-
 })
 
 .factory('SelfFactory', function ($http) {
@@ -21,7 +18,7 @@ angular.module('genome.self', [])
 	var getSnps = function (userId) {
 		return $http({
 			method: 'POST',
-			url: '/api/snpsdata',
+			url: '/api/getsnps',
 			data: userId
 		}).then(function (snps) {
 			//do something with the snps retrieved here

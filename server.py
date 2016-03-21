@@ -66,11 +66,12 @@ def getRelatives():
     #  look into database, query for user information then return response with all of user's data
 
 
-@app.route('/api/getsnps')
+@app.route('/api/getsnps', methods=['POST', 'GET'])
 def getSnps():
     print 'GET SNPS IS CALLED !!!! @@@@@@'
-    snps = models.db_session.query(models.Snps).all()
+    snps = models.db_session.query(models.User).all()
     result = []
+    return jsonify({'hello': 'dude'})
 
     # for snp in snps:
     #     result.append(snp, info)
