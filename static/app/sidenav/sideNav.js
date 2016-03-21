@@ -14,6 +14,7 @@ angular.module('genome.sideNav', [])
 			}
 
 			$scope.getRelatives = function () {
+				console.log('get relatives');
 				$location.path('/pool');
 			}
 

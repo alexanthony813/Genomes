@@ -69,7 +69,7 @@ def getRelatives():
 @app.route('/api/getsnps')
 def getSnps():
     print 'GET SNPS IS CALLED !!!! @@@@@@'
-    snps = models.db_session.query(models.Snps).all()
+    snps = models.db_session.query(models.User).all()
     result = []
 
     # for snp in snps:
