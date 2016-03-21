@@ -2,7 +2,7 @@ angular.module('genome.sideNav', [])
 
 .directive('dstSideNav', function () {
 	return {
-		controller: function ($scope, $location) {
+		controller: function ($scope, $rootScope, $location) {
 			$scope.expand = false;
 			$scope.target;
 
@@ -14,12 +14,12 @@ angular.module('genome.sideNav', [])
 			}
 
 			$scope.getRelatives = function () {
-				console.log('get relatives');
 				$location.path('/pool');
 			}
 
 			$scope.getSelf = function () {
 				$location.path('/self');
+				$rootScope.getSnps();
 			}
 		},
 		templateUrl: '../static/app/sidenav/sideNav.html'
