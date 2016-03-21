@@ -130,7 +130,8 @@ def receive_code():
                                                    verify=False)
                 #call createNewUser from controller to add User and User relatives to the database
                 controller.createNewUser(name_response, relatives_response, genotype_response, user_response)
-
+                #create snps table
+                controller.createSnpsTable()
                 # EDIT HEADERS/COOKIES ON THE 302???
                 resp = make_response(redirect(url_for('getUser')))
                 resp.set_cookie('user_profile_id', user_profile_id)
