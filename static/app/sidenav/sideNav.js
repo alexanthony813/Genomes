@@ -2,7 +2,7 @@ angular.module('genome.sideNav', [])
 
 .directive('dstSideNav', function () {
 	return {
-		controller: function ($scope, $rootScope, $location) {
+		controller: function ($scope, $rootScope, $location, SelfFactory) {
 			$scope.expand = false;
 			$scope.target;
 
@@ -18,8 +18,8 @@ angular.module('genome.sideNav', [])
 			}
 
 			$scope.getSelf = function () {
+				SelfFactory.getSnps($rootScope.user_profile_id);
 				$location.path('/self');
-				$rootScope.getSnps();
 			}
 		},
 		templateUrl: '../static/app/sidenav/sideNav.html'
