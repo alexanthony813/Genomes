@@ -11,6 +11,14 @@ var app = angular.module('genome', [
 
 .config(function ($routeProvider) {
   $routeProvider
+    .when('/', {
+      templateUrl: '/static/app/pool/pool.html',
+      controller: 'PoolController'
+    })
+    .when('/signin', {
+      templateUrl: '/static/app/auth/signin.html',
+      controller: 'AuthController'
+    })
     .when('/signout', {
       templateUrl: '/static/app/auth/signout.html',
       controller: 'AuthController'
@@ -19,11 +27,7 @@ var app = angular.module('genome', [
       templateUrl: '/static/app/pool/pool.html',
       controller: 'PoolController'
     })
-    .when('/', {
-      templateUrl: '/static/app/pool/pool.html',
-      controller: 'PoolController'
-    })
-    .when('/self/', {
+    .when('/self', {
       templateUrl : '/static/app/self/self.html',
       controller : 'SelfController'
     })
