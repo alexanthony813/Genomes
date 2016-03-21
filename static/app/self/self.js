@@ -9,7 +9,7 @@ angular.module('genome.self', [])
  		SelfFactory.getSnps('USER ID HERE');
  	}
   
-  $scope.getSnps();
+  //$scope.getSnps();
 
 })
 

@@ -2,9 +2,9 @@ var app = angular.module('genome', [
   'genome.pool', 
   'genome.self',
   'genome.relatives',
-  'genome.sideNav',
   'ngRoute', 
-  'genome.d3Service'
+  'genome.d3Service',
+  'genome.sideNav'
 ])
 
 .config(function ($routeProvider) {
