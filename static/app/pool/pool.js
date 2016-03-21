@@ -6,8 +6,7 @@ angular.module('genome.pool', [])
   $scope.circles = [];
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
-  console.log('height', boardHeight);
-  console.log('width', boardWidth);
+  var bubbles;
 
   //pop up message displaying relative data when user clicks on a bubble
   var showRelative = function(bubble) {
@@ -25,6 +24,12 @@ angular.module('genome.pool', [])
                  .data(circleData)
                  .enter()
                  .append('circle')
+                 .on('mouseover', function(){
+                  d3.select(this).transition().attr('r', function(d) {return d.r * 2;})
+                 })
+                 .on('mouseout', function(){
+                  d3.select(this).transition().attr('r', function(d){return d.r})
+                 })
                  .on('click', function(bubble) { showRelative(bubble);})
                  .attr('class', 'enter')
                  .attr('cx', function(d){return d.cx + Math.random() * 1000;})
