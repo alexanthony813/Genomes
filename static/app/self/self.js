@@ -111,12 +111,12 @@ angular.module('genome.self', [])
 	                .attr("fill-opacity", function (d) { return z(d.z) / 10 })
 	                .attr("fill", function (d, i) { return fills[index%7]; })
 	                	//console.log('RSID INFORMATION GOES HERE')
+	                	/** EACH circle will have this info --- **/ 
 	                	/** Give Each circle their own values for circle fill="#ETC" 
 										We can create functions that determine what color it is, and then ensure the color pattern
 										matches a certain SNP	
 	                	**/
 
-	                	/** EACH circle will have this info --- 
               d3.select(this)
                   .select('line')
                   .attr("x2", x(d[0].x) + inverted * z(d[0].z))
