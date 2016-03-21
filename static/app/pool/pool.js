@@ -1,5 +1,6 @@
 angular.module('genome.pool', [])
-.controller('PoolController', function($scope, Relatives, $rootScope) {
+
+.controller('PoolController', function ($scope, Relatives, $rootScope) {
   $scope.relatives = [];
   $rootScope.rels = [];
   $scope.myData = [10,20,30,40,60];
