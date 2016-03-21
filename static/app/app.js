@@ -3,16 +3,14 @@ var app = angular.module('genome', [
   'genome.self',
   'genome.relatives',
   'ngRoute', 
+  'ngCookies',
   'genome.d3Service',
-  'genome.sideNav'
+  'genome.sideNav',
+  'genome.auth'
 ])
 
 .config(function ($routeProvider) {
   $routeProvider
-    .when('/signin', {
-      templateUrl: '/static/app/auth/signin.html',
-      controller: 'AuthController'
-    })
     .when('/signout', {
       templateUrl: '/static/app/auth/signout.html',
       controller: 'AuthController'
@@ -32,4 +30,4 @@ var app = angular.module('genome', [
     .otherwise({
       redirectTo : '/'
     })
-})
+});
