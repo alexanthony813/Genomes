@@ -33,5 +33,5 @@ var app = angular.module('genome', [
     })
     .otherwise({
       redirectTo : '/'
-    })
+    });
 });
