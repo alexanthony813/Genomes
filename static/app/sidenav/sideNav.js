@@ -2,7 +2,6 @@ angular.module('genome.sideNav', [])
 
 .directive('dstSideNav', function () {
 	return {
-
 		controller: function ($scope) {
 			$scope.expand = false;
 			$scope.target;
@@ -13,6 +12,7 @@ angular.module('genome.sideNav', [])
            }
          $scope.lastEventType = ev.type;
 			}
-		}
+		},
+		templateUrl: '../static/app/sidenav/sideNav.html'
 	}
 });
