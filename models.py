@@ -103,6 +103,7 @@ class Relative(Base):
 
     def serialize(self):
         return {
+            'id' : self.id,
             'email': self.email,
             'first_name': self.first_name,
             'last_name': self.last_name,
