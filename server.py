@@ -46,22 +46,23 @@ def getUser():
 def getRelatives():
     #filter this by userID
     user_profile_id = request.cookies.get('user_profile_id')
-    user = models.db_session.query(models.User).filter(models.User.profile_id==user_profile_id).first()
-    print '>>>>>>>>>>>>>>>>>>>>>',models.db_session.query(models.user_relatives).filter(models.user_relatives.primary_key == user_profile_id).all()
+    user_relatives = models.db_session.query(models.user_relatives).all()
+    user_relatives_ids = []
 
-    relatives = models.db_session.query(models.Relative).filter(models.User.profile_id==user_profile_id).all()
+    for tup in user_relatives:
+        y = list(tup)
+        x = int(y[1])
+        user_relatives_ids.append(x)
 
-    # x = models.Relative.query.filter((profile_id==user_profile_id)).all()
+    relatives = models.db_session.query(models.Relative).all()
+    finalRelatives = []
 
-    # print x
-    result = []
+    for relative in relatives:
+        if relative.serialize()['id'] in user_relatives_ids:
+            finalRelatives.append(relative.serialize())
 
-    for rel in relatives:
-        result.append(rel.serialize())
     # The return value requires dictionary rather than list format
-    obj = {'relativeList': result}
-    return jsonify(obj)
-    return
+    return jsonify({'relativeList' : finalRelatives})
     #  look into database, query for user information then return response with all of user's data
 
 
