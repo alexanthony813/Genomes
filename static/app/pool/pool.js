@@ -59,6 +59,8 @@ var radius = d3.scale.sqrt().range([0, 12]);
             d3.select(this).transition().attr('r', function(d){return d.radius})
           })
           .on('click', function(bubble) { showRelative(bubble);})
+          .attr("data-target", "#myModal")
+          .attr("data-toggle", "modal")
           .attr("r", function (d) {
             return d.radius;
           })
