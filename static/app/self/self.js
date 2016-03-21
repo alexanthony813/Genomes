@@ -2,33 +2,35 @@ angular.module('genome.self', [])
 
 .controller('SelfController', function ($scope, $rootScope, $cookies, $location, SelfFactory, d3Service) {
 
-	var fills   = ['#00779C', '#00465C', '#54B8B1', '#377874', '#455560', '#7C99AC', '#F5CC49', '#F5CC9C', '#A8353D', '#682126'],
-	    h       = 600,
-	    w       = 150,
-	    numX    = 30,
-	    numY    = 20,
-	    speed   = 0.01,
+	/** 
+		* The 'FILLS' block will determine the availability of colors, balls and lines
+		* and what quantity and other attributes the d3 plot should contain
+	**/
+	var fills = ['#00779C', '#00465C', '#54B8B1', '#377874', '#455560', '#7C99AC', '#F5CC49', '#F5CC9C', '#A8353D', '#682126'],
+			h = 600,
+	    w = 150,
+	    numX = 30,
+	    numY = 20,
+	    speed = 0.01,
 	    torsion = 0.2,
 	    x = d3.scale.linear().range([10, w - 10]),
 	    y = d3.scale.linear().range([h - 10, 10]),
 	    z = d3.scale.linear().range([10, 2]);
 
+	    /** 
+	    	* This block will append the built svg elements to the "body" of the HTML
+	    **/
 	    var svg = d3.select("body")
 	        .append("svg")
 	        .attr("width", w)
 	        .attr("height", h)
-
-	    svg.append("rect")
+	    /** Appends the inner SVG to a larger SVG container **/
+	    
+	    svg.append("DNAHelix")
 	        .attr("width", w)
 	        .attr("height", h)
 	        .attr("fill", "white")
-	        .on("mouseclick", function () { 
-	        		/** 
-	        		BUILD FUNCTION TO HANDLE MOUSE CLICK HERE 
-	        		**/
 
-	        		//torsion = 0.5 * d3.mouse(this)[0] / w; 
-	        	});
 
 	    var container = svg.append("g");
 
@@ -58,6 +60,12 @@ angular.module('genome.self', [])
 	        var cont = container.selectAll("g").data(generateData());
 	        cont.exit().remove();
 
+
+	        /** 
+	       		* The following D3 Element will create an instance of a new circle
+	        	* We want each circle to be unique, and correspond with a particular SNP
+	        **/
+
 	        var enter = cont.enter()
 	            .append("g")
 	            .each(function (d, index) {
@@ -66,8 +74,19 @@ angular.module('genome.self', [])
 	                    .data(d)
 	                    .enter()
 	                    .append("circle")
-	                    .attr("fill", "black");
+	                    .attr("fill", "black")
+	                    .on("click", function () { 
+	                    		console.log('clicking on a ball!!!');
+	                    		/** 
+	                    		BUILD FUNCTION TO HANDLE MOUSE CLICK HERE 
+	                    		**/
 
+	                    		// TARGET THE MOUSE EVENT Using d3.mouse(this)[0];
+
+	                    	});
+	            	/** 
+	            	 * Ignore the block below this, it just relates to the creation of lines per set of balls
+	            	**/
 	                d3.select(this).append('line')
 	                    .attr("stroke", function (d, i) { 
 	                    	return fills[index%7] 
@@ -79,6 +98,9 @@ angular.module('genome.self', [])
 
 	            var inverted = (d[0].y < d[1].x) ? 1 : -1;
 
+	            /** 
+	              * The blocks below are responsible for filling in the coloring of each ball and line
+	            **/
 	            d3.select(this)
 	                .selectAll("circle")
 	                .data(d)
@@ -86,15 +108,13 @@ angular.module('genome.self', [])
 	                .attr("cy", function (d) { return y(d.y) })
 	                .attr("r",  function (d) { return z(d.z) })
 	                .attr("fill-opacity", function (d) { return z(d.z) / 10 })
-	                .attr("fill", function (d, i) { return fills[index%7]; });
-
+	                .attr("fill", function (d, i) { return fills[index%7]; })
               d3.select(this)
                   .select('line')
                   .attr("x2", x(d[0].x) + inverted * z(d[0].z))
                   .attr("x1", x(d[1].x) - inverted * z(d[1].z))
                   .attr("y2", y(d[0].y))
-                  .attr("y1", y(d[0].y))
-                 
+                  .attr("y1", y(d[0].y))                
 	        })
 	    };
 
