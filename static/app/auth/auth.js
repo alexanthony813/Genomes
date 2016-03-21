@@ -4,7 +4,6 @@ angular.module('genome.auth', [])
   $scope.user = {};
 
   $rootScope.signOut = function() {
-    // Remove cookies
     console.log('Signout being called');
     AuthFactory.signOut();
     // Delay redirect to landing page in case of cookie delays
@@ -19,16 +18,15 @@ angular.module('genome.auth', [])
 
   $scope.getUserProfileId();
 })
-  
- 
+   
 .factory('AuthFactory', function($http, $cookies) {
 
-  var redirectToLanding = function(){
-    return $http({
-      method: 'GET',
-      url: '/'
-    })
-  };
+  // var redirectToLanding = function(){
+  //   return $http({
+  //     method: 'GET',
+  //     url: '/'
+  //   })
+  // };
 
   var isAuth = function() {
     return !!$cookies['user_profile_id'];
@@ -42,7 +40,7 @@ angular.module('genome.auth', [])
 
   return {
     signOut: signOut,
-    isAuth: isAuth,
-    redirectToLanding: redirectToLanding
+    isAuth: isAuth
+    // redirectToLanding: redirectToLanding
   }
-})
+});
