@@ -1,16 +1,25 @@
 <h1>Welcome to the Pool</h1>
 
 
-<button ng-click="getRelatives()">Get Relatives</button>
-$scope relatives:
-<ul>
-<li ng-repeat="rel in relatives track by $index">{{rel}}</li>
-</ul>
+<div class="optionsContainer">
+	<button ng-click="getRelatives()">Get Relatives</button>
+	
+	<button ng-click="getSelf()">Get my own info</button>
+</div>
+
+<div class="relativesList">
+	$scope relatives:
+	<ul>
+	<li ng-repeat="rel in relatives track by $index">{{rel}}</li>
+	</ul>
+</div>
 
 
-$rootScope relatives:
-<ul>
-<li ng-repeat="rel in rels track by $index">{{rel}}</li>
-</ul>
-<bars-chart chart-data="myData" ></bars-chart>
-<pool-visualization val="relatives"></pool-visualization>
+<div class="relativesChart">
+	$rootScope relatives:
+	<ul>
+	<li ng-repeat="rel in rels track by $index">{{rel}}</li>
+	</ul>
+	<bars-chart chart-data="myData" ></bars-chart>
+	<pool-visualization val="relatives"></pool-visualization>
+</div>
