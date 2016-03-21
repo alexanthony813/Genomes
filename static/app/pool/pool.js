@@ -6,7 +6,7 @@ angular.module('genome.pool', [])
   $scope.circles = [];
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
-  var bubbles;
+  var bubbles = [1,2,3];
 
   //pop up message displaying relative data when user clicks on a bubble
   var showRelative = function(bubble) {
@@ -47,12 +47,12 @@ angular.module('genome.pool', [])
                    return d.cy;
                  }).attr('r', function(d) {
                    return d.r;
-                 });
+                 })
   };
 
   //After grabbing relatives from the DB, create a bubbles array based on length of relatives array
   var initialize = function(){
-    for (var i = 0; i <= $scope.relatives.length; i++) {
+    for (var i = 0; i <= $scope.relatives.length || 0; i++) {
       $scope.circles.push({
         cx: Math.random() * boardWidth,
         cy: Math.random() * boardHeight,
@@ -78,3 +78,4 @@ angular.module('genome.pool', [])
     })
   }
 });
+
