@@ -41,7 +41,7 @@ def getUser():
 
 @app.route('/demo/')
 def makeDemoUser():
-    controller.create_demo_user
+    controller.create_demo_user()
     demo_id = 'demo_id'
     response = make_response(render_template('index.html'))
     response.set_cookie('user_profile_id', demo_id)
@@ -54,20 +54,23 @@ def makeDemoUser():
 def getRelatives():
     #filter this by userID
     user_profile_id = request.cookies.get('user_profile_id')
-    #add filter by profile to take out irrelevant user_relatives 
+    #add filter by profile to take out irrelevant user_relatives
     user_relatives = models.db_session.query(models.user_relatives).all()
+    print 'USER RELATIVES FOR DEMO===========================', user_relatives
     user_relatives_ids = []
 
     for user_relative in user_relatives:
         user = list(user_relative)
-        _id = int(user[1])
-        user_relatives_ids.append(_id)
+        if user_profile_id == str(user[0]):
+            user_relatives_ids.append(int(user[1]))
 
+    print 'USER RELATIVE IDS FOR DEMO===========================', user_relatives_ids
     relatives = models.db_session.query(models.Relative).all()
     finalRelatives = []
 
     for relative in relatives:
         if relative.serialize()['id'] in user_relatives_ids:
+            print 'RELATIVE IN FINAL LOOP: ===============>>>>', relative.serialize()
             finalRelatives.append(relative.serialize())
 
     # The return value requires dictionary rather than list format
@@ -88,7 +91,7 @@ def getSnps():
     user_outcomes = []
     for user_snp in user_snps:
         # loop through entire snp table, if any of snp base pairs match up to the base pair in user snps, put in an object with rsid and outcome
-        current_snp = models.db_session.query(models.Snp).filter(models.Snp.rs_id == user_snp and models.Snp.dnaPair == user_snps[user_snp]).first()  
+        current_snp = models.db_session.query(models.Snp).filter(models.Snp.rs_id == user_snp and models.Snp.dnaPair == user_snps[user_snp]).first()
         if current_snp is not None:
             user_outcomes.append({user_snp : current_snp.serialize()['outcome']});
 
