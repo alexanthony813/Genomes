@@ -63,7 +63,7 @@ def getRelatives():
             finalRelatives.append(relative.serialize())
 
     # The return value requires dictionary rather than list format
-    return jsonify({'relativeList' : finalRelatives})
+    return jsonify({'relativeList': finalRelatives})
     #  look into database, query for user information then return response with all of user's data
 
 
