@@ -39,6 +39,12 @@ def getUser():
     response.set_cookie('user_profile_id', request.cookies.get('user_profile_id'))
     return response
 
+@app.route('/demo/')
+def makeDemoUser():
+    demo_id = 'demo_id'
+    response = make_response(render_template('index.html'))
+    response.set_cookie('user_profile_id', demo_id)
+    return response
 
 #Refactor this route to take a userProfileID after the trailing slash with some syntax like: '<%s UserID >''
 #i.e. the equivalent of '/:userId' with node/express servers
@@ -122,7 +128,7 @@ def receive_code():
         name_response = requests.get("%s%s" % (BASE_API_URL, "1/names/%s" % user_profile_id),
                                          headers=headers,
                                          verify=False)
-        
+
         #if both API calls are successful, process user data
         if user_response.status_code == 200 and genotype_response.status_code == 200:
             user_first_name = name_response.json()['first_name']
