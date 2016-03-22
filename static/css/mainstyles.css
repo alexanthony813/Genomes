@@ -19,3 +19,8 @@
   color: white;
   box-shadow: 2px 2px 2px #666;
 }
+
+svg {
+  display: block;
+  margin: 0 auto;
+}
