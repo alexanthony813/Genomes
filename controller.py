@@ -33,18 +33,18 @@ sample_snps = [
     {'rs_id':'rs18050070', 'dnaPair':'CC', 'outcome':'Makes your hair read'},
     {'rs_id':'rs18050070', 'dnaPair':'CT', 'outcome':'Makes your hair read and increases response to anesthetics'},
     {'rs_id':'rs18050070', 'dnaPair':'TT', 'outcome':'Makes your hair read and increases response to anesthetics'},
-    {'rs_id':'Rs1799971', 'dnaPair':'AA', 'outcome':'Could make your children like alcohol'},
-    {'rs_id':'Rs1799971', 'dnaPair':'AG', 'outcome':'Responsible for your affinity for alcohol'},
-    {'rs_id':'Rs1799971', 'dnaPair':'GG', 'outcome':'Responsible for your affinity for alcohol'},
-    {'rs_id':'Rs806380', 'dnaPair':'AA', 'outcome':'Responsible for your strong predisposition for marijuana'},
-    {'rs_id':'Rs806380', 'dnaPair':'AG', 'outcome':'Responsible for your predisposition towards marijuana'},
-    {'rs_id':'Rs806380', 'dnaPair':'GG', 'outcome':'Responsible for your predisposition towards marijuana'},
+    {'rs_id':'rs1799971', 'dnaPair':'AA', 'outcome':'Could make your children like alcohol'},
+    {'rs_id':'rs1799971', 'dnaPair':'AG', 'outcome':'Responsible for your affinity for alcohol'},
+    {'rs_id':'rs1799971', 'dnaPair':'GG', 'outcome':'Responsible for your affinity for alcohol'},
+    {'rs_id':'rs806380', 'dnaPair':'AA', 'outcome':'Responsible for your strong predisposition for marijuana'},
+    {'rs_id':'rs806380', 'dnaPair':'AG', 'outcome':'Responsible for your predisposition towards marijuana'},
+    {'rs_id':'rs806380', 'dnaPair':'GG', 'outcome':'Responsible for your predisposition towards marijuana'},
     {'rs_id':'rs1800955', 'dnaPair':'CC', 'outcome':'Responsible for your tendency to novelty seek'},
     {'rs_id':'rs1800955', 'dnaPair':'CT', 'outcome':'Responsible for your tendency to novelty seek'},
     {'rs_id':'rs1800955', 'dnaPair':'TT', 'outcome':'Responsible for your tendency to novelty seek'},
-    {'rs_id':'Rs121908908', 'dnaPair':'CC', 'outcome':'Responsible for your low tolerance to pain'},
-    {'rs_id':'Rs121908908', 'dnaPair':'CG', 'outcome':'Responsible for your high tolerance to pain'},
-    {'rs_id':'Rs121908908', 'dnaPair':'GG', 'outcome':'Responsible for your high tolerance to pain'},
+    {'rs_id':'rs121908908', 'dnaPair':'CC', 'outcome':'Responsible for your low tolerance to pain'},
+    {'rs_id':'rs121908908', 'dnaPair':'CG', 'outcome':'Responsible for your high tolerance to pain'},
+    {'rs_id':'rs121908908', 'dnaPair':'GG', 'outcome':'Responsible for your high tolerance to pain'}
 ]
 
 def createSnpsTable():
