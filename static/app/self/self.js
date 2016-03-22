@@ -1,11 +1,11 @@
 angular.module('genome.self', [])
 
 .controller('SelfController', function ($scope, $rootScope, $cookies, $location, SelfFactory, d3Service) {
+  
+  $scope.outcomelist = $rootScope.outcomes;
 
-  /** 
-    * The 'FILLS' block will determine the availability of colors, balls and lines
-    * and what quantity and other attributes the d3 plot should contain
-  **/
+    /* The 'FILLS' block will determine the availability of colors, balls and lines
+     * and what quantity and other attributes the d3 plot should contain */
   var fills = ['#E74C3C', '#3498DB', '#2ECC71'],
       h = 800,
       w = 150,
@@ -146,13 +146,12 @@ angular.module('genome.self', [])
   * Used to retrieve information about SNPs pertaining to currently logged in user
 **/
   var getSnps = function (userId) {
-    console.log(userId)
     return $http({
       method: 'POST',
       url: '/api/getsnps',
       data: userId
     }).then(function (snps) {
-      //do something with the snps retrieved here
+      return snps.data;
     }).catch(function (err) {
       console.error('An error occured retreiving your SNPs ', err);
     });

@@ -69,23 +69,22 @@ def getRelatives():
 
 @app.route('/api/getsnps', methods=['POST', 'GET'])
 def getSnps():
-    #print 'REQUEST DATA------' request.data
     current_user_id = request.data
-    user_snps = []
+    user_snps = {}
 
-    all_snps = models.db_session.query(models.Snp).all()
-    for snp in all_snps:
-        snpinfo = list(snp)
-    
-    user_data = models.db_session.query(models.User).filter_by(user_profile_id=current_user_id).first()
-        #Insert user's RSID & corresponding base pair to the user_snps array
-        user_snps.append()
-        
-        #Once loop works, go through each SNP, gathering the outcomes that pertain to the user
-        # as well as the user's base pairs, so probably need another query
-    print 'SNPINFO ~~~~~~~~~~~ ', snpinfo
+    user_data = models.db_session.query(models.User).filter(models.User.profile_id==current_user_id).first().serialize()
+    for user_datum in user_data:
+        if user_datum[:2:].lower()=='rs':
+            user_snps[user_datum] = user_data[user_datum]
 
-    return jsonify(vars(user_snps))
+    user_outcomes = {}
+    for user_snp in user_snps:
+        # loop through entire snp table, if any of snp base pairs match up to the base pair in user snps, put in an object with rsid and outcome
+        current_snp = models.db_session.query(models.Snp).filter(models.Snp.rs_id == user_snp and models.Snp.dnaPair == user_snps[user_snp]).first()  
+        if current_snp is not None:
+            user_outcomes[user_snp] = current_snp.serialize()['outcome']
+
+    return jsonify({'outcomes': user_outcomes})
 
 
 @app.route('/receive_code/')

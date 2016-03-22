@@ -78,7 +78,10 @@ class User(Base):
             'picture_url_small': self.picture_url_small,
             'picture_url_medium': self.picture_url_medium,
             'picture_url_large': self.picture_url_large,
-            'rs12913832': self.rs12913832
+            'rs12913832': self.rs12913832,
+            'rs1799971': self.rs1799971,
+            'rs1800955': self.rs1800955,
+            'rs806380': self.rs806380
         }
 
 
