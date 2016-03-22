@@ -20,120 +20,90 @@ angular.module('genome.self', [])
       /** 
         * This block will append the built svg elements to the "body" of the HTML
       **/
-      var svg = d3.select(".dnahelixcontainer")
-          .append("svg")
-          .attr("width", w)
-          .attr("height", h)
-      /** Appends the inner SVG to a larger SVG container **/
-      
-      svg.append("DNAHelix")
-          .attr("width", w)
-          .attr("height", h)
-          .attr("fill", "white")
+  var svg = d3.select(".dnahelixcontainer")
+      .append("svg")
+      .attr("width", w)
+      .attr("height", h)
+  /** Appends the inner SVG to a larger SVG container **/
+  
+  svg.append("DNAHelix")
+      .attr("width", w)
+      .attr("height", h)
+      .attr("fill", "white")
 
 
-      var container = svg.append("g");
+  var container = svg.append("g");
 
-      var counter = 0;
+  var counter = 0;
 
-      function generateData() {
-          counter++;
-          var data = d3.range(numX).map(function (d) {
-              var t = d * torsion - speed * counter;
-              return [{ x: Math.cos(t),
-                        y: d,
-                        z: Math.sin(t)
-                      },
-                      { x: Math.cos(t - Math.PI),
-                        y: d,
-                        z: Math.sin(t - Math.PI)
-                      }]
+  function generateData() {
+    counter++;
+    var data = d3.range(numX).map(function (d) {
+        var t = d * torsion - speed * counter;
+          return [{ x: Math.cos(t),
+                    y: d,
+                    z: Math.sin(t)
+                  },
+                  { x: Math.cos(t - Math.PI),
+                    y: d,
+                    z: Math.sin(t - Math.PI)
+                  }]
+        });
+      var flat = _.flatten(data);
+      x.domain(d3.extent(flat, function(d){ return d.x }));
+      y.domain(d3.extent(flat, function(d){ return d.y }));
+      z.domain(d3.extent(flat, function(d){ return d.z }));
+      return data
+  };
+
+  function draw () {
+    var cont = container.selectAll("g").data(generateData());
+    cont.exit().remove();
+    var enter = cont.enter()
+      .append("g")
+      .each(function (d, index) {
+          d3.select(this)
+            .selectAll("circle")
+            .data(d)
+            .enter()
+            .append("circle")
+            .attr("fill", "black")
+            .on("click", function () { 
+                console.log('clicking on a ball!!!');
+              })
+          d3.select(this).append('line')
+              .attr("stroke", function (d, i) { 
+                return fills[index%3] 
+              })
+              .attr("stroke-width", 2)
           });
-          var flat = _.flatten(data);
-          x.domain(d3.extent(flat, function(d){ return d.x }));
-          y.domain(d3.extent(flat, function(d){ return d.y }));
-          z.domain(d3.extent(flat, function(d){ return d.z }));
-          return data
-      };
-
-      function draw () {
-          var cont = container.selectAll("g").data(generateData());
-          cont.exit().remove();
-          /** 
-             * The following D3 Element will create an instance of a new circle
-            * We want each circle to be unique, and correspond with a particular SNP
-          **/
-
-          var enter = cont.enter()
-              .append("g")
-              .each(function (d, index) {
-                  d3.select(this)
-                      .selectAll("circle")
-                      .data(d)
-                      .enter()
-                      .append("circle")
-                      .attr("fill", "black")
-                      .on("click", function () { 
-                          console.log('clicking on a ball!!!');
-                          console.log(this, index);
-                          //the index pertains to an individual ball as well
-                          /** 
-                          BUILD FUNCTION TO HANDLE MOUSE CLICK HERE 
-                          **/
-                          // TARGET THE MOUSE EVENT Using d3.mouse(this)[0];
-
-                        })
-
-
-                /** 
-                 * Ignore the block below this, it just relates to the creation of lines per set of balls
-                **/
-                  d3.select(this).append('line')
-                      .attr("stroke", function (d, i) { 
-                        return fills[index%3] 
-                      })
-                      .attr("stroke-width", 2)
-                  });
-              
-            cont.each(function (d, index) {
-
-              var inverted = (d[0].y < d[1].x) ? 1 : -1;
-
-              /** 
-                * The blocks below are responsible for filling in the coloring of each ball and line
-              **/
-              d3.select(this)
-                  .selectAll("circle")
-                  .data(d)
-                  .attr("cx", function (d) { return x(d.x) })
-                  .attr("cy", function (d) { return y(d.y) })
-                  .attr("r",  function (d) { return z(d.z) })
-                  .attr("fill-opacity", function (d) { return z(d.z) / 10 })
-                  .attr("fill", function (d, i) { return fills[index%3]; })
-                  .on("mouseover", function (d, i) {
-                      d3.select(this).transition()
-                      .attr('fill', function (d) {
-                        console.log('d: ', d, 'i: ', i);
-
-                      })
-                      .attr('fill-opacity', function (d) {
-                        return z(d.z) / 1
-                      })
-                      .attr('stroke-opacity', 0.5);
-                    })
-                    //console.log('RSID INFORMATION GOES HERE')
-                    /** EACH circle will have this info --- **/ 
-                    /** Give Each circle their own values for circle fill="#ETC" 
-                    We can create functions that determine what color it is, and then ensure the color pattern
-                    matches a certain SNP  
-                    **/
-
-              d3.select(this)
-                  .select('line')
-                  .attr("x2", x(d[0].x) + inverted * z(d[0].z))
-                  .attr("x1", x(d[1].x) - inverted * z(d[1].z))
-                  .attr("y2", y(d[0].y))
-                  .attr("y1", y(d[0].y))                
+          
+        cont.each(function (d, index) {
+          var inverted = (d[0].y < d[1].x) ? 1 : -1;
+          d3.select(this)
+            .selectAll("circle")
+            .data(d)
+            .attr("cx", function (d) { return x(d.x) })
+            .attr("cy", function (d) { return y(d.y) })
+            .attr("r",  function (d) { return z(d.z) })
+            .attr("fill-opacity", function (d) { return z(d.z) / 10 })
+            .attr("fill", function (d, i) { return fills[index%3]; })
+            .on("mouseover", function (d, i) {
+              d3.select(this).transition()
+              .attr('fill', function (d) {
+                console.log('d: ', d, 'i: ', i);
+              })
+              .attr('fill-opacity', function (d) {
+                return z(d.z) / 1
+              })
+              .attr('stroke-opacity', 0.5);
+            })
+          d3.select(this)
+              .select('line')
+              .attr("x2", x(d[0].x) + inverted * z(d[0].z))
+              .attr("x1", x(d[1].x) - inverted * z(d[1].z))
+              .attr("y2", y(d[0].y))
+              .attr("y1", y(d[0].y))                
           })
       };
 
