@@ -6,6 +6,11 @@ angular.module('genome.pool', [])
   $scope.circles = [];
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
+  $scope.popModal = {
+    name: '',
+    similarity: '',
+    image: '../../assets/hipDNA.png'
+};
 /////FORCE TEST
 
 var margin = {
@@ -23,7 +28,9 @@ var radius = d3.scale.sqrt().range([0, 12]);
 /////END FORCE TEST
   //pop up message displaying relative data when user clicks on a bubble
   var showRelative = function(bubble) {
-    alert('You share ' + bubble.relative.similarity + '% of your DNA with ' + bubble.relative.first_name + bubble.relative.last_name);
+    $scope.popModal.name = bubble.relative.first_name + ' ' + bubble.relative.last_name;
+    $scope.popModal.similarity = bubble.relative.first_name + ' shares ' + bubble.relative.similarity + '% of your DNA.'
+    $scope.popModal.image = '../../assets/hipDNA.png'
   }
 
   //Grab the pool as a canvas for our bubbles
@@ -58,7 +65,11 @@ var radius = d3.scale.sqrt().range([0, 12]);
           .on('mouseout', function(){
             d3.select(this).transition().attr('r', function(d){return d.radius})
           })
-          .on('click', function(bubble) { showRelative(bubble);})
+          .on('click', function(bubble) {
+            $scope.$apply(
+            showRelative(bubble)
+            );
+          })
           .attr("data-target", "#myModal")
           .attr("data-toggle", "modal")
           .attr("r", function (d) {
