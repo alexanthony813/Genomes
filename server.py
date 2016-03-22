@@ -100,30 +100,35 @@ def receive_code():
     if response.status_code == 200:
         access_token = response.json()['access_token']
         headers = {'Authorization': 'Bearer %s' % access_token}
+
         #Begin API calls to 23andMe to get all scoped user data
         genotype_response = requests.get("%s%s" % (BASE_API_URL, "1/genotype/"),
                                          params = {'locations': ' '.join(SNPS)},
                                          headers=headers,
                                          verify=False)
+        user_profile_id = genotype_response.json().pop()['id']
         user_response = requests.get("%s%s" % (BASE_API_URL, "1/user/?email=true"),
                                          headers=headers,
                                          verify=False)
-
+        name_response = requests.get("%s%s" % (BASE_API_URL, "1/names/%s" % user_profile_id),
+                                         headers=headers,
+                                         verify=False)
+        
         #if both API calls are successful, process user data
         if user_response.status_code == 200 and genotype_response.status_code == 200:
-            user_profile_id = genotype_response.json().pop()['id']
+            # user_profile_id = genotype_response.json().pop()['id']
+            user_first_name = name_response.json()['first_name']
+            print "FIRST NAME!!!!!!!!!!!!! ", user_first_name
             #if user already exists in database, render the html and do not re-add user to database
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
                 # return flask.render_template('main.html', response_json = genotype_response.json())
                 resp = make_response(redirect(url_for('getUser')))
                 resp.set_cookie('user_profile_id', user_profile_id)
+                resp.set_cookie('user_first_name', user_first_name)
                 return resp
             # otherwise, add new user to database if they have never logged in before
             else:
                 #Begin API calls to 23andMe to get additional user data
-                name_response = requests.get("%s%s" % (BASE_API_URL, "1/names/%s" % user_profile_id),
-                                                 headers=headers,
-                                                 verify=False)
                 relatives_response = requests.get("%s%s" % (BASE_API_URL, "1/relatives/%s" % user_profile_id),
                                                    params = {'limit': 20, 'offset': 1},
                                                    headers=headers,
@@ -135,6 +140,7 @@ def receive_code():
                 # EDIT HEADERS/COOKIES ON THE 302???
                 resp = make_response(redirect(url_for('getUser')))
                 resp.set_cookie('user_profile_id', user_profile_id)
+                resp.set_cookie('user_first_name', user_first_name)
                 return resp
         #error handling if api calls for additional user data to 23andMe fail
         else:
