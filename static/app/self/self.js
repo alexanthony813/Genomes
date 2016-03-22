@@ -20,7 +20,7 @@ angular.module('genome.self', [])
 	    /** 
 	    	* This block will append the built svg elements to the "body" of the HTML
 	    **/
-	    var svg = d3.select("body")
+	    var svg = d3.select(".dnahelixcontainer")
 	        .append("svg")
 	        .attr("width", w)
 	        .attr("height", h)
@@ -59,8 +59,6 @@ angular.module('genome.self', [])
 	    function draw () {
 	        var cont = container.selectAll("g").data(generateData());
 	        cont.exit().remove();
-
-
 	        /** 
 	       		* The following D3 Element will create an instance of a new circle
 	        	* We want each circle to be unique, and correspond with a particular SNP
@@ -77,7 +75,8 @@ angular.module('genome.self', [])
 	                    .attr("fill", "black")
 	                    .on("click", function () { 
 	                    		console.log('clicking on a ball!!!');
-	                    		console.log(this);
+	                    		console.log(this, index);
+	                    		//the index pertains to an individual ball as well
 	                    		/** 
 	                    		BUILD FUNCTION TO HANDLE MOUSE CLICK HERE 
 	                    		**/
