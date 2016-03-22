@@ -47,6 +47,7 @@ def getUser():
 def getRelatives():
     #filter this by userID
     user_profile_id = request.cookies.get('user_profile_id')
+    #add filter by profile to take out irrelevant user_relatives 
     user_relatives = models.db_session.query(models.user_relatives).all()
     user_relatives_ids = []
 
