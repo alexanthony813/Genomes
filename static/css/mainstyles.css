@@ -8,13 +8,27 @@
 }
 
 .poolView {
-  display: flex;
+/*  display: flex;
   flex-direction: column;
-  justify-content: center;
-  margin-left: 10%;
-  margin-right: 10%;
+  justify-content: center;*/
 }
-
+.poolButtons {
+  margin-left: 10%;
+}
 .popImage {
   background-image: url('../assets/hipDNA.png')
+}
+
+.poolContainer {
+  display: flex;
+  max-width: 100%;
+  height: 800px;
+  align-items: center;
+  justify-content: center;
+}
+
+.pool {
+  width: auto;
+  align-items: center;
+  justify-content: center;
 }

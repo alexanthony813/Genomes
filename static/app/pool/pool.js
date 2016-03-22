@@ -34,9 +34,6 @@ var radius = d3.scale.sqrt().range([0, 12]);
   }
 
   //Grab the pool as a canvas for our bubbles
-  // var svg = d3.select('.pool').append('svg')
-  //             .attr('width', boardWidth)
-  //             .attr('height', boardHeight);
   var svg = d3.select('.pool').append("svg")
       .attr("width", boardWidth + margin.left + margin.right)
       .attr("height", boardHeight + margin.top + margin.bottom)
@@ -166,8 +163,8 @@ var radius = d3.scale.sqrt().range([0, 12]);
   var initialize = function(){
     for (var i = 0; i <= $scope.relatives.length || 0; i++) {
       $scope.circles.push({
-        cx: 250,
-        cy: 250,
+        cx: boardWidth/2,
+        cy: boardHeight/2,
         color: 'rgb(' + parseInt(Math.random() * 255) + ','
                + parseInt(Math.random() * 255) + ','
                + parseInt(Math.random() * 255) + ')',
