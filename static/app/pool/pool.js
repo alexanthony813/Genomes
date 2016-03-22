@@ -6,7 +6,8 @@ angular.module('genome.pool', [])
   $scope.circles = [];
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
-
+  $scope.map = var map = new Datamap({element: document.getElementById('container')});
+  
   $scope.showMap = false;
   $scope.filterRegions = function() {
     $scope.showMap = !$scope.showMap;
@@ -67,7 +68,7 @@ angular.module('genome.pool', [])
       })
       .on('click', function(bubble) {
         $scope.$apply(
-        showRelative(bubble)
+          showRelative(bubble)
         );
       })
       .attr("data-target", "#myModal")
