@@ -189,5 +189,7 @@ var radius = d3.scale.sqrt().range([0, 12]);
       console.error('Error retrieving relatives: ', err)
     })
   }
+
+  $scope.getRelatives();
 });
 
