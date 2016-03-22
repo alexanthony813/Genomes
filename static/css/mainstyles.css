@@ -32,7 +32,6 @@
   justify-content: center;
 }
 
-
 .top-nav {
   margin: 0;
   width: 100%;
@@ -41,3 +40,10 @@
   position: relative;
   background-color: #f1c40f;
 }
+
+.modal-body {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
