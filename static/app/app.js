@@ -6,7 +6,8 @@ var app = angular.module('genome', [
   'ngCookies',
   'genome.d3Service',
   'genome.sideNav',
-  'genome.auth'
+  'genome.auth',
+  'genome.directive'
 ])
 
 .config(function ($routeProvider) {
@@ -33,5 +34,5 @@ var app = angular.module('genome', [
     })
     .otherwise({
       redirectTo : '/'
-    })
+    });
 });
