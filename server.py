@@ -39,6 +39,7 @@ def getUser():
     response.set_cookie('user_profile_id', request.cookies.get('user_profile_id'))
     return response
 
+
 #Refactor this route to take a userProfileID after the trailing slash with some syntax like: '<%s UserID >''
 #i.e. the equivalent of '/:userId' with node/express servers
 @app.route('/api/relatives/')
@@ -49,8 +50,8 @@ def getRelatives():
     user_relatives = models.db_session.query(models.user_relatives).all()
     user_relatives_ids = []
 
-    for user_tup in user_relatives:
-        user = list(user_tup)
+    for user_relative in user_relatives:
+        user = list(user_relative)
         _id = int(y[1])
         user_relatives_ids.append(_id)
 
@@ -109,6 +110,7 @@ def receive_code():
         
         #if both API calls are successful, process user data
         if user_response.status_code == 200 and genotype_response.status_code == 200:
+            user_first_name = name_response.json()['first_name']
             #if user already exists in database, render the html and do not re-add user to database
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
                 # return flask.render_template('main.html', response_json = genotype_response.json())
