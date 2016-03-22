@@ -69,8 +69,23 @@ def getRelatives():
 
 @app.route('/api/getsnps', methods=['POST', 'GET'])
 def getSnps():
-    snps = models.db_session.query(models.Snp).all()
-    return jsonify({'snps': snps})
+    #print 'REQUEST DATA------' request.data
+    current_user_id = request.data
+    user_snps = []
+
+    all_snps = models.db_session.query(models.Snp).all()
+    for snp in all_snps:
+        snpinfo = list(snp)
+    
+    user_data = models.db_session.query(models.User).filter_by(user_profile_id=current_user_id).first()
+        #Insert user's RSID & corresponding base pair to the user_snps array
+        user_snps.append()
+        
+        #Once loop works, go through each SNP, gathering the outcomes that pertain to the user
+        # as well as the user's base pairs, so probably need another query
+    print 'SNPINFO ~~~~~~~~~~~ ', snpinfo
+
+    return jsonify(vars(user_snps))
 
 
 @app.route('/receive_code/')

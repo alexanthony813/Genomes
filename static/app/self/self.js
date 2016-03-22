@@ -146,6 +146,7 @@ angular.module('genome.self', [])
   * Used to retrieve information about SNPs pertaining to currently logged in user
 **/
   var getSnps = function (userId) {
+    console.log(userId)
     return $http({
       method: 'POST',
       url: '/api/getsnps',
