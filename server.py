@@ -116,9 +116,6 @@ def receive_code():
         
         #if both API calls are successful, process user data
         if user_response.status_code == 200 and genotype_response.status_code == 200:
-            # user_profile_id = genotype_response.json().pop()['id']
-            user_first_name = name_response.json()['first_name']
-            print "FIRST NAME!!!!!!!!!!!!! ", user_first_name
             #if user already exists in database, render the html and do not re-add user to database
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
                 # return flask.render_template('main.html', response_json = genotype_response.json())
