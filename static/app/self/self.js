@@ -7,7 +7,7 @@ angular.module('genome.self', [])
 		* and what quantity and other attributes the d3 plot should contain
 	**/
 	var fills = ['#E74C3C', '#3498DB', '#2ECC71'],
-			h = 700,
+			h = 800,
 	    w = 150,
 	    numX = 20,
 	    numY = 10,
