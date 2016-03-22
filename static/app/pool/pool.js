@@ -9,7 +9,7 @@ angular.module('genome.pool', [])
   $scope.popModal = {
     name: '',
     similarity: '',
-    image: '../../assets/hipDNA.png'
+    image: '../../static/assets/hipDNA.png'
   };
 
   var margin = {
