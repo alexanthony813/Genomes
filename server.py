@@ -52,7 +52,7 @@ def getRelatives():
 
     for user_relative in user_relatives:
         user = list(user_relative)
-        _id = int(y[1])
+        _id = int(user[1])
         user_relatives_ids.append(_id)
 
     relatives = models.db_session.query(models.Relative).all()
