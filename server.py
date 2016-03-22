@@ -24,7 +24,7 @@ CLIENT_ID = app.config.get('CLIENT_ID')
 CLIENT_SECRET = app.config.get('CLIENT_SECRET')
 REDIRECT_URI = app.config.get('REDIRECT_URI')
 SNPS = ['rs12913832', 'rs1799971', 'rs1800955', 'rs806380']
-DEFAULT_SCOPE = 'names basic email ancestry relatives %s' % (' '.join(SNPS))
+DEFAULT_SCOPE = 'names basic email ancestry relatives genomes %s' % (' '.join(SNPS))
 BASE_API_URL = 'https://api.23andme.com/'
 
 
@@ -41,6 +41,7 @@ def getUser():
 
 @app.route('/demo/')
 def makeDemoUser():
+    controller.create_demo_user
     demo_id = 'demo_id'
     response = make_response(render_template('index.html'))
     response.set_cookie('user_profile_id', demo_id)
@@ -114,6 +115,7 @@ def receive_code():
     #get access token from 23andMe
     if response.status_code == 200:
         access_token = response.json()['access_token']
+        print 'ACCESS_TOKEN =====================>>>>>>>>>>>>>>>>>', access_token
         headers = {'Authorization': 'Bearer %s' % access_token}
 
         #Begin API calls to 23andMe to get all scoped user data

@@ -1,6 +1,8 @@
 import models
 
-
+#create a demo user in the db for users without a 23andMe account
+def create_demo_user():
+    print 'create_demo_user'
 #CreateNewUser will be called in server.py when a user logging in has not been found in database
 def createNewUser(name_response, relatives_response, genotype_response, user_response):
     #Grab the dnaPairs at relative snps
