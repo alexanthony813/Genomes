@@ -2,16 +2,16 @@ import models
 
 #Create a demo user in the db for users without a 23andMe account
 def create_demo_user():
+    #check to see if demo user already exists in the db
     if models.db_session.query(models.User).filter(models.User.profile_id=='demo_id').first() is None:
-        print 'create_demo_user =======================..............................'
-
+        #hard code the demo user's genome data
         genome_data = {
         'rs12913832': "GG",
         'rs1799971': 'AA',
         'rs1800955': 'CT',
         'rs806380': 'AG'
         }
-
+        #hard code the demo user's relatives
         relatives = [{
         'first_name': "Aodh",
         'last_name': "O'Donnell",
@@ -30,7 +30,7 @@ def create_demo_user():
         'maternal_side': False,
         'paternal_side': True
         }]
-
+        #Create demo user and all demo user's associated relatives
         demo_user = models.User('demo_id', None, 'Lilly', 'Demo', None, None, None, None, genome_data)
         for relative in relatives:
             #Create a new relative with the information being passed from relatives_response

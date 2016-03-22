@@ -68,6 +68,7 @@ div.test.testDrive {
   border: solid 2px white;
   margin-left: 40%;
   margin-right: 40%;
+  cursor: pointer;
 }
 
 .hipsterCircles {

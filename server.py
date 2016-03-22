@@ -41,9 +41,11 @@ def getUser():
 
 @app.route('/demo/')
 def makeDemoUser():
+    #Add demo user to DB if they don't already exist
     controller.create_demo_user()
     demo_id = 'demo_id'
     response = make_response(render_template('index.html'))
+    #set demo user's cookie
     response.set_cookie('user_profile_id', demo_id)
     return response
 
@@ -52,31 +54,28 @@ def makeDemoUser():
 @app.route('/api/relatives/')
 #return all the relatives. Refactor to only return the relatives specific to the current User
 def getRelatives():
-    #filter this by userID
     user_profile_id = request.cookies.get('user_profile_id')
-    #add filter by profile to take out irrelevant user_relatives
+    #Retrieve all relatives from database, not filtered by user
+    #To Do: Filter this by user
     user_relatives = models.db_session.query(models.user_relatives).all()
-    print 'USER RELATIVES FOR DEMO===========================', user_relatives
     user_relatives_ids = []
-
+    #Iterate through all relatives
     for user_relative in user_relatives:
         user = list(user_relative)
+        #For each relative, grab only those that match on the current user_profile_id
         if user_profile_id == str(user[0]):
             user_relatives_ids.append(int(user[1]))
-
-    print 'USER RELATIVE IDS FOR DEMO===========================', user_relatives_ids
+    #Retrieve all relatives from DB
+    #To Do: is this the same information in the user_relatives variable above?
     relatives = models.db_session.query(models.Relative).all()
     finalRelatives = []
-
+    #Iterate through all relatives
     for relative in relatives:
+        #Grab only relatives who match the relatives in the user_relatives_ids storage
         if relative.serialize()['id'] in user_relatives_ids:
-            print 'RELATIVE IN FINAL LOOP: ===============>>>>', relative.serialize()
             finalRelatives.append(relative.serialize())
 
-    # The return value requires dictionary rather than list format
     return jsonify({'relativeList': finalRelatives})
-    #  look into database, query for user information then return response with all of user's data
-
 
 @app.route('/api/getsnps', methods=['POST', 'GET'])
 def getSnps():
