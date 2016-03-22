@@ -133,7 +133,7 @@ angular.module('genome.pool', [])
 
   //After grabbing relatives from the DB, create a bubbles array based on length of relatives array
   var initialize = function(){
-    for (var i = 0; i <= $scope.relatives.length || 0; i++) {
+    for (var i = 0; i < $scope.relatives.length || 0; i++) {
       $scope.circles.push({
         cx: boardWidth/2,
         cy: boardHeight/2,
