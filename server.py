@@ -23,14 +23,14 @@ DEFAULT_REDIRECT_URI = '%sreceive_code/'  % BASE_CLIENT_URL
 CLIENT_ID = app.config.get('CLIENT_ID')
 CLIENT_SECRET = app.config.get('CLIENT_SECRET')
 REDIRECT_URI = app.config.get('REDIRECT_URI')
-SNPS = ["rs12913832"]
-DEFAULT_SCOPE = "names basic email ancestry relatives %s" % (" ".join(SNPS))
-BASE_API_URL = "https://api.23andme.com/"
+SNPS = ['rs12913832', 'rs1799971', 'rs1800955', 'rs806380']
+DEFAULT_SCOPE = 'names basic email ancestry relatives %s' % (' '.join(SNPS))
+BASE_API_URL = 'https://api.23andme.com/'
 
 
 @app.route('/')
 def home():
-    auth_url = "%sauthorize/?response_type=code&redirect_uri=%s&client_id=%s&scope=%s" % (BASE_API_URL, REDIRECT_URI, CLIENT_ID, DEFAULT_SCOPE)
+    auth_url = '%sauthorize/?response_type=code&redirect_uri=%s&client_id=%s&scope=%s' % (BASE_API_URL, REDIRECT_URI, CLIENT_ID, DEFAULT_SCOPE)
     return render_template('landing.html', auth_url=auth_url)
 
 @app.route('/get_info/')
@@ -38,6 +38,7 @@ def getUser():
     response = make_response(render_template('index.html'))
     response.set_cookie('user_profile_id', request.cookies.get('user_profile_id'))
     return response
+
 
 #Refactor this route to take a userProfileID after the trailing slash with some syntax like: '<%s UserID >''
 #i.e. the equivalent of '/:userId' with node/express servers
@@ -49,10 +50,10 @@ def getRelatives():
     user_relatives = models.db_session.query(models.user_relatives).all()
     user_relatives_ids = []
 
-    for tup in user_relatives:
-        y = list(tup)
-        x = int(y[1])
-        user_relatives_ids.append(x)
+    for user_relative in user_relatives:
+        user = list(user_relative)
+        _id = int(user[1])
+        user_relatives_ids.append(_id)
 
     relatives = models.db_session.query(models.Relative).all()
     finalRelatives = []
@@ -68,16 +69,9 @@ def getRelatives():
 
 @app.route('/api/getsnps', methods=['POST', 'GET'])
 def getSnps():
-    print 'GET SNPS IS CALLED !!!! @@@@@@'
     snps = models.db_session.query(models.Snp).all()
-    print '>>>>>>>>>', snps
-    return jsonify({'hello': 'dude'})
+    return jsonify({'snps': snps})
 
-    # for snp in snps:
-    #     result.append(snp, info)
-    # snpData = {
-    #     'RSID': info
-    # }
 
 @app.route('/receive_code/')
 def receive_code():
@@ -116,9 +110,7 @@ def receive_code():
         
         #if both API calls are successful, process user data
         if user_response.status_code == 200 and genotype_response.status_code == 200:
-            # user_profile_id = genotype_response.json().pop()['id']
             user_first_name = name_response.json()['first_name']
-            print "FIRST NAME!!!!!!!!!!!!! ", user_first_name
             #if user already exists in database, render the html and do not re-add user to database
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
                 # return flask.render_template('main.html', response_json = genotype_response.json())

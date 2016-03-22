@@ -26,7 +26,8 @@ except:
     cursor.execute("CREATE DATABASE genome")
     cursor.close()
     connection.close()
-
+    
+        
 
 # Join table between users and relatives, see User model relatives property
 user_relatives = Table('user_relatives',
@@ -46,11 +47,14 @@ class User(Base):
     picture_url_medium = Column(String(255), nullable=True)
     picture_url_large = Column(String(255), nullable=True)
     rs12913832 = Column(String(255), nullable=True)
+    rs1799971 = Column(String(255), nullable=True)
+    rs1800955 = Column(String(255), nullable=True)
+    rs806380 = Column(String(255), nullable=True)
 
     # Setting up the relationship to the relatives table and user_relatives join table
     relatives = relationship('Relative', secondary=user_relatives, backref=backref('user', lazy='dynamic'))
 
-    def __init__(self, profile_id, email, first_name, last_name, location, picture_url_small, picture_url_medium, picture_url_large, rs12913832):
+    def __init__(self, profile_id, email, first_name, last_name, location, picture_url_small, picture_url_medium, picture_url_large, genotype_info):
         self.profile_id = profile_id
         self.email = email
         self.first_name = first_name
@@ -59,7 +63,10 @@ class User(Base):
         self.picture_url_small = picture_url_small
         self.picture_url_medium = picture_url_medium
         self.picture_url_large = picture_url_large
-        self.rs12913832 = rs12913832
+        self.rs12913832 = genotype_info['rs12913832']
+        self.rs1799971 = genotype_info['rs1799971']
+        self.rs1800955 = genotype_info['rs1800955']
+        self.rs806380 = genotype_info['rs806380']
 
     def serialize(self):
         return {
