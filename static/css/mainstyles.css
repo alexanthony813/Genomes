@@ -35,13 +35,18 @@
   justify-content: center;
 }
 
-.mapView {
-  background-image: url("../../static/assets/worldmap.png");
-  background-repeat: no-repeat;
+.svgMap{
   width: 100%;
-  height: 800px;
-  z-index: -1;
-  margin-left: -10%;
-  margin-right: -50%;
+  height: 100%;
+  margin-right: -100px;
+  float: left;
 }
+
+svg{
+  position: absolute;
+}
+
+.pool{
+}
+
 

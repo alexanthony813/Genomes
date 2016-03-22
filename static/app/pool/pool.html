@@ -8,7 +8,10 @@
     </div>
   </div>
   <div ng-class="showMap ? 'mapView': 'mapViewDisabled'">
+
     <div class="poolContainer">
+      <div ng-show="showMap" class="svgMap" id="container">
+      </div>
       <div class="pool">
       <!-- Bootstrap Popover Modal -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -31,7 +34,7 @@
         </div>
         <!--End Bootstrap Popover Modal-->
 
-        <script src="http://datamaps.github.io/scripts/datamaps.world.min.js?v=1"></script>
+
       </div>
     </div>
   </div>
