@@ -7,15 +7,15 @@ angular.module('genome.self', [])
     /* The 'FILLS' block will determine the availability of colors, balls and lines
      * and what quantity and other attributes the d3 plot should contain */
   var fills = ['#E74C3C', '#3498DB', '#2ECC71'],
-      h = 800,
-      w = 150,
-      numX = 20,
-      numY = 10,
-      speed = 0.01,
-      torsion = 0.2,
-      x = d3.scale.linear().range([20, w - 20]),
-      y = d3.scale.linear().range([h, 20]),
-      z = d3.scale.linear().range([20, 5]);
+    h = 800,
+    w = 150,
+    numX = 20,
+    numY = 10,
+    speed = 0.01,
+    torsion = 0.2,
+    x = d3.scale.linear().range([20, w - 20]),
+    y = d3.scale.linear().range([h, 20]),
+    z = d3.scale.linear().range([20, 5]);
 
       /** 
         * This block will append the built svg elements to the "body" of the HTML
@@ -31,7 +31,6 @@ angular.module('genome.self', [])
       .attr("height", h)
       .attr("fill", "white")
 
-
   var container = svg.append("g");
 
   var counter = 0;
@@ -39,6 +38,7 @@ angular.module('genome.self', [])
   function generateData() {
     counter++;
     var data = d3.range(numX).map(function (d) {
+<<<<<<< aa50eb628ed02b7e6c431a0d92c7b8b2c59cfba7
         var t = d * torsion - speed * counter;
           return [{ x: Math.cos(t),
                     y: d,
@@ -129,6 +129,6 @@ angular.module('genome.self', [])
 
   return {
     getSnps: getSnps
-  }
+  };
 
 });
