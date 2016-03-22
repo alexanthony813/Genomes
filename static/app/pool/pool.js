@@ -6,6 +6,12 @@ angular.module('genome.pool', [])
   $scope.circles = [];
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
+
+  $scope.showMap = false;
+  $scope.filterRegions = function() {
+    $scope.showMap = !$scope.showMap;
+  }
+
   $scope.popModal = {
     name: '',
     similarity: '',
@@ -18,8 +24,8 @@ angular.module('genome.pool', [])
       bottom: 50,
       left: 50
   }
-  var width = 500 - margin.left - margin.right
-  var height = 500 - margin.top - margin.bottom;
+  var width = 1000 - margin.left - margin.right
+  var height = 1000 - margin.top - margin.bottom;
 
   var padding = 2;
   var radius = d3.scale.sqrt().range([0, 12]);

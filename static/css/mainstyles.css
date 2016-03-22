@@ -14,22 +14,10 @@
 .poolButtons {
   margin-left: 10%;
 }
-.popImage {
-  background-image: url('../assets/hipDNA.png')
-}
 
 .poolContainer {
-  display: flex;
   max-width: 100%;
-  height: 800px;
-  align-items: center;
-  justify-content: center;
-}
-
-.pool {
-  width: auto;
-  align-items: center;
-  justify-content: center;
+  height: 1000px;
 }
 
 .top-nav {
@@ -45,5 +33,14 @@
   display: flex;
   text-align: center;
   justify-content: center;
+
+.mapView {
+  background-image: url("../../static/assets/worldmap.png");
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 800px;
+  z-index: -1;
+  margin-left: -10%;
+  margin-right: -50%;
 }
 
