@@ -7,9 +7,10 @@
   <div class="view-selection">
   	<button ng-click="getRelatives()">Get Relatives</button>
   	<button ng-click="getSelf()">Get my own info</button>
+    
+    <div class="header-options" ng-controller="AuthController">
+      <button ng-click="signOut()">signout </button>
+    </div>
   </div>
 
-  <div class="header-options" ng-controller="AuthController">
-    <button ng-click="signOut()">signout </button>
-  </div>
 </div>
