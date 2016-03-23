@@ -44,8 +44,10 @@ def makeDemoUser():
     #Add demo user to DB if they don't already exist
     controller.create_demo_user()
     demo_id = 'demo_id'
+    demo_userName = 'Lilly Demo'
     response = make_response(render_template('index.html'))
     #set demo user's cookie
+    response.set_cookie('user_first_name', demo_userName)
     response.set_cookie('user_profile_id', demo_id)
     return response
 
