@@ -16,25 +16,50 @@ var app = angular.module('genome', [
   $routeProvider
     .when('/', {
       templateUrl: '/static/app/pool/pool.html',
-      controller: 'PoolController'
+      controller: 'PoolController',
+      authenticate: true
     })
     .when('/signin', {
       templateUrl: '/static/app/auth/signin.html',
-      controller: 'AuthController'
+      controller: 'AuthController',
+      authenticate: true
     })
     .when('/signout', {
       templateUrl: '/static/app/auth/signout.html',
-      controller: 'AuthController'
+      controller: 'AuthController',
+      authenticate: true
     })
     .when('/pool', {
       templateUrl: '/static/app/pool/pool.html',
-      controller: 'PoolController'
+      controller: 'PoolController',
+      authenticate: true
     })
     .when('/self', {
-      templateUrl : '/static/app/self/self.html',
-      controller : 'SelfController'
+      templateUrl: '/static/app/self/self.html',
+      controller: 'SelfController',
+      authenticate: true
     })
     .otherwise({
       redirectTo : '/'
     });
-});
+})
+.run(function($rootScope, $location){
+  var isAuth = function () {
+    console.log('cookie crisps',$cookies.get('user_profile_id'))
+    return $cookies.get('user_profile_id');
+  };
+  
+  $rootScope.$on('$routeChangeStart', function(evt, next, current){
+    if(next.$$route && next.$$route.authenticate && ! isAuth()){
+      $location.path('/signin')
+    }
+  })
+})
+
+
+
+
+
+
+
+
