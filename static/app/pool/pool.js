@@ -76,7 +76,6 @@ angular.module('genome.pool', [])
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  //var map = new Datamap({element: document.getElementById('projection_map')});
   //Create bubbles
   var createBubbles = function(circleData) {
     nodes = $scope.circles
