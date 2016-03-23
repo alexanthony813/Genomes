@@ -8,7 +8,7 @@ angular.module('genome.self', [])
   var fills = ['#E74C3C', '#3498DB', '#2ECC71'],
     h = 800,
     w = 150,
-    numX = 20,
+    numX = 2,
     numY = 10,
     speed = 0.01,
     torsion = 0.2,
@@ -82,10 +82,13 @@ angular.module('genome.self', [])
             .attr("r",  function (d) { return z(d.z); })
             .attr("fill-opacity", function (d) { return z(d.z) / 10;})
             .attr("fill", function (d, i) { return fills[index%3]; })
+            .attr("rsid", function(d){ return d.rsid; })
+            .attr("pair", function(d){ return d.pair; })
+            .attr("outcome", function(d){ return d.outcome; })
             .on("mouseover", function (d, i) {
               d3.select(this).transition()
               .attr('fill', function (d) {
-                // console.log('d: ', d, 'i: ', i);
+                console.log("rsid, pair, outcome", d.rsid, d.pair, d.outcome);
               })
               .attr('fill-opacity', function (d) {
                 return z(d.z) / 1;
@@ -100,8 +103,17 @@ angular.module('genome.self', [])
               .attr("y1", y(d[0].y));
           });
       }
-    setInterval(draw, 25);
+  
+      SelfFactory.getSnps($rootScope.user_profile_id).then(function (outcomes) {
+        for (var key in outcomes) {
+          $rootScope.outcomes.push(outcomes[key]);
+        }
+        numX = $rootScope.outcomes.length;
+        setInterval(draw, 25);
+      });
+  
 })
+
 .factory('SelfFactory', function ($http) {
 /** 
   * Used to retrieve information about SNPs pertaining to currently logged in user
@@ -117,6 +129,7 @@ angular.module('genome.self', [])
       console.error('An error occured retreiving your SNPs ', err);
     });
   };
+
   return {
     getSnps: getSnps
   };

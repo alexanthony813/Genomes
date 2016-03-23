@@ -2,8 +2,12 @@
 <div class="selfPageContainer">
 	<div class="snpsContainer">
 		<h1> SNPS INFO GOES HERE </h1>
-    <div> anything??? {{ outcomelist }}</div>
-    <div ng-repeat=" outcome in outcomelist.outcome ">ello {{ outcome }}</div>
+    <div ng-repeat=" outcome in outcomelist"> 
+      <div>At location <strong>{{outcome.rsid}}</strong>
+      You have "{{ outcome.pair }}." <br>
+      This means {{ outcome.outcome }}
+      </div>
+    </div>
   </div>
 	<div class="dnahelixcontainer">
 		<h1> DNA HELIX GOES HERE </h1>

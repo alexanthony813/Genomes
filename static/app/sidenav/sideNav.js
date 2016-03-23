@@ -6,7 +6,8 @@ angular.module('genome.sideNav', [])
       $scope.expand = false;
       $scope.target;
 
-      $scope.outcomes = {};
+      // $scope.outcomes = {};
+      $rootScope.outcomes = [];
 
       $scope.toggleNavList = function (ev) {
         if (!(ev.type === 'mouseleave' && $scope.lastEventType === 'click')) {
