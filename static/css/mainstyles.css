@@ -48,7 +48,6 @@
 }
 
 .view-selection {
-  padding: 20px 0px 0px 30px;
   text-align: center;
 }
 
@@ -76,7 +75,9 @@
 }
 
 .header-options {
+  padding-top: 10px;
   float: right;
+
 }
 
 .modal-body {

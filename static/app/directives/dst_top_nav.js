@@ -14,11 +14,18 @@ angular.module('genome.directive', [])
          $scope.lastEventType = ev.type;
       };
 
+      $scope.onpoolpage = true;
+      $scope.onselfpage = false;
+
       $scope.getRelatives = function () {
+        $scope.onpoolpage = true;
+        $scope.onselfpage = false;
         $location.path('/pool');
       };
 
       $scope.getSelf = function () {
+        $scope.onselfpage = true;
+        $scope.onpoolpage = false;
         $location.path('/self');
       };
     },
