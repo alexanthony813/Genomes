@@ -26,8 +26,8 @@ except:
     cursor.execute("CREATE DATABASE genome")
     cursor.close()
     connection.close()
-    
-        
+
+
 
 # Join table between users and relatives, see User model relatives property
 user_relatives = Table('user_relatives',
@@ -98,9 +98,11 @@ class Relative(Base):
     maternal_side = Column(Boolean())
     paternal_side = Column(Boolean())
     picture_url = Column(String(255), nullable=True)
+    birth_year = Column(Integer, nullable=True)
+    relationship = Column(String(255), nullable=True)
 
     # add userId to init
-    def __init__(self, email, first_name, last_name, sex, residence, similarity, maternal_side, paternal_side, picture_url):
+    def __init__(self, email, first_name, last_name, sex, residence, similarity, maternal_side, paternal_side, picture_url, birth_year, relationship):
         self.email = email
         self.first_name = first_name
         self.last_name = last_name
@@ -110,6 +112,8 @@ class Relative(Base):
         self.maternal_side = maternal_side
         self.paternal_side = paternal_side
         self.picture_url = picture_url
+        self.birth_year = birth_year
+        self.relationship = relationship
 
     def serialize(self):
         return {
@@ -122,7 +126,9 @@ class Relative(Base):
             'similarity': self.similarity,
             'maternal_side': self.maternal_side,
             'paternal_side': self.paternal_side,
-            'picture_url': self.picture_url
+            'picture_url': self.picture_url,
+            'birth_year': self.birth_year,
+            'relationship': self.relationship
         }
 
 

@@ -16,7 +16,9 @@ angular.module('genome.pool', [])
   $scope.popModal = {
     name: '',
     similarity: '',
-    image: '../../static/assets/hipDNA.png'
+    image: '',
+    relationship: '',
+    age: 0
   };
 
   var margin = {
@@ -34,8 +36,14 @@ angular.module('genome.pool', [])
   //pop up message displaying relative data when user clicks on a bubble
   var showRelative = function(bubble) {
     $scope.popModal.name = bubble.relative.first_name + ' ' + bubble.relative.last_name;
-    $scope.popModal.similarity = bubble.relative.first_name + ' shares ' + bubble.relative.similarity + '% of your DNA.'
-    $scope.popModal.image = '../../assets/hipDNA.png'
+    $scope.popModal.similarity = bubble.relative.first_name + ' shares ' + (bubble.relative.similarity*100).toFixed(2) + '% of your DNA.'
+    $scope.popModal.relationship = bubble.relative.relationship || null;
+    if(bubble.relative.birth_year) {
+      $scope.popModal.age = 'Age: ' + (new Date().getFullYear() - bubble.relative.birth_year);
+    } else {
+      $scope.popModal.age = null;
+    }
+    $scope.popModal.image = '';
   }
 
   //Grab the pool as a canvas for our bubbles
@@ -155,6 +163,7 @@ angular.module('genome.pool', [])
       //Refactor? potentially redundant addition of relatives to $scope and $rootScope.
       $scope.relatives = relatives.data.relativeList;
       //Add relatives to rootScope to allow access within other controllers
+      console.log('relatives: ', $scope.relatives);
       $rootScope.rels = relatives.data.relativeList;
       initialize();
     }, function(err) {

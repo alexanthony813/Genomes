@@ -19,7 +19,9 @@ def create_demo_user():
         'residence': "South Carolina",
         'similarity': 0.25,
         'maternal_side': False,
-        'paternal_side': True
+        'paternal_side': True,
+        'birth_year': 1977,
+        'relationship': "Brother"
         },
         {
         'first_name': "Ruarc",
@@ -28,13 +30,15 @@ def create_demo_user():
         'residence': "North Carolina",
         'similarity': 0.12,
         'maternal_side': False,
-        'paternal_side': True
+        'paternal_side': True,
+        'birth_year': 1944,
+        'relationship': "3rd Cousin"
         }]
         #Create demo user and all demo user's associated relatives
         demo_user = models.User('demo_id', None, 'Lilly', 'Demo', None, None, None, None, genome_data)
         for relative in relatives:
             #Create a new relative with the information being passed from relatives_response
-            new_relative = models.Relative(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], None)
+            new_relative = models.Relative(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], None, relative['birth_year'], relative['relationship'])
             # Appending each relative to the demo user's relative property
             demo_user.relatives.append(new_relative)
             models.db_session.add(new_relative)
@@ -57,7 +61,7 @@ def createNewUser(name_response, relatives_response, genotype_response, user_res
     #iterate through list of relatives
     for relative in relatives_response.json()['relatives']:
         #Create a new relative with the information being passed from relatives_response
-        new_relative = models.Relative(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], None)
+        new_relative = models.Relative(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], None, relative['birth_year'], relative['relationship'])
 
         # Appending each relative to the user's relative property
         new_user.relatives.append(new_relative)
