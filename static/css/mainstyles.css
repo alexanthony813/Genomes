@@ -3,7 +3,7 @@
   height: 110px;
   display: block;
   text-align: center;
-  margin: 0 auto;
+  margin-right: 50%;
 }
 
 #snp-tip {
@@ -75,6 +75,10 @@
   background-color: #f1c40f;
 }
 
+.header-options {
+  float: right;
+}
+
 .modal-body {
   display: flex;
   text-align: center;
@@ -84,12 +88,12 @@
 .svgMap{
   width: 100%;
   height: 100%;
-  margin-right: -100px;
-  float: left;
+  float: center;
 }
 
-svg{
+svg {
   position: absolute;
+  margin-left: 10%;
 }
 
 .pool{

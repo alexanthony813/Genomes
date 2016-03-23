@@ -1,21 +1,13 @@
 
 <div class="poolView">
-    <h1>Relatives Pool</h1>
-  <div class="poolButtons">
-    <button ng-click="filterRegions()">Filter By Region</button>
-    <div class="testingAuth" ng-controller="AuthController">
-      <button ng-click="signOut()">signout </button>
-    </div>
-  </div>
-  <div ng-class="showMap ? 'mapView': 'mapViewDisabled'">
 
     <div class="poolContainer">
-      <div ng-show="showMap" class="svgMap" id="container">
+   <div ng-class="showMap ? 'mapView': 'mapViewDisabled'">
+      <div ng-show="showMap === true;" class="svgMap" id="container">
+        <datamap map="mapObject">
+        </datamap>
       </div>
-      <datamap
-  map="mapObject"
-  >
-</datamap>
+    </div>
 <div class="pool">
 <!-- Bootstrap Popover Modal -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

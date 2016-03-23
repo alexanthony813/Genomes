@@ -12,6 +12,9 @@ angular.module('genome.sideNav', [])
            }
          $scope.lastEventType = ev.type;
       };
+      $scope.filterRegions = function () {
+        $rootScope.filterRegions();
+      };
     },
     templateUrl: '../static/app/sidenav/sideNav.html'
   };
