@@ -3,6 +3,7 @@ angular.module('genome.self', [])
 
   $rootScope.outcomes = $rootScope.outcomes || [];
   $scope.outcomeList = $rootScope.outcomes;
+  $scope.current = {};
 
     /* The 'FILLS' block will determine the availability of colors, balls and lines
      * and what quantity and other attributes the d3 plot should contain */
@@ -23,8 +24,8 @@ angular.module('genome.self', [])
       .append("svg")
       .attr("width", w)
       .attr("height", h);
-  /** Appends the inner SVG to a larger SVG container **/
 
+  /** Appends the inner SVG to a larger SVG container **/
   svg.append("DNAHelix")
       .attr("width", w)
       .attr("height", h)
@@ -34,15 +35,22 @@ angular.module('genome.self', [])
 
   function generateData() {
     counter++;
-    var data = d3.range(numX).map(function (d) {
+    // Creating a range of numX (set to outcomes length) and then map
+    var data = d3.range(numX).map(function (d, i) {
         var t = d * torsion - speed * counter;
           return [{ x: Math.cos(t),
                     y: d,
-                    z: Math.sin(t)
+                    z: Math.sin(t),
+                    rsid: $rootScope.outcomes[d].rsid,
+                    pair: $rootScope.outcomes[d].pair,
+                    outcome: $rootScope.outcomes[d].outcome
                   },
                   { x: Math.cos(t - Math.PI),
                     y: d,
-                    z: Math.sin(t - Math.PI)
+                    z: Math.sin(t - Math.PI),
+                    rsid: $rootScope.outcomes[d].rsid,
+                    pair: $rootScope.outcomes[d].pair,
+                    outcome: $rootScope.outcomes[d].outcome
                   }];
         });
       var flat = _.flatten(data);
@@ -87,14 +95,8 @@ angular.module('genome.self', [])
             .attr("pair", function(d){ return d.pair; })
             .attr("outcome", function(d){ return d.outcome; })
             .on("mouseover", function (d, i) {
-              d3.select(this).transition()
-              .attr('fill', function (d) {
-                console.log("rsid, pair, outcome", d.rsid, d.pair, d.outcome);
-              })
-              .attr('fill-opacity', function (d) {
-                return z(d.z) / 1;
-              })
-              .attr('stroke-opacity', 0.5);
+              // Using $scope.$apply to force angular to rerender once the scope has been updated with the current snp
+              $scope.$apply($scope.current = { rsid: d.rsid, pair: d.pair, outcome: d.outcome });
             });
           d3.select(this)
               .select('line')
