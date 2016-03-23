@@ -31,6 +31,7 @@ angular.module('genome.self', [])
       .attr("width", w)
       .attr("height", h)
       .attr("fill", "white");
+
   var container = svg.append("g");
   var counter = 0;
 
@@ -60,6 +61,7 @@ angular.module('genome.self', [])
       z.domain(d3.extent(flat, function(d){ return d.z; }));
       return data;
   }
+
   function draw () {
     var cont = container.selectAll("g").data(generateData());
     cont.exit().remove();
@@ -134,7 +136,6 @@ angular.module('genome.self', [])
       console.error('An error occured retreiving your SNPs ', err);
     });
   };
-
   return {
     getSnps: getSnps
   };

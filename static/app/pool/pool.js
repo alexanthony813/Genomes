@@ -73,8 +73,15 @@ angular.module('genome.pool', [])
   var svg = d3.select('.pool').append("svg")
       .attr("width", boardWidth + margin.left + margin.right)
       .attr("height", boardHeight + margin.top + margin.bottom)
+      .attr('id', 'projection_map')
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  
+  //create map
+  var globe =  new Datamap({
+        scope: 'world',
+        element: document.getElementById('projection_map'),
+      });
 
   //Create bubbles
   var createBubbles = function(circleData) {
