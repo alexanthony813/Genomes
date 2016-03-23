@@ -85,15 +85,18 @@ def getSnps():
 
     user_data = models.db_session.query(models.User).filter(models.User.profile_id == current_user_id).first().serialize()
     for user_datum in user_data:
+        print "userdatum in the userdata loop", user_datum
         if user_datum[:2:].lower()=='rs':
             user_snps[user_datum] = user_data[user_datum]
+
+    print "usersnps[userdatum]", user_snps
 
     user_outcomes = []
     for user_snp in user_snps:
         # loop through entire snp table, if any of snp base pairs match up to the base pair in user snps, put in an object with rsid and outcome
         current_snp = models.db_session.query(models.Snp).filter(models.Snp.rs_id == user_snp and models.Snp.dnaPair == user_snps[user_snp]).first()
         if current_snp is not None:
-            user_outcomes.append({user_snp : current_snp.serialize()['outcome']});
+            user_outcomes.append({"rsid": user_snp, "pair": user_snps[user_snp], "outcome": current_snp.serialize()['outcome']});
 
     return jsonify({'outcomes': user_outcomes})
 

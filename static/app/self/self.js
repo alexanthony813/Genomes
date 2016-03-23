@@ -30,6 +30,7 @@ angular.module('genome.self', [])
       .attr("fill", "white");
   var container = svg.append("g");
   var counter = 0;
+
   function generateData() {
     counter++;
     var data = d3.range(numX).map(function (d) {
@@ -84,7 +85,7 @@ angular.module('genome.self', [])
             .on("mouseover", function (d, i) {
               d3.select(this).transition()
               .attr('fill', function (d) {
-                console.log('d: ', d, 'i: ', i);
+                // console.log('d: ', d, 'i: ', i);
               })
               .attr('fill-opacity', function (d) {
                 return z(d.z) / 1;

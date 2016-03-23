@@ -1,6 +1,18 @@
-<div class="snps"> {{ outcomelist }} </div>
+<div class="snps"> </div>
 <div class="selfPageContainer">
+	<div class="snpsContainer">
+		<h1> SNPS INFO GOES HERE </h1>
+    <div> anything??? {{ outcomelist }}</div>
+    <div ng-repeat=" outcome in outcomelist.outcome ">ello {{ outcome }}</div>
+  </div>
 	<div class="dnahelixcontainer">
+		<h1> DNA HELIX GOES HERE </h1>
+	</div>
+	<div class="snp-information">
+    <div id="snptip" class="hidden">
+        <p><strong>Important RSID Number</strong></p>
+        <p><span id="value">100</span>%</p>
+    </div>
 	</div>
 </div>
 
