@@ -12,6 +12,30 @@ angular.module('genome.pool', [])
     $scope.showMap = !$scope.showMap;
   };
 
+
+  //ng data map
+  $scope.mapObject = {
+    scope: 'world',
+    options: {
+      width: 1110,
+      legendHeight: 60 // optionally set the padding for the legend
+    },
+    geographyConfig: {
+      highlighBorderColor: '#EAA9A8',
+      highlighBorderWidth: 2
+    },
+    fills: {
+      'HIGH': '#CC4731',
+      'MEDIUM': '#306596',
+      'LOW': '#667FAF',
+      'defaultFill': '#DDDDDD'
+    },
+  }
+
+
+
+  //end ng data map
+
   $scope.popModal = {
     name: '',
     similarity: '',
@@ -49,11 +73,9 @@ angular.module('genome.pool', [])
   var svg = d3.select('.pool').append("svg")
       .attr("width", boardWidth + margin.left + margin.right)
       .attr("height", boardHeight + margin.top + margin.bottom)
-      .attr("id", "projection_map")
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  var map = new Datamap({element: document.getElementById('projection_map')});
   //Create bubbles
   var createBubbles = function(circleData) {
     nodes = $scope.circles;
