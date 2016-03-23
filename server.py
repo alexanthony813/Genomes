@@ -80,9 +80,10 @@ def getRelatives():
 @app.route('/api/getsnps', methods=['POST', 'GET'])
 def getSnps():
     current_user_id = request.data
+    print '>>>>>>', request.data
     user_snps = {}
 
-    user_data = models.db_session.query(models.User).filter(models.User.profile_id==current_user_id).first().serialize()
+    user_data = models.db_session.query(models.User).filter(models.User.profile_id == current_user_id).first().serialize()
     for user_datum in user_data:
         if user_datum[:2:].lower()=='rs':
             user_snps[user_datum] = user_data[user_datum]

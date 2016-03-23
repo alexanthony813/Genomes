@@ -1,4 +1,4 @@
-angular.module('genome.auth', [])
+angular.module('genome.auth', ['ngCookies'])
 
 .controller('AuthController', function($scope, $rootScope, $cookies, $location, $timeout, $window, AuthFactory) {
   $scope.user = {};
@@ -26,8 +26,8 @@ angular.module('genome.auth', [])
   };
 
   var signOut = function() {
-    delete $cookies['user_profile_id'];
-    delete $cookies['user_first_name'];
+    $cookies.remove('user_profile_id');
+    $cookies.remove('user_first_name');
   };
 
   return {
