@@ -21,7 +21,7 @@ var app = angular.module('genome', [
     })
     .when('/signin', {
       templateUrl: '/',
-      controller: 'AuthController',
+      controller: 'AuthController'
     })
     .when('/signout', {
       templateUrl: '/static/app/auth/signout.html',
@@ -53,11 +53,3 @@ var app = angular.module('genome', [
     }
   });
 });
-
-
-
-
-
-
-
-
