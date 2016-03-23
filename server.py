@@ -74,15 +74,8 @@ def getRelatives():
         #Grab only relatives who match the relatives in the user_relatives_ids storage
         if relative.serialize()['id'] in user_relatives_ids:
             finalRelatives.append(relative.serialize())
-<<<<<<< bce313ea8273ed41f26bf12a8694228124951fbb
 
-    return jsonify({'relativeList': finalRelatives})
-=======
-    print 'FINAL RELATIVES==========>>>>>>>>>>>>>>>>', finalRelatives
     return jsonify({'relativeList' : finalRelatives})
-
-
->>>>>>> Remove print access token command
 
 @app.route('/api/getsnps', methods=['POST', 'GET'])
 def getSnps():
