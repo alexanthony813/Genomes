@@ -16,7 +16,7 @@ angular.module('genome.self', [])
     speed = 0.01,
     torsion = 0.2,
     x = d3.scale.linear().range([20, w - 20]),
-    y = d3.scale.linear().range([h, 20]),
+    y = d3.scale.linear().range([h-100, 20]),
     z = d3.scale.linear().range([20, 5]);
       /**
         * This block will append the built svg elements to the "body" of the HTML
