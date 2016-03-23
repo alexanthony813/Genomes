@@ -3,6 +3,7 @@ angular.module('genome.self', [])
 
   $rootScope.outcomes = $rootScope.outcomes || [];
   $scope.outcomeList = $rootScope.outcomes;
+  $scope.current = {};
 
     /* The 'FILLS' block will determine the availability of colors, balls and lines
      * and what quantity and other attributes the d3 plot should contain */
@@ -23,8 +24,8 @@ angular.module('genome.self', [])
       .append("svg")
       .attr("width", w)
       .attr("height", h);
-  /** Appends the inner SVG to a larger SVG container **/
 
+  /** Appends the inner SVG to a larger SVG container **/
   svg.append("DNAHelix")
       .attr("width", w)
       .attr("height", h)
@@ -94,7 +95,8 @@ angular.module('genome.self', [])
             .attr("pair", function(d){ return d.pair; })
             .attr("outcome", function(d){ return d.outcome; })
             .on("mouseover", function (d, i) {
-              console.log("rsid: ", d.rsid, "pair: ",d.pair, "outcome: ",d.outcome);
+              // Using $scope.$apply to force angular to rerender once the scope has been updated with the current snp
+              $scope.$apply($scope.current = { rsid: d.rsid, pair: d.pair, outcome: d.outcome });
             });
           d3.select(this)
               .select('line')

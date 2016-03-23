@@ -1,22 +1,16 @@
 <div class="snps"> </div>
 <div class="selfPageContainer">
-	<div class="snpsContainer">
-		<h1> SNPS INFO GOES HERE </h1>
-    <div ng-repeat=" outcome in outcomeList">
-      <div>At location <strong>{{outcome.rsid}}</strong>
-      You have "{{ outcome.pair }}." <br>
-      This means {{ outcome.outcome }}
-      </div>
-    </div>
-  </div>
+
 	<div class="dnahelixcontainer">
 		<h1> DNA HELIX GOES HERE </h1>
 	</div>
-	<div class="snp-information">
-    <div id="snptip" class="hidden">
-        <p><strong>Important RSID Number</strong></p>
-        <p><span id="value">100</span>%</p>
+
+	<div ng-show="current.rsid" class="snp-information">
+    <div>At location <strong>{{current.rsid}}</strong>
+    You have "{{ current.pair }}." <br>
+    This means {{ current.outcome }}
     </div>
 	</div>
+
 </div>
 
