@@ -19,6 +19,10 @@ var app = angular.module('genome', [
       controller: 'PoolController',
       authenticate: true
     })
+    .when('/signin', {
+      templateUrl: '/',
+      controller: 'AuthController',
+    })
     .when('/signout', {
       templateUrl: '/static/app/auth/signout.html',
       controller: 'AuthController',
@@ -35,7 +39,7 @@ var app = angular.module('genome', [
       authenticate: true
     })
     .otherwise({
-      redirectTo : '/'
+      redirectTo : '/signin'
     });
 })
 .run(function($rootScope, $location, $cookies){
@@ -45,7 +49,15 @@ var app = angular.module('genome', [
   
   $rootScope.$on('$routeChangeStart', function(evt, next, current){
     if(next.$$route && next.$$route.authenticate && ! isAuth()){
-      $location.path('/');
+      $location.path('/signin');
     }
   });
 });
+
+
+
+
+
+
+
+
