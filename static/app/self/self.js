@@ -1,8 +1,9 @@
 angular.module('genome.self', [])
 .controller('SelfController', function ($scope, $rootScope, $cookies, $location, SelfFactory, d3Service) {
 
-  $rootScope.outcomes = $rootScope.outcomes || [];
-  $scope.outcomeList = $rootScope.outcomes;
+  
+  $scope.outcomes = $scope.outcomes || [];
+  
   $scope.current = {};
 
     /* The 'FILLS' block will determine the availability of colors, balls and lines
@@ -41,16 +42,16 @@ angular.module('genome.self', [])
           return [{ x: Math.cos(t),
                     y: d,
                     z: Math.sin(t),
-                    rsid: $rootScope.outcomes[d].rsid,
-                    pair: $rootScope.outcomes[d].pair,
-                    outcome: $rootScope.outcomes[d].outcome
+                    rsid: $scope.outcomes[d].rsid,
+                    pair: $scope.outcomes[d].pair,
+                    outcome: $scope.outcomes[d].outcome
                   },
                   { x: Math.cos(t - Math.PI),
                     y: d,
                     z: Math.sin(t - Math.PI),
-                    rsid: $rootScope.outcomes[d].rsid,
-                    pair: $rootScope.outcomes[d].pair,
-                    outcome: $rootScope.outcomes[d].outcome
+                    rsid: $scope.outcomes[d].rsid,
+                    pair: $scope.outcomes[d].pair,
+                    outcome: $scope.outcomes[d].outcome
                   }];
         });
       var flat = _.flatten(data);
@@ -108,10 +109,11 @@ angular.module('genome.self', [])
       }
 
       SelfFactory.getSnps($cookies.user_profile_id).then(function (outcomes) {
+        
         for (var key in outcomes) {
-          $rootScope.outcomes.push(outcomes[key]);
+          $scope.outcomes.push(outcomes[key]);
         }
-        numX = $rootScope.outcomes.length;
+        numX = $scope.outcomes.length;
         setInterval(draw, 25);
       });
 
