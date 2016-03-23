@@ -26,8 +26,8 @@ angular.module('genome.auth', [])
   };
 
   var signOut = function() {
-    $cookies.user_profile_id = "";
-    $cookies.user_first_name = "";
+    delete $cookies['user_profile_id'];
+    delete $cookies['user_first_name'];
   };
 
   return {
