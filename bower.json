@@ -32,5 +32,8 @@
     "datamaps": "^0.5.1",
     "bootstrap": "^3.3.6",
     "angular-datamaps": "^0.1.2"
+  },
+  "resolutions": {
+    "datamaps": "^0.5.1"
   }
 }
