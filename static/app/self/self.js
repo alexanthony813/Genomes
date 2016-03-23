@@ -4,6 +4,7 @@ angular.module('genome.self', [])
   
   $scope.outcomelist = $rootScope.outcomes;
 
+
     /* The 'FILLS' block will determine the availability of colors, balls and lines
      * and what quantity and other attributes the d3 plot should contain */
   var fills = ['#E74C3C', '#3498DB', '#2ECC71'],
@@ -86,7 +87,7 @@ angular.module('genome.self', [])
             .attr("cy", function (d) { return y(d.y); })
             .attr("r",  function (d) { return z(d.z); })
             .attr("fill-opacity", function (d) { return z(d.z) / 10;})
-            .attr("fill", function (d, i) { return fills[index%3]; })
+            .attr("fill", function (d, i) { return fills[index % 3]; })
             .on("mouseover", function (d, i) {
               d3.select(this).transition()
               .attr('fill', function (d) {
