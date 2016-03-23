@@ -24,7 +24,7 @@ CLIENT_ID = app.config.get('CLIENT_ID')
 CLIENT_SECRET = app.config.get('CLIENT_SECRET')
 REDIRECT_URI = app.config.get('REDIRECT_URI')
 SNPS = ['rs12913832', 'rs1799971', 'rs1800955', 'rs806380']
-DEFAULT_SCOPE = 'names basic email ancestry relatives %s' % (' '.join(SNPS))
+DEFAULT_SCOPE = 'names basic email ancestry relatives genomes %s' % (' '.join(SNPS))
 BASE_API_URL = 'https://api.23andme.com/'
 
 
@@ -39,34 +39,43 @@ def getUser():
     response.set_cookie('user_profile_id', request.cookies.get('user_profile_id'))
     return response
 
+@app.route('/demo/')
+def makeDemoUser():
+    #Add demo user to DB if they don't already exist
+    controller.create_demo_user()
+    demo_id = 'demo_id'
+    response = make_response(render_template('index.html'))
+    #set demo user's cookie
+    response.set_cookie('user_profile_id', demo_id)
+    return response
 
 #Refactor this route to take a userProfileID after the trailing slash with some syntax like: '<%s UserID >''
 #i.e. the equivalent of '/:userId' with node/express servers
 @app.route('/api/relatives/')
 #return all the relatives. Refactor to only return the relatives specific to the current User
 def getRelatives():
-    #filter this by userID
     user_profile_id = request.cookies.get('user_profile_id')
-    #add filter by profile to take out irrelevant user_relatives 
+    #Retrieve all relatives from database, not filtered by user
+    #To Do: Filter this by user
     user_relatives = models.db_session.query(models.user_relatives).all()
     user_relatives_ids = []
-
+    #Iterate through all relatives
     for user_relative in user_relatives:
         user = list(user_relative)
-        _id = int(user[1])
-        user_relatives_ids.append(_id)
-
+        #For each relative, grab only those that match on the current user_profile_id
+        if user_profile_id == str(user[0]):
+            user_relatives_ids.append(int(user[1]))
+    #Retrieve all relatives from DB
+    #To Do: is this the same information in the user_relatives variable above?
     relatives = models.db_session.query(models.Relative).all()
     finalRelatives = []
-
+    #Iterate through all relatives
     for relative in relatives:
+        #Grab only relatives who match the relatives in the user_relatives_ids storage
         if relative.serialize()['id'] in user_relatives_ids:
             finalRelatives.append(relative.serialize())
 
-    # The return value requires dictionary rather than list format
-    return jsonify({'relativeList': finalRelatives})
-    #  look into database, query for user information then return response with all of user's data
-
+    return jsonify({'relativeList' : finalRelatives})
 
 @app.route('/api/getsnps', methods=['POST', 'GET'])
 def getSnps():
@@ -81,7 +90,7 @@ def getSnps():
     user_outcomes = []
     for user_snp in user_snps:
         # loop through entire snp table, if any of snp base pairs match up to the base pair in user snps, put in an object with rsid and outcome
-        current_snp = models.db_session.query(models.Snp).filter(models.Snp.rs_id == user_snp and models.Snp.dnaPair == user_snps[user_snp]).first()  
+        current_snp = models.db_session.query(models.Snp).filter(models.Snp.rs_id == user_snp and models.Snp.dnaPair == user_snps[user_snp]).first()
         if current_snp is not None:
             user_outcomes.append({user_snp : current_snp.serialize()['outcome']});
 
@@ -122,7 +131,7 @@ def receive_code():
         name_response = requests.get("%s%s" % (BASE_API_URL, "1/names/%s" % user_profile_id),
                                          headers=headers,
                                          verify=False)
-        
+
         #if both API calls are successful, process user data
         if user_response.status_code == 200 and genotype_response.status_code == 200:
             user_first_name = name_response.json()['first_name']

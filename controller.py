@@ -1,5 +1,47 @@
 import models
 
+#Create a demo user in the db for users without a 23andMe account
+def create_demo_user():
+    #check to see if demo user already exists in the db
+    if models.db_session.query(models.User).filter(models.User.profile_id=='demo_id').first() is None:
+        #hard code the demo user's genome data
+        genome_data = {
+        'rs12913832': "GG",
+        'rs1799971': 'AA',
+        'rs1800955': 'CT',
+        'rs806380': 'AG'
+        }
+        #hard code the demo user's relatives
+        relatives = [{
+        'first_name': "Aodh",
+        'last_name': "O'Donnell",
+        'sex': "Male",
+        'residence': "South Carolina",
+        'similarity': 0.25,
+        'maternal_side': False,
+        'paternal_side': True
+        },
+        {
+        'first_name': "Ruarc",
+        'last_name': "O'Donnell",
+        'sex': "Male",
+        'residence': "North Carolina",
+        'similarity': 0.12,
+        'maternal_side': False,
+        'paternal_side': True
+        }]
+        #Create demo user and all demo user's associated relatives
+        demo_user = models.User('demo_id', None, 'Lilly', 'Demo', None, None, None, None, genome_data)
+        for relative in relatives:
+            #Create a new relative with the information being passed from relatives_response
+            new_relative = models.Relative(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], None)
+            # Appending each relative to the demo user's relative property
+            demo_user.relatives.append(new_relative)
+            models.db_session.add(new_relative)
+        # Add the demo user to the database and commit it
+        models.db_session.add(demo_user)
+        models.db_session.commit()
+
 
 #CreateNewUser will be called in server.py when a user logging in has not been found in database
 def createNewUser(name_response, relatives_response, genotype_response, user_response):
