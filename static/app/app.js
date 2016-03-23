@@ -1,8 +1,9 @@
 var app = angular.module('genome', [
-  'genome.pool', 
+  'datamaps',
+  'genome.pool',
   'genome.self',
   'genome.relatives',
-  'ngRoute', 
+  'ngRoute',
   'ngCookies',
   'genome.d3Service',
   'genome.sideNav',
