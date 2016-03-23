@@ -8,9 +8,9 @@ angular.module('genome.pool', [])
   var boardWidth = $window.innerWidth;
 
   $scope.showMap = false;
-  $scope.filterRegions = function() {
+  $rootScope.filterRegions = function() {
     $scope.showMap = !$scope.showMap;
-  };
+  }
 
 
   //ng data map
@@ -49,8 +49,8 @@ angular.module('genome.pool', [])
       right: 50,
       bottom: 50,
       left: 50
-  };
-  var width = 1000 - margin.left - margin.right;
+  }
+  var width = 1000 - margin.left - margin.right
   var height = 1000 - margin.top - margin.bottom;
 
   var padding = 2;
@@ -59,7 +59,7 @@ angular.module('genome.pool', [])
   //pop up message displaying relative data when user clicks on a bubble
   var showRelative = function(bubble) {
     $scope.popModal.name = bubble.relative.first_name + ' ' + bubble.relative.last_name;
-    $scope.popModal.similarity = bubble.relative.first_name + ' shares ' + (bubble.relative.similarity*100).toFixed(2) + '% of your DNA.';
+    $scope.popModal.similarity = bubble.relative.first_name + ' shares ' + (bubble.relative.similarity*100).toFixed(2) + '% of your DNA.'
     $scope.popModal.relationship = bubble.relative.relationship || null;
     if(bubble.relative.birth_year) {
       $scope.popModal.age = 'Age: ' + (new Date().getFullYear() - bubble.relative.birth_year);
@@ -67,7 +67,7 @@ angular.module('genome.pool', [])
       $scope.popModal.age = null;
     }
     $scope.popModal.image = '';
-  };
+  }
 
   //Grab the pool as a canvas for our bubbles
   var svg = d3.select('.pool').append("svg")
@@ -78,7 +78,7 @@ angular.module('genome.pool', [])
 
   //Create bubbles
   var createBubbles = function(circleData) {
-    nodes = $scope.circles;
+    nodes = $scope.circles
     //Add d3 force effect to layout
     var force = d3.layout.force()
         .nodes(nodes)
@@ -92,10 +92,10 @@ angular.module('genome.pool', [])
       .data(nodes)
       .enter().append("circle")
       .on('mouseover', function(){
-        d3.select(this).transition().attr('r', function(d) { return d.radius * 2; });
+        d3.select(this).transition().attr('r', function(d) {return d.radius * 2;})
       })
       .on('mouseout', function(){
-        d3.select(this).transition().attr('r', function(d) { return d.radius; });
+        d3.select(this).transition().attr('r', function(d){return d.radius})
       })
       .on('click', function(bubble) {
         $scope.$apply(
@@ -179,7 +179,7 @@ angular.module('genome.pool', [])
   };
 
  //Grab relatives from the database, then initialize bubbles
-  $scope.getRelatives = function() {
+  $scope.getRelatives = function (){
     Relatives.getRelatives()
     //Can refactor to return the promise values within the relatives factory if so desired
     .then(function(relatives) {
@@ -190,10 +190,9 @@ angular.module('genome.pool', [])
       $rootScope.rels = relatives.data.relativeList;
       initialize();
     }, function(err) {
-      console.error('Error retrieving relatives: ', err);
-    });
-  };
+      console.error('Error retrieving relatives: ', err)
+    })
+  }
   //Initialize the page with a call to getRelatives
   $scope.getRelatives();
 });
-
