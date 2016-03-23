@@ -1,7 +1,7 @@
 angular.module('genome.self', [])
 .controller('SelfController', function ($scope, $rootScope, $cookies, $location, SelfFactory, d3Service) {
   
-  $scope.outcomelist = $rootScope.outcomes;
+  $rootScope.outcomes = $rootScope.outcomes || [];
 
     /* The 'FILLS' block will determine the availability of colors, balls and lines
      * and what quantity and other attributes the d3 plot should contain */
@@ -104,7 +104,7 @@ angular.module('genome.self', [])
           });
       }
   
-      SelfFactory.getSnps($rootScope.user_profile_id).then(function (outcomes) {
+      SelfFactory.getSnps($cookies.user_profile_id).then(function (outcomes) {
         for (var key in outcomes) {
           $rootScope.outcomes.push(outcomes[key]);
         }
