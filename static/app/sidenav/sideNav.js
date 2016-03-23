@@ -12,17 +12,6 @@ angular.module('genome.sideNav', [])
            }
          $scope.lastEventType = ev.type;
       };
-
-      $scope.getRelatives = function () {
-        $location.path('/pool');
-      };
-
-      $scope.getSelf = function () {
-        SelfFactory.getSnps($rootScope.user_profile_id).then(function (outcomes) {
-          $rootScope.outcomes = outcomes;
-        });
-        $location.path('/self');
-      };
     },
     templateUrl: '../static/app/sidenav/sideNav.html'
   };

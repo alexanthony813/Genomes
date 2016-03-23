@@ -9,9 +9,16 @@
   </head>
 
   <body>
-    <dst-top-nav></dst-top-nav>
-    <div ng-view></div>
-    <dst-side-nav></dst-side-nav>
+  <div class="wholepage">
+    <div class="TopNavContainer">
+      <dst-top-nav></dst-top-nav>
+    <div class="BodyContainer">
+      <div ng-view></div>
+    </div>
+    <div class="sideNavContainer">
+      <dst-side-nav></dst-side-nav>
+    </div>
+  </div>
 
     <!-- map scripts -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
