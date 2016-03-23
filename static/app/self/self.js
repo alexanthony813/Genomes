@@ -34,15 +34,22 @@ angular.module('genome.self', [])
 
   function generateData() {
     counter++;
-    var data = d3.range(numX).map(function (d) {
+    // Creating a range of numX (set to outcomes length) and then map
+    var data = d3.range(numX).map(function (d, i) {
         var t = d * torsion - speed * counter;
           return [{ x: Math.cos(t),
                     y: d,
-                    z: Math.sin(t)
+                    z: Math.sin(t),
+                    rsid: $rootScope.outcomes[d].rsid,
+                    pair: $rootScope.outcomes[d].pair,
+                    outcome: $rootScope.outcomes[d].outcome
                   },
                   { x: Math.cos(t - Math.PI),
                     y: d,
-                    z: Math.sin(t - Math.PI)
+                    z: Math.sin(t - Math.PI),
+                    rsid: $rootScope.outcomes[d].rsid,
+                    pair: $rootScope.outcomes[d].pair,
+                    outcome: $rootScope.outcomes[d].outcome
                   }];
         });
       var flat = _.flatten(data);
@@ -87,14 +94,7 @@ angular.module('genome.self', [])
             .attr("pair", function(d){ return d.pair; })
             .attr("outcome", function(d){ return d.outcome; })
             .on("mouseover", function (d, i) {
-              d3.select(this).transition()
-              .attr('fill', function (d) {
-                console.log("rsid, pair, outcome", d.rsid, d.pair, d.outcome);
-              })
-              .attr('fill-opacity', function (d) {
-                return z(d.z) / 1;
-              })
-              .attr('stroke-opacity', 0.5);
+              console.log("rsid: ", d.rsid, "pair: ",d.pair, "outcome: ",d.outcome);
             });
           d3.select(this)
               .select('line')
