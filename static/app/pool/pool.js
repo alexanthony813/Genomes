@@ -6,7 +6,6 @@ angular.module('genome.pool', [])
   $scope.circles = [];
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
-  var map = new Datamap({element: document.getElementById('container')});
 
   $scope.showMap = false;
   $scope.filterRegions = function() {
@@ -50,9 +49,11 @@ angular.module('genome.pool', [])
   var svg = d3.select('.pool').append("svg")
       .attr("width", boardWidth + margin.left + margin.right)
       .attr("height", boardHeight + margin.top + margin.bottom)
+      .attr("id", "projection_map")
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+  var map = new Datamap({element: document.getElementById('projection_map')});
   //Create bubbles
   var createBubbles = function(circleData) {
     nodes = $scope.circles
