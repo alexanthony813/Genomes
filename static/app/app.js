@@ -43,10 +43,10 @@ var app = angular.module('genome', [
       redirectTo : '/'
     });
 })
-.run(function($rootScope, $location){
+.run(function($rootScope, $location, $cookies){
   var isAuth = function () {
-    console.log('cookie crisps',$cookies.get('user_profile_id'))
-    return $cookies.get('user_profile_id');
+    console.log('cookie crisps', $cookies['user_profile_id'])
+    return $cookies['user_profile_id'];
   };
   
   $rootScope.$on('$routeChangeStart', function(evt, next, current){
