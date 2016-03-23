@@ -20,9 +20,9 @@ angular.module('genome.directive', [])
       };
 
       $scope.getSelf = function () {
-        SelfFactory.getSnps($rootScope.user_profile_id).then(function (outcomes) {
-          $rootScope.outcomes = outcomes;
-        });
+        // SelfFactory.getSnps($rootScope.user_profile_id).then(function (outcomes) {
+        //   $rootScope.outcomes = outcomes;
+        // });
         $location.path('/self');
       };
     },
