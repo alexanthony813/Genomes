@@ -1,8 +1,8 @@
 angular.module('genome.self', [])
 .controller('SelfController', function ($scope, $rootScope, $cookies, $location, SelfFactory, d3Service) {
-
+  
   $scope.outcomelist = $rootScope.outcomes;
-  console.log('outcomes list: ', $scope.outcomelist);
+
     /* The 'FILLS' block will determine the availability of colors, balls and lines
      * and what quantity and other attributes the d3 plot should contain */
   var fills = ['#E74C3C', '#3498DB', '#2ECC71'],
@@ -15,7 +15,7 @@ angular.module('genome.self', [])
     x = d3.scale.linear().range([20, w - 20]),
     y = d3.scale.linear().range([h, 20]),
     z = d3.scale.linear().range([20, 5]);
-      /**
+      /** 
         * This block will append the built svg elements to the "body" of the HTML
       **/
   var svg = d3.select(".dnahelixcontainer")
@@ -102,7 +102,7 @@ angular.module('genome.self', [])
     setInterval(draw, 25);
 })
 .factory('SelfFactory', function ($http) {
-/**
+/** 
   * Used to retrieve information about SNPs pertaining to currently logged in user
 **/
   var getSnps = function (userId) {
