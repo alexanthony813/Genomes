@@ -57,13 +57,13 @@ Back-end
 ## Meet The Engineers
 =====================
 Product Owner 
-- Gar Lee
+- [**Gar Lee**](https://github.com/LeeGar)
 
 Scrum Master 
-- Alex Anthony
+- [**Alex Anthony**](https://github.com/alexanthony813)
 
 Development Team 
-- Chris Bassano
-- Peter Lollo
+- [**Chris Bassano**](https://github.com/christo4b)
+- [**Peter Lollo**](https://github.com/Peterlollo)
 
 
