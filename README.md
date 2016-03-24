@@ -1,9 +1,9 @@
-# Genomes
+# Genomie
 Genetic visualization application
 
 # Introduction 
 
-Genomie is a web application that provides beautiful data visualizations of hereditary information based on the information receieved from 23AndMe.com. Providing the user with a varieties of different views, anyone can easily interpret and understand their unique genetic information in an interactive, elegant way. Genomie provides clear and vibrant perspectives in multiple viewing environments for a smooth user experience. 
+Genomie is a web application that provides beautiful data visualizations of hereditary information based on the information receieved from 23AndMe.com. Providing the user with a varieties of different views, anyone can easily interpret and understand their unique genetic information in an interactive and elegant way. Genomie provides clear and vibrant perspectives in multiple viewing environments for an optimized user experience. 
 
 # Questions and Issues
 For any issues, please refer to [**our issues page**](https://github.com/ThunderousFigs/Genomes/issues)
