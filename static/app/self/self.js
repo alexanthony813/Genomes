@@ -34,7 +34,7 @@ angular.module('genome.self', [])
       .attr("height", h)
       .attr("fill", "white");
   var container = svg.append("g");
-  var counter = 0;
+  var counter = 50;
 
   function generateData() {
     counter++;
