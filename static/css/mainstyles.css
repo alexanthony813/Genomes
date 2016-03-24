@@ -116,3 +116,7 @@ svg {
 svg.datamap {
   padding-top: 0px;
 }
+
+.side-nav-button {
+  cursor: pointer;
+}

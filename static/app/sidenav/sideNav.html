@@ -1,8 +1,8 @@
 <section class="side-nav">
 	<div class="sideNavContainer">
 			<div class="poolViewOptions" ng-controller="PoolController">
-				<md-button class="md-raised md-primary" ng-click="filterRegions()">Filter By Region</md-button>
-				<md-button class="md-raised md-primary">Cool other option</md-button>
+        <img src="../../../static/assets/globe.png" type="button" ng-click="filterRegions()" class="side-nav-button" ng-show="view === 'pool'"/>
+        <img src="../../../static/assets/rocket.png" type="button" ng-click="filterRegions()" class="md-raised md-primary side-nav-button" ng-show="view === 'self'"/>
 			</div>
 	</div>
 </section>
