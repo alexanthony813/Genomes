@@ -1,18 +1,18 @@
 <div class="header">
   <div class="greetings">
-  <div class='app-title'>Genomie</div>
-  <div class='user-greeting'>Hello, {{ user_first_name }}</div>
+    <div class='app-title'>Genomie</div>
+    <div class='user-greeting'>Hello, {{ user_first_name }}</div>
   </div>
 
   <div class="view-selection">
     <div class="viewforpool" ng-show="onpoolpage === true;">
-    <md-button ng-disabled="true" class="md-raised md-primary">Get Relatives</md-button>
-  	<md-button class="md-raised" ng-click="getSelf()">Get my own info</md-button>
+      <md-button ng-disabled="true" class="md-raised md-primary">Get Relatives</md-button>
+    	<md-button class="md-raised" ng-click="getSelf()">Get my own info</md-button>
     </div>
 
     <div class="viewforself" ng-show="onpoolpage === false;">
-    <md-button class="md-raised" ng-click="getRelatives()">Get Relatives</md-button>
-    <md-button ng-disabled="true" class="md-raised md-primary">Get my own info</md-button>
+      <md-button class="md-raised" ng-click="getRelatives()">Get Relatives</md-button>
+      <md-button ng-disabled="true" class="md-raised md-primary">Get my own info</md-button>
     </div>
   </div>
 
