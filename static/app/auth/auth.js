@@ -29,16 +29,7 @@ angular.module('genome.auth', ['ngCookies', 'ngRoute'])
     delete $cookies['user_profile_id'];
     delete $cookies['user_first_name'];
     
-    // $location.path('/signout');
     window.location.href = '/'
-    // return $http.get('/receive_code/')
-    // .then(function (data) {
-    //   console.log(data.data);
-    //   console.log("User successfully signed out");
-    // })
-    // .catch(function (err) {
-    //   console.error('An error occurred signing out', err);
-    // });
   };
 
   return {
