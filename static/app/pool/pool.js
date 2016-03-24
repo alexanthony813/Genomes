@@ -102,6 +102,7 @@ angular.module('genome.pool', [])
           showRelative(bubble)
         );
       })
+      .attr('z-index', '1')
       .attr("data-target", "#myModal")
       .attr("data-toggle", "modal")
       .attr("r", function (d) {

@@ -18,6 +18,7 @@ config.py
 npm-debug.log
 server/static/scripts/main.js
 config.py
+server/static/img/
 
 # Distribution / packaging
 .Python

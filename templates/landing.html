@@ -7,39 +7,93 @@
     <title>Genome Sequence Visualizer</title>
   </head>
   <body>
-  <div class="container">
-    <div class="topContainer">
-      <div class="splash">
-        <h1>Genomie</h1>
-        <img src="/static/assets/jellyfish3.gif" />
-       <div type="button" class="testDrive test" onclick="location.href='/demo/'">Test Drive</div>
+    <!-- HEADER START -->
+    <header id="header">
+      <div class="content">
+        <div id="logo"><a href=""> GENOMIE </a></div>
+        <nav id="nav">
+         <ul>
+           <li><a href="#slide1" class="active" title="Next Section">HOME</a></li>
+           <li><a href="#slide2" title="Next Section">LEARN</a></li>
+           <li><a href="#slide3" title="Next Section">FIND RELATIVES</a></li>
+           <li><a href="#slide4" title="Next Section">HISTORY</a></li>
+           <li><a href="#slide5" title="Next Section">START</a></li>
+         </ul>
+        </nav>
       </div>
-        <div class="hipsterdata">
-          <div class="hipsterCircles">
-            <div class="hipsterpic"><img src="/static/assets/hipDNA.png"></div>
-            <div class="hipsterpic"><img src="/static/assets/hipDNA.png"></div>
-            <div class="hipsterpic"><img src="/static/assets/hipDNA.png"></div>
-          </div>
-
-          <div class="hipsterDescriptions">
-            <h2 class="choicewords lead">
-            SEE a visual representation of your DNA
-            </h2>
-            <h2 class="choicewords lead">
-            LEARN if you're predisposed to hate cilantro? Or to play the trumpet?
-            </h2>
-            <h2 class="choicewords lead">
-            FIND and reach out to your distant relatives around the globe
-            </h2>
-          </div>
+    </header>
+    <!--End HEADER-->
+    <!-- SLIDES START -->
+    <div id="slide1">
+      <div class="content">
+        <!-- <div id="christmas_tree"> </div>
+        <div id="snowflakes1"></div>
+        <div id="snowflakes2"></div> -->
+        <div class="landingHeader">
+          <h2>VISUALIZE</h2>
+          <h1>YOUR GENES</h1>
+        </div>
+        <!-- <div id="divider"> </div> -->
+        <!-- <h3>HAPPY NEW YEAR </h3> -->
+        <!-- <div id="ribbon"></div>
+        <div id="new_year"> </div> -->
+      </div>
+    </div>
+    <div id="slide2">
+      <div class="content" >
+        <div class="quotes_container">
+          <h3 class="quotes">“With Genomie, see your DNA and learn what makes you an awesome trumpet player, or predisposed to certain addictions, or just why you hate cilantro.”</h3>
+          <img src="../static/assets/hipDNA.png" align="left"/> <h4 class="author_name_gray">Not an image of real DNA</h4>
         </div>
       </div>
-    <div class="loginFooter">
-    <!-- TODO update auth url  -->
-      <input class="login-btn" type="button" value="Log in with 23andMe" onclick="location.href='{{ auth_url }}'" />
-    <!-- <a class="login-btn" type="button" value="Log in with 23andMe"href="/login"></a> -->
-    <input class="login-btn" type="button" value="Test Drive" onclick="location.href='/demo/'" />
     </div>
-  </div>
+    <div id="slide3">
+      <div class="content">
+        <div class="quotes_container">
+          <h3 id="darken" class="quotes">“You can also find distant relatives around the world. Who knows? Maybe this time next year you'll visit your 3rd cousin in Hungary.” </h3>
+          <img src="../static/assets/norman.png" align="left"/> <h4 id="darken" class="author_name_white">Your cousin?</h4>
+        </div>
+      </div>
+     </div>
+     <div id="slide4">
+      <div class="content">
+        <div class="quotes_container">
+          <h3 class="quotes">“The nitrogen in our DNA, the calcium in our teeth, the iron in our blood, the carbon in our apple pies were made in the interiors of collapsing stars. We are made of starstuff.”</h3>
+          <img src="../static/assets/dr-seuss.png" align="left"/> <h4 class="author_name_gray">Carl Sagan</h4>
+        </div>
+      </div>
+     </div>
+    <div id="slide5">
+      <div class="content">
+        <div class="quotes_container">
+          <h3 class="quotes">““If you already received your genome data from 23andMe, you can log in. Otherwise, take the app for a test drive with some anonymous data.”</h3>
+          <img src="../static/assets/bob.png" align="left"/ type="button" onclick="location.href='/demo/'"> <h4 class="author_name_white">Log in as 'Lilly Demo'</h4>
+          <img src="../static/assets/bob.png" align="left"/ type="button" value="Log in with 23andMe" onclick="location.href='{{ auth_url }}'"> <h4 class="author_name_white">Log in with 23andMe</h4>
+        </div>
+          <div id="copyright"><a href="http://www.1stwebdesigner.com/">Copyright Genomie.com </a></div>
+      </div>
+    </div>
+    <script src="../static/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('a[href*="#"]').each(function() {
+          if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
+          && location.hostname == this.hostname
+          && this.hash.replace(/#/,'') ) {
+            var $targetId = $(this.hash), $targetAnchor = $('[name=' + this.hash.slice(1) +']');
+            var $target = $targetId.length ? $targetId : $targetAnchor.length ? $targetAnchor : false;
+            if ($target) {
+              var targetOffset = $target.offset().top;
+              $(this).click(function() {
+                $("#nav li a").removeClass("active");
+                $(this).addClass('active');
+                $('html, body').animate({scrollTop: targetOffset}, 1000);
+                return false;
+              });
+            }
+          }
+        });
+      });
+    </script>
   </body>
 </html>
