@@ -7,7 +7,7 @@ Genomie is a web application that provides beautiful data visualizations of here
 
 # Questions and Issues
 For any issues, please refer to [**our issues page**](https://github.com/ThunderousFigs/Genomes/issues)
-Please direct any questions regarding Genomie to [**our wiki page](https://github.com/ThunderousFigs/Genomes/wiki)
+Please direct any questions regarding Genomie to [**our wiki page**](https://github.com/ThunderousFigs/Genomes/wiki)
 
 Thank you!
 
@@ -58,8 +58,10 @@ Back-end
 =====================
 Product Owner 
 - Gar Lee
+
 Scrum Master 
 - Alex Anthony
+
 Development Team 
 - Chris Bassano
 - Peter Lollo
