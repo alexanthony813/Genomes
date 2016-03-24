@@ -41,7 +41,6 @@ $ npm start
 ===============
 ## Technologies
 ===============
-
 Front-end
 - AngularJS 
 - Angular-Material
