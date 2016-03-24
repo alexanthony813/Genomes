@@ -10,8 +10,7 @@ angular.module('genome.pool', [])
   $scope.showMap = false;
   $rootScope.filterRegions = function() {
     $scope.showMap = !$scope.showMap;
-  }
-
+  };
 
   //ng data map
   $scope.mapObject = {
@@ -30,10 +29,7 @@ angular.module('genome.pool', [])
       'LOW': '#667FAF',
       'defaultFill': '#DDDDDD'
     },
-  }
-
-
-
+  };
   //end ng data map
 
   $scope.popModal = {
@@ -45,57 +41,59 @@ angular.module('genome.pool', [])
   };
 
   var margin = {
-      top: 50,
-      right: 50,
-      bottom: 50,
-      left: 50
-  }
-  var width = 1000 - margin.left - margin.right
+    top: 50,
+    right: 50,
+    bottom: 50,
+    left: 50
+  };
+
+  var width = 1000 - margin.left - margin.right;
   var height = 1000 - margin.top - margin.bottom;
 
   var padding = 2;
+
   var radius = d3.scale.sqrt().range([0, 12]);
 
   //pop up message displaying relative data when user clicks on a bubble
   var showRelative = function(bubble) {
     $scope.popModal.name = bubble.relative.first_name + ' ' + bubble.relative.last_name;
-    $scope.popModal.similarity = bubble.relative.first_name + ' shares ' + (bubble.relative.similarity*100).toFixed(2) + '% of your DNA.'
+    $scope.popModal.similarity = bubble.relative.first_name + ' shares ' + (bubble.relative.similarity*100).toFixed(2) + '% of your DNA.';
     $scope.popModal.relationship = bubble.relative.relationship || null;
     if(bubble.relative.birth_year) {
       $scope.popModal.age = 'Age: ' + (new Date().getFullYear() - bubble.relative.birth_year);
     } else {
       $scope.popModal.age = null;
     }
-    $scope.popModal.image = '';
-  }
+    $scope.popModal.image = bubble.relative.picture_url || '../../../static/assets/hipDNA.png';
+  };
 
   //Grab the pool as a canvas for our bubbles
   var svg = d3.select('.pool').append("svg")
-      .attr("width", boardWidth + margin.left + margin.right)
-      .attr("height", boardHeight + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("width", boardWidth + margin.left + margin.right)
+    .attr("height", boardHeight + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   //Create bubbles
   var createBubbles = function(circleData) {
-    nodes = $scope.circles
+    nodes = $scope.circles;
     //Add d3 force effect to layout
     var force = d3.layout.force()
-        .nodes(nodes)
-        .size([width, height])
-        .gravity(0)
-        .charge(0)
-        .on("tick", tick)
-        .start();
+      .nodes(nodes)
+      .size([width, height])
+      .gravity(0)
+      .charge(0)
+      .on("tick", tick)
+      .start();
     //Add bubbles to DOM
     var circle = svg.selectAll("circle")
       .data(nodes)
       .enter().append("circle")
       .on('mouseover', function(){
-        d3.select(this).transition().attr('r', function(d) {return d.radius * 2;})
+        d3.select(this).transition().attr('r', function(d) {return d.radius * 2;});
       })
       .on('mouseout', function(){
-        d3.select(this).transition().attr('r', function(d){return d.radius})
+        d3.select(this).transition().attr('r', function(d){return d.radius; });
       })
       .on('click', function(bubble) {
         $scope.$apply(
@@ -105,7 +103,7 @@ angular.module('genome.pool', [])
       .attr("data-target", "#myModal")
       .attr("data-toggle", "modal")
       .attr("r", function (d) {
-        return d.radius;
+          return d.radius;
       })
       .style('fill', function(d) {
          return d.color;
@@ -127,8 +125,8 @@ angular.module('genome.pool', [])
     // Move nodes toward cluster focus.
     function gravity(alpha) {
       return function (d) {
-          d.y += (d.cy - d.y) * alpha;
-          d.x += (d.cx - d.x) * alpha;
+        d.y += (d.cy - d.y) * alpha;
+        d.x += (d.cx - d.x) * alpha;
       };
     }
 
@@ -137,25 +135,25 @@ angular.module('genome.pool', [])
       var quadtree = d3.geom.quadtree(nodes);
       return function (d) {
         var r = d.radius + radius.domain()[1] + padding,
-            nx1 = d.x - r,
-            nx2 = d.x + r,
-            ny1 = d.y - r,
-            ny2 = d.y + r;
+          nx1 = d.x - r,
+          nx2 = d.x + r,
+          ny1 = d.y - r,
+          ny2 = d.y + r;
         quadtree.visit(function (quad, x1, y1, x2, y2) {
-            if (quad.point && (quad.point !== d)) {
-                var x = d.x - quad.point.x,
-                    y = d.y - quad.point.y,
-                    l = Math.sqrt(x * x + y * y),
-                    r = d.radius + quad.point.radius + (d.color !== quad.point.color) * padding;
-                if (l < r) {
-                    l = (l - r) / l * alpha;
-                    d.x -= x *= l;
-                    d.y -= y *= l;
-                    quad.point.x += x;
-                    quad.point.y += y;
-                }
+          if (quad.point && (quad.point !== d)) {
+            var x = d.x - quad.point.x,
+              y = d.y - quad.point.y,
+              l = Math.sqrt(x * x + y * y),
+              r = d.radius + quad.point.radius + (d.color !== quad.point.color) * padding;
+            if (l < r) {
+              l = (l - r) / l * alpha;
+              d.x -= x *= l;
+              d.y -= y *= l;
+              quad.point.x += x;
+              quad.point.y += y;
             }
-            return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+          }
+          return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
         });
       };
     }
@@ -165,13 +163,20 @@ angular.module('genome.pool', [])
   //After grabbing relatives from the DB, create a bubbles array based on length of relatives array
   var initialize = function(){
     for (var i = 0; i < $scope.relatives.length || 0; i++) {
+      
+      var radius = $scope.relatives[i].similarity;
+      
+      if (radius < 0.1){
+        radius = 0.1;
+      }
+
       $scope.circles.push({
         cx: boardWidth/2,
         cy: boardHeight/2,
-        color: 'rgb(' + parseInt(Math.random() * 255) + ','
-               + parseInt(Math.random() * 255) + ','
-               + parseInt(Math.random() * 255) + ')',
-        radius: Math.random() * 100,
+        color: 'rgb(' + parseInt(Math.random() * 255) + ',' +
+              parseInt(Math.random() * 255) + ',' +
+              parseInt(Math.random() * 255) + ')',
+        radius: radius * 300,
         relative: $scope.relatives[i]
       });
     }
@@ -190,9 +195,9 @@ angular.module('genome.pool', [])
       $rootScope.rels = relatives.data.relativeList;
       initialize();
     }, function(err) {
-      console.error('Error retrieving relatives: ', err)
-    })
-  }
+      console.error('Error retrieving relatives: ', err);
+    });
+  };
   //Initialize the page with a call to getRelatives
   $scope.getRelatives();
 });

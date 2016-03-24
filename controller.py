@@ -3,7 +3,7 @@ import models
 #Create a demo user in the db for users without a 23andMe account
 def create_demo_user():
     #check to see if demo user already exists in the db
-    if models.db_session.query(models.User).filter(models.User.id=='demo_id').first() is None:
+    if models.db_session.query(models.User).filter(models.User.profile_id=='demo_id').first() is None:
         #hard code the demo user's genome data
         genome_data = {
             'rs12913832': "GG",
@@ -24,7 +24,7 @@ def create_demo_user():
             'relationship': "Brother",
             "birthplace": "United States",
             "ancestry": "Northwestern Europe",
-            "picture_url": "https://goo.gl/lgh849"
+            "picture_url": "https://goo.gl/0D9cs4"
             },
             {
             'first_name': "Ruarc",
@@ -38,7 +38,7 @@ def create_demo_user():
             'relationship': "1st Cousin",
             "birthplace": "United States",
             "ancestry": "Northwestern Europe",
-            "picture_url": "https://goo.gl/lgh849"
+            "picture_url": "https://goo.gl/0D9cs4"
             },        
             {
             'first_name': "Maximus",
@@ -52,7 +52,7 @@ def create_demo_user():
             'relationship': "1st Cousin",
             "birthplace": "United States",
             "ancestry": "Northwestern Europe",
-            "picture_url": "https://goo.gl/lgh849"
+            "picture_url": "https://goo.gl/0D9cs4"
             },
             {
             'first_name': "Quinci",
@@ -66,7 +66,7 @@ def create_demo_user():
             'relationship': "4th-6th Cousin",
             "birthplace": "United States",
             "ancestry": "Northwestern Europe",
-            "picture_url": "https://goo.gl/lgh849"
+            "picture_url": "https://goo.gl/0D9cs4"
             },
             {
             'first_name': "Wilder B.",
@@ -80,7 +80,7 @@ def create_demo_user():
             "birthplace": "France",
             "ancestry": "Northwestern Europe",
             'relationship': "Brother",
-            "picture_url": "https://goo.gl/lgh849"
+            "picture_url": "https://goo.gl/0D9cs4"
             },
             {
             'first_name': "Juniper",
@@ -94,7 +94,7 @@ def create_demo_user():
             "birthplace": "France",
             "ancestry": "Northwestern Europe",
             'relationship': "4th Cousin",
-            "picture_url": "https://goo.gl/lgh849"
+            "picture_url": "https://goo.gl/0D9cs4"
             },
             {
             'first_name': "Casseopeia",
@@ -108,7 +108,7 @@ def create_demo_user():
             "birthplace": "Canada",
             "ancestry": "Northwestern Europe",
             'relationship': "Distant Relative",
-            "picture_url": "https://goo.gl/lgh849"
+            "picture_url": "https://goo.gl/0D9cs4"
             },
             {
             'first_name': "Andromeda",
@@ -122,13 +122,13 @@ def create_demo_user():
             "birthplace": "Canada",
             "ancestry": "Northwestern Europe",
             'relationship': "Distant Relative",
-            "picture_url": "https://goo.gl/lgh849"
+            "picture_url": "https://goo.gl/0D9cs4"
         }]
         #Create demo user and all demo user's associated relatives
         demo_user = models.User('demo_id', None, 'Lilly', 'Demo', None, None, None, None, genome_data)
         for relative in demo_relatives:
             #Create a new relative with the information being passed from relatives_response
-            new_relative = models.Relative(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], None, relative['birth_year'], relative['relationship'])
+            new_relative = models.Relative(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], relative['picture_url'], relative['birth_year'], relative['relationship'], relative['birthplace'], relative['ancestry'])
             # Appending each relative to the demo user's relative property
             demo_user.relatives.append(new_relative)
             models.db_session.add(new_relative)
@@ -151,7 +151,7 @@ def createNewUser(name_response, relatives_response, genotype_response, user_res
     #iterate through list of relatives
     for relative in relatives_response.json()['relatives']:
         #Create a new relative with the information being passed from relatives_response
-        new_relative = models.Relative(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], relative['picture_url'], relative['birth_year'], relative['relationship'], relative['birthplace'], relative['ancestry'])
+        new_relative = models.Relative(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], None, relative['birth_year'], relative['relationship'], relative['birthplace'], relative['ancestry'])
 
         # Appending each relative to the user's relative property
         new_user.relatives.append(new_relative)
