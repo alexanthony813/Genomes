@@ -3,7 +3,7 @@ import models
 #Create a demo user in the db for users without a 23andMe account
 def create_demo_user():
     #check to see if demo user already exists in the db
-    if models.db_session.query(models.User).filter(models.User.profile_id=='demo_id').first() is None:
+    if models.db_session.query(models.User).filter(models.User.id=='demo_id').first() is None:
         #hard code the demo user's genome data
         genome_data = {
             'rs12913832': "GG",
@@ -24,7 +24,7 @@ def create_demo_user():
             'relationship': "Brother",
             "birthplace": "United States",
             "ancestry": "Northwestern Europe",
-            "profile_picture_url": "https://goo.gl/lgh849"
+            "picture_url": "https://goo.gl/lgh849"
             },
             {
             'first_name': "Ruarc",
@@ -38,7 +38,7 @@ def create_demo_user():
             'relationship': "1st Cousin",
             "birthplace": "United States",
             "ancestry": "Northwestern Europe",
-            "profile_picture_url": "https://goo.gl/lgh849"
+            "picture_url": "https://goo.gl/lgh849"
             },        
             {
             'first_name': "Maximus",
@@ -52,7 +52,7 @@ def create_demo_user():
             'relationship': "1st Cousin",
             "birthplace": "United States",
             "ancestry": "Northwestern Europe",
-            "profile_picture_url": "https://goo.gl/lgh849"
+            "picture_url": "https://goo.gl/lgh849"
             },
             {
             'first_name': "Quinci",
@@ -66,7 +66,7 @@ def create_demo_user():
             'relationship': "4th-6th Cousin",
             "birthplace": "United States",
             "ancestry": "Northwestern Europe",
-            "profile_picture_url": "https://goo.gl/lgh849"
+            "picture_url": "https://goo.gl/lgh849"
             },
             {
             'first_name': "Wilder B.",
@@ -80,7 +80,7 @@ def create_demo_user():
             "birthplace": "France",
             "ancestry": "Northwestern Europe",
             'relationship': "Brother",
-            "profile_picture_url": "https://goo.gl/lgh849"
+            "picture_url": "https://goo.gl/lgh849"
             },
             {
             'first_name': "Juniper",
@@ -94,7 +94,7 @@ def create_demo_user():
             "birthplace": "France",
             "ancestry": "Northwestern Europe",
             'relationship': "4th Cousin",
-            "profile_picture_url": "https://goo.gl/lgh849"
+            "picture_url": "https://goo.gl/lgh849"
             },
             {
             'first_name': "Casseopeia",
@@ -108,7 +108,7 @@ def create_demo_user():
             "birthplace": "Canada",
             "ancestry": "Northwestern Europe",
             'relationship': "Distant Relative",
-            "profile_picture_url": "https://goo.gl/lgh849"
+            "picture_url": "https://goo.gl/lgh849"
             },
             {
             'first_name': "Andromeda",
@@ -122,7 +122,7 @@ def create_demo_user():
             "birthplace": "Canada",
             "ancestry": "Northwestern Europe",
             'relationship': "Distant Relative",
-            "profile_picture_url": "https://goo.gl/lgh849"
+            "picture_url": "https://goo.gl/lgh849"
         }]
         #Create demo user and all demo user's associated relatives
         demo_user = models.User('demo_id', None, 'Lilly', 'Demo', None, None, None, None, genome_data)
@@ -144,10 +144,10 @@ def createNewUser(name_response, relatives_response, genotype_response, user_res
     #Define the user's basic information
     user_first_name = name_response.json()['first_name']
     user_last_name = name_response.json()['last_name']
-    user_profile_id = genome_data['id']
+    user_id = genome_data['id']
     user_email = user_response.json()
     #Create a new user following the Users Model
-    new_user = models.User(user_profile_id, user_email['email'], user_first_name, user_last_name, None, None, None, None, genome_data)
+    new_user = models.User(user_id, user_email['email'], user_first_name, user_last_name, None, None, None, None, genome_data)
     #iterate through list of relatives
     for relative in relatives_response.json()['relatives']:
         #Create a new relative with the information being passed from relatives_response
