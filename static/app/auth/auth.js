@@ -1,6 +1,6 @@
-angular.module('genome.auth', ['ngCookies'])
+angular.module('genome.auth', ['ngCookies', 'ngRoute'])
 
-.controller('AuthController', function($scope, $rootScope, $cookies, $location, $timeout, $window, AuthFactory) {
+.controller('AuthController', function($scope, $rootScope, $cookies, $location, $rootElement, $timeout, $window, AuthFactory) {
   $scope.user = {};
 
   $rootScope.signOut = function() {
@@ -19,7 +19,7 @@ angular.module('genome.auth', ['ngCookies'])
 
 })
 
-.factory('AuthFactory', function($http, $cookies) {
+.factory('AuthFactory', function($http, $cookies, $location) {
 
   var isAuth = function() {
     return !!$cookies.user_profile_id;
@@ -28,6 +28,7 @@ angular.module('genome.auth', ['ngCookies'])
   var signOut = function() {
     delete $cookies['user_profile_id'];
     delete $cookies['user_first_name'];
+    $location.path('/signin')
   };
 
   return {
