@@ -108,12 +108,13 @@ body {
 }
 
 svg {
-  padding-top: 20%;
   position: absolute;
   margin-left: 10%;
 }
 
-.pool{
+svg.datamap {
+  padding-top: 0px;
 }
+
 
 
