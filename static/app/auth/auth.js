@@ -30,7 +30,7 @@ angular.module('genome.auth', ['ngCookies', 'ngRoute'])
     delete $cookies['user_first_name'];
     
     // $location.path('/signout');
-
+    window.location.href = '/'
     // return $http.get('/receive_code/')
     // .then(function (data) {
     //   console.log(data.data);
