@@ -57,7 +57,7 @@ angular.module('genome.pool', [])
   var width = 1000 - margin.left - margin.right;
   var height = 1000 - margin.top - margin.bottom;
 
-  var padding = 2;
+  var padding = 5;
 
   var radius = d3.scale.sqrt().range([0, 12]);
 
