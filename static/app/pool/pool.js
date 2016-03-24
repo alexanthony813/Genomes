@@ -166,7 +166,15 @@ angular.module('genome.pool', [])
       
       var radius = $scope.relatives[i].similarity;
       
-      if (radius < 0.1){
+      if (radius < 0.005){
+        radius = 0.01;
+      } else if (radius > 0.01 && radius < 0.1) {
+        radius = 0.03;
+      } else if (radius >= 0.1 && radius < 0.2) {
+        radius = 0.05;
+      } else if (radius >= 0.2 && radius < 0.5) {
+        radius = 0.07;
+      } else if (radius >= 0.5) {
         radius = 0.1;
       }
 
@@ -176,7 +184,7 @@ angular.module('genome.pool', [])
         color: 'rgb(' + parseInt(Math.random() * 255) + ',' +
               parseInt(Math.random() * 255) + ',' +
               parseInt(Math.random() * 255) + ')',
-        radius: radius * 300,
+        radius: radius * 800,
         relative: $scope.relatives[i]
       });
     }
