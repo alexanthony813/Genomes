@@ -3,6 +3,7 @@ angular.module('genome.self', [])
 
   $scope.outcomes = $scope.outcomes || [];
   $scope.current = {};
+
    var whichView = function() {
     $rootScope.view = $location.$$path;
   }

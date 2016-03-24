@@ -2,6 +2,7 @@ angular.module('genome.pool', [])
 .controller('PoolController', function($scope, d3Service, Relatives, $rootScope, $window, $location
   ) {
 
+  var circle;
   $scope.relatives = [];
   $rootScope.rels = [];
   $scope.myData = [10,10,10,20];
@@ -9,6 +10,15 @@ angular.module('genome.pool', [])
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
 
+  var makeNewBubbleData = function(){
+    for(var i = 0; i < $scope.circles.length; i++){
+      $scope.circles[i]['cx'] = 100 * i;
+    }
+  }
+  var moveBubbles = function() {
+    makeNewBubbleData();
+    d3.selectAll("circle").data($scope.circles).transition().delay(3000);
+  }
   var whichView = function() {
     $rootScope.view = $location.$$path;
   }
@@ -17,6 +27,7 @@ angular.module('genome.pool', [])
   $scope.showMap = false;
   $rootScope.filterRegions = function() {
     $scope.showMap = !$scope.showMap;
+    moveBubbles();
   };
 
   //ng data map
@@ -94,7 +105,7 @@ angular.module('genome.pool', [])
       .on("tick", tick)
       .start();
     //Add bubbles to DOM
-    var circle = svg.selectAll("circle")
+    circle = svg.selectAll("circle")
       .data(nodes)
       .enter().append("circle")
       .on('mouseover', function(d){
