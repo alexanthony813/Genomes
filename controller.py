@@ -6,103 +6,127 @@ def create_demo_user():
     if models.db_session.query(models.User).filter(models.User.profile_id=='demo_id').first() is None:
         #hard code the demo user's genome data
         genome_data = {
-        'rs12913832': "GG",
-        'rs1799971': 'AA',
-        'rs1800955': 'CT',
-        'rs806380': 'AG'
+            'rs12913832': "GG",
+            'rs1799971': 'AA',
+            'rs1800955': 'CT',
+            'rs806380': 'AG'
         }
         #hard code the demo user's relatives
-        relatives = [{
-        'first_name': "Aodh",
-        'last_name': "O'Donnell",
-        'sex': "Male",
-        'residence': "South Carolina",
-        'similarity': 0.25,
-        'maternal_side': False,
-        'paternal_side': True,
-        'birth_year': 1977,
-        'relationship': "Brother"
-        },
-        {
-        'first_name': "Ruarc",
-        'last_name': "O'Donnell",
-        'sex': "Male",
-        'residence': "North Carolina",
-        'similarity': 0.12,
-        'maternal_side': False,
-        'paternal_side': True,
-        'birth_year': 1944,
-        'relationship': "1st Cousin"
-        },        
-        {
-        'first_name': "Maximus",
-        'last_name': "Bundletreat",
-        'sex': "Male",
-        'residence': "New Jersey",
-        'similarity': 0.125,
-        'maternal_side': True,
-        'paternal_side': False,
-        'birth_year': 1974,
-        'relationship': "1st Cousin"
-        },
-        {
-        'first_name': "Quinci",
-        'last_name': "Peachfuzz",
-        'sex': "Female",
-        'residence': "Georgia",
-        'similarity': 0.0128,
-        'maternal_side': True,
-        'paternal_side': False,
-        'birth_year': 1966,
-        'relationship': "4th-6th Cousin"
-        },
-        {
-        'first_name': "Wilder B.",
-        'last_name': "Shick-Groundswell",
-        'sex': "Male",
-        'residence': "Louisiana",
-        'similarity': 0.25,
-        'maternal_side': False,
-        'paternal_side': True,
-        'birth_year': 1939,
-        'relationship': "Brother"
-        },
-        {
-        'first_name': "Juniper",
-        'last_name': "Kinglsey",
-        'sex': "Male",
-        'residence': "North Carolina",
-        'similarity': 0.0134,
-        'maternal_side': True,
-        'paternal_side': False,
-        'birth_year': 1955,
-        'relationship': "4th Cousin"
-        },
-        {
-        'first_name': "Casseopeia",
-        'last_name': "Middlemist-Gilbralter",
-        'sex': "Female",
-        'residence': "North Carolina",
-        'similarity': 0.002,
-        'maternal_side': False,
-        'paternal_side': True,
-        'birth_year': 1978,
-        'relationship': "Distant Relative"
-        },
-        {
-        'first_name': "Andromeda",
-        'last_name': "Middlemist-Gilbralter",
-        'sex': "Female",
-        'residence': "North Carolina",
-        'similarity': 0.002,
-        'maternal_side': False,
-        'paternal_side': True,
-        'birth_year': 1978,
-        'relationship': "Distant Relative"
+        demo_relatives = [{
+            'first_name': "Aodh",
+            'last_name': "O'Donnell",
+            'sex': "Male",
+            'residence': "South Carolina",
+            'similarity': 0.25,
+            'maternal_side': False,
+            'paternal_side': True,
+            'birth_year': 1977,
+            'relationship': "Brother",
+            "birthplace": "United States",
+            "ancestry": "Northwestern Europe",
+            "profile_picture_url": "https://goo.gl/lgh849"
+            },
+            {
+            'first_name': "Ruarc",
+            'last_name': "O'Donnell",
+            'sex': "Male",
+            'residence': "North Carolina",
+            'similarity': 0.12,
+            'maternal_side': False,
+            'paternal_side': True,
+            'birth_year': 1944,
+            'relationship': "1st Cousin",
+            "birthplace": "United States",
+            "ancestry": "Northwestern Europe",
+            "profile_picture_url": "https://goo.gl/lgh849"
+            },        
+            {
+            'first_name': "Maximus",
+            'last_name': "Bundletreat",
+            'sex': "Male",
+            'residence': "New Jersey",
+            'similarity': 0.125,
+            'maternal_side': True,
+            'paternal_side': False,
+            'birth_year': 1974,
+            'relationship': "1st Cousin",
+            "birthplace": "United States",
+            "ancestry": "Northwestern Europe",
+            "profile_picture_url": "https://goo.gl/lgh849"
+            },
+            {
+            'first_name': "Quinci",
+            'last_name': "Peachfuzz",
+            'sex': "Female",
+            'residence': "Georgia",
+            'similarity': 0.0128,
+            'maternal_side': True,
+            'paternal_side': False,
+            'birth_year': 1966,
+            'relationship': "4th-6th Cousin",
+            "birthplace": "United States",
+            "ancestry": "Northwestern Europe",
+            "profile_picture_url": "https://goo.gl/lgh849"
+            },
+            {
+            'first_name': "Wilder B.",
+            'last_name': "Shick-Groundswell",
+            'sex': "Male",
+            'residence': "Louisiana",
+            'similarity': 0.25,
+            'maternal_side': False,
+            'paternal_side': True,
+            'birth_year': 1939,
+            "birthplace": "France",
+            "ancestry": "Northwestern Europe",
+            'relationship': "Brother",
+            "profile_picture_url": "https://goo.gl/lgh849"
+            },
+            {
+            'first_name': "Juniper",
+            'last_name': "Kinglsey",
+            'sex': "Male",
+            'residence': "North Carolina",
+            'similarity': 0.0134,
+            'maternal_side': True,
+            'paternal_side': False,
+            'birth_year': 1955,
+            "birthplace": "France",
+            "ancestry": "Northwestern Europe",
+            'relationship': "4th Cousin",
+            "profile_picture_url": "https://goo.gl/lgh849"
+            },
+            {
+            'first_name': "Casseopeia",
+            'last_name': "Middlemist-Gilbralter",
+            'sex': "Female",
+            'residence': "North Carolina",
+            'similarity': 0.002,
+            'maternal_side': False,
+            'paternal_side': True,
+            'birth_year': 1978,
+            "birthplace": "Canada",
+            "ancestry": "Northwestern Europe",
+            'relationship': "Distant Relative",
+            "profile_picture_url": "https://goo.gl/lgh849"
+            },
+            {
+            'first_name': "Andromeda",
+            'last_name': "Middlemist-Gilbralter",
+            'sex': "Female",
+            'residence': "North Carolina",
+            'similarity': 0.002,
+            'maternal_side': False,
+            'paternal_side': True,
+            'birth_year': 1978,
+            "birthplace": "Canada",
+            "ancestry": "Northwestern Europe",
+            'relationship': "Distant Relative",
+            "profile_picture_url": "https://goo.gl/lgh849"
         }]
         #Create demo user and all demo user's associated relatives
         demo_user = models.User('demo_id', None, 'Lilly', 'Demo', None, None, None, None, genome_data)
-        for relative in relatives:
+        for relative in demo_relatives:
             #Create a new relative with the information being passed from relatives_response
             new_relative = models.Relative(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], None, relative['birth_year'], relative['relationship'])
             # Appending each relative to the demo user's relative property
