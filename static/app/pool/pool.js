@@ -30,8 +30,8 @@ angular.module('genome.pool', [])
       'defaultFill': '#DDDDDD'
     },
   };
-  //end ng data map
 
+  //end ng data map
   $scope.popModal = {
     name: '',
     similarity: '',
@@ -53,6 +53,8 @@ angular.module('genome.pool', [])
   var padding = 2;
 
   var radius = d3.scale.sqrt().range([0, 12]);
+
+  var colorScheme = ['#1abc9c', '#2ecc71', '#f1c40f', '#27ae60', '#3498db', '#9b59b6', '#2980b9','#8e44ad','#34495e','#e67e22','#d35400','#e74c3c', '#c0392b', '#bdc3c7', '#f39c12', '#2c3e50', '#95a5a6']
 
   //pop up message displaying relative data when user clicks on a bubble
   var showRelative = function(bubble) {
@@ -162,45 +164,138 @@ angular.module('genome.pool', [])
   };
 
   //After grabbing relatives from the DB, create a bubbles array based on length of relatives array
-  var initialize = function(){
+  var initialize = function() {
+
+    //set up range of values in similarity between all relatives
+    var range = [];
+    $scope.relatives.map(function (relative) {
+      range.push(relative.similarity);
+    }).sort(function (a, b) {
+      return b - a
+    });
+
     for (var i = 0; i < $scope.relatives.length || 0; i++) {
       
-      var radius = $scope.relatives[i].similarity;
-      
-      if (radius < 0.005){
-        radius = 0.01;
-      } else if (radius > 0.01 && radius < 0.1) {
-        radius = 0.03;
-      } else if (radius >= 0.1 && radius < 0.2) {
-        radius = 0.05;
-      } else if (radius >= 0.2 && radius < 0.5) {
-        radius = 0.07;
-      } else if (radius >= 0.5) {
-        radius = 0.1;
+      var similarity = $scope.relatives[i].similarity;
+
+      var similarRange = (range[0] - range[range.length-1]);
+
+      if (similarRange > 0 && similarRange < 0.05) {
+        if (similarity < 0.01){
+          similarity = 0.01;
+        } else if (similarity > 0.01 && similarity < 0.012) {
+          similarity = 0.02;
+        } else if (similarity >= 0.012 && similarity < 0.015) {
+          similarity = 0.035;
+        } else if (similarity >= 0.015 && similarity < 0.02) {
+          similarity = 0.05;
+        } else if (similarity >= 0.02 && similarity < 0.025) {
+          similarity = 0.065;
+        } else if (similarity >= 0.025 && similarity < 0.04) {
+          similarity = 0.08;
+        } else if (similarity >= 0.04 && similarity < 0.049) {
+          similarity = 0.09;
+        } else if (similarity >= 0.05) {
+          similarity = 0.1;
+        }    
+      }
+
+      if (similarRange >= 0.05 && similarRange < 0.2) {
+        if (similarity < 0.01){
+          similarity = 0.01;
+        } else if (similarity > 0.01 && similarity < 0.012) {
+          similarity = 0.02;
+        } else if (similarity >= 0.012 && similarity < 0.015) {
+          similarity = 0.035;
+        } else if (similarity >= 0.015 && similarity < 0.02) {
+          similarity = 0.05;
+        } else if (similarity >= 0.02 && similarity < 0.025) {
+          similarity = 0.065;
+        } else if (similarity >= 0.025 && similarity < 0.04) {
+          similarity = 0.08;
+        } else if (similarity >= 0.04 && similarity < 0.049) {
+          similarity = 0.09;
+        } else if (similarity >= 0.05) {
+          similarity = 0.1;
+        }       
+      }
+
+      if (similarRange >= 0.2 && similarRange < 0.3) {
+        if (similarity < 0.01){
+          similarity = 0.01;
+        } else if (similarity > 0.01 && similarity < 0.015) {
+          similarity = 0.015;
+        } else if (similarity > 0.015 && similarity < 0.02) {
+          similarity = 0.02;
+        } else if (similarity > 0.02 && similarity < 0.025) {
+          similarity = 0.027;
+        } else if (similarity >= 0.025 && similarity < 0.035) {
+          similarity = 0.035;
+        } else if (similarity >= 0.035 && similarity < 0.05) {
+          similarity = 0.045;
+        } else if (similarity >= 0.05 && similarity < 0.065) {
+          similarity = 0.055;
+        } else if (similarity >= 0.065 && similarity < 0.08) {
+          similarity = 0.06;
+        } else if (similarity >= 0.08 && similarity < 0.09) {
+          similarity = 0.065;
+        } else if (similarity > 0.1 && similarity < 0.15) {
+          similarity = 0.07;
+        } else if (similarity > 0.15 && similarity < 0.2) {
+          similarity = 0.08;   
+        } else if (similarity >= 0.2) {
+          similarity = 0.1;
+        }    
+      }
+
+      if (similarRange >= 0.3 && similarRange < 0.5) {
+        if (similarity < 0.01){
+          similarity = 0.01;
+        } else if (similarity > 0.01 && similarity < 0.015) {
+          similarity = 0.015;
+        } else if (similarity > 0.015 && similarity < 0.02) {
+          similarity = 0.02;
+        } else if (similarity > 0.02 && similarity < 0.025) {
+          similarity = 0.027;
+        } else if (similarity >= 0.025 && similarity < 0.035) {
+          similarity = 0.035;
+        } else if (similarity >= 0.035 && similarity < 0.05) {
+          similarity = 0.045;
+        } else if (similarity >= 0.05 && similarity < 0.065) {
+          similarity = 0.055;
+        } else if (similarity >= 0.065 && similarity < 0.08) {
+          similarity = 0.06;
+        } else if (similarity >= 0.08 && similarity < 0.09) {
+          similarity = 0.065;
+        } else if (similarity > 0.1 && similarity < 0.15) {
+          similarity = 0.07;
+        } else if (similarity > 0.15 && similarity < 0.2) {
+          similarity = 0.08;   
+        } else if (similarity >= 0.2) {
+          similarity = 0.1;
+        }        
       }
 
       $scope.circles.push({
         cx: boardWidth/2,
         cy: boardHeight/2,
-        color: 'rgb(' + parseInt(Math.random() * 255) + ',' +
-              parseInt(Math.random() * 255) + ',' +
-              parseInt(Math.random() * 255) + ')',
-        radius: radius * 800,
+        color: colorScheme[Math.floor(Math.random() * colorScheme.length)],
+        radius: similarity * 1000,
         relative: $scope.relatives[i]
       });
     }
     createBubbles($scope.circles);
   };
 
+
  //Grab relatives from the database, then initialize bubbles
-  $scope.getRelatives = function (){
+  $scope.getRelatives = function() {
     Relatives.getRelatives()
     //Can refactor to return the promise values within the relatives factory if so desired
     .then(function(relatives) {
       //Refactor? potentially redundant addition of relatives to $scope and $rootScope.
       $scope.relatives = relatives.data.relativeList;
       //Add relatives to rootScope to allow access within other controllers
-      console.log('relatives: ', $scope.relatives);
       $rootScope.rels = relatives.data.relativeList;
       initialize();
     }, function(err) {
