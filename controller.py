@@ -32,7 +32,73 @@ def create_demo_user():
         'maternal_side': False,
         'paternal_side': True,
         'birth_year': 1944,
-        'relationship': "3rd Cousin"
+        'relationship': "1st Cousin"
+        },        
+        {
+        'first_name': "Maximus",
+        'last_name': "Bundletreat",
+        'sex': "Male",
+        'residence': "New Jersey",
+        'similarity': 0.125,
+        'maternal_side': True,
+        'paternal_side': False,
+        'birth_year': 1974,
+        'relationship': "1st Cousin"
+        },
+        {
+        'first_name': "Quinci",
+        'last_name': "Peachfuzz",
+        'sex': "Female",
+        'residence': "Georgia",
+        'similarity': 0.0128,
+        'maternal_side': True,
+        'paternal_side': False,
+        'birth_year': 1966,
+        'relationship': "4th-6th Cousin"
+        },
+        {
+        'first_name': "Wilder B.",
+        'last_name': "Shick-Groundswell",
+        'sex': "Male",
+        'residence': "Louisiana",
+        'similarity': 0.25,
+        'maternal_side': False,
+        'paternal_side': True,
+        'birth_year': 1939,
+        'relationship': "Brother"
+        },
+        {
+        'first_name': "Juniper",
+        'last_name': "Kinglsey",
+        'sex': "Male",
+        'residence': "North Carolina",
+        'similarity': 0.0134,
+        'maternal_side': True,
+        'paternal_side': False,
+        'birth_year': 1955,
+        'relationship': "4th Cousin"
+        },
+        {
+        'first_name': "Casseopeia",
+        'last_name': "Middlemist-Gilbralter",
+        'sex': "Female",
+        'residence': "North Carolina",
+        'similarity': 0.002,
+        'maternal_side': False,
+        'paternal_side': True,
+        'birth_year': 1978,
+        'relationship': "Distant Relative"
+        },
+        {
+        'first_name': "Andromeda",
+        'last_name': "Middlemist-Gilbralter",
+        'sex': "Female",
+        'residence': "North Carolina",
+        'similarity': 0.002,
+        'maternal_side': False,
+        'paternal_side': True,
+        'birth_year': 1978,
+        'relationship': "Distant Relative"
         }]
         #Create demo user and all demo user's associated relatives
         demo_user = models.User('demo_id', None, 'Lilly', 'Demo', None, None, None, None, genome_data)
