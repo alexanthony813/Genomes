@@ -40,7 +40,7 @@ position: relative;
 
 #header {
 width: 100%;
-background: url('../../static/img/header-bg.png');
+background: url('../../static/assets/header-bg.png');
 height: 80px;
 position: fixed;
 margin-top: 30px;
@@ -85,7 +85,7 @@ margin: 50px auto;
 
 #slide1, #slide2{ width: 100%; }
 #slide1{
-background:url('../../static/assets/jellyfish-crop.gif') 50% 0 no-repeat fixed;
+background:url('../../static/assets/cosmo1.jpeg') 50% 0 no-repeat fixed;
 color: #fff;
 height: 600px;
 margin: 0;
