@@ -7,15 +7,8 @@ angular.module('genome.directive', [])
       $scope.user_first_name = $cookies.user_first_name;
       $scope.expand = false;
 
-      $scope.toggleNavList = function (ev) {
-        if (!(ev.type === 'mouseleave' && $scope.lastEventType === 'click')) {
-            $scope.expand = !$scope.expand;
-           }
-         $scope.lastEventType = ev.type;
-      };
-
-      $scope.onpoolpage = true;
-      $scope.onselfpage = false;
+      $scope.onpoolpage = $location.$$path === '/pool' ? true : false;
+      $scope.onselfpage = $location.$$path === '/self' ? true : false;
 
       $scope.getRelatives = function () {
         $scope.onpoolpage = true;

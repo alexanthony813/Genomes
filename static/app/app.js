@@ -15,9 +15,7 @@ var app = angular.module('genome', [
 .config(function ($routeProvider) {
   $routeProvider
     .when('/', {
-      templateUrl: '/static/app/pool/pool.html',
-      controller: 'PoolController',
-      authenticate: true
+      redirectTo: '/pool'
     })
     .when('/signin', {
       templateUrl: '/',
@@ -45,7 +43,7 @@ var app = angular.module('genome', [
   var isAuth = function () {
     return $cookies['user_profile_id'];
   };
-  
+
   $rootScope.$on('$routeChangeStart', function(evt, next, current){
     if(next.$$route && next.$$route.authenticate && ! isAuth()){
       $location.path('/signin');

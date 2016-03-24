@@ -130,3 +130,18 @@ background-size: cover;
   margin-right: 20%;
   margin-left: 20%;
 }
+
+.login-button {
+  cursor: pointer;
+}
+
+.remove {
+  color: white;
+  cursor: pointer;
+}
+
+.login-area {
+  display: flex;
+  flex-direction: row;
+  height: 50%;
+}

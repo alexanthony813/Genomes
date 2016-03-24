@@ -1,10 +1,12 @@
 angular.module('genome.self', [])
-.controller('SelfController', function ($scope, $rootScope, $cookies, $location, SelfFactory, d3Service) {
+.controller('SelfController', function ($scope, $cookies, $location, SelfFactory, d3Service, $rootScope) {
 
-  
   $scope.outcomes = $scope.outcomes || [];
-  
   $scope.current = {};
+   var whichView = function() {
+    $rootScope.view = $location.$$path;
+  }
+  whichView();
 
     /* The 'FILLS' block will determine the availability of colors, balls and lines
      * and what quantity and other attributes the d3 plot should contain */
@@ -109,10 +111,11 @@ angular.module('genome.self', [])
       }
 
       SelfFactory.getSnps($cookies.user_profile_id).then(function (outcomes) {
-        
+        console.log('making call for snps');
         for (var key in outcomes) {
           $scope.outcomes.push(outcomes[key]);
         }
+        console.log('scope outcomes', $scope.outcomes);
         numX = $scope.outcomes.length;
         setInterval(draw, 25);
       });
