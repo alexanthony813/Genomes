@@ -75,11 +75,12 @@ body {
 .header {
   display: flex;
   justify-content: space-between;
-  background-color: #f1c40f;
+  background-color: #34495e;
 }
 
 .greetings {
   padding-left: 10px;
+  color: #D0F8FF;
 }
 
 .app-title {
