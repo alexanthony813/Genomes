@@ -151,7 +151,7 @@ def createNewUser(name_response, relatives_response, genotype_response, user_res
     #iterate through list of relatives
     for relative in relatives_response.json()['relatives']:
         #Create a new relative with the information being passed from relatives_response
-        new_relative = models.Relative(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], None, relative['birth_year'], relative['relationship'])
+        new_relative = models.Relative(None, relative['first_name'], relative['last_name'], relative['sex'], relative['residence'], relative['similarity'], relative['maternal_side'], relative['paternal_side'], relative['picture_url'], relative['birth_year'], relative['relationship'], relative['birthplace'], relative['ancestry'])
 
         # Appending each relative to the user's relative property
         new_user.relatives.append(new_relative)

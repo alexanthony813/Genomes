@@ -97,11 +97,11 @@ class Relative(Base):
     similarity = Column(Float())
     maternal_side = Column(Boolean())
     paternal_side = Column(Boolean())
-    birthplace = Column(String(255), nullable=True)
-    ancestry = Column(String(255), nullable=True)
     picture_url = Column(String(255), nullable=True)
     birth_year = Column(Integer, nullable=True)
     relationship = Column(String(255), nullable=True)
+    birthplace = Column(String(255), nullable=True)
+    ancestry = Column(String(255), nullable=True)
 
     # add userId to init
     def __init__(self, email, first_name, last_name, sex, residence, similarity, maternal_side, paternal_side, picture_url, birth_year, relationship):
@@ -115,9 +115,9 @@ class Relative(Base):
         self.paternal_side = paternal_side
         self.picture_url = picture_url
         self.birth_year = birth_year
+        self.relationship = relationship
         self.birthplace = birthplace
         self.ancestry = ancestry
-        self.relationship = relationship
 
     def serialize(self):
         return {
