@@ -98,7 +98,12 @@ body {
 }
 
 .modal-body {
-  display: flex;
+  /*display: flex;*/
+  text-align: center;
+  justify-content: center;
+}
+
+.modal-text {
   text-align: center;
   justify-content: center;
 }

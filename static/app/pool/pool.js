@@ -67,14 +67,14 @@ angular.module('genome.pool', [])
   //pop up message displaying relative data when user clicks on a bubble
   var showRelative = function(bubble) {
     $scope.popModal.name = bubble.relative.first_name + ' ' + bubble.relative.last_name;
-    $scope.popModal.similarity = bubble.relative.first_name + ' shares ' + (bubble.relative.similarity*100).toFixed(2) + '% of your DNA.';
-    $scope.popModal.relationship = bubble.relative.relationship || null;
-    if(bubble.relative.birth_year) {
-      $scope.popModal.age = 'Age: ' + (new Date().getFullYear() - bubble.relative.birth_year);
-    } else {
-      $scope.popModal.age = null;
-    }
+    $scope.popModal.similarity = (bubble.relative.similarity*100).toFixed(2) + "% of your DNA";
+    $scope.popModal.relationship = bubble.relative.relationship  || "Unknown";
+    $scope.popModal.age = bubble.relative.birth_year ? (new Date().getFullYear() - bubble.relative.birth_year) : "Unknown";
     $scope.popModal.image = bubble.relative.picture_url || '../../../static/assets/hipDNA.png';
+    $scope.popModal.ancestry = bubble.relative.ancestry || "Unknown";
+    $scope.popModal.birthplace = bubble.relative.birthplace  || "Unknown";
+
+    console.log("showRelative", $scope.popModal);
   };
 
   //Grab the pool as a canvas for our bubbles
@@ -106,6 +106,7 @@ angular.module('genome.pool', [])
         var xPosition = parseFloat(d3.select(this).attr("cx"));
         var yPosition = parseFloat(d3.select(this).attr("cy"));
 
+        var similarity = d3.select(this)[0][0].__data__.relative.similarity * 100;
         svg.append("text")
           .attr("id", "tooltip")
           .attr("x", xPosition)
@@ -115,7 +116,8 @@ angular.module('genome.pool', [])
           .attr("font-size", "13px")
           .attr("font-weight", "bold")
           .attr("fill", "black")
-          .html(d3.select(this)[0][0].__data__.relative.similarity.toFixed(2) + "%");
+          .attr("pointer-events", "none")
+          .text(similarity.toFixed(2) + "%");
 
         d3.select(this)
           .attr("opacity", ".7");
