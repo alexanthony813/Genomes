@@ -1,15 +1,22 @@
-<div class="top-nav">
-  <div class="top-nav-bar">
-    <span class='user-greeting'>Hello, {{ user_first_name }} </span>
-    <span class='app-title'>Genomie</span>
+<div class="header">
+  <div class="greetings">
+    <div class='app-title'>Genomie</div>
+    <div class='user-greeting'>Hello, {{ user_first_name }}</div>
   </div>
 
   <div class="view-selection">
-  	<button ng-click="getRelatives()">Get Relatives</button>
-  	<button ng-click="getSelf()">Get my own info</button>
+    <div class="viewforpool" ng-show="onpoolpage === true;">
+      <md-button ng-disabled="true" class="md-raised md-primary">Get Relatives</md-button>
+    	<md-button class="md-raised" ng-click="getSelf()">Get my own info</md-button>
+    </div>
+
+    <div class="viewforself" ng-show="onpoolpage === false;">
+      <md-button class="md-raised" ng-click="getRelatives()">Get Relatives</md-button>
+      <md-button ng-disabled="true" class="md-raised md-primary">Get my own info</md-button>
+    </div>
   </div>
 
   <div class="header-options" ng-controller="AuthController">
-    <button ng-click="signOut()">signout </button>
+    <md-button class="md-warn md-raised md-hue-2" ng-click="signOut()">Sign out</md-button>
   </div>
 </div>

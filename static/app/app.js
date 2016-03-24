@@ -8,7 +8,8 @@ var app = angular.module('genome', [
   'genome.d3Service',
   'genome.sideNav',
   'genome.auth',
-  'genome.directive'
+  'genome.directive',
+  'ngMaterial'
 ])
 
 .config(function ($routeProvider) {
