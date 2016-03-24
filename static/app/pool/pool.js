@@ -1,11 +1,18 @@
 angular.module('genome.pool', [])
-.controller('PoolController', function($scope, d3Service, Relatives, $rootScope, $window) {
+.controller('PoolController', function($scope, d3Service, Relatives, $rootScope, $window, $location
+  ) {
+
   $scope.relatives = [];
   $rootScope.rels = [];
   $scope.myData = [10,10,10,20];
   $scope.circles = [];
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
+
+  var whichView = function() {
+    $rootScope.view = $location.$$path;
+  }
+  whichView();
 
   $scope.showMap = false;
   $rootScope.filterRegions = function() {
@@ -175,7 +182,7 @@ angular.module('genome.pool', [])
     });
 
     for (var i = 0; i < $scope.relatives.length || 0; i++) {
-      
+
       var similarity = $scope.relatives[i].similarity;
 
       var similarRange = (range[0] - range[range.length-1]);
@@ -197,7 +204,7 @@ angular.module('genome.pool', [])
           similarity = 0.09;
         } else if (similarity >= 0.05) {
           similarity = 0.1;
-        }    
+        }
       }
 
       if (similarRange >= 0.05 && similarRange < 0.2) {
@@ -217,7 +224,7 @@ angular.module('genome.pool', [])
           similarity = 0.09;
         } else if (similarity >= 0.05) {
           similarity = 0.1;
-        }       
+        }
       }
 
       if (similarRange >= 0.2 && similarRange < 0.3) {
@@ -242,10 +249,10 @@ angular.module('genome.pool', [])
         } else if (similarity > 0.1 && similarity < 0.15) {
           similarity = 0.07;
         } else if (similarity > 0.15 && similarity < 0.2) {
-          similarity = 0.08;   
+          similarity = 0.08;
         } else if (similarity >= 0.2) {
           similarity = 0.1;
-        }    
+        }
       }
 
       if (similarRange >= 0.3 && similarRange < 0.5) {
@@ -270,10 +277,10 @@ angular.module('genome.pool', [])
         } else if (similarity > 0.1 && similarity < 0.15) {
           similarity = 0.07;
         } else if (similarity > 0.15 && similarity < 0.2) {
-          similarity = 0.08;   
+          similarity = 0.08;
         } else if (similarity >= 0.2) {
           similarity = 0.1;
-        }        
+        }
       }
 
       $scope.circles.push({
