@@ -33,11 +33,13 @@ def home():
     auth_url = '%sauthorize/?response_type=code&redirect_uri=%s&client_id=%s&scope=%s' % (BASE_API_URL, REDIRECT_URI, CLIENT_ID, DEFAULT_SCOPE)
     return render_template('landing.html', auth_url=auth_url)
 
+
 @app.route('/get_info/')
 def getUser():
     response = make_response(render_template('index.html'))
     response.set_cookie('user_profile_id', request.cookies.get('user_profile_id'))
     return response
+
 
 @app.route('/demo/')
 def makeDemoUser():
@@ -50,6 +52,7 @@ def makeDemoUser():
     response.set_cookie('user_first_name', demo_userName)
     response.set_cookie('user_profile_id', demo_id)
     return response
+
 
 #Refactor this route to take a userProfileID after the trailing slash with some syntax like: '<%s UserID >''
 #i.e. the equivalent of '/:userId' with node/express servers
@@ -82,16 +85,12 @@ def getRelatives():
 @app.route('/api/getsnps', methods=['POST', 'GET'])
 def getSnps():
     current_user_id = request.data
-    print '>>>>>>', request.data
     user_snps = {}
 
     user_data = models.db_session.query(models.User).filter(models.User.profile_id == current_user_id).first().serialize()
     for user_datum in user_data:
-        print "userdatum in the userdata loop", user_datum
         if user_datum[:2:].lower()=='rs':
             user_snps[user_datum] = user_data[user_datum]
-
-    print "usersnps[userdatum]", user_snps
 
     user_outcomes = []
     for user_snp in user_snps:
@@ -171,7 +170,7 @@ def receive_code():
     #error handling if initial api calls to 23andMe fail
     else:
         response.raise_for_status()
-
+        
 
 #Initialize python server on port
 if __name__ == '__main__':

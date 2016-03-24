@@ -1,14 +1,11 @@
 angular.module('genome.auth', ['ngCookies', 'ngRoute'])
 
-.controller('AuthController', function($scope, $rootScope, $cookies, $location, $rootElement, $timeout, $window, AuthFactory) {
+.controller('AuthController', function($http, $scope, $rootScope, $cookies, $location, $rootElement, $timeout, $window, AuthFactory) {
   $scope.user = {};
 
   $rootScope.signOut = function() {
     AuthFactory.signOut();
 
-    $timeout(function() {
-      $location.path('/signout');
-    }, 400);
   };
 
   $scope.getUserProfileId = function () {
@@ -28,7 +25,8 @@ angular.module('genome.auth', ['ngCookies', 'ngRoute'])
   var signOut = function() {
     delete $cookies['user_profile_id'];
     delete $cookies['user_first_name'];
-    $location.path('/signin')
+    
+    window.location.href = '/';
   };
 
   return {
