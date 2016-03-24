@@ -1,3 +1,10 @@
+body {
+  display: inline-block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 .dnahelixcontainer {
   max-width: 100%;
   height: 110px;
@@ -65,19 +72,27 @@
   word-wrap: normal;
 }
 
-.top-nav {
-  margin: 0px;
-  width: 100%;
-  height: 70px;
-  padding: 0px;
-  position: relative;
+.header {
+  display: flex;
+  justify-content: space-between;
   background-color: #f1c40f;
 }
 
-.header-options {
-  padding-top: 10px;
-  float: right;
+.greetings {
+  padding-left: 10px;
+}
 
+.app-title {
+  font-family: monospace, sans-serif;
+  letter-spacing: 0.2em;
+  color: #D0F8FF;
+  text-shadow: 0 0 5px #A5F1FF, 0 0 10px #A5F1FF,
+               0 0 20px #A5F1FF, 0 0 30px #A5F1FF,
+               0 0 40px #A5F1FF;
+}
+
+.header-options {
+  float: right;
 }
 
 .modal-body {
@@ -93,6 +108,7 @@
 }
 
 svg {
+  padding-top: 20%;
   position: absolute;
   margin-left: 10%;
 }
