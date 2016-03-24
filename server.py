@@ -31,7 +31,15 @@ BASE_API_URL = 'https://api.23andme.com/'
 @app.route('/')
 def home():
     auth_url = '%sauthorize/?response_type=code&redirect_uri=%s&client_id=%s&scope=%s' % (BASE_API_URL, REDIRECT_URI, CLIENT_ID, DEFAULT_SCOPE)
+    print 'here'
     return render_template('landing.html', auth_url=auth_url)
+
+
+# @app.route('/user/signout/')
+# def signOut():
+#     print 'yo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+#     return redirect(url_for('home'))
+
 
 @app.route('/get_info/')
 def getUser():
@@ -82,16 +90,12 @@ def getRelatives():
 @app.route('/api/getsnps', methods=['POST', 'GET'])
 def getSnps():
     current_user_id = request.data
-    print '>>>>>>', request.data
     user_snps = {}
 
     user_data = models.db_session.query(models.User).filter(models.User.profile_id == current_user_id).first().serialize()
     for user_datum in user_data:
-        print "userdatum in the userdata loop", user_datum
         if user_datum[:2:].lower()=='rs':
             user_snps[user_datum] = user_data[user_datum]
-
-    print "usersnps[userdatum]", user_snps
 
     user_outcomes = []
     for user_snp in user_snps:
@@ -171,6 +175,8 @@ def receive_code():
     #error handling if initial api calls to 23andMe fail
     else:
         response.raise_for_status()
+
+
 
 
 #Initialize python server on port

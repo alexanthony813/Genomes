@@ -24,8 +24,7 @@ var app = angular.module('genome', [
       controller: 'AuthController'
     })
     .when('/signout', {
-      templateUrl: '/static/app/auth/signout.html',
-      controller: 'AuthController',
+      templateUrl: '/templates/landing.html',
       authenticate: true
     })
     .when('/pool', {
