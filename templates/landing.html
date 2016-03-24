@@ -13,24 +13,26 @@
   <div id="logo"><a href=""> GENOMIE </a></div>
   <nav id="nav">
    <ul>
-   <li><a href="#slide1" class="active" title="Next Section" >Slide 1</a></li>
-   <li><a href="#slide2" title="Next Section">Slide 2</a></li>
-   <li><a href="#slide3" title="Next Section">Slide 3</a></li>
-   <li><a href="#slide4" title="Next Section">Slide 4</a></li>
-   <li><a href="#slide5" title="Next Section">Slide 5</a></li>
+     <li><a href="#slide1" class="active" title="Next Section">HOME</a></li>
+     <li><a href="#slide2" title="Next Section">LEARN</a></li>
+     <li><a href="#slide3" title="Next Section">FIND RELATIVES</a></li>
+     <li><a href="#slide4" title="Next Section">HISTORY</a></li>
+     <li><a href="#slide5" title="Next Section">START</a></li>
    </ul>
   </nav>
   </div>
   </header>
   <!--End HEADER-->
-  <!-- --- SLIDES START --->  -->
+  <!-- SLIDES START -->
    <div id="slide1">
    <div class="content">
    <!-- <div id="christmas_tree"> </div>
    <div id="snowflakes1"></div>
    <div id="snowflakes2"></div> -->
+   <div class="landingHeader">
    <h2>VISUALIZE</h2>
    <h1>YOUR GENES</h1>
+   </div>
    <!-- <div id="divider"> </div> -->
    <!-- <h3>HAPPY NEW YEAR </h3> -->
    <!-- <div id="ribbon"></div>
@@ -48,63 +50,29 @@
    <div id="slide3">
    <div class="content">
    <div class="quotes_container">
-   <h3 class="quotes">“I truly believe that if we keep telling the Christmas story, singing the Christmas songs, and living the Christmas spirit, we can bring joy and happiness and peace to this world.” </h3>
-   <img src="../static/img/norman.png" align="left"/> <h4 class="author_name_white">Norman Vincent Peale </h4>
+   <h3 id="darken" class="quotes">“You can also find distant relatives around the world. Who knows? Maybe this time next year you'll visit your 3rd cousin in Hungary.” </h3>
+   <img src="../static/img/norman.png" align="left"/> <h4 id="darken" class="author_name_white">Your cousin?</h4>
    </div>
    </div>
    </div>
    <div id="slide4">
    <div class="content">
    <div class="quotes_container">
-   <h3 class="quotes">“Christmas doesn't come from a store, maybe Christmas perhaps means a little bit more....” </h3>
-   <img src="../static/img/dr-seuss.png" align="left"/> <h4 class="author_name_gray">Dr. Seuss </h4>
+   <h3 class="quotes">“DNA, 1963 till now”</h3>
+   <img src="../static/img/dr-seuss.png" align="left"/> <h4 class="author_name_gray"><--Not the woman Watson & Crick nabbed the theory of DNA from. </h4>
    </div>
    </div>
    </div>
    <div id="slide5">
    <div class="content">
    <div class="quotes_container">
-   <h3 class="quotes">“My idea of Christmas, whether old-fashioned or modern, is very simple: loving others. Come to think of it, why do we have to wait for Christmas to do that?” </h3>
-   <img src="../static/img/bob.png" align="left"/> <h4 class="author_name_white">Bob Hope </h4>
+   <h3 class="quotes">““If you already received your genome data from 23andMe, you can log in. Otherwise, take the app for a test drive with some anonymous data.”</h3>
+   <img src="../static/img/bob.png" align="left"/ type="button" onclick="location.href='/demo/'"> <h4 class="author_name_white">Log in as 'Lilly Demo'</h4>
+   <img src="../static/img/bob.png" align="left"/ type="button" value="Log in with 23andMe" onclick="location.href='{{ auth_url }}'"> <h4 class="author_name_white">Log in with 23andMe</h4>
    </div>
-   <div id="copyright"><a href="http://www.1stwebdesigner.com/">Copyright 1stwebdesigner.com </a></div>
+   <div id="copyright"><a href="http://www.1stwebdesigner.com/">Copyright Genomie.com </a></div>
    </div>
    </div>
-   <!----- SLIDES END --->
-  <div class="container">
-    <div class="topContainer">
-      <div class="splash">
-        <h1>Genomie</h1>
-        <img src="/static/assets/jellyfish3.gif" />
-       <div type="button" class="testDrive test" onclick="location.href='/demo/'">Test Drive</div>
-      </div>
-        <div class="hipsterdata">
-          <div class="hipsterCircles">
-            <div class="hipsterpic"><img src="/static/assets/hipDNA.png"></div>
-            <div class="hipsterpic"><img src="/static/assets/hipDNA.png"></div>
-            <div class="hipsterpic"><img src="/static/assets/hipDNA.png"></div>
-          </div>
-
-          <div class="hipsterDescriptions">
-            <h2 class="choicewords lead">
-            SEE a visual representation of your DNA
-            </h2>
-            <h2 class="choicewords lead">
-            LEARN if you're predisposed to hate cilantro? Or to play the trumpet?
-            </h2>
-            <h2 class="choicewords lead">
-            FIND and reach out to your distant relatives around the globe
-            </h2>
-          </div>
-        </div>
-      </div>
-    <div class="loginFooter">
-    <!-- TODO update auth url
-      <input class="login-btn" type="button" value="Log in with 23andMe" onclick="location.href='{{ auth_url }}'" />
-    <!-- <a class="login-btn" type="button" value="Log in with 23andMe"href="/login"></a> -->
-    <input class="login-btn" type="button" value="Test Drive" onclick="location.href='/demo/'" />
-    </div>
-  </div>
   <script src="../static/lib/jquery/dist/jquery.min.js"></script>
   <script>
   $(document).ready(function() {
