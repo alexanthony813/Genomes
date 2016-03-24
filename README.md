@@ -56,8 +56,12 @@ Back-end
 =====================
 ## Meet The Engineers
 =====================
-Product Owner - Gar Lee
-Scrum Master - Alex Anthony
-Development Team - Chris Bassano, Peter Lollo
+Product Owner 
+- Gar Lee
+Scrum Master 
+- Alex Anthony
+Development Team 
+- Chris Bassano
+- Peter Lollo
 
 
