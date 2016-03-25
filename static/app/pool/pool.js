@@ -61,19 +61,18 @@ angular.module('genome.pool', [])
 
   var radius = d3.scale.sqrt().range([0, 12]);
 
-  var colorScheme = ['#1abc9c', '#2ecc71', '#f1c40f', '#27ae60', '#3498db', '#9b59b6', '#2980b9','#8e44ad','#34495e','#e67e22','#d35400','#e74c3c', '#c0392b', '#bdc3c7', '#f39c12', '#2c3e50', '#95a5a6']
+  var colorScheme = ['#1abc9c', '#2ecc71', '#f1c40f', '#27ae60', '#3498db', '#9b59b6', '#2980b9','#8e44ad','#e67e22','#d35400','#e74c3c', '#c0392b', '#bdc3c7', '#f39c12', '#95a5a6'];
+  // '#34495e','#2c3e50',
 
   //pop up message displaying relative data when user clicks on a bubble
   var showRelative = function(bubble) {
     $scope.popModal.name = bubble.relative.first_name + ' ' + bubble.relative.last_name;
-    $scope.popModal.similarity = bubble.relative.first_name + ' shares ' + (bubble.relative.similarity*100).toFixed(2) + '% of your DNA.';
-    $scope.popModal.relationship = bubble.relative.relationship || null;
-    if(bubble.relative.birth_year) {
-      $scope.popModal.age = 'Age: ' + (new Date().getFullYear() - bubble.relative.birth_year);
-    } else {
-      $scope.popModal.age = null;
-    }
+    $scope.popModal.similarity = (bubble.relative.similarity*100).toFixed(2) + "% of your DNA";
+    $scope.popModal.relationship = bubble.relative.relationship  || "Unknown";
+    $scope.popModal.age = bubble.relative.birth_year ? (new Date().getFullYear() - bubble.relative.birth_year) : "Unknown";
     $scope.popModal.image = bubble.relative.picture_url || '../../../static/assets/hipDNA.png';
+    $scope.popModal.ancestry = bubble.relative.ancestry || "Unknown";
+    $scope.popModal.birthplace = bubble.relative.birthplace  || "Unknown";
   };
 
   //Grab the pool as a canvas for our bubbles
@@ -98,11 +97,34 @@ angular.module('genome.pool', [])
     var circle = svg.selectAll("circle")
       .data(nodes)
       .enter().append("circle")
-      .on('mouseover', function(){
-        d3.select(this).transition().attr('r', function(d) {return d.radius * 2;});
+      .on('mouseover', function(d){
+
+        // Get this bubble's x/y values, then augment for the tooltip 
+        // This will allow the tool tip to be centered in the middle of the bubble
+        var xPosition = parseFloat(d3.select(this).attr("cx"));
+        var yPosition = parseFloat(d3.select(this).attr("cy"));
+
+        var similarity = d3.select(this)[0][0].__data__.relative.similarity * 100;
+        svg.append("text")
+          .attr("id", "tooltip")
+          .attr("x", xPosition)
+          .attr("y", yPosition)
+          .attr("text-anchor", "middle")
+          .attr("font-family", "sans-serif")
+          .attr("font-size", "13px")
+          .attr("font-weight", "bold")
+          .attr("fill", "black")
+          .attr("pointer-events", "none")
+          .text(similarity.toFixed(2) + "%");
+
+        d3.select(this)
+          .attr("opacity", ".7");
+
       })
       .on('mouseout', function(){
-        d3.select(this).transition().attr('r', function(d){return d.radius; });
+        d3.select('#tooltip').remove();
+        d3.select(this)
+          .attr("opacity", "1");
       })
       .on('click', function(bubble) {
         $scope.$apply(
@@ -178,7 +200,7 @@ angular.module('genome.pool', [])
     $scope.relatives.map(function (relative) {
       range.push(relative.similarity);
     }).sort(function (a, b) {
-      return b - a
+      return b - a; 
     });
 
     for (var i = 0; i < $scope.relatives.length || 0; i++) {
