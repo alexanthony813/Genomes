@@ -50,6 +50,7 @@ h3 {
   background: url('../../static/assets/header-bg.png');
   height: 80px;
   position: fixed;
+  margin-top: 0px;
 }
 #nav { 
   width: 410px; 
