@@ -50,7 +50,6 @@ h3 {
   background: url('../../static/assets/header-bg.png');
   height: 80px;
   position: fixed;
-  margin-top: 30px;
 }
 #nav { 
   width: 410px; 
@@ -81,10 +80,6 @@ h3 {
   margin: 50px auto;
 }
 
-/*#darken {
-  color: black;
-}*/
-
 .author_name_white { 
   font-family:"Wellfleet"; 
   margin: 70px 0 0 75px; 
@@ -97,6 +92,7 @@ h3 {
   color: #94a4a4; 
   font-size: 20px; 
 }
+
 .quotes_container { 
   width: 800px; 
   margin: 0 auto; 
