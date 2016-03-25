@@ -7,13 +7,19 @@ angular.module('genome.pool', [])
   $rootScope.rels = [];
   $scope.myData = [10,10,10,20];
   $scope.circles = [];
+  var margin = {
+    top: 50,
+    right: 50,
+    bottom: 50,
+    left: 50
+  };
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
-  var column1 = $window.innerWidth - ($window.innerWidth * 5/6);
+  var column1 = margin[left];
   var column2 = $window.innerWidth - ($window.innerWidth * 1/3);
-  var column3 = $window.innerWidth;
-  var row1 = $window.innerHeight - ($window.innerHeight * 3/4);
-  var row2 = $window.innerHeight;
+  var column3 = $window.innerWidth - margin[right];
+  var row1 = margin[top]
+  var row2 = $window.innerHeight - margin[top];
 
 
   var makeNewBubbleData = function(){
@@ -31,13 +37,15 @@ angular.module('genome.pool', [])
     }
     var moveBubbles = function() {
       makeNewBubbleData();
-      d3.selectAll("circle").attr('r', '5').data($scope.circles).transition().delay(3000);
+      d3.selectAll("circle").transition().duration(1500).attr('r', '5').data($scope.circles).transition().delay(3000);
     }
 
   var whichView = function() {
     $rootScope.view = $location.$$path;
   }
   whichView();
+
+  //Toggle Map
   var mapShowing = false;
   var toggleMap = function(){
     if(!mapShowing) {
@@ -49,25 +57,19 @@ angular.module('genome.pool', [])
     }
     mapShowing = !mapShowing;
   }
-  $scope.showMap = false;
   $rootScope.filterRegions = function() {
     toggleMap();
     setTimeout(function(){moveBubbles();}, 2000);
   };
+  //End map toggle
 
+  //Pop Modal
   $scope.popModal = {
     name: '',
     similarity: '',
     image: '',
     relationship: '',
     age: 0
-  };
-
-  var margin = {
-    top: 50,
-    right: 50,
-    bottom: 50,
-    left: 50
   };
 
   var width = 1000 - margin.left - margin.right;
