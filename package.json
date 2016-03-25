@@ -27,7 +27,14 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "bower-requirejs": "^1.2.0",
     "grunt": "^0.4.5"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "karma": "^0.13.22",
+    "karma-bower": "^1.0.1",
+    "karma-jasmine": "^0.3.8",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "karma-requirejs": "^0.2.6"
+  }
 }
