@@ -15,19 +15,29 @@ angular.module('genome.pool', [])
   };
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
-  var column1 = margin[left];
+  var column1 = margin['left'];
   var column2 = $window.innerWidth - ($window.innerWidth * 1/3);
-  var column3 = $window.innerWidth - margin[right];
-  var row1 = margin[top]
-  var row2 = $window.innerHeight - margin[top];
-
-
+  var column3 = $window.innerWidth - margin['right'];
+  var row1 = margin['top']
+  var row2 = $window.innerHeight - margin['top'];
+  //Adjust Bubble Data
+  //Move Bubbles to Random Locations
+  var makeRandomBubbleData = function() {
+    var count = 1;
+    $scope.circles.forEach(function(bubble, i){
+      bubble['cx'] = bubble['cx'] + count*(100 * i);
+      bubble['cy'] = bubble['cy'] - count*(100 * i);
+      count *= -1;
+    })
+  }
+  //Move Bubbles to Their Respective Locations on the Globe Based on Relative Birthplace
   var makeNewBubbleData = function(){
       for(var i = 0; i < $scope.circles.length; i++){
         console.log($scope.circles[i].relative.birthplace);
-        if($scope.circles[i].relative.birthplace === "United States") {
+        if($scope.circles[i].relative.birthplace === "United States" || $scope.circles[i].relative.birthplace === null) {
           $scope.circles[i]['cx'] = column1;
           $scope.circles[i]['cy'] = row1;
+          $scope.circles[i]['radius'] = 5;
         } else if($scope.circles[i].relative.birthplace === "France") {
           console.log('france france');
           $scope.circles[i]['cx'] = column3;
@@ -35,33 +45,34 @@ angular.module('genome.pool', [])
         }
       }
     }
+    //Enter New Bubble Data and Instigate Bubble Movement
     var moveBubbles = function() {
       makeNewBubbleData();
-      d3.selectAll("circle").transition().duration(1500).attr('r', '5').data($scope.circles).transition().delay(3000);
+      d3.selectAll("circle").data($scope.circles).on('click', function(){console.log('clicked')});
     }
 
+  //Toggle Side Nav Icons
   var whichView = function() {
     $rootScope.view = $location.$$path;
   }
   whichView();
+  //End Toggle Side Nav Icons
 
   //Toggle Map
   var mapShowing = false;
   var toggleMap = function(){
     if(!mapShowing) {
-      //$('svg#mainCanvas').prepend('<img src="../../../static/assets/worldmap.png" class="imgMap" />')
       $('div.wholepage').addClass('mapView');
     } else {
-      // $('.imgMap').remove();
       $('div.wholepage').removeClass('mapView');
     }
     mapShowing = !mapShowing;
   }
   $rootScope.filterRegions = function() {
     toggleMap();
-    setTimeout(function(){moveBubbles();}, 2000);
+    moveBubbles();
   };
-  //End map toggle
+  //End Map Toggle
 
   //Pop Modal
   $scope.popModal = {
@@ -96,6 +107,11 @@ angular.module('genome.pool', [])
   //Grab the pool as a canvas for our bubbles
   var svg = d3.select('.pool').append("svg")
     .attr("fill", "transparent")
+    .attr("preserveAspectRatio", "xMinYMin meet")
+    //.classed("svg-container", true)
+      .attr("viewBox", "0 0 600 400")
+      //class to make it responsive
+      .classed("svg-content-responsive", true)
     .attr("width", boardWidth + margin.left + margin.right)
     .attr("height", boardHeight + margin.top + margin.bottom)
     .attr("id", "mainCanvas")

@@ -140,7 +140,7 @@ svg#mainCanvas {
              animation: fadein 2s;
   z-index: -1;
   background-image:url('../../static/assets/worldmap.png');
-   background-repeat: no-repeat;
+  background-repeat: no-repeat;
   background-size: contain;
   max-width: 100%;
   height: 100%;
@@ -186,4 +186,18 @@ svg#mainCanvas {
   max-width: 90%;
   margin-left: 8%;
   margin-top: 8%;
+}
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* aspect ratio */
+    vertical-align: top;
+    overflow: hidden;
+}
+.svg-content-responsive {
+    display: inline-block;
+    position: absolute;
+    /*top: 10px;*/
+    left: 0;
 }
