@@ -108,7 +108,7 @@ angular.module('genome.pool', [])
   var svg = d3.select('.pool').append("svg")
     .attr("fill", "transparent")
     .attr("preserveAspectRatio", "xMinYMin meet")
-    //.classed("svg-container", true)
+    .classed("svg-container", true)
       .attr("viewBox", "0 0 600 400")
       //class to make it responsive
       .classed("svg-content-responsive", true)
