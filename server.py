@@ -23,7 +23,7 @@ DEFAULT_REDIRECT_URI = '%sreceive_code/'  % BASE_CLIENT_URL
 CLIENT_ID = app.config.get('CLIENT_ID')
 CLIENT_SECRET = app.config.get('CLIENT_SECRET')
 REDIRECT_URI = app.config.get('REDIRECT_URI')
-SNPS = ['rs12913832', 'rs1799971', 'rs1800955', 'rs806380']
+SNPS = ['rs12913832', 'rs8177374', 'rs1799971', 'rs806380', 'rs1800955', 'rs53576', 'rs1815739', 'rs6152', 'rs1800497', 'rs9939609', 'rs662799', 'rs17822931', 'rs4680', 'rs4988235', 'rs6025', 'rs7574865', 'rs1695', 'rs72921001', 'rs1537415', 'rs2472297', 'rs909525']
 DEFAULT_SCOPE = 'names basic email ancestry relatives genomes %s' % (' '.join(SNPS))
 BASE_API_URL = 'https://api.23andme.com/'
 

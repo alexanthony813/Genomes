@@ -13,13 +13,13 @@ angular.module('genome.self', [])
   var fills = ['#E74C3C', '#3498DB', '#2ECC71'],
     h = 800,
     w = 150,
-    numX = 2,
-    numY = 10,
+    numX = 0,
+    numY = 0,
     speed = 0.01,
-    torsion = 0.2,
+    torsion = 0.3,
     x = d3.scale.linear().range([20, w - 20]),
-    y = d3.scale.linear().range([h-100, 20]),
-    z = d3.scale.linear().range([20, 5]);
+    y = d3.scale.linear().range([h - 100, 20]),
+    z = d3.scale.linear().range([18, 5]);
       /**
         * This block will append the built svg elements to the "body" of the HTML
       **/
