@@ -14,25 +14,6 @@ body {
   padding-top: 20px;
 }
 
-#snp-tip {
-  position: absolute;
-  width: 200px;
-  height: auto;
-  padding: 10px;
-  background-color: white;
-  border-color: #f1c40f;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-  pointer-events: none;
-}
-
-#snp-tip.hidden {
-  display: none;
-}
 
 #tooltip p {
   margin: 0;
@@ -99,12 +80,10 @@ body {
 
 .modal-body {
   text-align: center;
-  justify-content: center;
 }
 
 .modal-text {
   text-align: center;
-  justify-content: center;
 }
 
 .svgMap{

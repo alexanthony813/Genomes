@@ -73,8 +73,6 @@ angular.module('genome.pool', [])
     $scope.popModal.image = bubble.relative.picture_url || '../../../static/assets/hipDNA.png';
     $scope.popModal.ancestry = bubble.relative.ancestry || "Unknown";
     $scope.popModal.birthplace = bubble.relative.birthplace  || "Unknown";
-
-    console.log("showRelative", $scope.popModal);
   };
 
   //Grab the pool as a canvas for our bubbles
