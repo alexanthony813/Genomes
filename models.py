@@ -47,9 +47,26 @@ class User(Base):
     picture_url_medium = Column(String(255), nullable=True)
     picture_url_large = Column(String(255), nullable=True)
     rs12913832 = Column(String(255), nullable=True)
+    rs8177374 = Column(String(255), nullable=True)
     rs1799971 = Column(String(255), nullable=True)
-    rs1800955 = Column(String(255), nullable=True)
     rs806380 = Column(String(255), nullable=True)
+    rs1800955 = Column(String(255), nullable=True)
+    rs53576 = Column(String(255), nullable=True)
+    rs1815739 = Column(String(255), nullable=True)
+    rs6152 = Column(String(255), nullable=True)
+    rs1800497 = Column(String(255), nullable=True)
+    rs9939609 = Column(String(255), nullable=True)
+    rs662799 = Column(String(255), nullable=True)
+    rs17822931 = Column(String(255), nullable=True)
+    rs4680 = Column(String(255), nullable=True)
+    rs4988235 = Column(String(255), nullable=True)
+    rs6025 = Column(String(255), nullable=True)
+    rs7574865 = Column(String(255), nullable=True)
+    rs1695 = Column(String(255), nullable=True)
+    rs72921001 = Column(String(255), nullable=True)
+    rs1537415 = Column(String(255), nullable=True)
+    rs2472297 = Column(String(255), nullable=True)
+    rs909525 = Column(String(255), nullable=True)
 
     # Setting up the relationship to the relatives table and user_relatives join table
     relatives = relationship('Relative', secondary=user_relatives, backref=backref('user', lazy='dynamic'))
@@ -64,9 +81,26 @@ class User(Base):
         self.picture_url_medium = picture_url_medium
         self.picture_url_large = picture_url_large
         self.rs12913832 = genotype_info['rs12913832']
+        self.rs8177374 = genotype_info['rs8177374']
         self.rs1799971 = genotype_info['rs1799971']
-        self.rs1800955 = genotype_info['rs1800955']
         self.rs806380 = genotype_info['rs806380']
+        self.rs1800955 = genotype_info['rs1800955']
+        self.rs53576 = genotype_info['rs53576']
+        self.rs1815739 = genotype_info['rs1815739']
+        self.rs6152 = genotype_info['rs6152']
+        self.rs1800497 = genotype_info['rs1800497']
+        self.rs9939609 = genotype_info['rs9939609']
+        self.rs662799 = genotype_info['rs662799']
+        self.rs17822931 = genotype_info['rs17822931']
+        self.rs4680 = genotype_info['rs4680']
+        self.rs4988235 = genotype_info['rs4988235']
+        self.rs6025 = genotype_info['rs6025']
+        self.rs7574865 = genotype_info['rs7574865']
+        self.rs1695 = genotype_info['rs1695']
+        self.rs72921001 = genotype_info['rs72921001']
+        self.rs1537415 = genotype_info['rs1537415']
+        self.rs2472297 = genotype_info['rs2472297']
+        self.rs909525 = genotype_info['rs909525']
 
     def serialize(self):
         return {
@@ -79,9 +113,26 @@ class User(Base):
             'picture_url_medium': self.picture_url_medium,
             'picture_url_large': self.picture_url_large,
             'rs12913832': self.rs12913832,
+            'rs8177374': self.rs8177374,
             'rs1799971': self.rs1799971,
+            'rs806380': self.rs806380,
             'rs1800955': self.rs1800955,
-            'rs806380': self.rs806380
+            'rs53576': self.rs53576,
+            'rs1815739': self.rs1815739,
+            'rs6152': self.rs6152,
+            'rs1800497': self.rs1800497,
+            'rs9939609': self.rs9939609,
+            'rs662799': self.rs662799,
+            'rs17822931': self.rs17822931,
+            'rs4680': self.rs4680,
+            'rs4988235': self.rs4988235,
+            'rs6025': self.rs6025,
+            'rs7574865': self.rs7574865,
+            'rs1695': self.rs1695,
+            'rs72921001': self.rs72921001,
+            'rs1537415': self.rs1537415,
+            'rs2472297': self.rs2472297,
+            'rs909525': self.rs909525
         }
 
 
