@@ -38,22 +38,21 @@ angular.module('genome.pool', [])
     $rootScope.view = $location.$$path;
   }
   whichView();
-
+  var mapShowing = false;
+  var toggleMap = function(){
+    if(!mapShowing) {
+      //$('svg#mainCanvas').prepend('<img src="../../../static/assets/worldmap.png" class="imgMap" />')
+      $('div.wholepage').addClass('mapView');
+    } else {
+      // $('.imgMap').remove();
+      $('div.wholepage').removeClass('mapView');
+    }
+    mapShowing = !mapShowing;
+  }
   $scope.showMap = false;
   $rootScope.filterRegions = function() {
-    //$('body').addClass("mapView")
-    $('body').append('<img src="../../../static/assets/worldmap.png" class="imgMap" />')
-    var imgs = svg.selectAll("image").data([0]);
-            imgs.enter()
-            .append("svg:image")
-            .attr("xlink:href", "../../../static/assets/worldmap.png")
-            .attr("x", "60")
-                            .attr("y", "60")
-                            .attr("width", "20")
-                            .attr("height", "20");
-    d3.selectAll(".poolView").append("svg:image").attr("xlink:href", "../../../static/assets/worldmap.png");
-    $scope.showMap = !$scope.showMap;
-    moveBubbles();
+    toggleMap();
+    setTimeout(function(){moveBubbles();}, 2000);
   };
 
   $scope.popModal = {
@@ -94,6 +93,7 @@ angular.module('genome.pool', [])
 
   //Grab the pool as a canvas for our bubbles
   var svg = d3.select('.pool').append("svg")
+    .attr("fill", "transparent")
     .attr("width", boardWidth + margin.left + margin.right)
     .attr("height", boardHeight + margin.top + margin.bottom)
     .attr("id", "mainCanvas")
@@ -117,7 +117,7 @@ angular.module('genome.pool', [])
       .enter().append("circle")
       .on('mouseover', function(d){
 
-        // Get this bubble's x/y values, then augment for the tooltip 
+        // Get this bubble's x/y values, then augment for the tooltip
         // This will allow the tool tip to be centered in the middle of the bubble
         var xPosition = parseFloat(d3.select(this).attr("cx"));
         var yPosition = parseFloat(d3.select(this).attr("cy"));
@@ -217,7 +217,7 @@ angular.module('genome.pool', [])
     $scope.relatives.map(function (relative) {
       range.push(relative.similarity);
     }).sort(function (a, b) {
-      return b - a; 
+      return b - a;
     });
 
     for (var i = 0; i < $scope.relatives.length || 0; i++) {
@@ -275,8 +275,8 @@ angular.module('genome.pool', [])
       }
 
       $scope.circles.push({
-        cx: boardWidth/2,
-        cy: boardHeight/2,
+        cx: boardWidth/4,
+        cy: boardHeight/3,
         color: colorScheme[Math.floor(Math.random() * colorScheme.length)],
         radius: similarity * 1000,
         relative: $scope.relatives[i]

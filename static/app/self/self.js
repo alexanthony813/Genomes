@@ -26,6 +26,7 @@ angular.module('genome.self', [])
       **/
   var svg = d3.select(".dnahelixcontainer")
       .append("svg")
+      .attr("id", "helix")
       .attr("width", w)
       .attr("height", h);
 
