@@ -9,16 +9,31 @@ angular.module('genome.pool', [])
   $scope.circles = [];
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
+  var column1 = $window.innerWidth - ($window.innerWidth * 5/6);
+  var column2 = $window.innerWidth - ($window.innerWidth * 1/3);
+  var column3 = $window.innerWidth;
+  var row1 = $window.innerHeight - ($window.innerHeight * 3/4);
+  var row2 = $window.innerHeight;
+
 
   var makeNewBubbleData = function(){
-    for(var i = 0; i < $scope.circles.length; i++){
-      $scope.circles[i]['cx'] = 100 * i;
+      for(var i = 0; i < $scope.circles.length; i++){
+        console.log($scope.circles[i].relative.birthplace);
+        if($scope.circles[i].relative.birthplace === "United States") {
+          $scope.circles[i]['cx'] = column1;
+          $scope.circles[i]['cy'] = row1;
+        } else if($scope.circles[i].relative.birthplace === "France") {
+          console.log('france france');
+          $scope.circles[i]['cx'] = column3;
+          $scope.circles[i]['cy'] = row2;
+        }
+      }
     }
-  }
-  var moveBubbles = function() {
-    makeNewBubbleData();
-    d3.selectAll("circle").data($scope.circles).transition().delay(3000);
-  }
+    var moveBubbles = function() {
+      makeNewBubbleData();
+      d3.selectAll("circle").attr('r', '5').data($scope.circles).transition().delay(3000);
+    }
+
   var whichView = function() {
     $rootScope.view = $location.$$path;
   }
@@ -26,30 +41,21 @@ angular.module('genome.pool', [])
 
   $scope.showMap = false;
   $rootScope.filterRegions = function() {
+    //$('body').addClass("mapView")
+    $('body').append('<img src="../../../static/assets/worldmap.png" class="imgMap" />')
+    var imgs = svg.selectAll("image").data([0]);
+            imgs.enter()
+            .append("svg:image")
+            .attr("xlink:href", "../../../static/assets/worldmap.png")
+            .attr("x", "60")
+                            .attr("y", "60")
+                            .attr("width", "20")
+                            .attr("height", "20");
+    d3.selectAll(".poolView").append("svg:image").attr("xlink:href", "../../../static/assets/worldmap.png");
     $scope.showMap = !$scope.showMap;
     moveBubbles();
   };
 
-  //ng data map
-  $scope.mapObject = {
-    scope: 'world',
-    options: {
-      width: 1110,
-      legendHeight: 60 // optionally set the padding for the legend
-    },
-    geographyConfig: {
-      highlighBorderColor: '#EAA9A8',
-      highlighBorderWidth: 2
-    },
-    fills: {
-      'HIGH': '#CC4731',
-      'MEDIUM': '#306596',
-      'LOW': '#667FAF',
-      'defaultFill': '#DDDDDD'
-    },
-  };
-
-  //end ng data map
   $scope.popModal = {
     name: '',
     similarity: '',
@@ -90,6 +96,7 @@ angular.module('genome.pool', [])
   var svg = d3.select('.pool').append("svg")
     .attr("width", boardWidth + margin.left + margin.right)
     .attr("height", boardHeight + margin.top + margin.bottom)
+    .attr("id", "mainCanvas")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -205,7 +212,6 @@ angular.module('genome.pool', [])
 
   //After grabbing relatives from the DB, create a bubbles array based on length of relatives array
   var initialize = function() {
-
     //set up range of values in similarity between all relatives
     var range = [];
     $scope.relatives.map(function (relative) {

@@ -1,11 +1,8 @@
 <div class="poolView">
-  <div class="poolContainer">
+<!-- <div ng-class="showMap ? 'mapView': 'mapViewDisabled'">
+ -->  <div class="poolContainer">
     <h1> Your Relatives Pool </h1>
-    <div ng-class="showMap ? 'mapView': 'mapViewDisabled'">
-      <div ng-show="showMap === true;" class="svgMap" id="container">
-        <datamap map="mapObject">
-        </datamap>
-      </div>
+     <div ng-show="showMap" class="mapView">
     </div>
     <div class="pool">
       <!-- Bootstrap Popover Modal -->
@@ -33,6 +30,7 @@
             </div>
           </div>
         </div>
+      </div>
     </div>
-  </div>
+  </<!-- div -->>
 </div>

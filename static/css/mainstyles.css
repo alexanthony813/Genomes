@@ -86,11 +86,11 @@ body {
   text-align: center;
 }
 
-.svgMap{
+/*.svgMap{
   width: 100%;
   height: 100%;
   float: center;
-}
+}*/
 
 .dna-info {
   display: flex;
@@ -115,13 +115,23 @@ body {
 
 svg {
   position: absolute;
-  margin-left: 10%;
+  margin-left: 20%;
 }
 
-svg.datamap {
+/*svg.datamap {
   padding-top: 0px;
 }
+*/
 
 .side-nav-button {
   cursor: pointer;
+}
+
+.mapView {
+  background-image:url('../../static/assets/worldmap.png');
+}
+
+.imgMap {
+  max-height: 80%;
+  max-width: 80%;
 }
