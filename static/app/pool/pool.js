@@ -209,99 +209,51 @@ angular.module('genome.pool', [])
 
       var similarRange = (range[0] - range[range.length-1]);
 
-      if (similarRange > 0 && similarRange < 0.05) {
+      if (similarRange > 0 && similarRange < 0.2) {
         if (similarity < 0.01){
-          similarity = 0.01;
+          similarity = 0.03;
         } else if (similarity > 0.01 && similarity < 0.012) {
-          similarity = 0.02;
-        } else if (similarity >= 0.012 && similarity < 0.015) {
           similarity = 0.035;
+        } else if (similarity >= 0.012 && similarity < 0.015) {
+          similarity = 0.04;
         } else if (similarity >= 0.015 && similarity < 0.02) {
           similarity = 0.05;
         } else if (similarity >= 0.02 && similarity < 0.025) {
-          similarity = 0.065;
+          similarity = 0.055;
         } else if (similarity >= 0.025 && similarity < 0.04) {
-          similarity = 0.08;
+          similarity = 0.06;
         } else if (similarity >= 0.04 && similarity < 0.049) {
-          similarity = 0.09;
+          similarity = 0.065;
         } else if (similarity >= 0.05) {
-          similarity = 0.1;
+          similarity = 0.07;
         }
       }
 
-      if (similarRange >= 0.05 && similarRange < 0.2) {
+      if (similarRange >= 0.2 && similarRange < 0.5) {
         if (similarity < 0.01){
-          similarity = 0.01;
-        } else if (similarity > 0.01 && similarity < 0.012) {
           similarity = 0.02;
-        } else if (similarity >= 0.012 && similarity < 0.015) {
-          similarity = 0.035;
-        } else if (similarity >= 0.015 && similarity < 0.02) {
+        } else if (similarity > 0.01 && similarity < 0.015) {
+          similarity = 0.025;
+        } else if (similarity > 0.015 && similarity < 0.02) {
+          similarity = 0.03;
+        } else if (similarity > 0.02 && similarity < 0.025) {
+          similarity = 0.033;
+        } else if (similarity >= 0.025 && similarity < 0.035) {
+          similarity = 0.037;
+        } else if (similarity >= 0.035 && similarity < 0.05) {
+          similarity = 0.041;
+        } else if (similarity >= 0.05 && similarity < 0.065) {
+          similarity = 0.045;
+        } else if (similarity >= 0.065 && similarity < 0.08) {
           similarity = 0.05;
-        } else if (similarity >= 0.02 && similarity < 0.025) {
-          similarity = 0.065;
-        } else if (similarity >= 0.025 && similarity < 0.04) {
-          similarity = 0.08;
-        } else if (similarity >= 0.04 && similarity < 0.049) {
-          similarity = 0.09;
-        } else if (similarity >= 0.05) {
-          similarity = 0.1;
-        }
-      }
-
-      if (similarRange >= 0.2 && similarRange < 0.3) {
-        if (similarity < 0.01){
-          similarity = 0.01;
-        } else if (similarity > 0.01 && similarity < 0.015) {
-          similarity = 0.015;
-        } else if (similarity > 0.015 && similarity < 0.02) {
-          similarity = 0.02;
-        } else if (similarity > 0.02 && similarity < 0.025) {
-          similarity = 0.027;
-        } else if (similarity >= 0.025 && similarity < 0.035) {
-          similarity = 0.035;
-        } else if (similarity >= 0.035 && similarity < 0.05) {
-          similarity = 0.045;
-        } else if (similarity >= 0.05 && similarity < 0.065) {
-          similarity = 0.055;
-        } else if (similarity >= 0.065 && similarity < 0.08) {
-          similarity = 0.06;
         } else if (similarity >= 0.08 && similarity < 0.09) {
-          similarity = 0.065;
-        } else if (similarity > 0.1 && similarity < 0.15) {
-          similarity = 0.07;
-        } else if (similarity > 0.15 && similarity < 0.2) {
-          similarity = 0.08;
-        } else if (similarity >= 0.2) {
-          similarity = 0.1;
-        }
-      }
-
-      if (similarRange >= 0.3 && similarRange < 0.5) {
-        if (similarity < 0.01){
-          similarity = 0.01;
-        } else if (similarity > 0.01 && similarity < 0.015) {
-          similarity = 0.015;
-        } else if (similarity > 0.015 && similarity < 0.02) {
-          similarity = 0.02;
-        } else if (similarity > 0.02 && similarity < 0.025) {
-          similarity = 0.027;
-        } else if (similarity >= 0.025 && similarity < 0.035) {
-          similarity = 0.035;
-        } else if (similarity >= 0.035 && similarity < 0.05) {
-          similarity = 0.045;
-        } else if (similarity >= 0.05 && similarity < 0.065) {
           similarity = 0.055;
-        } else if (similarity >= 0.065 && similarity < 0.08) {
-          similarity = 0.06;
-        } else if (similarity >= 0.08 && similarity < 0.09) {
-          similarity = 0.065;
         } else if (similarity > 0.1 && similarity < 0.15) {
-          similarity = 0.07;
+          similarity = 0.06;
         } else if (similarity > 0.15 && similarity < 0.2) {
-          similarity = 0.08;
+          similarity = 0.065;
         } else if (similarity >= 0.2) {
-          similarity = 0.1;
+          similarity = 0.07;
         }
       }
 
