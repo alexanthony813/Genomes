@@ -6,10 +6,27 @@ def create_demo_user():
     if models.db_session.query(models.User).filter(models.User.profile_id=='demo_id').first() is None:
         #hard code the demo user's genome data
         genome_data = {
-            'rs12913832': "GG",
-            'rs1799971': 'AA',
-            'rs1800955': 'CT',
-            'rs806380': 'AG'
+        'rs12913832': 'GG',
+        'rs8177374': 'TT',
+        'rs1799971': 'GG',
+        'rs806380': 'GG',
+        'rs1800955': 'TT',
+        'rs53576': 'AA',
+        'rs1815739': 'CT',
+        'rs6152': 'GG',
+        'rs1800497': 'CT',
+        'rs9939609': 'AA',
+        'rs662799': 'GG',
+        'rs17822931': 'CT',
+        'rs4680': 'GG',
+        'rs4988235': 'TT',
+        'rs6025': 'AA',
+        'rs7574865': 'TT',
+        'rs1695': 'GG',
+        'rs72921001': 'AC',
+        'rs1537415': 'GG',
+        'rs2472297': 'CT',
+        'rs909525': 'GG'
         }
         #hard code the demo user's relatives
         demo_relatives = [{

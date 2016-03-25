@@ -15,8 +15,7 @@ var app = angular.module('genome', [
 .config(function ($routeProvider) {
   $routeProvider
     .when('/', {
-      templateUrl: '/static/app/pool/pool.html',
-      controller: 'PoolController'
+      redirectTo: '/pool'
     })
     .when('/signin', {
       templateUrl: '/',
