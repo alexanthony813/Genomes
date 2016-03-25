@@ -47,6 +47,7 @@ h3 {
 .clear {
   clear: both;
 }
+<<<<<<< e680e0c4985281175f17b58ce9e615f5a9217e7f
 
 .dnaimage {
   width: 200px;
@@ -55,6 +56,8 @@ h3 {
   border-radius: 50%;
 }
 
+=======
+>>>>>>> Fixed merge conflicts
 #header {
   width: 100%;
   background-color: black;
@@ -212,13 +215,11 @@ h3 {
 .login-button {
   cursor: pointer;
 }
-
 .remove {
   color: white;
   cursor: pointer;
   margin-left: 40px;
 }
-
 .login-area {
   display: flex;
   flex-direction: row;
@@ -227,7 +228,6 @@ h3 {
   max-width: 100%;
   height: 50%;
 }
-
 .login-button {
   max-height: 50%;
   max-width: 50%;

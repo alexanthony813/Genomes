@@ -1,69 +1,70 @@
 <!DOCTYPE html>
-<html ng-app='genome'>
+<html>
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Genome Sequence Visualizer</title>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/static/css/mainstyles.css" />
-    <!-- Angular Material styling -->
-    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css" />
-    <link rel="stylesheet" href="../static/css/introjs.css" />
+    <link rel="stylesheet" href="/static/css/styles.css" />
     <link href='https://fonts.googleapis.com/css?family=Lato:400,700,900,300,300italic,400italic' rel='stylesheet' type='text/css'/>
+    <title>Genome Sequence Visualizer</title>
   </head>
-
-  <body ng-app="genome" ng-cloak class="background-image">
-  <div class="TopNavContainer">
-    <dst-top-nav></dst-top-nav>
-  </div>
-  <div class="wholepage frontground-image">
-    <div class="BodyContainer">
-      <div id="mapContainer">
-        <div ng-view></div>
+  <body>
+    <!-- HEADER START -->
+    <header id="header">
+      <div class="content">
+        <div id="logo">GENOMIE</div>
+        <nav id="nav">
+         <ul>
+           <li class="remove" onclick="location.href='/demo/'" class="login-button">DEMO</li>
+           <li class="remove" onclick="location.href='{{ auth_url }}'" class="login-button">LOG IN WITH<img src="/static/assets/23andme_logo_white.png" align="right" type="button" value="Log in with 23andMe" onclick="location.href='{{ auth_url }}'" class="login-button shrink"></li>
+         </ul>
+        </nav>
+      </div>
+    </header>
+    <!--End HEADER-->
+    <!-- SLIDES START -->
+    <div id="slide1">
+      <div class="content">
+        <div class="landingHeader">
+          <p>VISUALIZE</p>
+          <p>YOUR GENES</p>
+        </div>
       </div>
     </div>
-    <div class="sideNavContainer">
-      <dst-side-nav></dst-side-nav>
+    <div id="slide2">
+      <div class="content" >
+        <div class="quotes_container">
+          <h3 class="quotes">Learn what makes you an awesome trumpet player, or predisposed to certain addictions, or just why you hate cilantro.</h3>
+          <img class="dnaimage" src="http://goo.gl/fhoyHV" align="left"/> <h4 class="quote_subtitle_gray">Analyze your own DNA</h4>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="footer">
-    <dst-footer></dst-footer>
-  </div>
+    <div id="slide3">
+      <div class="content">
+        <div class="quotes_container">
+          <h3 id="darken" class="quotes">Find distant relatives around the world. Who knows? Maybe this time next year you'll visit your 3rd cousin in Hungary. </h3>
+        </div>
+      </div>
+     </div>
+     <div id="slide4">
+      <div class="content">
+        <div class="quotes_container">
+          <h3 class="quotes">“The nitrogen in our DNA, the calcium in our teeth, the iron in our blood, the carbon in our apple pies were made in the interiors of collapsing stars. We are made of starstuff.”</h3>
+          <img src="../static/assets/Carl_Sagan_1980.jpg" align="left" class="circular"/> <h4 class="quote_subtitle_gray">Carl Sagan</h4>
+        </div>
+      </div>
+     </div>
+    <div id="slide5">
+      <div class="content">
+        <div class="quotes_container">
+          <div class="login-area">
+              <img src="/static/assets/23logo2.png" align="left"/ type="button" value="Log in with 23andMe" onclick="location.href='{{ auth_url }}'" class="login-button-bottom">
 
-
-    <script src="../static/lib/intro.js/minified/intro.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
-    <!-- end of map scripts -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
-    <script src="../static/lib/datamaps/dist/datamaps.world.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+              <img src="/static/assets/demo_button1.png" align="left"/ type="button" onclick="location.href='/demo/'" class="login-button-bottom">
+          </div>
+        </div>
+          <div id="copyright"><a href="//www.github.com/ThunderousFigs/Genomes">Genomie 2016</a></div>
+      </div>
+    </div>
     <script src="../static/lib/jQuery/dist/jquery.min.js"></script>
-    <script src='../static/lib/angular/angular.js'></script>
-    <script src='../static/lib/angular-route/angular-route.js'></script>
-    <script src='../static/lib/angular-cookies/angular-cookies.js'></script>
-    <script src="../static/lib/angular-intro.js/build/angular-intro.min.js"></script>
-    <!-- Angular Material requires Angular.js Libraries -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
-    <!-- END of Angular Material Library -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="../static/app/services/treeService.js"></script>
-    <script src='../static/app/tree/tree.js'></script>
-    <script src='../static/app/app.js'></script>
-    <script src='../static/app/auth/auth.js'></script>
-    <script src='../static/app/directives/dst_top_nav.js'></script>
-    <script src='../static/app/directives/dst_footer.js'></script>
-    <script src='../static/app/services/relatives.js'></script>
-    <script src='../static/app/services/d3Service.js'></script>
-    <script src='../static/app/sidenav/sideNav.js'></script>
-    <script src='../static/app/about/about.js'></script>
-    <script src='../static/app/map/map.js'></script>
-    <script src='../static/app/self/self.js'></script>
   </body>
 </html>
-
-
-
