@@ -191,4 +191,4 @@ def receive_code():
 #Initialize python server on port
 if __name__ == '__main__':
   print 'Server has been initialized'
-  app.run(debug=True, port=PORT)
+  app.run(port=PORT)
