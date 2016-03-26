@@ -23,7 +23,7 @@ try:
 except:
     #create database if it does not already exist
     #connection = connect(user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
-    connection = connect(user=app.config.get('DATABASE_USERNAME'), host='heroku', password=app.config.get('DATABASE_PASSWORD'))
+    connection = connect(user=app.config.get('DATABASE_USERNAME'), host='postgres://ekmsxuepfrzsrq:eheMsYxYxlKSuLbKvgyrxkAWlH@ec2-54-225-102-131.compute-1.amazonaws.com:5432/deued1oqupgabe', password=app.config.get('DATABASE_PASSWORD'))
     connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cursor = connection.cursor()
     cursor.execute("CREATE DATABASE genome")
