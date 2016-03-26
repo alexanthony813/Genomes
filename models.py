@@ -39,7 +39,7 @@ try:
 except:
     #create database if it does not already exist
     #connection = connect(user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
-    connection = connect(user=app.config.get('DATABASE_USERNAME'), host='genomie.herokuapp.com', password=app.config.get('DATABASE_PASSWORD'))
+    connection = connect(user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
     connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cursor = connection.cursor()
     cursor.execute("CREATE DATABASE genome")
