@@ -19,6 +19,7 @@ angular.module('genome.directive', [])
       $scope.getSelf = function () {
         $scope.onselfpage = true;
         $scope.onpoolpage = false;
+        $rootScope.removeMap();
         $location.path('/self');
       };
     },

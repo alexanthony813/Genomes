@@ -3,6 +3,7 @@ angular.module('genome.self', [])
 
   $scope.outcomes = $scope.outcomes || [];
   $scope.current = {};
+
    var whichView = function() {
     $rootScope.view = $location.$$path;
   }
@@ -25,6 +26,7 @@ angular.module('genome.self', [])
       **/
   var svg = d3.select(".dnahelixcontainer")
       .append("svg")
+      .attr("id", "helix")
       .attr("width", w)
       .attr("height", h);
 

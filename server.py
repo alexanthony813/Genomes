@@ -152,7 +152,7 @@ def receive_code():
             else:
                 #Begin API calls to 23andMe to get additional user data
                 relatives_response = requests.get("%s%s" % (BASE_API_URL, "1/relatives/%s" % user_profile_id),
-                                                   params = {'limit': 20, 'offset': 1},
+                                                   params = {'limit': 60, 'offset': 1},
                                                    headers=headers,
                                                    verify=False)
                 #call createNewUser from controller to add User and User relatives to the database
@@ -172,7 +172,6 @@ def receive_code():
     else:
         resp = make_response(redirect(url_for('home')))
         return resp
-        
 
 #Initialize python server on port
 if __name__ == '__main__':

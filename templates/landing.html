@@ -36,16 +36,16 @@
     <div id="slide2">
       <div class="content" >
         <div class="quotes_container">
-          <h3 class="quotes">“With Genomie, see your DNA and learn what makes you an awesome trumpet player, or predisposed to certain addictions, or just why you hate cilantro.”</h3>
-          <img src="../static/assets/hipDNA.png" align="left"/> <h4 class="author_name_gray">Not an image of real DNA</h4>
+          <h3 class="quotes">Learn what makes you an awesome trumpet player, or predisposed to certain addictions, or just why you hate cilantro.</h3>
+          <img src="../static/assets/hipDNA.png" align="left"/> <h4 class="quote_subtitle_gray">Not an image of real DNA</h4>
         </div>
       </div>
     </div>
     <div id="slide3">
       <div class="content">
         <div class="quotes_container">
-          <h3 id="darken" class="quotes">“You can also find distant relatives around the world. Who knows? Maybe this time next year you'll visit your 3rd cousin in Hungary.” </h3>
-          <img src="../static/assets/norman.png" align="left"/> <h4 id="darken" class="author_name_white">Your cousin?</h4>
+          <h3 id="darken" class="quotes">Find distant relatives around the world. Who knows? Maybe this time next year you'll visit your 3rd cousin in Hungary. </h3>
+          <img src="../static/assets/norman.png" align="left"/> <h4 id="darken" class="quote_subtitle_white">Your cousin?</h4>
         </div>
       </div>
      </div>
@@ -53,14 +53,14 @@
       <div class="content">
         <div class="quotes_container">
           <h3 class="quotes">“The nitrogen in our DNA, the calcium in our teeth, the iron in our blood, the carbon in our apple pies were made in the interiors of collapsing stars. We are made of starstuff.”</h3>
-          <img src="../static/assets/dr-seuss.png" align="left"/> <h4 class="author_name_gray">Carl Sagan</h4>
+          <img src="../static/assets/dr-seuss.png" align="left"/> <h4 class="quote_subtitle_gray">Carl Sagan</h4>
         </div>
       </div>
      </div>
     <div id="slide5">
       <div class="content">
         <div class="quotes_container">
-          <h3 class="quotes">““If you already received your genome data from 23andMe, you can log in. Otherwise, take the app for a test drive with some anonymous data.”</h3>
+          <h3 class="quotes">Log in with 23andMe if you have an account. Or take the app for a test drive with anonymous data.</h3>
           <div class="login-area">
               <img src="https://p2.zdassets.com/hc/theme_assets/110137/200043004/icn_logo_retina.png" align="left"/ type="button" value="Log in with 23andMe" onclick="location.href='{{ auth_url }}'" class="login-button">
 
@@ -91,7 +91,37 @@
             }
           }
         });
+        //cycle through quotes
+        var j = 0;
+        var delay = 2000; //millisecond delay between cycles
+        function cycleThru(){
+                var jmax = $("ul#cyclelist li").length -1;
+                $("ul#cyclelist li:eq(" + j + ")")
+                        .animate({"opacity" : "1"} ,400)
+                        .animate({"opacity" : "1"}, delay)
+                        .animate({"opacity" : "0"}, 400, function(){
+                                (j == jmax) ? j=0 : j++;
+                                cycleThru();
+                        });
+                };
+
+        cycleThru();
       });
+
+      // scrollQuotes
+      // function scrollBanner() {
+      //   $(document).scroll(function(){
+      //     var scrollPos = $(this).scrollTop();
+      //     $('#banner-text').css({
+      //       'top' : (scrollPos/3)+'px',
+      //       'opacity' : 1-(scrollPos/300)
+      //     });
+      //     $('#banner').css({
+      //       'background-position' : 'center ' + (-scrollPos/2)+'px'
+      //     });
+      //   });
+      // }
+      // scrollBanner();
     </script>
   </body>
 </html>
