@@ -97,7 +97,7 @@ def getSnps():
         current_snp = models.db_session.query(models.Snp).filter(models.Snp.rs_id == user_snp).filter(models.Snp.dnaPair == user_snps[user_snp]).first()
 
         if current_snp is not None:
-            print current_snp.serialize()
+            
             user_outcomes.append({"rsid": user_snp, "pair": user_snps[user_snp], "outcome": current_snp.serialize()['outcome']});
 
     return jsonify({'outcomes': user_outcomes})
