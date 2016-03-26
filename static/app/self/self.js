@@ -9,6 +9,10 @@ angular.module('genome.self', [])
   }
   whichView();
 
+  $rootScope.removeHelix = function () {
+    d3.select("svg").remove();
+  }
+
     /* The 'FILLS' block will determine the availability of colors, balls and lines
      * and what quantity and other attributes the d3 plot should contain */
   var fills = ['#E74C3C', '#3498DB', '#2ECC71'],
@@ -24,7 +28,7 @@ angular.module('genome.self', [])
       /**
         * This block will append the built svg elements to the "body" of the HTML
       **/
-  var svg = d3.select(".dnahelixcontainer")
+  var svg = d3.select(".BodyContainer")
       .append("svg")
       .attr("id", "helix")
       .attr("width", w)
