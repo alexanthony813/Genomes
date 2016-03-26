@@ -10,45 +10,53 @@ angular.module('genome.pool', [])
   var margin = {
     top: 50,
     right: 50,
-    bottom: 50,
-    left: 50
+    bottom: 200,
+    left: 30
   };
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
   var column1 = margin['left'];
-  var column2 = $window.innerWidth - ($window.innerWidth * 1/3);
-  var column3 = $window.innerWidth - margin['right'];
+  var column2 = boardWidth/8;
+  var column3 = boardWidth/3;
+  var column4 = boardWidth * 8/15;
+  var column5 = boardWidth * .6;
   var row1 = margin['top']
-  var row2 = $window.innerHeight - margin['top'];
+  var row2 = boardHeight/2.5;
+  var row3 = boardHeight/2.3;
+  var continents = [
+    [row1, column1, 'north america'],
+    [row2, column2, 'south america'],
+    [row1, column3, 'europe'],
+    [row2, column3, 'africa'],
+    [row1, column4, 'asia'],
+    [row3, column5, 'australia']
+  ];
   //Adjust Bubble Data
-  //Move Bubbles to Random Locations
-  var makeRandomBubbleData = function() {
-    var count = 1;
-    $scope.circles.forEach(function(bubble, i){
-      bubble['cx'] = bubble['cx'] + count*(100 * i);
-      bubble['cy'] = bubble['cy'] - count*(100 * i);
-      count *= -1;
-    })
-  }
   //Move Bubbles to Their Respective Locations on the Globe Based on Relative Birthplace
   var makeNewBubbleData = function(){
       for(var i = 0; i < $scope.circles.length; i++){
-        console.log($scope.circles[i].relative.birthplace);
-        if($scope.circles[i].relative.birthplace === "United States" || $scope.circles[i].relative.birthplace === null) {
-          $scope.circles[i]['cx'] = column1;
-          $scope.circles[i]['cy'] = row1;
+        if($scope.circles[i].relative.birthplace === "United States") {
+          $scope.circles[i]['oldCX'] = $scope.circles[i]['cx']
+          $scope.circles[i]['cx'] = row1;
+          $scope.circles[i]['oldCY'] = $scope.circles[i]['cy']
+          $scope.circles[i]['cy'] = column1;
+          $scope.circles[i]['oldRadius'] = $scope.circles[i]['radius']
           $scope.circles[i]['radius'] = 5;
-        } else if($scope.circles[i].relative.birthplace === "France") {
-          console.log('france france');
-          $scope.circles[i]['cx'] = column3;
-          $scope.circles[i]['cy'] = row2;
+        } else {
+          var birthplace = continents[i%6]
+          $scope.circles[i]['oldCX'] = $scope.circles[i]['cx']
+          $scope.circles[i]['cx'] = birthplace[1];
+          $scope.circles[i]['oldCY'] = $scope.circles[i]['cy']
+          $scope.circles[i]['cy'] = birthplace[0];
+          $scope.circles[i]['oldRadius'] = $scope.circles[i]['radius']
+          $scope.circles[i]['radius'] = 5;
         }
       }
     }
     //Enter New Bubble Data and Instigate Bubble Movement
     var moveBubbles = function() {
       makeNewBubbleData();
-      d3.selectAll("circle").data($scope.circles).on('click', function(){console.log('clicked')});
+      d3.selectAll("circle").data($scope.circles).attr('r', function(d){return d.radius;});
     }
 
   //Toggle Side Nav Icons
@@ -107,11 +115,11 @@ angular.module('genome.pool', [])
   //Grab the pool as a canvas for our bubbles
   var svg = d3.select('.pool').append("svg")
     .attr("fill", "transparent")
-    .attr("preserveAspectRatio", "xMinYMin meet")
-    .classed("svg-container", true)
-      .attr("viewBox", "0 0 600 400")
+    //.attr("preserveAspectRatio", "xMinYMin meet")
+    //.classed("svg-container", true)
+      //.attr("viewBox", "0 0 600 400")
       //class to make it responsive
-      .classed("svg-content-responsive", true)
+      //.classed("svg-content-responsive", true)
     .attr("width", boardWidth + margin.left + margin.right)
     .attr("height", boardHeight + margin.top + margin.bottom)
     .attr("id", "mainCanvas")

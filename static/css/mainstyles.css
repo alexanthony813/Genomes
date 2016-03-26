@@ -123,10 +123,6 @@ svg#mainCanvas {
   flex-direction: column;
   justify-content: center;
 }
-/*.poolContainer {
-  width: 100%;
-  height: 1000px;
-}*/
 
 .pool {
   z-index: 1;
