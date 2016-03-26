@@ -289,6 +289,7 @@ angular.module('genome.pool', [])
     for (var i = 0; i < $scope.relatives.length || 0; i++) {
       var similarity = $scope.relatives[i].similarity;
       var similarRange = (range[0] - range[range.length-1]);
+      
       if (similarRange > 0 && similarRange < 0.2) {
         if (similarity < 0.01){
           similarity = 0.03;
@@ -313,9 +314,9 @@ angular.module('genome.pool', [])
           similarity = 0.02;
         } else if (similarity > 0.01 && similarity < 0.015) {
           similarity = 0.025;
-        } else if (similarity > 0.015 && similarity < 0.02) {
+        } else if (similarity >= 0.015 && similarity < 0.02) {
           similarity = 0.03;
-        } else if (similarity > 0.02 && similarity < 0.025) {
+        } else if (similarity >= 0.02 && similarity < 0.025) {
           similarity = 0.033;
         } else if (similarity >= 0.025 && similarity < 0.035) {
           similarity = 0.037;
@@ -325,11 +326,11 @@ angular.module('genome.pool', [])
           similarity = 0.045;
         } else if (similarity >= 0.065 && similarity < 0.08) {
           similarity = 0.05;
-        } else if (similarity >= 0.08 && similarity < 0.09) {
+        } else if (similarity >= 0.08 && similarity < 0.1) {
           similarity = 0.055;
-        } else if (similarity > 0.1 && similarity < 0.15) {
+        } else if (similarity >= 0.1 && similarity < 0.15) {
           similarity = 0.06;
-        } else if (similarity > 0.15 && similarity < 0.2) {
+        } else if (similarity >= 0.15 && similarity < 0.2) {
           similarity = 0.065;
         } else if (similarity >= 0.2) {
           similarity = 0.07;
