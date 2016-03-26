@@ -1,14 +1,14 @@
 angular.module('genome.pool', [])
 .controller('PoolController', function($scope, d3Service, Relatives, $rootScope, $window, $location
   ) {
-  $( window ).resize = function(){
-    $('h1').append('<div>HELLO</div>');
-  }
+  //Containers for Relatives' Data
   var circle;
   $scope.relatives = [];
   $rootScope.rels = [];
-  $scope.myData = [10,10,10,20];
   $scope.circles = [];
+  //End containers for Relatives' Data
+
+  //Set up appropriate SVG and page sizing
   var idealMargins = [50/768, 50/1024, 'bottom', 30/1024]
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
@@ -52,6 +52,8 @@ angular.module('genome.pool', [])
     [row1, column4, 'asia'],
     [row3, column5, 'australia']
   ];
+  //End SVG and Page Sizing
+
   //Adjust Bubble Data
   //Move Bubbles to Their Respective Locations on the Globe Based on Relative Birthplace
   var makeNewBubbleData = function(){
@@ -87,7 +89,7 @@ angular.module('genome.pool', [])
         bubble['cy'] = bubble['oldCY'];
         bubble['radius'] = bubble['oldRadius'];
       })
-
+      //Explicitly restate the force layout
       var nodes = $scope.circles;
       var force = d3.layout.force()
       .nodes(nodes)
@@ -99,6 +101,7 @@ angular.module('genome.pool', [])
 
       d3.selectAll("circle").data($scope.circles).attr('r', function(d){return d.radius;}).call(force.drag);
     };
+    //End of functions adjusting bubble placement
 
   //Toggle Side Nav Icons
   var whichView = function() {
@@ -137,16 +140,6 @@ angular.module('genome.pool', [])
     age: 0
   };
 
-  var width = 1000 - margin.left - margin.right;
-  var height = 1000 - margin.top - margin.bottom;
-
-  var padding = 5;
-
-  var radius = d3.scale.sqrt().range([0, 12]);
-
-  var colorScheme = ['#1abc9c', '#2ecc71', '#f1c40f', '#27ae60', '#3498db', '#9b59b6', '#2980b9','#8e44ad','#e67e22','#d35400','#e74c3c', '#c0392b', '#bdc3c7', '#f39c12', '#95a5a6'];
-  // '#34495e','#2c3e50',
-
   //pop up message displaying relative data when user clicks on a bubble
   var showRelative = function(bubble) {
     $scope.popModal.name = bubble.relative.first_name + ' ' + bubble.relative.last_name;
@@ -157,22 +150,26 @@ angular.module('genome.pool', [])
     $scope.popModal.ancestry = bubble.relative.ancestry || "Unknown";
     $scope.popModal.birthplace = bubble.relative.birthplace  || "Unknown";
   };
+  //End Pop Modal
+
+  //Force and Bubble Layout Settings
+  var width = 1000 - margin.left - margin.right;
+  var height = 1000 - margin.top - margin.bottom;
+  var padding = 5;
+  var radius = d3.scale.sqrt().range([0, 12]);
+  var colorScheme = ['#1abc9c', '#2ecc71', '#f1c40f', '#27ae60', '#3498db', '#9b59b6', '#2980b9','#8e44ad','#e67e22','#d35400','#e74c3c', '#c0392b', '#bdc3c7', '#f39c12', '#95a5a6'];
+  //End force and bubble layout settings
 
   //Grab the pool as a canvas for our bubbles
   var svg = d3.select('.pool').append("svg")
     .attr("fill", "transparent")
-    //.attr("preserveAspectRatio", "xMinYMin meet")
-    //.classed("svg-container", true)
-      //.attr("viewBox", "0 0 600 400")
-      //class to make it responsive
-      //.classed("svg-content-responsive", true)
     .attr("width", $window.innerWidth)
     .attr("height", $window.innerHeight)
     .attr("id", "mainCanvas")
     .append("g")
     //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  //Create bubbles
+  //Create Initial bubbles
   var createBubbles = function(circleData) {
     nodes = $scope.circles;
     //Add d3 force effect to layout
@@ -231,10 +228,8 @@ angular.module('genome.pool', [])
          return d.color;
        })
       .call(force.drag);
-
-
-  //close createBubbles function
   };
+  //End initial bubble creation
 
   //Control bubble entry onto DOM and magnetic resistance to each other
   function tick(e) {
@@ -295,11 +290,8 @@ angular.module('genome.pool', [])
     });
 
     for (var i = 0; i < $scope.relatives.length || 0; i++) {
-
       var similarity = $scope.relatives[i].similarity;
-
       var similarRange = (range[0] - range[range.length-1]);
-
       if (similarRange > 0 && similarRange < 0.2) {
         if (similarity < 0.01){
           similarity = 0.03;
@@ -319,7 +311,6 @@ angular.module('genome.pool', [])
           similarity = 0.07;
         }
       }
-
       if (similarRange >= 0.2 && similarRange < 0.5) {
         if (similarity < 0.01){
           similarity = 0.02;
@@ -347,7 +338,7 @@ angular.module('genome.pool', [])
           similarity = 0.07;
         }
       }
-
+      //Set initial bubble properties
       $scope.circles.push({
         cx: $window.innerWidth/3.5,
         cy: $window.innerHeight/2,
