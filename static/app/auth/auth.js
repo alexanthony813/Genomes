@@ -8,23 +8,18 @@ angular.module('genome.auth', ['ngCookies', 'ngRoute'])
 
   };
 
-  $scope.getUserProfileId = function () {
-    $rootScope.user_profile_id = $cookies.user_profile_id;
-  };
+  // $scope.getUserProfileId = function () {
+  //   $rootScope.user_profile_id = $cookies.user_profile_id;
+  // };
 
-  $scope.getUserProfileId();
+  // $scope.getUserProfileId();
 
 })
 
 .factory('AuthFactory', function($http, $cookies, $location) {
 
-  var isAuth = function() {
-    return !!$cookies.user_profile_id;
-  };
-
   var signOut = function() {
-    delete $cookies['user_profile_id'];
-    delete $cookies['user_first_name'];
+    delete $cookies['token'];
     window.location.href = '/';
   };
 

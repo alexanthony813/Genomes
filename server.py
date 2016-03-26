@@ -3,6 +3,7 @@ import flask
 from flask import Flask, request, render_template, jsonify, redirect, url_for, make_response
 from flask.ext.sqlalchemy import SQLAlchemy
 import jwt
+# from encode import jwt_encode, jwt_decode
 from logging import Formatter, FileHandler
 import models
 import controller
@@ -37,7 +38,15 @@ def home():
 @app.route('/get_info/')
 def getUser():
     response = make_response(render_template('index.html'))
-    response.set_cookie('user_profile_id', request.cookies.get('user_profile_id'))
+    # response.set_cookie('user_profile_id', request.cookies.get('user_profile_id'))
+
+    # print "token", request.cookies.get('token')
+
+    # decoded = jwt.decode(request.cookies.get('token'), app.config.get('SECRET_KEY'), algorithms=['HS256'])
+    # print "decoded", decoded
+    # response.set_cookie('token', decoded);
+
+    # print "in getUser function in /get_info/ route"
     return response
 
 
@@ -45,16 +54,13 @@ def getUser():
 def makeDemoUser():
     #Add demo user to DB if they don't already exist
     controller.create_demo_user()
-    demo_id = 'demo_id'
-    demo_userName = 'Lilly Demo'
+    demo_profile_id = 'demo_id'
+    demo_user_name = 'Lilly Demo'
     response = make_response(render_template('index.html'))
 
-    #set demo user's cookie
-    
+    encoded = jwt.encode({'user_profile_id': demo_profile_id, 'user_first_name': demo_user_name},  app.config.get('SECRET_KEY'), algorithm='HS256')
+    response.set_cookie('token', encoded)
 
-
-    response.set_cookie('user_first_name', demo_userName)
-    response.set_cookie('user_profile_id', demo_id)
     return response
 
 
@@ -156,11 +162,13 @@ def receive_code():
             #if user already exists in database, render the html and do not re-add user to database
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
                
-                resp = make_response(redirect(url_for('getUser')))
-                encoded = jwt.encode({'user_profile_id': user_profile_id,'user_first_name': user_first_name},  app.config.get('SECRET_KEY'), algorithm='HS256')
-                resp.set_cookie('token', encoded)
-                return resp
+                response = make_response(redirect(url_for('getUser')))
                 
+                encoded = jwt.encode({'user_profile_id': user_profile_id,'user_first_name': user_first_name},  app.config.get('SECRET_KEY'), algorithm='HS256')
+                response.set_cookie('token', encoded)
+                
+                return response
+
             # otherwise, add new user to database if they have never logged in before
             else:
                 #Begin API calls to 23andMe to get additional user data
@@ -173,20 +181,20 @@ def receive_code():
                 #create snps table
                 controller.createSnpsTable()
 
-                resp = make_response(redirect(url_for('getUser')))
+                response = make_response(redirect(url_for('getUser')))
                 # Using jwt module to encode and concat a JWT, then setting it to a value in the token
                 encoded = jwt.encode({'user_profile_id': user_profile_id,'user_first_name': user_first_name},  app.config.get('SECRET_KEY'), algorithm='HS256')
-                resp.set_cookie('token', encoded)
+                response.set_cookie('token', encoded)
                 
-                return resp
+                return response 
         #error handling if api calls for additional user data to 23andMe fail
         else:
             reponse_text = genotype_response.text
             response.raise_for_status()
     #error handling if initial api calls to 23andMe fail
     else:
-        resp = make_response(redirect(url_for('home')))
-        return resp
+        response = make_response(redirect(url_for('home')))
+        return response
 
 #Initialize python server on port
 if __name__ == '__main__':
