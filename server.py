@@ -97,7 +97,6 @@ def getSnps():
         current_snp = models.db_session.query(models.Snp).filter(models.Snp.rs_id == user_snp).filter(models.Snp.dnaPair == user_snps[user_snp]).first()
 
         if current_snp is not None:
-            
             user_outcomes.append({"rsid": user_snp, "pair": user_snps[user_snp], "outcome": current_snp.serialize()['outcome']});
 
     return jsonify({'outcomes': user_outcomes})
@@ -114,6 +113,7 @@ def receive_code():
         'redirect_uri': REDIRECT_URI,
         'scope': DEFAULT_SCOPE
     }
+
     response = requests.post(
         "%s%s" % (BASE_API_URL, "token/"),
         data = parameters,
@@ -170,7 +170,8 @@ def receive_code():
             response.raise_for_status()
     #error handling if initial api calls to 23andMe fail
     else:
-        response.raise_for_status()
+        resp = make_response(redirect(url_for('home')))
+        return resp
         
 
 #Initialize python server on port
