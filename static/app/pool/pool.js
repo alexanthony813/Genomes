@@ -122,6 +122,10 @@ angular.module('genome.pool', [])
   $rootScope.filterRegions = function() {
     toggleMap();
   };
+  $rootScope.removeMap = function(){
+    mapShowing = false;
+    $('div.wholepage').removeClass('mapView');
+  }
   //End Map Toggle
 
   //Pop Modal
