@@ -95,9 +95,41 @@ angular.module('genome.pool', [])
     var elem = svg.selectAll('g')
     .data(nodes)
 
+
+
+
     //create and place the blocks containing the circle and the text
-    var elemEnter = elem.enter().append('g') //.call(force.drag)
  
+    
+
+    function dropHandler(d){
+      // TODO: use  showRelative() here
+    }
+
+    function dragmove(d){
+      // console.log(d3.event.sourceEvent.target.parentNode)
+      // if(d3.event.sourceEvent.target.parentNode = 'g'){      
+        var node = this //.parentNode;
+        var translation = ['translate(', d3.event.x, ',', d3.event.y, ')'].join('')
+        var x = d3.event.x;
+        var y = d3.event.y;
+        var translation = ['translate(', x, ',', y, ')'].join('');
+        console.log(d3.select(node))
+        d3.select(node).attr('transform', translation);
+        // d3.select(this).attr('transform', translation);
+      // }
+    }
+
+    function onDragDrop(dragmove, dropHandler){
+      var drag = d3.behavior.drag()
+                   .origin(function(d,i) { return {x:0, y:0}; })
+                   .on('drag', dragmove)
+                   .on('dragend', dropHandler);
+      return drag;
+    }
+
+
+    var elemEnter = elem.enter().append('g').call(onDragDrop(dragmove, onDragDrop))
 
     //create the circle for each block
     var circle = elemEnter.append("circle")
@@ -144,6 +176,7 @@ angular.module('genome.pool', [])
       .style('fill', function(d) {
          return d.color;
        })
+      // .call(onDragDrop(dragmove, dropHandler));
 
       // .call(force.drag);
     //END APPEND CIRCLE
@@ -163,7 +196,7 @@ angular.module('genome.pool', [])
       .text(function(d){
         return 'x'
       })
-      .call(force.drag)
+      // .call(onDragDrop(dragmove, dropHandler));
     }, 1000)
 
     //Control bubble entry onto DOM and magnetic resistance to each other
@@ -310,12 +343,12 @@ angular.module('genome.pool', [])
   //Initialize the page with a call to getRelatives
   $scope.getRelatives();
 
-  $scope.$watch(function(){
-    console.log("HIIIIIIIIII")
-    var text = d3.selectAll('g').selectAll('text')
-                .attr('transform', 'translate(50,50)')    
-    // .attr('transform', function(d){
-    //   return ['translate(',d.x, ',', d.y')']
-    // })
-  })
+  // $scope.$watch(function(){
+  //   console.log("HIIIIIIIIII")
+  //   var text = d3.selectAll('g').selectAll('text')
+  //               .attr('transform', 'translate(50,50)')    
+  //   // .attr('transform', function(d){
+  //   //   return ['translate(',d.x, ',', d.y')']
+  //   // })
+  // })
 });
