@@ -5,10 +5,9 @@ angular.module('genome.auth', ['ngCookies', 'ngRoute'])
 
   $rootScope.signOut = function() {
     AuthFactory.signOut();
-
   };
-})
 
+})
 .factory('AuthFactory', function($http, $cookies, $location) {
 
   var signOut = function() {

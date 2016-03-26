@@ -40,9 +40,6 @@ var app = angular.module('genome', [
 })
 .run(function($rootScope, $location, $cookies){
   var isAuth = function () {
-    // console.log("isAuth is being called, cookies:", $cookies);
-    // Currently have an issue where we're getting the $cookies with the JWT token, but this function is looking for the specific user_profile_id in the cookie
-    // We need to figure out how to do front-end decoding of JWT,
     return $cookies['token'];
   };
 

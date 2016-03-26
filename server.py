@@ -50,6 +50,7 @@ def makeDemoUser():
     demo_user_name = 'Lilly Demo'
 
     response = make_response(render_template('index.html'))
+    response.set_cookie('user_name': demo_user_name)
     response.set_cookie('token', jwt_encode(demo_profile_id, demo_user_name, SECRET_KEY))
     return response
 
@@ -153,6 +154,7 @@ def receive_code():
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
                
                 response = make_response(redirect(url_for('getUser')))
+                response.set_cookie('user_name': user_first_name)
                 response.set_cookie('token', jwt_encode(user_profile_id, user_first_name, SECRET_KEY))
                 return response
 
@@ -169,6 +171,7 @@ def receive_code():
                 controller.createSnpsTable()
 
                 response = make_response(redirect(url_for('getUser')))
+                response.set_cookie('user_name': user_first_name)
                 response.set_cookie('token', jwt_encode(user_profile_id, user_first_name, SECRET_KEY))
                 return response
         #error handling if api calls for additional user data to 23andMe fail
