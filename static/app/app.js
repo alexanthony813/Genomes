@@ -38,13 +38,10 @@ var app = angular.module('genome', [
       redirectTo : '/signin'
     });
 })
-.run(function($rootScope, $location, $cookies){
-  var isAuth = function () {
-    return $cookies['token'];
-  };
+.run(function($rootScope, $location, $cookies, AuthFactory){
 
   $rootScope.$on('$routeChangeStart', function(evt, next, current){
-    if(next.$$route && next.$$route.authenticate && ! isAuth()){
+    if(next.$$route && next.$$route.authenticate && ! AuthFactory.isAuth()){
       $location.path('/signin');
     }
   });

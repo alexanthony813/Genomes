@@ -10,6 +10,10 @@ angular.module('genome.auth', ['ngCookies', 'ngRoute'])
 })
 .factory('AuthFactory', function($http, $cookies, $location) {
 
+  var isAuth = function () {
+    return $cookies['token'];
+  };
+
   var signOut = function() {
     delete $cookies['token'];
     delete $cookies['user_first_name']
