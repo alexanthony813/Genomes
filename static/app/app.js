@@ -1,5 +1,4 @@
 var app = angular.module('genome', [
-  'datamaps',
   'genome.pool',
   'genome.self',
   'genome.relatives',
