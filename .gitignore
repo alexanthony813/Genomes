@@ -11,8 +11,6 @@ staticfiles
 
 #Node modules
 node_modules/
-
-config.py
 npm-debug.log
 
 #unwanted files
