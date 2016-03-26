@@ -13,6 +13,7 @@ angular.module('genome.directive', [])
       $scope.getRelatives = function () {
         $scope.onpoolpage = true;
         $scope.onselfpage = false;
+        $rootScope.removeHelix();
         $location.path('/pool');
       };
 
