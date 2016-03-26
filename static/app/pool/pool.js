@@ -1,28 +1,49 @@
 angular.module('genome.pool', [])
 .controller('PoolController', function($scope, d3Service, Relatives, $rootScope, $window, $location
   ) {
-
+  $( window ).resize = function(){
+    $('h1').append('<div>HELLO</div>');
+  }
   var circle;
   $scope.relatives = [];
   $rootScope.rels = [];
   $scope.myData = [10,10,10,20];
   $scope.circles = [];
-  var margin = {
-    top: 50,
-    right: 50,
-    bottom: 200,
-    left: 30
-  };
+  var idealMargins = [50/768, 50/1024, 'bottom', 30/1024]
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
+  var standardWidth = 1024;
+  var standardHeight = 768;
+  var margin = {
+    top: function(){return 3 * boardHeight * 50/768}(),
+    right: function(){return boardWidth * 50/1024}(),
+    bottom: 200,
+    left: function(){return boardWidth * 30/1024}()
+  };
+  var resetSizing = function() {
+    var heightDiff = Math.abs(boardHeight - standardHeight);
+    var widthDiff = Math.abs(boardWidth - standardWidth);
+    var fraction;
+    if(heightDiff > widthDiff) {
+      console.log('first width', boardWidth);
+      fraction = boardHeight/standardHeight;
+      console.log('fraction', fraction)
+      boardWidth = boardWidth * fraction;
+      console.log('changed width', boardWidth);
+    } else {
+      fraction = boardWidth/standardWidth;
+      boardHeight = boardHeight * fraction;
+    }
+  }
+  resetSizing();
   var column1 = margin['left'];
   var column2 = boardWidth/8;
   var column3 = boardWidth/3;
   var column4 = boardWidth * 8/15;
   var column5 = boardWidth * .6;
-  var row1 = margin['top']
-  var row2 = boardHeight/2.5;
-  var row3 = boardHeight/2.3;
+  var row1 = boardHeight/9
+  var row2 = boardHeight/3.2;
+  var row3 = boardHeight/2.9;
   var continents = [
     [row1, column1, 'north america'],
     [row2, column2, 'south america'],
@@ -141,11 +162,11 @@ angular.module('genome.pool', [])
       //.attr("viewBox", "0 0 600 400")
       //class to make it responsive
       //.classed("svg-content-responsive", true)
-    .attr("width", boardWidth + margin.left + margin.right)
-    .attr("height", boardHeight + margin.top + margin.bottom)
+    .attr("width", $window.innerWidth)
+    .attr("height", $window.innerHeight)
     .attr("id", "mainCanvas")
     .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   //Create bubbles
   var createBubbles = function(circleData) {
@@ -324,8 +345,8 @@ angular.module('genome.pool', [])
       }
 
       $scope.circles.push({
-        cx: boardWidth/4,
-        cy: boardHeight/3,
+        cx: $window.innerWidth/3.5,
+        cy: $window.innerHeight/2,
         color: colorScheme[Math.floor(Math.random() * colorScheme.length)],
         radius: similarity * 1000,
         relative: $scope.relatives[i]
