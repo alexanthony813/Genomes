@@ -59,7 +59,10 @@ def makeDemoUser():
 @app.route('/api/relatives/')
 #return all the relatives. Refactor to only return the relatives specific to the current User
 def getRelatives():
-    user_profile_id = request.cookies.get('user_profile_id')
+    
+    decoded = jwt.decode(request.cookies.get('token'), app.config.get('SECRET_KEY'), algorithms=['HS256'])
+    user_profile_id = decoded['user_profile_id']
+
     #Retrieve all relatives from database, not filtered by user
     #To Do: Filter this by user
     user_relatives = models.db_session.query(models.user_relatives).all()
@@ -145,12 +148,11 @@ def receive_code():
             user_first_name = name_response.json()['first_name']
             #if user already exists in database, render the html and do not re-add user to database
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
-                # return flask.render_template('main.html', response_json = genotype_response.json())
                 resp = make_response(redirect(url_for('getUser')))
                 # resp.set_cookie('user_profile_id', user_profile_id)
-                # resp.set_cookie('user_first_name', user_first_name)
-                encoded = jwt.encode({'userdata': 'user_profile_id'},  app.config.get('SECRET_KEY'), algorithm='HS256')
-                resp.set_cookie('token': encoded)
+                resp.set_cookie('user_first_name', user_first_name)
+                encoded = jwt.encode({'user_profile_id': user_profile_id,'user_first_name': user_first_name},  app.config.get('SECRET_KEY'), algorithm='HS256')
+                resp.set_cookie('token', encoded)
                 return resp
             # otherwise, add new user to database if they have never logged in before
             else:
@@ -163,12 +165,12 @@ def receive_code():
                 controller.createNewUser(name_response, relatives_response, genotype_response, user_response)
                 #create snps table
                 controller.createSnpsTable()
-                # EDIT HEADERS/COOKIES ON THE 302???
+
                 resp = make_response(redirect(url_for('getUser')))
-                resp.set_cookie('user_profile_id', user_profile_id)
-                resp.set_cookie('user_first_name', user_first_name)
-                encoded = jwt.encode({'userdata': 'user_profile_id'},  app.config.get('SECRET_KEY'), algorithm='HS256')
-                resp.set_cookie('token': encoded)
+                # Using jwt module to encode and concat a JWT, then setting it to a value in the token
+                encoded = jwt.encode({'user_profile_id': user_profile_id,'user_first_name': user_first_name},  app.config.get('SECRET_KEY'), algorithm='HS256')
+                resp.set_cookie('token', encoded)
+                
                 return resp
         #error handling if api calls for additional user data to 23andMe fail
         else:
