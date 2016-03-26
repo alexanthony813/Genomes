@@ -8,7 +8,8 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from server import app
 
 #Initialize postgreSQL genome database
-engine = create_engine('postgres://localhost/genome', convert_unicode=True)
+engine = create_engine('postgres://ekmsxuepfrzsrq:eheMsYxYxlKSuLbKvgyrxkAWlH@ec2-54-225-102-131.compute-1.amazonaws.com:5432/deued1oqupgabe', convert_unicode=True)
+#engine = create_engine('postgres://localhost/genome', convert_unicode=True)
 session_factory = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 db_session = scoped_session(session_factory)
 Base = declarative_base()
@@ -17,7 +18,8 @@ Base.query = db_session.query_property()
 
 try:
     #connect to database if it exissts
-    connection = connect(dbname='GENOME_DB', user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
+    connection=connect(postgres://ekmsxuepfrzsrq:eheMsYxYxlKSuLbKvgyrxkAWlH@ec2-54-225-102-131.compute-1.amazonaws.com:5432/deued1oqupgabe)
+    #connection = connect(dbname='genome', user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
 except:
     #create database if it does not already exist
     connection = connect(user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
