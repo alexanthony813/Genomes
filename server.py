@@ -9,11 +9,12 @@ import models
 import controller
 from os import path
 import models
+import os
 
 
 #Initialize Flask application
 app = Flask(__name__)
-PORT = 5000
+PORT = os.environ.get('PORT') || 5000
 
 #Gather data from config.py
 app.config.from_object('config')
