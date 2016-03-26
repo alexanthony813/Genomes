@@ -2,6 +2,7 @@ import requests
 import flask
 from flask import Flask, request, render_template, jsonify, redirect, url_for, make_response
 from flask.ext.sqlalchemy import SQLAlchemy
+import jwt
 from logging import Formatter, FileHandler
 import models
 import controller
@@ -81,6 +82,7 @@ def getRelatives():
 
     return jsonify({'relativeList' : finalRelatives})
 
+
 @app.route('/api/getsnps', methods=['POST', 'GET'])
 def getSnps():
     current_user_id = request.data
@@ -145,8 +147,10 @@ def receive_code():
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
                 # return flask.render_template('main.html', response_json = genotype_response.json())
                 resp = make_response(redirect(url_for('getUser')))
-                resp.set_cookie('user_profile_id', user_profile_id)
-                resp.set_cookie('user_first_name', user_first_name)
+                # resp.set_cookie('user_profile_id', user_profile_id)
+                # resp.set_cookie('user_first_name', user_first_name)
+                encoded = jwt.encode({'userdata': 'user_profile_id'},  app.config.get('SECRET_KEY'), algorithm='HS256')
+                resp.set_cookie('token': encoded)
                 return resp
             # otherwise, add new user to database if they have never logged in before
             else:
@@ -163,6 +167,8 @@ def receive_code():
                 resp = make_response(redirect(url_for('getUser')))
                 resp.set_cookie('user_profile_id', user_profile_id)
                 resp.set_cookie('user_first_name', user_first_name)
+                encoded = jwt.encode({'userdata': 'user_profile_id'},  app.config.get('SECRET_KEY'), algorithm='HS256')
+                resp.set_cookie('token': encoded)
                 return resp
         #error handling if api calls for additional user data to 23andMe fail
         else:
