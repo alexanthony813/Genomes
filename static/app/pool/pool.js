@@ -54,10 +54,30 @@ angular.module('genome.pool', [])
       }
     }
     //Enter New Bubble Data and Instigate Bubble Movement
-    var moveBubbles = function() {
+    var moveBubblesToRegions = function() {
       makeNewBubbleData();
       d3.selectAll("circle").data($scope.circles).attr('r', function(d){return d.radius;});
     }
+
+    //Move Bubbles Back to Center of Page
+    replaceBubblesInCenter = function(){
+      $scope.circles.forEach(function(bubble){
+        bubble['cx'] = bubble['oldCX'];
+        bubble['cy'] = bubble['oldCY'];
+        bubble['radius'] = bubble['oldRadius'];
+      })
+
+      var nodes = $scope.circles;
+      var force = d3.layout.force()
+      .nodes(nodes)
+      .size([width, height])
+      .gravity(0)
+      .charge(0)
+      .on("tick", tick)
+      .start();
+
+      d3.selectAll("circle").data($scope.circles).attr('r', function(d){return d.radius;}).call(force.drag);
+    };
 
   //Toggle Side Nav Icons
   var whichView = function() {
@@ -71,14 +91,15 @@ angular.module('genome.pool', [])
   var toggleMap = function(){
     if(!mapShowing) {
       $('div.wholepage').addClass('mapView');
+      moveBubblesToRegions();
     } else {
       $('div.wholepage').removeClass('mapView');
+      replaceBubblesInCenter();
     }
     mapShowing = !mapShowing;
   }
   $rootScope.filterRegions = function() {
     toggleMap();
-    moveBubbles();
   };
   //End Map Toggle
 
@@ -186,55 +207,57 @@ angular.module('genome.pool', [])
        })
       .call(force.drag);
 
-    //Control bubble entry onto DOM and magnetic resistance to each other
-    function tick(e) {
-      circle.each(gravity(0.8 * e.alpha))
-      .each(collide(0.5))
-      .attr("cx", function (d) {
-        return d.x;
-      })
-      .attr("cy", function (d) {
-        return d.y;
-      });
-    }
 
-    // Move nodes toward cluster focus.
-    function gravity(alpha) {
-      return function (d) {
-        d.y += (d.cy - d.y) * alpha;
-        d.x += (d.cx - d.x) * alpha;
-      };
-    }
-
-    // Resolve collisions between nodes.
-    function collide(alpha) {
-      var quadtree = d3.geom.quadtree(nodes);
-      return function (d) {
-        var r = d.radius + radius.domain()[1] + padding,
-          nx1 = d.x - r,
-          nx2 = d.x + r,
-          ny1 = d.y - r,
-          ny2 = d.y + r;
-        quadtree.visit(function (quad, x1, y1, x2, y2) {
-          if (quad.point && (quad.point !== d)) {
-            var x = d.x - quad.point.x,
-              y = d.y - quad.point.y,
-              l = Math.sqrt(x * x + y * y),
-              r = d.radius + quad.point.radius + (d.color !== quad.point.color) * padding;
-            if (l < r) {
-              l = (l - r) / l * alpha;
-              d.x -= x *= l;
-              d.y -= y *= l;
-              quad.point.x += x;
-              quad.point.y += y;
-            }
-          }
-          return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
-        });
-      };
-    }
   //close createBubbles function
   };
+
+  //Control bubble entry onto DOM and magnetic resistance to each other
+  function tick(e) {
+    circle.each(gravity(0.8 * e.alpha))
+    .each(collide(0.5))
+    .attr("cx", function (d) {
+      return d.x;
+    })
+    .attr("cy", function (d) {
+      return d.y;
+    });
+  }
+
+  // Move nodes toward cluster focus.
+  function gravity(alpha) {
+    return function (d) {
+      d.y += (d.cy - d.y) * alpha;
+      d.x += (d.cx - d.x) * alpha;
+    };
+  }
+
+  // Resolve collisions between nodes.
+  function collide(alpha) {
+    var quadtree = d3.geom.quadtree(nodes);
+    return function (d) {
+      var r = d.radius + radius.domain()[1] + padding,
+        nx1 = d.x - r,
+        nx2 = d.x + r,
+        ny1 = d.y - r,
+        ny2 = d.y + r;
+      quadtree.visit(function (quad, x1, y1, x2, y2) {
+        if (quad.point && (quad.point !== d)) {
+          var x = d.x - quad.point.x,
+            y = d.y - quad.point.y,
+            l = Math.sqrt(x * x + y * y),
+            r = d.radius + quad.point.radius + (d.color !== quad.point.color) * padding;
+          if (l < r) {
+            l = (l - r) / l * alpha;
+            d.x -= x *= l;
+            d.y -= y *= l;
+            quad.point.x += x;
+            quad.point.y += y;
+          }
+        }
+        return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+      });
+    };
+  }
 
   //After grabbing relatives from the DB, create a bubbles array based on length of relatives array
   var initialize = function() {
