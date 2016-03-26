@@ -394,3 +394,4 @@ angular.module('genome.pool', ['angular-intro'])
       doneLabel: 'Thanks'
   };
 });
+
