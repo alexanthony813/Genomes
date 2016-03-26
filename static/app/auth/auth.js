@@ -12,6 +12,7 @@ angular.module('genome.auth', ['ngCookies', 'ngRoute'])
 
   var signOut = function() {
     delete $cookies['token'];
+    delete $cookies['user_name']
     window.location.href = '/';
   };
 
