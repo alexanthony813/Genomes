@@ -48,7 +48,11 @@ def makeDemoUser():
     demo_id = 'demo_id'
     demo_userName = 'Lilly Demo'
     response = make_response(render_template('index.html'))
+
     #set demo user's cookie
+    
+
+
     response.set_cookie('user_first_name', demo_userName)
     response.set_cookie('user_profile_id', demo_id)
     return response
@@ -61,7 +65,7 @@ def makeDemoUser():
 def getRelatives():
     
     decoded = jwt.decode(request.cookies.get('token'), app.config.get('SECRET_KEY'), algorithms=['HS256'])
-    user_profile_id = decoded['user_profile_id']
+    current_user_profile_id = decoded['user_profile_id']
 
     #Retrieve all relatives from database, not filtered by user
     #To Do: Filter this by user
@@ -70,8 +74,8 @@ def getRelatives():
     #Iterate through all relatives
     for user_relative in user_relatives:
         user = list(user_relative)
-        #For each relative, grab only those that match on the current user_profile_id
-        if user_profile_id == str(user[0]):
+        #For each relative, grab only those that match on the current_user_profile_id
+        if current_user_profile_id == str(user[0]):
             user_relatives_ids.append(int(user[1]))
     #Retrieve all relatives from DB
     #To Do: is this the same information in the user_relatives variable above?
@@ -88,10 +92,13 @@ def getRelatives():
 
 @app.route('/api/getsnps', methods=['POST', 'GET'])
 def getSnps():
-    current_user_id = request.data
+    
+    decoded = jwt.decode(request.cookies.get('token'), app.config.get('SECRET_KEY'), algorithms=['HS256'])
+    current_user_profile_id = decoded['user_profile_id']
+    
     user_snps = {}
 
-    user_data = models.db_session.query(models.User).filter(models.User.profile_id == current_user_id).first().serialize()
+    user_data = models.db_session.query(models.User).filter(models.User.profile_id == current_user_profile_id).first().serialize()
     for user_datum in user_data:
         if user_datum[:2:].lower()=='rs':
             user_snps[user_datum] = user_data[user_datum]
@@ -148,12 +155,12 @@ def receive_code():
             user_first_name = name_response.json()['first_name']
             #if user already exists in database, render the html and do not re-add user to database
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
+               
                 resp = make_response(redirect(url_for('getUser')))
-                # resp.set_cookie('user_profile_id', user_profile_id)
-                resp.set_cookie('user_first_name', user_first_name)
                 encoded = jwt.encode({'user_profile_id': user_profile_id,'user_first_name': user_first_name},  app.config.get('SECRET_KEY'), algorithm='HS256')
                 resp.set_cookie('token', encoded)
                 return resp
+                
             # otherwise, add new user to database if they have never logged in before
             else:
                 #Begin API calls to 23andMe to get additional user data
