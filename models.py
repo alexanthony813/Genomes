@@ -23,6 +23,14 @@ conn = psycopg2.connect(
     port=url.port
 )
 
+#Initialize postgreSQL genome database
+engine = create_engine('postgres://ekmsxuepfrzsrq:eheMsYxYxlKSuLbKvgyrxkAWlH@ec2-54-225-102-131.compute-1.amazonaws.com:5432/deued1oqupgabe', convert_unicode=True)
+#engine = create_engine('postgres://localhost/genome', convert_unicode=True)
+session_factory = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+db_session = scoped_session(session_factory)
+Base = declarative_base()
+Base.query = db_session.query_property()
+
 
 
 
