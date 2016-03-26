@@ -17,7 +17,7 @@ Base.query = db_session.query_property()
 
 try:
     #connect to database if it exissts
-    connection = connect(dbname='genome', user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
+    connection = connect(dbname='GENOME_DB', user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
 except:
     #create database if it does not already exist
     connection = connect(user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
