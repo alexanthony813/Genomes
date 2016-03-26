@@ -18,15 +18,15 @@ Base.query = db_session.query_property()
 
 try:
     #connect to database if it exissts
-    connection=connect(dbname='postgres://ekmsxuepfrzsrq:eheMsYxYxlKSuLbKvgyrxkAWlH@ec2-54-225-102-131.compute-1.amazonaws.com:5432/deued1oqupgabe')
+    connection=connect('postgres://ekmsxuepfrzsrq:eheMsYxYxlKSuLbKvgyrxkAWlH@ec2-54-225-102-131.compute-1.amazonaws.com:5432/deued1oqupgabe')
     #connection = connect(dbname='genome', user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
 except:
     #create database if it does not already exist
     #connection = connect(user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
+    connection = connect(user=app.config.get('DATABASE_USERNAME'), host='heroku', password=app.config.get('DATABASE_PASSWORD'))
     connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cursor = connection.cursor()
-    #cursor.execute("CREATE DATABASE genome")
-    cursor.execute("CREATE DATABASE DATABASE_URL")
+    cursor.execute("CREATE DATABASE genome")
     cursor.close()
     connection.close()
 
