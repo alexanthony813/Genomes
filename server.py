@@ -3,7 +3,7 @@ import flask
 from flask import Flask, request, render_template, jsonify, redirect, url_for, make_response
 from flask.ext.sqlalchemy import SQLAlchemy
 import jwt
-# from encode import jwt_encode, jwt_decode
+from encoder import jwt_encode
 from logging import Formatter, FileHandler
 import models
 import controller
@@ -27,6 +27,7 @@ REDIRECT_URI = app.config.get('REDIRECT_URI')
 SNPS = ['rs12913832', 'rs8177374', 'rs1799971', 'rs806380', 'rs1800955', 'rs53576', 'rs1815739', 'rs6152', 'rs1800497', 'rs9939609', 'rs662799', 'rs17822931', 'rs4680', 'rs4988235', 'rs6025', 'rs7574865', 'rs1695', 'rs72921001', 'rs1537415', 'rs2472297', 'rs909525']
 DEFAULT_SCOPE = 'names basic email ancestry relatives genomes %s' % (' '.join(SNPS))
 BASE_API_URL = 'https://api.23andme.com/'
+SECRET_KEY = app.config.get('SECRET_KEY')
 
 
 @app.route('/')
@@ -38,15 +39,6 @@ def home():
 @app.route('/get_info/')
 def getUser():
     response = make_response(render_template('index.html'))
-    # response.set_cookie('user_profile_id', request.cookies.get('user_profile_id'))
-
-    # print "token", request.cookies.get('token')
-
-    # decoded = jwt.decode(request.cookies.get('token'), app.config.get('SECRET_KEY'), algorithms=['HS256'])
-    # print "decoded", decoded
-    # response.set_cookie('token', decoded);
-
-    # print "in getUser function in /get_info/ route"
     return response
 
 
@@ -56,11 +48,9 @@ def makeDemoUser():
     controller.create_demo_user()
     demo_profile_id = 'demo_id'
     demo_user_name = 'Lilly Demo'
+
     response = make_response(render_template('index.html'))
-
-    encoded = jwt.encode({'user_profile_id': demo_profile_id, 'user_first_name': demo_user_name},  app.config.get('SECRET_KEY'), algorithm='HS256')
-    response.set_cookie('token', encoded)
-
+    response.set_cookie('token', jwt_encode(demo_profile_id, demo_user_name, SECRET_KEY))
     return response
 
 
@@ -70,7 +60,7 @@ def makeDemoUser():
 #return all the relatives. Refactor to only return the relatives specific to the current User
 def getRelatives():
     
-    decoded = jwt.decode(request.cookies.get('token'), app.config.get('SECRET_KEY'), algorithms=['HS256'])
+    decoded = jwt.decode(request.cookies.get('token'), SECRET_KEY, algorithms=['HS256'])
     current_user_profile_id = decoded['user_profile_id']
 
     #Retrieve all relatives from database, not filtered by user
@@ -163,10 +153,7 @@ def receive_code():
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
                
                 response = make_response(redirect(url_for('getUser')))
-                
-                encoded = jwt.encode({'user_profile_id': user_profile_id,'user_first_name': user_first_name},  app.config.get('SECRET_KEY'), algorithm='HS256')
-                response.set_cookie('token', encoded)
-                
+                response.set_cookie('token', jwt_encode(user_profile_id, user_first_name, SECRET_KEY))
                 return response
 
             # otherwise, add new user to database if they have never logged in before
@@ -182,11 +169,8 @@ def receive_code():
                 controller.createSnpsTable()
 
                 response = make_response(redirect(url_for('getUser')))
-                # Using jwt module to encode and concat a JWT, then setting it to a value in the token
-                encoded = jwt.encode({'user_profile_id': user_profile_id,'user_first_name': user_first_name},  app.config.get('SECRET_KEY'), algorithm='HS256')
-                response.set_cookie('token', encoded)
-                
-                return response 
+                response.set_cookie('token', jwt_encode(user_profile_id, user_first_name, SECRET_KEY))
+                return response
         #error handling if api calls for additional user data to 23andMe fail
         else:
             reponse_text = genotype_response.text

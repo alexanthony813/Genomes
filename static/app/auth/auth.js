@@ -7,13 +7,6 @@ angular.module('genome.auth', ['ngCookies', 'ngRoute'])
     AuthFactory.signOut();
 
   };
-
-  // $scope.getUserProfileId = function () {
-  //   $rootScope.user_profile_id = $cookies.user_profile_id;
-  // };
-
-  // $scope.getUserProfileId();
-
 })
 
 .factory('AuthFactory', function($http, $cookies, $location) {
