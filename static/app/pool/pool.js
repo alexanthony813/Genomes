@@ -25,11 +25,8 @@ angular.module('genome.pool', [])
     var widthDiff = Math.abs(boardWidth - standardWidth);
     var fraction;
     if(heightDiff > widthDiff) {
-      console.log('first width', boardWidth);
       fraction = boardHeight/standardHeight;
-      console.log('fraction', fraction)
       boardWidth = boardWidth * fraction;
-      console.log('changed width', boardWidth);
     } else {
       fraction = boardWidth/standardWidth;
       boardHeight = boardHeight * fraction;
