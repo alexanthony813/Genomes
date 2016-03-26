@@ -23,28 +23,6 @@ conn = psycopg2.connect(
     port=url.port
 )
 
-#Initialize postgreSQL genome database
-engine = create_engine('postgres://ekmsxuepfrzsrq:eheMsYxYxlKSuLbKvgyrxkAWlH@ec2-54-225-102-131.compute-1.amazonaws.com:5432/deued1oqupgabe', convert_unicode=True)
-#engine = create_engine('postgres://localhost/genome', convert_unicode=True)
-session_factory = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-db_session = scoped_session(session_factory)
-Base = declarative_base()
-Base.query = db_session.query_property()
-
-
-try:
-    #connect to database if it exissts
-    connection=connect(dbname='postgres://ekmsxuepfrzsrq:eheMsYxYxlKSuLbKvgyrxkAWlH@ec2-54-225-102-131.compute-1.amazonaws.com:5432/deued1oqupgabe', user='', host='localhost', password='')
-    #connection = connect(dbname='genome', user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
-except:
-    #create database if it does not already exist
-    #connection = connect(user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
-    connection = connect(user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
-    connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-    cursor = connection.cursor()
-    cursor.execute("CREATE DATABASE genome")
-    cursor.close()
-    connection.close()
 
 
 
