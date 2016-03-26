@@ -111,11 +111,9 @@ angular.module('genome.self', [])
       }
 
       SelfFactory.getSnps($cookies.user_profile_id).then(function (outcomes) {
-        console.log('making call for snps');
         for (var key in outcomes) {
           $scope.outcomes.push(outcomes[key]);
         }
-        console.log('scope outcomes', $scope.outcomes);
         numX = $scope.outcomes.length;
         setInterval(draw, 25);
       });

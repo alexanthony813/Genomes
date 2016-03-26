@@ -17,7 +17,6 @@ PORT = 5000
 app.config.from_object('config')
 
 #Declaration of all necessary variables needed to perform 23AndMe API Call
-# API_SERVER = "api.23andme.com"
 BASE_CLIENT_URL = 'http://localhost:%s/'% PORT
 DEFAULT_REDIRECT_URI = '%sreceive_code/'  % BASE_CLIENT_URL
 CLIENT_ID = app.config.get('CLIENT_ID')
@@ -95,8 +94,10 @@ def getSnps():
     user_outcomes = []
     for user_snp in user_snps:
         # loop through entire snp table, if any of snp base pairs match up to the base pair in user snps, put in an object with rsid and outcome
-        current_snp = models.db_session.query(models.Snp).filter(models.Snp.rs_id == user_snp and models.Snp.dnaPair == user_snps[user_snp]).first()
+        current_snp = models.db_session.query(models.Snp).filter(models.Snp.rs_id == user_snp).filter(models.Snp.dnaPair == user_snps[user_snp]).first()
+
         if current_snp is not None:
+            print current_snp.serialize()
             user_outcomes.append({"rsid": user_snp, "pair": user_snps[user_snp], "outcome": current_snp.serialize()['outcome']});
 
     return jsonify({'outcomes': user_outcomes})
