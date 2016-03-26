@@ -22,10 +22,11 @@ try:
     #connection = connect(dbname='genome', user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
 except:
     #create database if it does not already exist
-    connection = connect(user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
+    #connection = connect(user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
     connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cursor = connection.cursor()
-    cursor.execute("CREATE DATABASE genome")
+    #cursor.execute("CREATE DATABASE genome")
+    cursor.execute("CREATE DATABASE DATABASE_URL")
     cursor.close()
     connection.close()
 
