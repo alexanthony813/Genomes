@@ -34,7 +34,7 @@ Base.query = db_session.query_property()
 
 try:
     #connect to database if it exissts
-    connection=connect(dbname='postgres://ekmsxuepfrzsrq:eheMsYxYxlKSuLbKvgyrxkAWlH@ec2-54-225-102-131.compute-1.amazonaws.com:5432/deued1oqupgabe', user='', host='genomie.herokuapp.com', password='')
+    connection=connect(dbname='postgres://ekmsxuepfrzsrq:eheMsYxYxlKSuLbKvgyrxkAWlH@ec2-54-225-102-131.compute-1.amazonaws.com:5432/deued1oqupgabe', user='', host='localhost', password='')
     #connection = connect(dbname='genome', user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
 except:
     #create database if it does not already exist
