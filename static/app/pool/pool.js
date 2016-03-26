@@ -62,7 +62,6 @@ angular.module('genome.pool', [])
   var radius = d3.scale.sqrt().range([0, 12]);
 
   var colorScheme = ['#1abc9c', '#2ecc71', '#f1c40f', '#27ae60', '#3498db', '#9b59b6', '#2980b9','#8e44ad','#e67e22','#d35400','#e74c3c', '#c0392b', '#bdc3c7', '#f39c12', '#95a5a6'];
-  // '#34495e','#2c3e50',
 
   //pop up message displaying relative data when user clicks on a bubble
   var showRelative = function(bubble) {
@@ -79,8 +78,6 @@ angular.module('genome.pool', [])
   var svg = d3.select('.pool').append("svg")
     .attr("width", boardWidth + margin.left + margin.right)
     .attr("height", boardHeight + margin.top + margin.bottom)
-    // .append("g")
-    // .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   //Create bubbles
   var createBubbles = function(circleData) {
@@ -99,12 +96,8 @@ angular.module('genome.pool', [])
     .data(nodes)
 
     //create and place the blocks containing the circle and the text
-    var elemEnter = elem.enter().append('g')
+    var elemEnter = elem.enter().append('g') //.call(force.drag)
  
- // .attr('transform', function(d){
- //      return "translate(50,80)"
- //    })
-
 
     //create the circle for each block
     var circle = elemEnter.append("circle")
@@ -115,17 +108,17 @@ angular.module('genome.pool', [])
         var yPosition = parseFloat(d3.select(this).attr("cy"));
 
         var similarity = d3.select(this)[0][0].__data__.relative.similarity * 100;
-        svg.append("text")
-          .attr("id", "tooltip")
-          .attr("x", xPosition)
-          .attr("y", yPosition)
-          .attr("text-anchor", "middle")
-          .attr("font-family", "sans-serif")
-          .attr("font-size", "13px")
-          .attr("font-weight", "bold")
-          .attr("fill", "black")
-          .attr("pointer-events", "none")
-          .text(similarity.toFixed(2) + "%");
+        // svg.append("text")
+        //   .attr("id", "tooltip")
+        //   .attr("x", xPosition)
+        //   .attr("y", yPosition)
+        //   .attr("text-anchor", "middle")
+        //   .attr("font-family", "sans-serif")
+        //   .attr("font-size", "13px")
+        //   .attr("font-weight", "bold")
+        //   .attr("fill", "black")
+        //   .attr("pointer-events", "none")
+        //   .text(similarity.toFixed(2) + "%");
 
 
         d3.select(this)
@@ -151,9 +144,11 @@ angular.module('genome.pool', [])
       .style('fill', function(d) {
          return d.color;
        })
-      .call(force.drag);
+
+      // .call(force.drag);
     //END APPEND CIRCLE
 
+    //append text to the circles after they are created
     setTimeout(function(){
     elemEnter.append('text')
       .attr('x', function(g){
@@ -168,6 +163,7 @@ angular.module('genome.pool', [])
       .text(function(d){
         return 'x'
       })
+      .call(force.drag)
     }, 1000)
 
     //Control bubble entry onto DOM and magnetic resistance to each other
@@ -315,7 +311,11 @@ angular.module('genome.pool', [])
   $scope.getRelatives();
 
   $scope.$watch(function(){
+    console.log("HIIIIIIIIII")
     var text = d3.selectAll('g').selectAll('text')
-    console.log(text)
+                .attr('transform', 'translate(50,50)')    
+    // .attr('transform', function(d){
+    //   return ['translate(',d.x, ',', d.y')']
+    // })
   })
 });
