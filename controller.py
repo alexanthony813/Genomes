@@ -1,5 +1,6 @@
 import models
 import demo
+import snps
 
 #Create a demo user in the db for users without a 23andMe account
 def create_demo_user():
@@ -44,7 +45,7 @@ def createNewUser(name_response, relatives_response, genotype_response, user_res
 
 
 def createSnpsTable():
-    for snp in demo.sample_snps:
+    for snp in snps.sample_snps:
         new_snp = models.Snp(snp['rs_id'], snp['dnaPair'], snp['outcome'])
         models.db_session.add(new_snp)
         models.db_session.commit()
