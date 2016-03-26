@@ -79,8 +79,8 @@ angular.module('genome.pool', [])
   var svg = d3.select('.pool').append("svg")
     .attr("width", boardWidth + margin.left + margin.right)
     .attr("height", boardHeight + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    // .append("g")
+    // .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   //Create bubbles
   var createBubbles = function(circleData) {
@@ -93,12 +93,22 @@ angular.module('genome.pool', [])
       .charge(0)
       .on("tick", tick)
       .start();
-    //Add bubbles to DOM
-    var circle = svg.selectAll("circle")
-      .data(nodes)
-      .enter().append("circle")
-      .on('mouseover', function(d){
+    
+    //define data for the circles
+    var elem = svg.selectAll('g')
+    .data(nodes)
 
+    //create and place the blocks containing the circle and the text
+    var elemEnter = elem.enter().append('g')
+ 
+ // .attr('transform', function(d){
+ //      return "translate(50,80)"
+ //    })
+
+
+    //create the circle for each block
+    var circle = elemEnter.append("circle")
+      .on('mouseover', function(d){
         // Get this bubble's x/y values, then augment for the tooltip 
         // This will allow the tool tip to be centered in the middle of the bubble
         var xPosition = parseFloat(d3.select(this).attr("cx"));
@@ -116,6 +126,7 @@ angular.module('genome.pool', [])
           .attr("fill", "black")
           .attr("pointer-events", "none")
           .text(similarity.toFixed(2) + "%");
+
 
         d3.select(this)
           .attr("opacity", ".7");
@@ -141,6 +152,23 @@ angular.module('genome.pool', [])
          return d.color;
        })
       .call(force.drag);
+    //END APPEND CIRCLE
+
+    setTimeout(function(){
+    elemEnter.append('text')
+      .attr('x', function(g){
+        var circle = d3.select(this)[0][0].previousSibling
+        return d3.select(circle).attr('cx')
+      })
+      .attr('y', function(g){
+        var circle = d3.select(this)[0][0].previousSibling
+        return d3.select(circle).attr('cy')
+      })
+      .attr('class', 'relativeText')
+      .text(function(d){
+        return 'x'
+      })
+    }, 1000)
 
     //Control bubble entry onto DOM and magnetic resistance to each other
     function tick(e) {
@@ -189,8 +217,8 @@ angular.module('genome.pool', [])
         });
       };
     }
-  //close createBubbles function
   };
+
 
   //After grabbing relatives from the DB, create a bubbles array based on length of relatives array
   var initialize = function() {
@@ -285,4 +313,9 @@ angular.module('genome.pool', [])
   };
   //Initialize the page with a call to getRelatives
   $scope.getRelatives();
+
+  $scope.$watch(function(){
+    var text = d3.selectAll('g').selectAll('text')
+    console.log(text)
+  })
 });
