@@ -55,7 +55,16 @@ h3 {
   float: right;
   margin-top: 20px;
 }
-#logo a { color: #fff; text-decoration: none; float: left; font-size: 30px; margin-top: 20px; color: #fff; font-family:"Wellfleet"; font-weight: bold; }
+#logo a {
+  color: #fff;
+  text-decoration: none;
+  float: left;
+  font-size: 30px;
+  margin-top: 20px;
+  color: #fff;
+  font-family:"Wellfleet";
+  font-weight: bold;
+}
 #nav ul{
   list-style: none;
   display: block;
@@ -67,9 +76,22 @@ h3 {
   float: left;
   padding-left: 21px;
 }
-#nav li a { color: #fff; opacity:0.6; font-size: 16px; text-decoration: none; font-family: 'Wellfleet'; }
-#nav li a.active { color: #fff; opacity:1; border-bottom: 2px solid #fff; }
-#nav li a:hover { color: #fff; opacity:1; }
+#nav li a {
+  color: #fff;
+  opacity:0.6;
+  font-size: 16px;
+  text-decoration: none;
+  font-family: 'Wellfleet';
+}
+#nav li a.active {
+  color: #fff;
+  opacity:1;
+  border-bottom: 2px solid #fff;
+}
+#nav li a:hover {
+  color: #fff;
+  opacity:1;
+}
 
 .quotes {
   font-family: 'Goudy Bookletter 1911', serif;
@@ -79,14 +101,13 @@ h3 {
   margin: 50px auto;
 }
 
-<<<<<<< 0bf1294fec3366a61a9c496b22fb31e157e7913b
-.author_name_white {
+.quote_subtitle_white {
   font-family:"Wellfleet";
   margin: 70px 0 0 75px;
   color: #fff;
   font-size: 20px;
 }
-.author_name_gray {
+.quote_subtitle_gray {
   font-family:"Wellfleet";
   margin: 70px 0 0 75px;
   color: #94a4a4;
