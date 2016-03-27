@@ -129,6 +129,7 @@ def receive_code():
         verify=False
     )
 
+
     #get access token from 23andMe
     if response.status_code == 200:
         access_token = response.json()['access_token']
