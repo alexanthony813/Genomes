@@ -1,5 +1,5 @@
 angular.module('genome.self', [])
-.controller('SelfController', function ($scope, $cookies, $location, SelfFactory, d3Service, $rootScope) {
+.controller('SelfController', function ($scope, $cookies, $location, SelfFactory, d3Service, $rootScope, $timeout) {
 
   $scope.outcomes = $scope.outcomes || [];
   $scope.current = {};
@@ -131,9 +131,10 @@ angular.module('genome.self', [])
     setInterval(draw, 25);
   });
 
+
   $rootScope.IntroOptions = {
       steps:[{ 
-          // element: document.querySelector('#test3'),
+          element: document.querySelector('#helix'),
           intro: "Welcome to your personal DNA helix. Click on the bubbles for more information about your DNA."
         },
         {
