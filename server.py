@@ -16,6 +16,7 @@ import os
 app = Flask(__name__)
 PORT = int(os.environ.get('PORT', 5000))
 is_prod = os.environ.get('IS_HEROKU', None)
+app.config.from_object('config')
 
 if is_prod:
     BASE_CLIENT_URL = 'https://genomie.herokuapp.com'
