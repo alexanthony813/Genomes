@@ -3,8 +3,7 @@
   "version": "1.2.0",
   "description": "Genome sequence visualizer",
   "scripts": {
-    "start": "python server.py",
-    "postinstall":"./node_modules/bower/bin/bower install",
+    "postinstall": "bower install",
     "test": "NODE_ENV=test BABEL_JEST_STAGE=0 jest"
   },
   "repository": {
