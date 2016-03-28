@@ -7,6 +7,7 @@ angular.module('genome.tree', [])
   $scope.myData = [10,10,10,20];
   $scope.circles = [];
   var force;
+  var similarRange;
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
   var relativeTree = {
@@ -22,15 +23,6 @@ angular.module('genome.tree', [])
                         }
                         ]
                       };
-
-  $scope.destroyTree = function(){
-    d3.selectAll('line').remove();
-    
-    var nodes = d3.selectAll('g').transform(function(d){
-      console.log(d);
-      return 'translate('+ 50 + ',' + 50 + ')' ;
-    });
-  };
 
  //Grab relatives from the database, then initialize bubbles
   $scope.getRelatives = function() {
@@ -198,7 +190,7 @@ angular.module('genome.tree', [])
       return b - a;
     });
 
-    var similarRange = (range[0] - range[range.length-1]);
+    similarRange = (range[0] - range[range.length-1]);
 
     //Add d3 force effect to layout
     force = d3.layout.force()
@@ -325,8 +317,6 @@ angular.module('genome.tree', [])
           return similarity * 0.07;
         }
       }
-
-      return 5
     }
 
     function tick() {
