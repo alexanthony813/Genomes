@@ -34,7 +34,7 @@ relatives = [{
       'relationship': "Brother",
       "birthplace": "United States",
       "ancestry": "Northwestern Europe",
-      "picture_url": "http://clipartfreefor.com/cliparts/male-clipart/cliparti1_male-clipart_09.jpg"
+      "picture_url": "http://goo.gl/sphWXl"
       },
       {
       'first_name': "Wilder B.",
@@ -48,7 +48,7 @@ relatives = [{
       "birthplace": "United States",
       "ancestry": "Northwestern Europe",
       'relationship': "Brother",
-      "picture_url": "http://clipartfreefor.com/cliparts/male-clipart/cliparti1_male-clipart_09.jpg"
+      "picture_url": "http://goo.gl/sphWXl"
       },
       {
       'first_name': "Ruarc",
@@ -62,7 +62,7 @@ relatives = [{
       'relationship': "1st Cousin",
       "birthplace": "United States",
       "ancestry": "Northwestern Europe",
-      "picture_url": "http://clipartfreefor.com/cliparts/male-clipart/cliparti1_male-clipart_09.jpg"
+      "picture_url": "http://goo.gl/sphWXl"
       },        
       {
       'first_name': "Maximus",
@@ -76,7 +76,7 @@ relatives = [{
       'relationship': "1st Cousin",
       "birthplace": "United States",
       "ancestry": "Northwestern Europe",
-      "picture_url": "http://clipartfreefor.com/cliparts/male-clipart/cliparti1_male-clipart_09.jpg"
+      "picture_url": "http://goo.gl/sphWXl"
       },
       {
       'first_name': "Wimberly",
@@ -90,7 +90,7 @@ relatives = [{
       'relationship': "1st Cousin",
       "birthplace": "United States",
       "ancestry": "Northwestern Europe",
-      "picture_url": "http://clipartfreefor.com/cliparts/female-clipart/cliparti1_female-clipart_10.jpg"
+      "picture_url": "http://goo.gl/TdyBcc"
       },
       {
       'first_name': "Roberto",
@@ -104,7 +104,7 @@ relatives = [{
       'relationship': "1st Cousin",
       "birthplace": "United States",
       "ancestry": "Northwestern Europe",
-      "picture_url": "http://clipartfreefor.com/cliparts/male-clipart/cliparti1_male-clipart_09.jpg"
+      "picture_url": "http://goo.gl/sphWXl"
       },
       {
       'first_name': "Mary-Ann",
@@ -118,7 +118,7 @@ relatives = [{
       'relationship': "2nd Cousin",
       "birthplace": "Canada",
       "ancestry": "Northwestern Europe",
-      "picture_url": "http://clipartfreefor.com/cliparts/female-clipart/cliparti1_female-clipart_10.jpg"
+      "picture_url": "http://goo.gl/TdyBcc"
       },
       {
       'first_name': "Martavius",
@@ -132,7 +132,7 @@ relatives = [{
       'relationship': "2nd Cousin",
       "birthplace": "Canada",
       "ancestry": "Northwestern Europe",
-      "picture_url": "http://clipartfreefor.com/cliparts/male-clipart/cliparti1_male-clipart_09.jpg"
+      "picture_url": "http://goo.gl/sphWXl"
       },
       {
       'first_name': "Alfred",
@@ -146,7 +146,7 @@ relatives = [{
       "birthplace": "United States",
       "ancestry": "Northwestern Europe",
       'relationship': "3rd Cousin",
-      "picture_url": "http://clipartfreefor.com/cliparts/male-clipart/cliparti1_male-clipart_09.jpg"
+      "picture_url": "http://goo.gl/sphWXl"
       },
       {
       'first_name': "James",
@@ -160,7 +160,7 @@ relatives = [{
       "birthplace": "United States",
       "ancestry": "Northwestern Europe",
       'relationship': "3rd Cousin",
-      "picture_url": "http://clipartfreefor.com/cliparts/male-clipart/cliparti1_male-clipart_09.jpg"
+      "picture_url": "http://goo.gl/sphWXl"
       },
       {
       'first_name': "Leonardo",
@@ -174,7 +174,7 @@ relatives = [{
       'relationship': "4th-6th Cousin",
       "birthplace": "United States",
       "ancestry": "Northwestern Europe",
-      "picture_url": "http://clipartfreefor.com/cliparts/male-clipart/cliparti1_male-clipart_09.jpg"
+      "picture_url": "http://goo.gl/sphWXl"
       },
       {
       'first_name': "Quinci",
@@ -188,7 +188,7 @@ relatives = [{
       'relationship': "4th-6th Cousin",
       "birthplace": "United States",
       "ancestry": "Northwestern Europe",
-      "picture_url": "http://clipartfreefor.com/cliparts/female-clipart/cliparti1_female-clipart_10.jpg"
+      "picture_url": "http://goo.gl/TdyBcc"
       },
       {
       'first_name': "Juniper",
@@ -202,7 +202,7 @@ relatives = [{
       "birthplace": "Europe",
       "ancestry": "Northwestern Europe",
       'relationship': "4th Cousin",
-      "picture_url": "http://clipartfreefor.com/cliparts/male-clipart/cliparti1_male-clipart_09.jpg"
+      "picture_url": "http://goo.gl/sphWXl"
       },
       {
       'first_name': "Casseopeia",
@@ -216,7 +216,7 @@ relatives = [{
       "birthplace": "Canada",
       "ancestry": "Northwestern Europe",
       'relationship': "Distant Relative",
-      "picture_url": "http://clipartfreefor.com/cliparts/female-clipart/cliparti1_female-clipart_10.jpg"
+      "picture_url": "http://goo.gl/TdyBcc"
       },
       {
       'first_name': "Bartholomew",
@@ -230,7 +230,7 @@ relatives = [{
       "birthplace": "United States",
       "ancestry": "South African",
       'relationship': "Distant relative",
-      "picture_url": "http://clipartfreefor.com/cliparts/male-clipart/cliparti1_male-clipart_09.jpg"
+      "picture_url": "http://goo.gl/sphWXl"
       },
       {
       'first_name': "Markov",
@@ -244,7 +244,7 @@ relatives = [{
       "birthplace": "Russia",
       "ancestry": "Russian",
       'relationship': "4th-6th Cousin",
-      "picture_url": "http://clipartfreefor.com/cliparts/male-clipart/cliparti1_male-clipart_09.jpg"
+      "picture_url": "http://goo.gl/sphWXl"
       },
       {
       'first_name': "Kristen",
@@ -258,7 +258,7 @@ relatives = [{
       "birthplace": "Europe",
       "ancestry": "Northwestern Europe",
       'relationship': "4th Cousin",
-      "picture_url": "http://clipartfreefor.com/cliparts/female-clipart/cliparti1_female-clipart_10.jpg"
+      "picture_url": "http://goo.gl/TdyBcc"
       },
       {
       'first_name': "Michael",
@@ -272,7 +272,7 @@ relatives = [{
       "birthplace": "United States",
       "ancestry": "African-American",
       'relationship': "4th Cousin",
-      "picture_url": "http://clipartfreefor.com/cliparts/male-clipart/cliparti1_male-clipart_09.jpg"
+      "picture_url": "http://goo.gl/sphWXl"
       },
       {
       'first_name': "Chaz",
@@ -286,7 +286,7 @@ relatives = [{
       "birthplace": "United States",
       "ancestry": "African-American",
       'relationship': "4th Cousin",
-      "picture_url": "http://clipartfreefor.com/cliparts/male-clipart/cliparti1_male-clipart_09.jpg"
+      "picture_url": "http://goo.gl/sphWXl"
       },
       {
       'first_name': "Wagyu",
@@ -300,7 +300,7 @@ relatives = [{
       "birthplace": "United States",
       "ancestry": "African-American",
       'relationship': "4th Cousin",
-      "picture_url": "http://clipartfreefor.com/cliparts/male-clipart/cliparti1_male-clipart_09.jpg"
+      "picture_url": "http://goo.gl/sphWXl"
       },
       {
       'first_name': "Selena",
@@ -314,7 +314,7 @@ relatives = [{
       "birthplace": "United States",
       "ancestry": "Northwestern Europe",
       'relationship': "3rd Cousin",
-      "picture_url": "http://clipartfreefor.com/cliparts/female-clipart/cliparti1_female-clipart_10.jpg"
+      "picture_url": "http://goo.gl/TdyBcc"
       },
       {
       'first_name': "Harold",
@@ -328,7 +328,7 @@ relatives = [{
       "birthplace": "United States",
       "ancestry": "Northwestern Europe",
       'relationship': "Distant relative",
-      "picture_url": "http://clipartfreefor.com/cliparts/male-clipart/cliparti1_male-clipart_09.jpg"
+      "picture_url": "http://goo.gl/sphWXl"
       },
       {
       'first_name': "Justina",
@@ -342,7 +342,7 @@ relatives = [{
       "birthplace": "Canada",
       "ancestry": "Northwestern Europe",
       'relationship': "3rd Cousin",
-      "picture_url": "http://clipartfreefor.com/cliparts/female-clipart/cliparti1_female-clipart_10.jpg"
+      "picture_url": "http://goo.gl/TdyBcc"
       },
       {
       'first_name': "Arash",
@@ -356,7 +356,7 @@ relatives = [{
       "birthplace": "United States",
       "ancestry": "African-American",
       'relationship': "Distant relative",
-      "picture_url": "http://clipartfreefor.com/cliparts/male-clipart/cliparti1_male-clipart_09.jpg"
+      "picture_url": "http://goo.gl/sphWXl"
       },
       {
       'first_name': "Andromeda",
@@ -370,5 +370,5 @@ relatives = [{
       "birthplace": "Canada",
       "ancestry": "Northwestern Europe",
       'relationship': "Distant Relative",
-      "picture_url": "http://clipartfreefor.com/cliparts/female-clipart/cliparti1_female-clipart_10.jpg"
+      "picture_url": "http://goo.gl/TdyBcc"
 }]
