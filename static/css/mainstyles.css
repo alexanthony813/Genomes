@@ -111,25 +111,40 @@ svg#helix {
 
 svg#mainCanvas {
   position: absolute;
-  margin-left: 20%;
+  margin-left: 10%;
+  width: 90%;
+  height: 100%;
+  max-width: 90%;
+  max-height: 100%;
 }
 
 .pool {
-  z-index: 1;
+
 }
 
-.mapView {
-  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
-        -moz-animation: fadein 2s; /* Firefox < 16 */
-         -ms-animation: fadein 2s; /* Internet Explorer */
-          -o-animation: fadein 2s; /* Opera < 12.1 */
-             animation: fadein 2s;
-  z-index: -1;
-  background-image:url('../../static/assets/worldmap.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  max-width: 100%;
-  height: 100%;
+#map {
+  border: 1px solid #000;
+}
+.state {
+  fill: #EEE;
+  stroke: #DDD;
+}
+
+.point {
+  fill: #F00;
+  stroke: #f00;
+}
+
+.node {
+  fill: none;
+  stroke: #ccc;
+  shape-rendering: crispEdges;
+}
+
+.brush .extent {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
 }
 
 @keyframes fadein {
