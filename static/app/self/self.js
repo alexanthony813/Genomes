@@ -134,11 +134,11 @@ angular.module('genome.self', [])
 
   $rootScope.IntroOptions = {
       steps:[{ 
-          element: document.querySelector('#helix'),
+          // element: document.querySelector('#helix'),
           intro: "Welcome to your personal DNA helix. Click on the bubbles for more information about your DNA."
         },
         {
-          element: document.querySelector('#path2'),
+          element: document.querySelector('#dna-info-id'),
           intro: "Click this rocketship for no reason.",
           position: 'right'
         },
