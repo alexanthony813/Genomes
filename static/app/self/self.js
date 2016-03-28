@@ -88,46 +88,72 @@ angular.module('genome.self', [])
                 return fills[index%3];
               })
               .attr("stroke-width", 2);
-          });
-
-        cont.each(function (d, index) {
-          var inverted = (d[0].y < d[1].x) ? 1 : -1;
-          d3.select(this)
-            .selectAll("circle")
-            .data(d)
-            .attr("cx", function (d) { return x(d.x); })
-            .attr("cy", function (d) { return y(d.y); })
-            .attr("r",  function (d) { return z(d.z); })
-            .attr("fill-opacity", function (d) { return z(d.z) / 10;})
-            .attr("fill", function (d, i) { return fills[index%3]; })
-            .attr("rsid", function(d){ return d.rsid; })
-            .attr("pair", function(d){ return d.pair; })
-            .attr("outcome", function(d){ return d.outcome; })
-            .on("mouseover", function (d, i) {
-              // Using $scope.$apply to force angular to rerender once the scope has been updated with the current snp
-              $scope.$apply($scope.current = { rsid: d.rsid, pair: d.pair, outcome: d.outcome });
-            });
-          d3.select(this)
-              .select('line')
-              .attr("x2", x(d[0].x) + inverted * z(d[0].z))
-              .attr("x1", x(d[1].x) - inverted * z(d[1].z))
-              .attr("y2", y(d[0].y))
-              .attr("y1", y(d[0].y));
-          });
-      }
-
-      SelfFactory.getSnps($cookies.user_profile_id).then(function (outcomes) {
-        for (var key in outcomes) {
-          $scope.outcomes.push(outcomes[key]);
-        }
-        $scope.current = {
-          rsid: 'rs12345',
-          pair: 'AA',
-          outcome: 'A very interesting fact'
-        },
-        numX = $scope.outcomes.length;
-        setInterval(draw, 25);
       });
+
+      cont.each(function (d, index) {
+        var inverted = (d[0].y < d[1].x) ? 1 : -1;
+        d3.select(this)
+          .selectAll("circle")
+          .data(d)
+          .attr("cx", function (d) { return x(d.x); })
+          .attr("cy", function (d) { return y(d.y); })
+          .attr("r",  function (d) { return z(d.z); })
+          .attr("fill-opacity", function (d) { return z(d.z) / 10;})
+          .attr("fill", function (d, i) { return fills[index%3]; })
+          .attr("rsid", function(d){ return d.rsid; })
+          .attr("pair", function(d){ return d.pair; })
+          .attr("outcome", function(d){ return d.outcome; })
+          .on("mouseover", function (d, i) {
+            // Using $scope.$apply to force angular to rerender once the scope has been updated with the current snp
+            $scope.$apply($scope.current = { rsid: d.rsid, pair: d.pair, outcome: d.outcome });
+          });
+        d3.select(this)
+            .select('line')
+            .attr("x2", x(d[0].x) + inverted * z(d[0].z))
+            .attr("x1", x(d[1].x) - inverted * z(d[1].z))
+            .attr("y2", y(d[0].y))
+            .attr("y1", y(d[0].y));
+      });
+  }
+
+  SelfFactory.getSnps($cookies.user_profile_id).then(function (outcomes) {
+    for (var key in outcomes) {
+      $scope.outcomes.push(outcomes[key]);
+    }
+
+    $scope.current = {
+      rsid: 'rs12345',
+      pair: 'AA',
+      outcome: 'A very interesting fact'
+    };
+
+    numX = $scope.outcomes.length;
+    setInterval(draw, 25);
+  });
+
+  $rootScope.IntroOptions = {
+      steps:[{ 
+          // element: document.querySelector('#test3'),
+          intro: "Welcome to your personal DNA helix. Click on the bubbles for more information about your DNA."
+        },
+        {
+          element: document.querySelector('#path2'),
+          intro: "Click this rocketship for no reason.",
+          position: 'right'
+        },
+        {
+          element: document.querySelector('#test3'),
+          intro: "Here is the second thing in our stuff"
+        }
+      ],
+      showStepNumbers: false,
+      exitOnOverlayClick: true,
+      exitOnEsc:true,
+      nextLabel: '<strong><span style="color:green">Next</span></strong>',
+      prevLabel: '<span style="color:red">Previous</span>',
+      skipLabel: 'Exit',
+      doneLabel: 'Thanks'
+  };
 
 })
 

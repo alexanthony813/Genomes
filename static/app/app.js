@@ -39,6 +39,7 @@ var app = angular.module('genome', [
       redirectTo : '/signin'
     });
 })
+
 .run(function($rootScope, $location, $cookies, AuthFactory){
 
   $rootScope.$on('$routeChangeStart', function(evt, next, current){
