@@ -1,10 +1,12 @@
 angular.module('genome.tree', [])
-.controller('TreeController', function($scope, d3Service, Relatives, $rootScope, $window, $location) {
+.controller('TreeController', function($scope, d3Service, Relatives, $rootScope, $window, $location
+  ) {
 
   $scope.relatives = [];
   $rootScope.rels = [];
   $scope.myData = [10,10,10,20];
   $scope.circles = [];
+  var force;
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
   var relativeTree = {
@@ -17,9 +19,18 @@ angular.module('genome.tree', [])
                         {
                           'relationship' : 'paternal_side',
                           'children' : []
-                        }  
+                        }
                         ]
-                      }
+                      };
+
+  $scope.destroyTree = function(){
+    d3.selectAll('line').remove();
+    
+    var nodes = d3.selectAll('g').transform(function(d){
+      console.log(d);
+      return 'translate('+ 50 + ',' + 50 + ')' ;
+    });
+  };
 
  //Grab relatives from the database, then initialize bubbles
   $scope.getRelatives = function() {
@@ -30,7 +41,7 @@ angular.module('genome.tree', [])
       $scope.relatives = relatives.data.relativeList;
       //Add relatives to rootScope to allow access within other controllers
       $rootScope.rels = relatives.data.relativeList;
-      createTree($scope.relatives)
+      createTree($scope.relatives);
       initialize();
     }, function(err) {
       console.error('Error retrieving relatives: ', err);
@@ -190,8 +201,8 @@ angular.module('genome.tree', [])
     var similarRange = (range[0] - range[range.length-1]);
 
     //Add d3 force effect to layout
-    var force = d3.layout.force()
-      .linkDistance(150)
+    force = d3.layout.force()
+      .linkDistance(250)
       .charge(-120)
       .gravity(0.05)
       .size([width, height])
@@ -208,16 +219,17 @@ angular.module('genome.tree', [])
 
     var nodes = flatten(relativeTree);
     
-    var tree = d3.layout.tree().nodeSize(function(d){
-      console.log('!!!!!', d)
-      return 5
-    }).separation(function separation(a,b){
-      return a == b ? 2 : 1;
-    })
+    var tree = d3.layout.tree();
 
+    //TODO : figure out to make bubbles not overlap and tree maintain shape
+    // .nodeSize(function(d){
+    //   return 5
+    // }).separation(function separation(a,b){
+    //   return a == b ? 2 : 1;
+    // });
+    
     var links = tree.links(nodes);
-
-    console.log('>>>>>',tree.nodeSize())
+    
     // Restart the force layout.
     force
         .nodes(nodes)
@@ -225,11 +237,13 @@ angular.module('genome.tree', [])
         .start();
 
         // Update links.
-    link = link.data(links, function(d) { return d.target.id; });
+    link = link.data(links, function(d) { 
+      return d.target.id; });
 
     link.exit().remove();
 
     link.enter().insert('line', '.node')
+        .attr('color', 'black')
         .attr('class', 'link');
 
     // Update nodes.
@@ -448,3 +462,4 @@ angular.module('genome.tree', [])
       return drag;
     }
 });
+

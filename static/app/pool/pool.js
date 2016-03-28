@@ -34,6 +34,33 @@ angular.module('genome.pool', ['angular-intro'])
           '</div>'].join('');
       }
     });
+  //End containers for Relatives' Data
+  var force;
+  var boardHeight = $window.innerHeight;
+  var boardWidth = $window.innerWidth;
+  var relativeTree = {
+                       'relationship': 'me',
+                       'children': [
+                        {
+                         'relationship': 'maternal_side',
+                         'children': []
+                        },
+                        {
+                          'relationship' : 'paternal_side',
+                          'children' : []
+                        }  
+                        ]
+                      };
+
+  //Set up appropriate SVG and page sizing
+  var idealMargins = [50/768, 50/1024, 'bottom', 30/1024]
+  var standardWidth = 1024;
+  var standardHeight = 768;
+  var margin = {
+    top: function(){return 3 * boardHeight * 50/768}(),
+    right: function(){return boardWidth * 50/1024}(),
+    bottom: 200,
+    left: function(){return boardWidth * 30/1024}()
   };
 
   var makeNewBubbleData = function() {
@@ -93,7 +120,7 @@ angular.module('genome.pool', ['angular-intro'])
         bubble['cx'] = bubble['oldCX'];
         bubble['cy'] = bubble['oldCY'];
         bubble['radius'] = bubble['oldRadius'];
-      })
+      });
       //Explicitly restate the force layout
       var nodes = $scope.circles;
       var force = d3.layout.force()
@@ -171,24 +198,40 @@ angular.module('genome.pool', ['angular-intro'])
     .attr("width", $window.innerWidth)
     .attr("height", $window.innerHeight)
     .attr("id", "mainCanvas")
-    .append("g")
+    // .append("g")
     //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+ 
 
   //Create Initial bubbles
   var createBubbles = function(circleData) {
-    nodes = $scope.circles;
-    //Add d3 force effect to layout
+    console.log(circleData)
+    var nodes = circleData;
+
     var force = d3.layout.force()
       .nodes(nodes)
       .size([width, height])
       .gravity(0)
       .charge(0)
-      .on("tick", tick)
-      .start();
+      .on("tick", tick);
+
+    var link = svg.selectAll('.link');
+    var node = svg.selectAll('.node');
+
+    //Add d3 force effect to layout
+
+    //update nodes
+    var elem = svg.selectAll('g').data(nodes);
+
+    var relativeContainers = elem.enter().append('g')
+        .attr('class', 'node')
+        .on('click', click)
+        .attr('x', 50)
+        .attr('y', 50)
+        .call(force.drag);
+
     //Add bubbles to DOM
-    circle = svg.selectAll("circle")
-      .data(nodes)
-      .enter().append("circle")
+
+    circle = relativeContainers.append("circle")
       .on('mouseover', function(d){
 
         // Get this bubble's x/y values, then augment for the tooltip
@@ -235,6 +278,48 @@ angular.module('genome.pool', ['angular-intro'])
   };
   //End initial bubble creation
 
+  $scope.toggleTree = function(){
+    console.log('in toggleTree')
+    var link = svg.selectAll('.link');
+    var node = svg.selectAll('.node');
+    var nodes = flatten(relativeTree);
+    var tree = d3.layout.tree()
+    var links = tree.links(nodes);
+
+    force
+      .nodes(nodes)
+      .links(links)
+      .start();
+
+        // Update links.
+    link = link.data(links, function(d) { return d.target.id; });
+
+    link.exit().remove();
+
+    link.enter().insert('line', '.node')
+        .attr('class', 'link');
+
+    // Update nodes.
+    node = node.data(nodes, function(d) { return d.id; });
+
+    node.exit().remove();
+
+    var nodeEnter = node.enter().append('g')
+        .attr('class', 'node')
+        .on('click', click)
+        .call(force.drag);
+
+    nodeEnter.append('circle')
+        .attr('fill', 'yellow')
+        .attr('r', relativeSize);
+
+    nodeEnter.append('text')
+        .attr('dy', '.35em')
+        .text(function(d) { return d.relationship; });
+
+    node.select('circle');
+  }
+
   //Control bubble entry onto DOM and magnetic resistance to each other
   function tick(e) {
     circle.each(gravity(0.8 * e.alpha))
@@ -246,6 +331,15 @@ angular.module('genome.pool', ['angular-intro'])
       return d.y;
     });
   }
+
+  // function tick() {
+  //   link.attr('x1', function(d) { return d.source.x; })
+  //       .attr('y1', function(d) { return d.source.y; })
+  //       .attr('x2', function(d) { return d.target.x; })
+  //       .attr('y2', function(d) { return d.target.y; });
+
+  //   node.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
+  // }
 
   // Move nodes toward cluster focus.
   function gravity(alpha) {
