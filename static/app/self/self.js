@@ -121,8 +121,8 @@ angular.module('genome.self', [])
           $scope.outcomes.push(outcomes[key]);
         }
         $scope.current = {
-          rsid: 'rs1337',
-          pair: 'GG',
+          rsid: 'rs12345',
+          pair: 'AA',
           outcome: 'A very interesting fact'
         },
         numX = $scope.outcomes.length;
