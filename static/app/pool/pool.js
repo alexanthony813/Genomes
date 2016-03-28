@@ -1,5 +1,6 @@
 angular.module('genome.pool', [])
 .controller('PoolController', function($scope, d3Service, Relatives, $rootScope, $window, $location) {
+
   //Containers for Relatives' Data
   var circle;
   $scope.relatives = [];
@@ -82,13 +83,13 @@ angular.module('genome.pool', [])
           })
         }
       }
-    } 
+    }
   };
 
   var moveBubblesToRegions = function() {
     d3.selectAll("circle").data($scope.circles).attr('r', function(d){return d.radius;});
   }
-   
+
     //Move Bubbles Back to Center of Page
    var replaceBubblesInCenter = function() {
       $scope.circles.forEach(function(bubble){
@@ -299,7 +300,7 @@ angular.module('genome.pool', [])
     for (var i = 0; i < $scope.relatives.length || 0; i++) {
       var similarity = $scope.relatives[i].similarity;
       var similarRange = (range[0] - range[range.length-1]);
-      
+
       if (similarRange > 0 && similarRange < 0.2) {
         if (similarity < 0.01){
           similarity = 0.03;
