@@ -15,10 +15,14 @@ import os
 #Initialize Flask application
 app = Flask(__name__)
 PORT = int(os.environ.get('PORT', 5000))
+is_prod = os.environ.get('IS_HEROKU', None)
 
-
-#Gather data from config.py
-app.config.from_object('config')
+if is_prod:
+    print 'we are in production mode!!!!!!============>>>>>>>>>>>>>>>>>'
+    app.config.from_object('production_config')
+else:
+    #Gather data from config.py
+    app.config.from_object('config')
 
 #Declaration of all necessary variables needed to perform 23AndMe API Call
 BASE_CLIENT_URL = 'http://localhost:%s/'% PORT

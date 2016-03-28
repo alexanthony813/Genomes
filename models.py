@@ -6,11 +6,14 @@ from flask_sqlalchemy import SQLAlchemy
 from psycopg2 import connect
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from server import app
-
-
 import os
 import psycopg2
 import urlparse
+
+is_prod = os.environ.get('IS_HEROKU', None)
+
+if is_prod:
+    print 'we are in production mode!!!!!!============>>>>>>>>>>>>>>>>>'
 
 urlparse.uses_netloc.append("postgres")
 url = urlparse.urlparse(os.environ["DATABASE_URL"])
