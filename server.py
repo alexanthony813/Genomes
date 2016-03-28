@@ -52,6 +52,8 @@ def makeDemoUser():
     response = make_response(render_template('index.html'))
     response.set_cookie('user_first_name', demo_user_name)
     response.set_cookie('token', jwt_encode(demo_profile_id, demo_user_name, SECRET_KEY))
+
+    controller.createSnpsTable()
     return response
 
 
