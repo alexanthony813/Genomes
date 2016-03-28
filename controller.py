@@ -45,7 +45,9 @@ def createNewUser(name_response, relatives_response, genotype_response, user_res
 
 
 def createSnpsTable():
-    for snp in snps.sample_snps:
-        new_snp = models.Snp(snp['rs_id'], snp['dnaPair'], snp['outcome'])
-        models.db_session.add(new_snp)
-        models.db_session.commit()
+    if len(models.db_session.query(models.Snp).all()) == 0:
+
+        for snp in snps.sample_snps:
+            new_snp = models.Snp(snp['rs_id'], snp['dnaPair'], snp['outcome'])
+            models.db_session.add(new_snp)
+            models.db_session.commit()
