@@ -121,9 +121,9 @@ angular.module('genome.self', [])
           $scope.outcomes.push(outcomes[key]);
         }
         $scope.current = {
-          rsid: 'rs12913832',
+          rsid: 'rs1337',
           pair: 'GG',
-          outcome: 'Makes your eyes blue'
+          outcome: 'A very interesting fact'
         },
         numX = $scope.outcomes.length;
         setInterval(draw, 25);
