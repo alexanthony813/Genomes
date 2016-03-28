@@ -206,10 +206,9 @@ angular.module('genome.tree', [])
       .attr('width', boardWidth + margin.left + margin.right)
       .attr('height', boardHeight + margin.top + margin.bottom);
 
-    var link = svg.selectAll('.link');
-    var node = svg.selectAll('.node');
 
     var nodes = flatten(relativeTree);
+
     
     var tree = d3.layout.tree();
 
@@ -222,17 +221,23 @@ angular.module('genome.tree', [])
     
     var links = tree.links(nodes);
     
-    // Restart the force layout.
     force
         .nodes(nodes)
         .links(links)
         .start();
+        
+
+    // Restart the force layout.
+    var link = svg.selectAll('.link');
+    var node = svg.selectAll('.node');
 
         // Update links.
     link = link.data(links, function(d) { 
       return d.target.id; });
-
+ 
+    console.log(link)
     link.exit().remove();
+    console.log(link)
 
     link.enter().insert('line', '.node')
         .attr('color', 'black')
@@ -256,7 +261,6 @@ angular.module('genome.tree', [])
         .attr('dy', '.35em')
         .text(function(d) { return d.relationship; });
 
-    node.select('circle');
 
     function relativeSize(relative){
 
@@ -355,8 +359,6 @@ angular.module('genome.tree', [])
       return nodes;
     }
   };
-//////////////////////////////////////////////////////////////////////
-
 
   //After grabbing relatives from the DB, create a bubbles array based on length of relatives array
   var initialize = function() {
