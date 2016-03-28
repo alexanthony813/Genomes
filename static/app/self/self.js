@@ -120,6 +120,11 @@ angular.module('genome.self', [])
         for (var key in outcomes) {
           $scope.outcomes.push(outcomes[key]);
         }
+        $scope.current = {
+          rsid: 'rs12345',
+          pair: 'AA',
+          outcome: 'A very interesting fact'
+        },
         numX = $scope.outcomes.length;
         setInterval(draw, 25);
       });
