@@ -24,7 +24,11 @@ if is_prod:
     REDIRECT_URI = app.config.get('PROD_REDIRECT_URI')
 else:
     #Gather data from config.py
-    app.config.from_object('config')
+    BASE_CLIENT_URL = 'http://localhost:%s/'% PORT
+    CLIENT_ID = app.config.get('CLIENT_ID')
+    CLIENT_SECRET = app.config.get('CLIENT_SECRET')
+    REDIRECT_URI = app.config.get('REDIRECT_URI')
+
 
 #Declaration of all necessary variables needed to perform 23AndMe API Call
 BASE_CLIENT_URL = 'http://localhost:%s/'% PORT
