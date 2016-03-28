@@ -8,7 +8,8 @@ var app = angular.module('genome', [
   'genome.sideNav',
   'genome.auth',
   'genome.directive',
-  'ngMaterial'
+  'ngMaterial',
+  'angular-intro'
 ])
 
 .config(function ($routeProvider) {
