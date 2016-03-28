@@ -1,1 +1,0 @@
-web: python server.py collectstatic --noinput; --bind=0.0.0.0:$PORT
