@@ -6,26 +6,44 @@ from flask_sqlalchemy import SQLAlchemy
 from psycopg2 import connect
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from server import app
+import os
+import psycopg2
+import urlparse
+#check to see if app is running in production or dev mode
+is_prod = os.environ.get('IS_HEROKU', None)
 
-#Initialize postgreSQL genome database
-engine = create_engine('postgres://localhost/genome', convert_unicode=True)
+if is_prod:
+    urlparse.uses_netloc.append("postgres")
+    url = urlparse.urlparse(os.environ["DATABASE_URL"])
+    conn = psycopg2.connect(
+        database=url.path[1:],
+        user=url.username,
+        password=url.password,
+        host=url.hostname,
+        port=url.port
+    )
+    #Initialize postgreSQL genome database
+    engine = create_engine('postgres://ekmsxuepfrzsrq:eheMsYxYxlKSuLbKvgyrxkAWlH@ec2-54-225-102-131.compute-1.amazonaws.com:5432/deued1oqupgabe', convert_unicode=True)
+else:
+    engine = create_engine('postgres://localhost/genome', convert_unicode=True)
+    try:
+        #connect to database if it exissts
+        connection = connect(dbname='genome', user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
+    except:
+        #create database if it does not already exist
+        connection = connect(user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
+        connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+        cursor = connection.cursor()
+        cursor.execute("CREATE DATABASE genome")
+        cursor.close()
+        connection.close()
+
+
+
 session_factory = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 db_session = scoped_session(session_factory)
 Base = declarative_base()
 Base.query = db_session.query_property()
-
-
-try:
-    #connect to database if it exissts
-    connection = connect(dbname='genome', user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
-except:
-    #create database if it does not already exist
-    connection = connect(user=app.config.get('DATABASE_USERNAME'), host='localhost', password=app.config.get('DATABASE_PASSWORD'))
-    connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-    cursor = connection.cursor()
-    cursor.execute("CREATE DATABASE genome")
-    cursor.close()
-    connection.close()
 
 
 

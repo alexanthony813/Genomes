@@ -2,19 +2,21 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+venv
+*.pyc
+staticfiles
+.env
 # C extensions
 *.so
 
 #Node modules
 node_modules/
-
-config.py
 npm-debug.log
 
 #unwanted files
 /config.py
 config.py
+production_config.py
 npm-debug.log
 server/static/scripts/main.js
 config.py
