@@ -199,7 +199,7 @@ relatives = [{
       'maternal_side': True,
       'paternal_side': False,
       'birth_year': 1955,
-      "birthplace": "France",
+      "birthplace": "Europe",
       "ancestry": "Northwestern Europe",
       'relationship': "4th Cousin",
       "picture_url": "http://clipartfreefor.com/cliparts/male-clipart/cliparti1_male-clipart_09.jpg"
@@ -250,12 +250,12 @@ relatives = [{
       'first_name': "Kristen",
       'last_name': "Braile",
       'sex': "Female",
-      'residence': "France",
+      'residence': "Europe",
       'similarity': 0.0135,
       'maternal_side': False,
       'paternal_side': True,
       'birth_year': 1995,
-      "birthplace": "France",
+      "birthplace": "Europe",
       "ancestry": "Northwestern Europe",
       'relationship': "4th Cousin",
       "picture_url": "http://clipartfreefor.com/cliparts/female-clipart/cliparti1_female-clipart_10.jpg"

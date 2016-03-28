@@ -1,86 +1,96 @@
 angular.module('genome.pool', [])
-.controller('PoolController', function($scope, d3Service, Relatives, $rootScope, $window, $location
-  ) {
+.controller('PoolController', function($scope, d3Service, Relatives, $rootScope, $window, $location) {
   //Containers for Relatives' Data
   var circle;
   $scope.relatives = [];
   $rootScope.rels = [];
   $scope.circles = [];
-  //End containers for Relatives' Data
 
-  //Set up appropriate SVG and page sizing
-  var idealMargins = [50/768, 50/1024, 'bottom', 30/1024]
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
-  var standardWidth = 1024;
-  var standardHeight = 768;
-  var margin = {
-    top: function(){return 3 * boardHeight * 50/768}(),
-    right: function(){return boardWidth * 50/1024}(),
-    bottom: 200,
-    left: function(){return boardWidth * 30/1024}()
-  };
-  var resetSizing = function() {
-    var heightDiff = Math.abs(boardHeight - standardHeight);
-    var widthDiff = Math.abs(boardWidth - standardWidth);
-    var fraction;
-    if(heightDiff > widthDiff) {
-      fraction = boardHeight/standardHeight;
-      boardWidth = boardWidth * fraction;
-    } else {
-      fraction = boardWidth/standardWidth;
-      boardHeight = boardHeight * fraction;
-    }
-  }
-  resetSizing();
-  var column1 = margin['left'];
-  var column2 = boardWidth/8;
-  var column3 = boardWidth/3;
-  var column4 = boardWidth * 8/15;
-  var column5 = boardWidth * .6;
-  var row1 = boardHeight/9
-  var row2 = boardHeight/3.2;
-  var row3 = boardHeight/2.9;
-  var continents = [
-    [row1, column1, 'north america'],
-    [row2, column2, 'south america'],
-    [row1, column3, 'europe'],
-    [row2, column3, 'africa'],
-    [row1, column4, 'asia'],
-    [row3, column5, 'australia']
-  ];
-  //End SVG and Page Sizing
+  var relativesList = [];
 
-  //Adjust Bubble Data
-  //Move Bubbles to Their Respective Locations on the Globe Based on Relative Birthplace
-  var makeNewBubbleData = function(){
-      for(var i = 0; i < $scope.circles.length; i++){
-        if($scope.circles[i].relative.birthplace === "United States") {
-          $scope.circles[i]['oldCX'] = $scope.circles[i]['cx']
-          $scope.circles[i]['cx'] = row1;
-          $scope.circles[i]['oldCY'] = $scope.circles[i]['cy']
-          $scope.circles[i]['cy'] = column1;
-          $scope.circles[i]['oldRadius'] = $scope.circles[i]['radius']
-          $scope.circles[i]['radius'] = 5;
-        } else {
-          var birthplace = continents[i%6]
-          $scope.circles[i]['oldCX'] = $scope.circles[i]['cx']
-          $scope.circles[i]['cx'] = birthplace[1];
-          $scope.circles[i]['oldCY'] = $scope.circles[i]['cy']
-          $scope.circles[i]['cy'] = birthplace[0];
-          $scope.circles[i]['oldRadius'] = $scope.circles[i]['radius']
-          $scope.circles[i]['radius'] = 5;
+  var createMap = function () {
+    var map = new Datamap({
+        element: document.getElementById('mainCanvas'),
+        scope: 'world',
+        geographyConfig: {
+            popupOnHover: false,
+            highlightOnHover: false
+        },
+        fills: {
+            'USA': '#4CAF50',
+            'RUS': '#4DB6AC',
+            'EUR': '#d62728',
+            'CAN': '#AB47BC',
+            'ASN': '#f44336',
+            'SAM': '#FFF59D',
+            'AUS': '#00838F',
+            'AFR': '#FB8C00',
+            defaultFill: '#607D8B'
+        },
+        data: {
+            'USA': {fillKey: 'USA'},
+            'RUS': {fillKey: 'RUS'},
+            'EUR': {fillKey: 'EUR'},
+            'CAN': {fillKey: 'CAN'},
+            'SAM': {fillKey: 'SAM'},
+            'AUS': {fillKey: 'AUS'},
+            'AFR': {fillKey: 'AFR'},
+            'ASIA': {fillKey: 'ASN'}
+        }
+    });
+
+    //create bubbles for each relative in the relative list, after parsing with makeNewBubbleData
+    map.bubbles(relativesList, {
+      popupTemplate: function (geo, data) {
+              return ['<div class="hoverinfo">' +  data.name,
+              '<br/>Relationship: ' +  data.relationship,
+              '<br/>Similarity: ' +  data.similarity,
+              '<br/>Residence: ' +  data.residence + '',
+              '</div>'].join('');
+      }
+    });
+  };
+
+   $scope.makeNewBubbleData = function() {
+    var geoInfo = {
+      'United States': [39.5, -98.43, 'USA'],
+      'Canada': [54.51, -100.1953, 'CAN'],
+      'South America': [-11.2, -56.25, 'SAM'],
+      'Europe': [48.4419, 19.07, 'EUR'],
+      'India': [21.348, 78.31, 'IND'],
+      'Russia': [61.17, 90.000, 'RUS'],
+      'Asia': [36.15, 105.468, 'ASN'],
+      'Australia': [-25.05, 134, 'AUS'],
+      'Africa': [7.612, 18.6328, 'AFR']
+    };
+
+    for(var i = 0; i < $scope.relatives.length; i++) {
+      for (var places in geoInfo) {
+        if ($scope.relatives[i].birthplace === places) {
+          relativesList.push({
+            name: $scope.relatives[i].first_name + ' ' + $scope.relatives[i].last_name,
+            country: $scope.relatives[i].birthplace,
+            relationship: $scope.relatives[i].relationship,
+            residence: $scope.relatives[i].residence,
+            similarity: $scope.relatives[i].similarity,
+            latitude: (geoInfo[places][0] + (Math.floor(Math.random() * 10)+1)),
+            longitude: (geoInfo[places][1] + (Math.floor(Math.random() * 10)+1)),
+            fillKey: geoInfo[places][2],
+            radius: 7
+          })
         }
       }
-    }
-    //Enter New Bubble Data and Instigate Bubble Movement
-    var moveBubblesToRegions = function() {
-      makeNewBubbleData();
-      d3.selectAll("circle").data($scope.circles).attr('r', function(d){return d.radius;});
-    }
+    } 
+  };
 
+  var moveBubblesToRegions = function() {
+    d3.selectAll("circle").data($scope.circles).attr('r', function(d){return d.radius;});
+  }
+   
     //Move Bubbles Back to Center of Page
-    replaceBubblesInCenter = function(){
+   var replaceBubblesInCenter = function() {
       $scope.circles.forEach(function(bubble){
         bubble['cx'] = bubble['oldCX'];
         bubble['cy'] = bubble['oldCY'];
@@ -95,10 +105,8 @@ angular.module('genome.pool', [])
       .charge(0)
       .on("tick", tick)
       .start();
-
       d3.selectAll("circle").data($scope.circles).attr('r', function(d){return d.radius;}).call(force.drag);
-    };
-    //End of functions adjusting bubble placement
+  };
 
   //Toggle Side Nav Icons
   var whichView = function() {
@@ -109,23 +117,26 @@ angular.module('genome.pool', [])
 
   //Toggle Map
   var mapShowing = false;
-  var toggleMap = function(){
+
+  var toggleMap = function() {
     if(!mapShowing) {
-      $('div.wholepage').addClass('mapView');
-      moveBubblesToRegions();
+      d3.selectAll("circle").attr("visibility", "hidden");
+      createMap();
+      mapShowing = true;
     } else {
-      $('div.wholepage').removeClass('mapView');
-      replaceBubblesInCenter();
+      initialize();
+      $rootScope.removeMap();
+      mapShowing = false;
     }
-    mapShowing = !mapShowing;
   }
+
   $rootScope.filterRegions = function() {
     toggleMap();
   };
-  $rootScope.removeMap = function(){
-    mapShowing = false;
-    $('div.wholepage').removeClass('mapView');
-  }
+
+  $rootScope.removeMap = function () {
+    d3.select("svg.datamap").remove();
+  };
   //End Map Toggle
 
   //Pop Modal
@@ -150,8 +161,8 @@ angular.module('genome.pool', [])
   //End Pop Modal
 
   //Force and Bubble Layout Settings
-  var width = 1000 - margin.left - margin.right;
-  var height = 1000 - margin.top - margin.bottom;
+  var width = $window.innerWidth //- margin.left - margin.right;
+  var height = $window.innerHeight //- margin.top - margin.bottom;
   var padding = 5;
   var radius = d3.scale.sqrt().range([0, 12]);
   var colorScheme = ['#1abc9c', '#2ecc71', '#f1c40f', '#27ae60', '#3498db', '#9b59b6', '#2980b9','#8e44ad','#e67e22','#d35400','#e74c3c', '#c0392b', '#bdc3c7', '#f39c12', '#95a5a6'];
@@ -215,7 +226,6 @@ angular.module('genome.pool', [])
           showRelative(bubble)
         );
       })
-      .attr('z-index', '1')
       .attr("data-target", "#myModal")
       .attr("data-toggle", "modal")
       .attr("r", function (d) {
@@ -359,6 +369,7 @@ angular.module('genome.pool', [])
       //Add relatives to rootScope to allow access within other controllers
       $rootScope.rels = relatives.data.relativeList;
       initialize();
+      $scope.makeNewBubbleData();
     }, function(err) {
       console.error('Error retrieving relatives: ', err);
     });
