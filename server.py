@@ -18,8 +18,10 @@ PORT = int(os.environ.get('PORT', 5000))
 is_prod = os.environ.get('IS_HEROKU', None)
 
 if is_prod:
-    print 'we are in production mode!!!!!!============>>>>>>>>>>>>>>>>>'
-    app.config.from_object('production_config')
+    BASE_CLIENT_URL = 'https://genomie.herokuapp.com'
+    CLIENT_ID = app.config.get('PROD_CLIENT_ID')
+    CLIENT_SECRET = app.config.get('PROD_CLIENT_SECRET')
+    REDIRECT_URI = app.config.get('PROD_REDIRECT_URI')
 else:
     #Gather data from config.py
     app.config.from_object('config')
@@ -68,7 +70,7 @@ def makeDemoUser():
 @app.route('/api/relatives/')
 #return all the relatives. Refactor to only return the relatives specific to the current User
 def getRelatives():
-    
+
     decoded = jwt.decode(request.cookies.get('token'), SECRET_KEY, algorithms=['HS256'])
     current_user_profile_id = decoded['user_profile_id']
 
@@ -97,10 +99,10 @@ def getRelatives():
 
 @app.route('/api/getsnps', methods=['POST', 'GET'])
 def getSnps():
-    
+
     decoded = jwt.decode(request.cookies.get('token'), app.config.get('SECRET_KEY'), algorithms=['HS256'])
     current_user_profile_id = decoded['user_profile_id']
-    
+
     user_snps = {}
 
     user_data = models.db_session.query(models.User).filter(models.User.profile_id == current_user_profile_id).first().serialize()
@@ -161,7 +163,7 @@ def receive_code():
             user_first_name = name_response.json()['first_name']
             #if user already exists in database, render the html and do not re-add user to database
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
-               
+
                 response = make_response(redirect(url_for('getUser')))
                 response.set_cookie('user_first_name', user_first_name)
                 response.set_cookie('token', jwt_encode(user_profile_id, user_first_name, SECRET_KEY))
