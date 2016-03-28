@@ -38,14 +38,10 @@ else:
         cursor.close()
         connection.close()
 
-
-
 session_factory = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 db_session = scoped_session(session_factory)
 Base = declarative_base()
 Base.query = db_session.query_property()
-
-
 
 # Join table between users and relatives, see User model relatives property
 user_relatives = Table('user_relatives',
