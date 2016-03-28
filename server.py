@@ -124,7 +124,6 @@ def getSnps():
 
 @app.route('/receive_code/')
 def receive_code():
-    print 'receive_code is being called'
     parameters = {
         'client_id': CLIENT_ID,
         'client_secret': CLIENT_SECRET,
