@@ -38,6 +38,11 @@ You're good to go. Start the server with:
 $ npm start
 ```
 
+==========
+## Example
+==========
+![alt tag](http://i68.tinypic.com/2d1nwi9.jpg)
+
 ===============
 ## Technologies
 ===============
