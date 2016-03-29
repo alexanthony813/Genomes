@@ -51,9 +51,10 @@ h3 {
   margin-top: 0px;
 }
 #nav {
-  width: 410px;
+  /*width: px;*/
   float: right;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 #logo a {
   color: #fff;
@@ -62,7 +63,7 @@ h3 {
   font-size: 30px;
   margin-top: 20px;
   color: #fff;
-  font-family:"Wellfleet";
+  font-family:"Lato";
   font-weight: bold;
 }
 #nav ul{
@@ -81,7 +82,7 @@ h3 {
   opacity:0.6;
   font-size: 16px;
   text-decoration: none;
-  font-family: 'Wellfleet';
+  font-family: 'Lato';
 }
 #nav li a.active {
   color: #fff;
@@ -94,7 +95,7 @@ h3 {
 }
 
 .quotes {
-  font-family: 'Goudy Bookletter 1911', serif;
+  font-family: 'Lato';
   font-weight: normal;
   font-size: 30px;
   text-align: left;
@@ -164,9 +165,12 @@ background-size: cover;
 #copyright a { text-decoration: none; color: #fff; }
 
 .landingHeader {
-  border: solid white 2px;
-  margin-right: 20%;
-  margin-left: 20%;
+  /*border: solid white 2px;*/
+  margin-right: 10%;
+  margin-left: 10%;
+  text-align: center;
+  font-size: 100px;
+  font-family: 'Lato';
 }
 
 .login-button {
