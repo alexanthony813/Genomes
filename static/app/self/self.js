@@ -223,6 +223,7 @@ angular.module('genome.self', [])
       url: '/api/getsnps',
       data: userId
     }).then(function (snps) {
+      console.log('snps retrieved: ', snps);
       return snps.data.outcomes;
     }).catch(function (err) {
       console.error('An error occured retreiving your SNPs ', err);

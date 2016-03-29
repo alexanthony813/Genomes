@@ -207,17 +207,20 @@ class Relative(Base):
 class Snp(Base):
     __tablename__ = 'snps'
     id = Column(Integer(), primary_key=True)
+    title = Column(String(255))
     rs_id = Column(String(255))
     dnaPair = Column(String(255))
     outcome = Column(String(255))
 
-    def __init__(self, rs_id, dnaPair, outcome):
+    def __init__(self, title, rs_id, dnaPair, outcome):
+        self.title = title
         self.rs_id = rs_id
         self.dnaPair = dnaPair
         self.outcome = outcome
 
     def serialize(self):
         return {
+            'title': self.title,
             'rs_id': self.rs_id,
             'dnaPair': self.dnaPair,
             'outcome': self.outcome
