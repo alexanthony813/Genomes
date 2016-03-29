@@ -6,6 +6,9 @@ angular.module('genome.pool', ['angular-intro'])
   $scope.relatives = [];
   $rootScope.rels = [];
   $scope.circles = [];
+  $rootScope.currentLocation = function(){
+    return $location.path();
+  }
 
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;

@@ -1,7 +1,6 @@
 angular.module('genome.tree', [])
 .controller('TreeController', function($scope, d3Service, Relatives, $rootScope, $window, $location
   ) {
-
   $scope.relatives = [];
   $rootScope.rels = [];
   $scope.myData = [10,10,10,20];
