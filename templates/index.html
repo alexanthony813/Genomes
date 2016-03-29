@@ -13,23 +13,22 @@
   </head>
 
   <body ng-app="genome" ng-cloak>
-  <div class="wrapper">
-      <div class="TopNavContainer">
-        <dst-top-nav></dst-top-nav>
-      </div>
-      <div class="wholepage">
-        <div class="BodyContainer">
-          <div id="mapContainer">
-            <div ng-view></div>
-          </div>
-        </div>
-        <div class="sideNavContainer">
-          <dst-side-nav></dst-side-nav>
-        </div>
-      </div>
+  <div class="TopNavContainer">
+    <dst-top-nav></dst-top-nav>
   </div>
-    <div class="footer" sticky-footer=".wrapper">      
+  <div class="wholepage">
+    <div class="BodyContainer">
+      <div id="mapContainer">
+        <div ng-view></div>
+      </div>
     </div>
+    <div class="sideNavContainer">
+      <dst-side-nav></dst-side-nav>
+    </div>
+  </div>
+  <div class="footer"> 
+    <dst-footer></dst-footer>     
+  </div>
 
 
     <script src="../static/lib/intro.js/minified/intro.min.js"></script>

@@ -8,6 +8,7 @@ var app = angular.module('genome', [
   'genome.sideNav',
   'genome.auth',
   'genome.directive',
+  'genome.footer',
   'ngMaterial',
   'angular-intro'
 ])
