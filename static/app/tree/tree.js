@@ -6,8 +6,6 @@ angular.module('genome.tree', [])
   $rootScope.rels = [];
   $scope.myData = [10,10,10,20];
   $scope.circles = [];
-  var force;
-  var similarRange;
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
   var relativeTree = {
@@ -20,9 +18,9 @@ angular.module('genome.tree', [])
                         {
                           'relationship' : 'paternal_side',
                           'children' : []
-                        }
+                        }  
                         ]
-                      };
+                      }
 
  //Grab relatives from the database, then initialize bubbles
   $scope.getRelatives = function() {
@@ -33,7 +31,7 @@ angular.module('genome.tree', [])
       $scope.relatives = relatives.data.relativeList;
       //Add relatives to rootScope to allow access within other controllers
       $rootScope.rels = relatives.data.relativeList;
-      createTree($scope.relatives);
+      createTree($scope.relatives)
       initialize();
     }, function(err) {
       console.error('Error retrieving relatives: ', err);
@@ -45,38 +43,37 @@ angular.module('genome.tree', [])
 
 
   function createTree(relatives){
-
     var family = {}
     relatives.forEach(function(relative){
       relative.children = [];
       relative.name = relative.relationship;
-    });
-
+    })
     family.paternalCloseRelatives = relatives.filter(function(relative){
-        return !relative.relationship.match('Cousin') && !relative.relationship.match('Distant') && relative.paternal_side
-      });
-      family.maternalCloseRelatives = relatives.filter(function(relative){
-        return !relative.relationship.match('Cousin') && !relative.relationship.match('Distant') && relative.maternal_side
-      });
-      family.paternalFirstCousins = relatives.filter(function(relative){
-        return relative.relationship.match('1st Cousin') && relative.paternal_side
-      });
-      family.maternalFirstCousins = relatives.filter(function(relative){
-        return relative.relationship.match('1st Cousin') && relative.maternal_side
-      });
-      family.paternalOtherCousins = relatives.filter(function(relative){
-        return relative.relationship.match('2nd Cousin') && relative.relationship.match('3rd Cousin') && relative.paternal_side
-      });
-      family.maternalOtherCousins = relatives.filter(function(relative){
-        return relative.relationship.match('2nd Cousin') && relative.relationship.match('3rd Cousin') && relative.maternal_side;
-      });
-      family.paternalDistantRelatives = relatives.filter(function(relative){
-        return checkIfDistant(relative) && relative.paternal_side;
-      });
-      family.maternalDistantRelatives = relatives.filter(function(relative){
-        return checkIfDistant(relative) && relative.maternal_side;
-      });
+      return !relative.relationship.match('Cousin') && !relative.relationship.match('Distant') && relative.paternal_side
+    });
+    family.maternalCloseRelatives = relatives.filter(function(relative){
+      return !relative.relationship.match('Cousin') && !relative.relationship.match('Distant') && relative.maternal_side
+    });
+    family.paternalFirstCousins = relatives.filter(function(relative){
+      return relative.relationship.match('1st Cousin') && relative.paternal_side
+    });
+    family.maternalFirstCousins = relatives.filter(function(relative){
+      return relative.relationship.match('1st Cousin') && relative.maternal_side
+    });
+    family.paternalOtherCousins = relatives.filter(function(relative){
+      return relative.relationship.match('2nd Cousin') && relative.relationship.match('3rd Cousin') && relative.paternal_side
+    });
+    family.maternalOtherCousins = relatives.filter(function(relative){
+      return relative.relationship.match('2nd Cousin') && relative.relationship.match('3rd Cousin') && relative.maternal_side;
+    });
+    family.paternalDistantRelatives = relatives.filter(function(relative){
+      return checkIfDistant(relative) && relative.paternal_side;
+    });
+    family.maternalDistantRelatives = relatives.filter(function(relative){
+      return checkIfDistant(relative) && relative.maternal_side;
+    });
  
+
     for(var prop in family){
       if(family[prop].length > 0){
         var which_side = (prop.search('maternal') === 0 ) ? 'maternal' : 'paternal';
@@ -190,11 +187,11 @@ angular.module('genome.tree', [])
       return b - a;
     });
 
-    similarRange = (range[0] - range[range.length-1]);
+    var similarRange = (range[0] - range[range.length-1]);
 
     //Add d3 force effect to layout
-    force = d3.layout.force()
-      .linkDistance(250)
+    var force = d3.layout.force()
+      .linkDistance(80)
       .charge(-120)
       .gravity(0.05)
       .size([width, height])
@@ -206,41 +203,26 @@ angular.module('genome.tree', [])
       .attr('width', boardWidth + margin.left + margin.right)
       .attr('height', boardHeight + margin.top + margin.bottom);
 
+    var link = svg.selectAll('.link');
+    var node = svg.selectAll('.node');
 
     var nodes = flatten(relativeTree);
 
-    
-    var tree = d3.layout.tree();
 
-    //TODO : figure out to make bubbles not overlap and tree maintain shape
-    // .nodeSize(function(d){
-    //   return 5
-    // }).separation(function separation(a,b){
-    //   return a == b ? 2 : 1;
-    // });
-    
-    var links = tree.links(nodes);
-    
+    var links = d3.layout.tree().links(nodes);
+
+    // Restart the force layout.
     force
         .nodes(nodes)
         .links(links)
         .start();
-        
-
-    // Restart the force layout.
-    var link = svg.selectAll('.link');
-    var node = svg.selectAll('.node');
 
         // Update links.
-    link = link.data(links, function(d) { 
-      return d.target.id; });
- 
-    console.log(link)
+    link = link.data(links, function(d) { return d.target.id; });
+
     link.exit().remove();
-    console.log(link)
 
     link.enter().insert('line', '.node')
-        .attr('color', 'black')
         .attr('class', 'link');
 
     // Update nodes.
@@ -255,12 +237,13 @@ angular.module('genome.tree', [])
 
     nodeEnter.append('circle')
         .attr('fill', 'yellow')
-        .attr('r', relativeSize);
+        .attr('r', relativeSize)
 
     nodeEnter.append('text')
         .attr('dy', '.35em')
         .text(function(d) { return d.relationship; });
 
+    node.select('circle')
 
     function relativeSize(relative){
 
@@ -268,11 +251,11 @@ angular.module('genome.tree', [])
         relative.similarity = 0.30;
       } else if(relative.relationship === 'paternal_side' || relative.relationship === 'maternal_side'){
         relative.similarity = 0.25;
-      } else if(relative.relationship === 'Distant Relative'){
-        relative.similarity = 0.008;
       }
-
       var similarity = (relative.similarity < 0.03 && relative.similarity) ? relative.similarity * 15000 : relative.similarity * 2000;
+
+
+
 
       if (similarRange > 0 && similarRange < 0.2) {
         if (similarity < 0.01){
@@ -321,6 +304,8 @@ angular.module('genome.tree', [])
           return similarity * 0.07;
         }
       }
+
+      return 5
     }
 
     function tick() {
@@ -359,6 +344,8 @@ angular.module('genome.tree', [])
       return nodes;
     }
   };
+//////////////////////////////////////////////////////////////////////
+
 
   //After grabbing relatives from the DB, create a bubbles array based on length of relatives array
   var initialize = function() {
