@@ -18,7 +18,7 @@ angular.module('genome.tree', [])
                         {
                           'relationship' : 'paternal_side',
                           'children' : []
-                        }  
+                        }
                         ]
                       };
 
@@ -31,7 +31,7 @@ angular.module('genome.tree', [])
       $scope.relatives = relatives.data.relativeList;
       //Add relatives to rootScope to allow access within other controllers
       $rootScope.rels = relatives.data.relativeList;
-      createTree($scope.relatives)
+      createTree($scope.relatives);
       initialize();
     }, function(err) {
       console.error('Error retrieving relatives: ', err);
@@ -41,11 +41,11 @@ angular.module('genome.tree', [])
   $scope.getRelatives();
 
   function createTree(relatives){
-    var family = {}
+    var family = {};
     relatives.forEach(function(relative){
       relative.children = [];
       relative.name = relative.relationship;
-    })
+    });
     family.paternalCloseRelatives = relatives.filter(function(relative){
       return !relative.relationship.match('Cousin') && !relative.relationship.match('Distant') && relative.paternal_side
     });
@@ -190,7 +190,7 @@ angular.module('genome.tree', [])
     var force = d3.layout.force()
       .linkDistance(80)
       .charge(-120)
-      .gravity(0.05)
+      .gravity(0.0)
       .size([width, height])
       .on('tick', tick)
       // .on("tick", function(e) {
@@ -326,16 +326,11 @@ angular.module('genome.tree', [])
       }
     }
 
-    function tick(e) {
-      var k = 2 * e.alpha;
-      link
-          .each(function(d) { 
-            console.log(d, d.source)
-            d.source.y -= k, d.target.y += k; })
-          .attr("x1", function(d) { return d.source.x; })
-          .attr("y1", function(d) { return d.source.y; })
-          .attr("x2", function(d) { return d.target.x; })
-          .attr("y2", function(d) { return d.target.y; });
+    function tick() {
+      link.attr('x1', function(d) { return d.source.x; })
+          .attr('y1', function(d) { return d.source.y; })
+          .attr('x2', function(d) { return d.target.x; })
+          .attr('y2', function(d) { return d.target.y; });
 
       node.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
     }
@@ -355,18 +350,71 @@ angular.module('genome.tree', [])
     }
 
     // Returns a list of all nodes under the root.
+    // function flatten(root) {
+    //   var nodes = [], i = 0;
+
+    //   function recurse(node) {
+    //     if (node.children) node.children.forEach(recurse);
+    //     if (!node.id) node.id = ++i;
+    //     nodes.push(node);
+    //   }
+
+    //   recurse(root);
+    //   return nodes;
+    // }
+
     function flatten(root) {
-      var nodes = [], i = 0;
+  var nodes = [], i = 0, depth = 0, level_widths = [1], max_width, max_depth = 1, kx, ky;
 
-      function recurse(node) {
-        if (node.children) node.children.forEach(recurse);
-        if (!node.id) node.id = ++i;
-        nodes.push(node);
-      }
-
-      recurse(root);
-      return nodes;
+  function recurse(node, parent, depth, x) {
+    if (node.children) {
+      var w = level_widths[depth + 1] || 0;
+      level_widths[depth + 1] = w + node.children.length;
+      max_depth = Math.max(max_depth, depth + 1);
+      node.size = node.children.reduce(function(p, v, i) {
+        return p + recurse(v, node, depth + 1, w + i);
+      }, 0);
     }
+    if (!node.id) node.id = ++i;
+    node.parent = parent;
+    node.depth = depth;
+    //node.fixed = 8;
+    if (!node.px && !node.fixed && 0) {
+      node.y = depth;
+      node.x = x;
+    }
+    nodes.push(node);
+    return node.size;
+  }
+
+  root.size = recurse(root, null, 0, 0);
+
+  if (0) {
+    // now correct/balance the x positions:
+    max_width = 1;
+    for (i = level_widths.length; --i > 0; ) {
+      max_width = Math.max(max_width, level_widths[i]);
+    }
+    kx = (width - 20) / max_width;
+    ky = (height - 20) / max_depth;
+    for (i = nodes.length; --i >= 0; ) {
+      var node = nodes[i];
+      if (!node.px && !node.fixed) {
+        var kkx = kx * max_width / level_widths[node.depth];
+        node.y *= ky;
+        //node.y += 10 + ky / 2;
+        node.x *= kkx;
+        node.x += 10 + kkx / 2;
+        node.x = width / 2;
+
+        node.qx = node.px = node.x;
+        node.qy = node.py = node.y;
+      }
+    }
+  }
+
+  return nodes;
+}
   };
 
   //After grabbing relatives from the DB, create a bubbles array based on length of relatives array
