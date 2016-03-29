@@ -88,46 +88,93 @@ angular.module('genome.self', [])
                 return fills[index%3];
               })
               .attr("stroke-width", 2);
-          });
-
-        cont.each(function (d, index) {
-          var inverted = (d[0].y < d[1].x) ? 1 : -1;
-          d3.select(this)
-            .selectAll("circle")
-            .data(d)
-            .attr("cx", function (d) { return x(d.x); })
-            .attr("cy", function (d) { return y(d.y); })
-            .attr("r",  function (d) { return z(d.z); })
-            .attr("fill-opacity", function (d) { return z(d.z) / 10;})
-            .attr("fill", function (d, i) { return fills[index%3]; })
-            .attr("rsid", function(d){ return d.rsid; })
-            .attr("pair", function(d){ return d.pair; })
-            .attr("outcome", function(d){ return d.outcome; })
-            .on("mouseover", function (d, i) {
-              // Using $scope.$apply to force angular to rerender once the scope has been updated with the current snp
-              $scope.$apply($scope.current = { rsid: d.rsid, pair: d.pair, outcome: d.outcome });
-            });
-          d3.select(this)
-              .select('line')
-              .attr("x2", x(d[0].x) + inverted * z(d[0].z))
-              .attr("x1", x(d[1].x) - inverted * z(d[1].z))
-              .attr("y2", y(d[0].y))
-              .attr("y1", y(d[0].y));
-          });
-      }
-
-      SelfFactory.getSnps($cookies.user_profile_id).then(function (outcomes) {
-        for (var key in outcomes) {
-          $scope.outcomes.push(outcomes[key]);
-        }
-        $scope.current = {
-          rsid: 'rs12345',
-          pair: 'AA',
-          outcome: 'A very interesting fact'
-        },
-        numX = $scope.outcomes.length;
-        setInterval(draw, 25);
       });
+
+      cont.each(function (d, index) {
+        var inverted = (d[0].y < d[1].x) ? 1 : -1;
+        d3.select(this)
+          .selectAll("circle")
+          .data(d)
+          .attr("cx", function (d) { return x(d.x); })
+          .attr("cy", function (d) { return y(d.y); })
+          .attr("r",  function (d) { return z(d.z); })
+          .attr("fill-opacity", function (d) { return z(d.z) / 10;})
+          .attr("fill", function (d, i) { return fills[index%3]; })
+          .attr("rsid", function(d){ return d.rsid; })
+          .attr("pair", function(d){ return d.pair; })
+          .attr("outcome", function(d){ return d.outcome; })
+          .on("mouseover", function (d, i) {
+            // Using $scope.$apply to force angular to rerender once the scope has been updated with the current snp
+            $scope.$apply($scope.current = { rsid: d.rsid, pair: d.pair, outcome: d.outcome });
+          });
+        d3.select(this)
+            .select('line')
+            .attr("x2", x(d[0].x) + inverted * z(d[0].z))
+            .attr("x1", x(d[1].x) - inverted * z(d[1].z))
+            .attr("y2", y(d[0].y))
+            .attr("y1", y(d[0].y));
+      });
+  }
+
+  SelfFactory.getSnps($cookies.user_profile_id).then(function (outcomes) {
+    for (var key in outcomes) {
+      $scope.outcomes.push(outcomes[key]);
+    }
+
+    $scope.current = {
+      rsid: 'rs12345',
+      pair: 'AA',
+      outcome: 'A very interesting fact'
+    };
+
+    numX = $scope.outcomes.length;
+    setInterval(draw, 25);
+  });
+
+
+  $rootScope.IntroOptions = {
+      steps:[{ 
+          intro: "Welcome to your personal DNA helix. Hover your mouse over the spinning DNA helix bubbles for more information. You can close this walkthrough at any time."
+        },
+        {
+          element: document.querySelector('#helix-path-2'),
+          intro: "Your DNA is made up of many nucleotide pairs. This box will display information about your individual genes.",
+          position: 'left'
+        },
+        {
+          element: document.querySelector('#helix-path-3'),
+          intro: "This ID represents the specific location on your genome. You can click on the rsid link to find scientific articles about this information.",
+          position: 'left'
+        },
+        {
+          element: document.querySelector('#helix-path-4'),
+          intro: "These letters represent the specific <a href='en.wikipedia.org/wiki/Base_pair'> base pair</a> you have at this location.",
+          position: 'left'
+        },
+        {
+          element: document.querySelector('#helix-path-5'),
+          intro: "Here is a commonly reported outcome of having the specific base pair at this specific location. This is not medical advice. If you have any concern about this information, speak with a medical professional.",
+          position: 'left'
+        },
+        {
+          element: document.querySelector('#helix-path-6'),
+          intro: "Click here to access your relatives pool.",
+          position: 'bottom-middle-aligned'
+        },
+        {
+          element: document.querySelector('#helix-path-7'),
+          intro: "You can view the help menu at any time by clicking here.",
+          position: 'right'
+        }
+      ],
+      showStepNumbers: false,
+      exitOnOverlayClick: true,
+      exitOnEsc:true,
+      nextLabel: '<strong><span style="color:green">Next</span></strong>',
+      prevLabel: '<span style="color:red">Previous</span>',
+      skipLabel: 'Exit',
+      doneLabel: 'Thanks'
+  };
 
 })
 

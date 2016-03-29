@@ -1,4 +1,4 @@
-angular.module('genome.pool', [])
+angular.module('genome.pool', ['angular-intro'])
 .controller('PoolController', function($scope, d3Service, Relatives, $rootScope, $window, $location) {
 
   //Containers for Relatives' Data
@@ -377,4 +377,25 @@ angular.module('genome.pool', [])
   };
   //Initialize the page with a call to getRelatives
   $scope.getRelatives();
+
+  $rootScope.IntroOptions = {
+      steps:[{ 
+          // element: document.querySelector('#test3'),
+          intro: "Welcome to the Family Pool page. Each bubble represents a relative and is sized based on percentage of shared DNA. Click on the bubbles for more information."
+        },
+        {
+          element: document.querySelector('#path2'),
+          intro: "Access the map view and the help menu from over here.",
+          position: 'right'
+        }
+      ],
+      showStepNumbers: false,
+      exitOnOverlayClick: true,
+      exitOnEsc:true,
+      nextLabel: '<strong><span style="color:green">Next</span></strong>',
+      prevLabel: '<span style="color:red">Previous</span>',
+      skipLabel: 'Exit',
+      doneLabel: 'Thanks'
+  };
+
 });

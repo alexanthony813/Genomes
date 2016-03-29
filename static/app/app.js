@@ -8,7 +8,8 @@ var app = angular.module('genome', [
   'genome.sideNav',
   'genome.auth',
   'genome.directive',
-  'ngMaterial'
+  'ngMaterial',
+  'angular-intro'
 ])
 
 .config(function ($routeProvider) {
@@ -38,6 +39,7 @@ var app = angular.module('genome', [
       redirectTo : '/signin'
     });
 })
+
 .run(function($rootScope, $location, $cookies, AuthFactory){
 
   $rootScope.$on('$routeChangeStart', function(evt, next, current){

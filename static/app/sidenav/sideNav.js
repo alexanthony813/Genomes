@@ -15,6 +15,7 @@ angular.module('genome.sideNav', [])
       $scope.filterRegions = function () {
         $rootScope.filterRegions();
       };
+
     },
     templateUrl: '../static/app/sidenav/sideNav.html'
   };
