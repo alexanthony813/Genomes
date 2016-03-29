@@ -21,6 +21,7 @@ angular.module('genome.tree', [])
                         }
                         ]
                       };
+  var root = relativeTree;
 
  //Grab relatives from the database, then initialize bubbles
   $scope.getRelatives = function() {
@@ -92,10 +93,10 @@ angular.module('genome.tree', [])
 
     if(side === 'maternal'){
       //start recursion here
-      recursiveAdd(maternalBranch, relatives)
+      recursiveAdd(maternalBranch, relatives);
     } else {
       //start recursion here
-      recursiveAdd(paternalBranch, relatives)
+      recursiveAdd(paternalBranch, relatives);
     }
 
     function recursiveAdd(parentNode, newNodes){
@@ -110,7 +111,6 @@ angular.module('genome.tree', [])
         var half_length = Math.ceil(newNodes.length / 2);    
         var leftSide = newNodes.slice(0,half_length);
         var rightSide = newNodes.slice(half_length,  newNodes.length);
-        console.log(newNodes, leftSide, rightSide);
         recursiveAdd(parentNode.children[firstRandomIndex], leftSide);
         recursiveAdd(parentNode.children[secondRandomIndex], rightSide);
       }
@@ -118,26 +118,6 @@ angular.module('genome.tree', [])
     }
   }
 
-      // if(parentNode.children.length < 2 && newNodes.length > 0){
-      //   console.log(newNodes.length)
-
-      //   var first = newNodes.pop();
-      //   console.log(newNodes.length)
-      //   parentNode.children.push(first);
-      //   if(newNodes.length > 0){
-      //     console.log('second?')
-      //     var second = newNodes.pop();
-      //     parentNode.children.push(second);
-      //   }
-      //   if(newNodes.length > 0){
-      //     recursiveAdd(parentNode, newNodes);
-      //   }
-      // } else {
-      //   if(newNodes.length >1 && parentNode.children && parentNode.children[1]){
-      //     recursiveAdd(parentNode.children[1], [newNodes[0]]);
-      //   }
-      //   recursiveAdd(parentNode.children[0], newNodes.slice(1));
-      // }
   var whichView = function() {
     $rootScope.view = $location.$$path;
   }
@@ -355,14 +335,137 @@ angular.module('genome.tree', [])
       }
     }
 
-    function tick() {
-      link.attr('x1', function(d) { return d.source.x; })
-          .attr('y1', function(d) { return d.source.y; })
-          .attr('x2', function(d) { return d.target.x; })
-          .attr('y2', function(d) { return d.target.y; });
+///////////////////////////////////////////////
+function tick(e) {
+  var ly = 100;
 
-      node.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
+  link.attr("x1", function(d) { return d.source.x; })
+      .attr("y1", function(d) { return d.source.y; })
+      .attr("x2", function(d) { return d.target.x; })
+      .attr("y2", function(d) { return d.target.y; });
+
+  node.attr("cx", function(d) { return d.x; })
+      .attr("cy", function(d) { return d.y; });
+
+  if (0) {
+    var dbg = d3.select("g");
+    dbg.selectAll("g").remove();
+    var dbg_scale_r = d3.scale.linear().range([2,30]);
+    var dbg_dmn = [1000, 1];
+    function dbg_domain(q, dbg_dmn) {
+      dbg_dmn[0] = Math.min(dbg_dmn[0], Math.max(1, Math.abs(q.charge)));
+      dbg_dmn[1] = Math.max(dbg_dmn[1], Math.max(1, Math.abs(q.charge)));
+      for (var i = q.nodes.length; --i >= 0; ) {
+        if (q.nodes[i])
+          dbg_domain(q.nodes[i], dbg_dmn);
+      }
     }
+    dbg_domain(e.quadtree, dbg_dmn);
+    dbg_scale_r.domain(dbg_dmn);
+
+    function dbg_charge_r(c) {
+      return dbg_scale_r(Math.max(1, Math.abs(c)));
+    }
+    function draw_dbg(q) {
+      dbg.append("g")
+        .attr("cx", q.cx)
+        .attr("cy", q.cy)
+        .attr("r", dbg_charge_r(q.charge))
+        .style("fill", q.charge > 0 ? "green" : "red");
+
+      for (var i = q.nodes.length; --i >= 0; ) {
+        if (q.nodes[i])
+          draw_dbg(q.nodes[i]);
+      }
+    }
+    draw_dbg(e.quadtree);
+  }
+
+  // Apply the constraints; these will be effective in the next round:
+  // Apply important constraints; these will be effective in this round:
+  var ai = Math.max(0.1, 0.8 - e.alpha);
+  force.nodes().forEach(function(d, i) {
+    d.qx = d.x;
+    d.qy = d.y;
+    if (!d.fixed) {
+      var r = circle_radius(d) + 4, dx, dy;
+
+      // #1.0: hierarchy: same level nodes have to remain with a 1 LY band vertically:
+      // NOTE: do NOT force the coordinate EXACTLY as then the force annealing only works in X and nodes cannot pass another very well.
+      //       Instead, 'suggest' the new location...
+      if (d.children || d._children) {
+        dy = root.y + d.depth * ly;
+        d.y += (dy - d.y) * ai;
+      }
+
+      // #1: constraint all nodes to the visible screen:
+      //d.x = Math.min(width - r, Math.max(r, d.x));
+      //d.y = Math.min(height - r, Math.max(r, d.y));
+
+      // #1a: constraint all nodes to the visible screen: links
+      dx = Math.min(0, width - r - d.x) + Math.max(0, r - d.x);
+      dy = Math.min(0, height - r - d.y) + Math.max(0, r - d.y);
+      d.x += Math.max(-ly, Math.min(ly, dx));
+      d.y += Math.max(-ly, Math.min(ly, dy));
+      // #1b: constraint all nodes to the visible screen: charges ('repulse')
+      dx = Math.min(0, width - r - d.px) + Math.max(0, r - d.px);
+      dy = Math.min(0, height - r - d.py) + Math.max(0, r - d.py);
+      d.px += Math.max(-ly, Math.min(ly, dx));
+      d.py += Math.max(-ly, Math.min(ly, dy));
+
+      // #1.5: edges have a rejection force:
+      if (01) {
+        dx = width / 2 - d.px;
+        var k = dx * dx * 4 / (width * width);
+        var charge = width / 10;
+        k *= e.alpha;
+        if (dx > 0) {
+          d.px -= charge * k;
+        } else {
+          d.px += charge * k;
+        }
+        dy = height / 2 - d.py;
+        k = dy * dy * 4 / (height * height);
+        charge = height / 10;
+        k *= e.alpha;
+        if (dy > 0) {
+          d.py -= charge * k;
+        } else {
+          d.py += charge * k;
+        }
+      }
+
+      // #2: hierarchy means childs must be BELOW parents in Y direction:
+      // NOTE: do NOT force the coordinate EXACTLY as then the force annealing only works in X and nodes cannot pass another very well.
+      if (d.parent && !d.children) {
+        dy = d.parent.y + ly / 3;
+        dy = dy - d.y;
+        if (dy > 0) {
+          if (0) {
+            // extra: pull node towards point further below parent: right below it.
+            dx = d.parent.x - d.px;
+            d.px -= dx * ai * 0.1;
+          }
+          d.y += dy * ai;
+        }
+      }
+    } else {
+      // sticky drag
+      //d.fixed |= 8;
+    }
+    //d.px = d.x;
+    //d.py = d.y;
+  });
+}
+
+function color(d) {
+  return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#fd8d3c";
+}
+
+function circle_radius(d) {
+  return d.children ? 4.5 : d.size > 0 ? Math.sqrt(d.size) / 10 : 2;
+}
+///////////////////////////////////////////////////
 
     // Toggle children on click.
     function click(d) {
