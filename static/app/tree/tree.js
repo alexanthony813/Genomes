@@ -486,10 +486,9 @@ function circle_radius(d) {
 
   function dragmove(d){
       var node = this;
-      var translation = ['translate(', d3.event.x, ',', d3.event.y, ')'].join('')
       var x = d3.event.x;
       var y = d3.event.y;
-      var translation = ['translate(', x, ',', y, ')'].join('');
+      var translation= ['translate(', x, ',', y, ')'].join('');
       d3.select(node).attr('transform', translation);
   }
 
