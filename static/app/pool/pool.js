@@ -20,24 +20,24 @@ angular.module('genome.pool', ['angular-intro'])
             highlightOnHover: false
         },
         fills: {
-            'USA': '#4CAF50',
-            'RUS': '#4DB6AC',
-            'EUR': '#d62728',
-            'CAN': '#AB47BC',
-            'ASN': '#f44336',
-            'SAM': '#FFF59D',
-            'AUS': '#00838F',
-            'AFR': '#FB8C00',
+            // 'USA': '#4CAF50',
+            // 'RUS': '#4DB6AC',
+            // 'EUR': '#d62728',
+            // 'CAN': '#AB47BC',
+            // 'ASN': '#f44336',
+            // 'SAM': '#FFF59D',
+            // 'AUS': '#00838F',
+            // 'AFR': '#FB8C00',
             defaultFill: '#607D8B'
         },
         data: {
-            'USA': {fillKey: 'USA'},
-            'RUS': {fillKey: 'RUS'},
-            'EUR': {fillKey: 'EUR'},
-            'CAN': {fillKey: 'CAN'},
-            'SAM': {fillKey: 'SAM'},
-            'AUS': {fillKey: 'AUS'},
-            'AFR': {fillKey: 'AFR'},
+            // 'USA': {fillKey: 'USA'},
+            // 'RUS': {fillKey: 'RUS'},
+            // 'EUR': {fillKey: 'EUR'},
+            // 'CAN': {fillKey: 'CAN'},
+            // 'SAM': {fillKey: 'SAM'},
+            // 'AUS': {fillKey: 'AUS'},
+            // 'AFR': {fillKey: 'AFR'},
             'ASIA': {fillKey: 'ASN'}
         }
     });
@@ -67,6 +67,17 @@ angular.module('genome.pool', ['angular-intro'])
       'Africa': [7.612, 18.6328, 'AFR']
     };
 
+    var fills = {
+        'USA': '#4CAF50',
+        'RUS': '#4DB6AC',
+        'EUR': '#d62728',
+        'CAN': '#AB47BC',
+        'ASN': '#f44336',
+        'SAM': '#FFF59D',
+        'AUS': '#00838F',
+        'AFR': '#FB8C00'
+    }
+
     for(var i = 0; i < $scope.relatives.length; i++) {
       for (var places in geoInfo) {
         if ($scope.relatives[i].birthplace === places) {
@@ -78,8 +89,12 @@ angular.module('genome.pool', ['angular-intro'])
             similarity: $scope.relatives[i].similarity,
             latitude: (geoInfo[places][0] + (Math.floor(Math.random() * 10)+1)),
             longitude: (geoInfo[places][1] + (Math.floor(Math.random() * 10)+1)),
-            fillKey: geoInfo[places][2],
-            radius: 7
+            borderColor: fills[geoInfo[places][2]],
+            borderWidth: 4,
+            fills: fills[geoInfo[places][2]],
+            radius: 7,
+            fillOpacity: 1,
+            popupOnHover: true
           })
         }
       }
