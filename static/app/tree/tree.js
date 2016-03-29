@@ -99,29 +99,45 @@ angular.module('genome.tree', [])
     }
 
     function recursiveAdd(parentNode, newNodes){
-      if(parentNode.children.length < 2 && newNodes.length > 0){
-        console.log(newNodes.length)
-
-        var first = newNodes.pop();
-        console.log(newNodes.length)
-        parentNode.children.push(first);
-        if(newNodes.length > 0){
-          console.log('second?')
-          var second = newNodes.pop();
-          parentNode.children.push(second);
-        }
-        if(newNodes.length > 0){
-          recursiveAdd(parentNode, newNodes);
-        }
+      if(parentNode.children.length === 0){
+        var first = (newNodes.length > 1) ? newNodes.slice(0, 2) : newNodes.slice(0, 1);
+        first.forEach(function(node){
+          parentNode.children.push(node);
+        });
       } else {
-        if(newNodes.length >1 && parent.children && parent.children[1]){
-          recursiveAdd(parentNode.children[1], newNodes.pop());
-        }
-        recursiveAdd(parentNode.children[0], newNodes);
+        var firstRandomIndex = Math.floor(Math.random() * parentNode.children.length);
+        var secondRandomIndex = Math.floor(Math.random() * parentNode.children.length);
+        var half_length = Math.ceil(newNodes.length / 2);    
+        var leftSide = newNodes.slice(0,half_length);
+        var rightSide = newNodes.slice(half_length,  newNodes.length);
+        console.log(newNodes, leftSide, rightSide);
+        recursiveAdd(parentNode.children[firstRandomIndex], leftSide);
+        recursiveAdd(parentNode.children[secondRandomIndex], rightSide);
       }
+
     }
   }
 
+      // if(parentNode.children.length < 2 && newNodes.length > 0){
+      //   console.log(newNodes.length)
+
+      //   var first = newNodes.pop();
+      //   console.log(newNodes.length)
+      //   parentNode.children.push(first);
+      //   if(newNodes.length > 0){
+      //     console.log('second?')
+      //     var second = newNodes.pop();
+      //     parentNode.children.push(second);
+      //   }
+      //   if(newNodes.length > 0){
+      //     recursiveAdd(parentNode, newNodes);
+      //   }
+      // } else {
+      //   if(newNodes.length >1 && parentNode.children && parentNode.children[1]){
+      //     recursiveAdd(parentNode.children[1], [newNodes[0]]);
+      //   }
+      //   recursiveAdd(parentNode.children[0], newNodes.slice(1));
+      // }
   var whichView = function() {
     $rootScope.view = $location.$$path;
   }
