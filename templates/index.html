@@ -13,18 +13,22 @@
   </head>
 
   <body ng-app="genome" ng-cloak>
-    <div class="TopNavContainer">
-      <dst-top-nav></dst-top-nav>
-    </div>
-    <div class="wholepage">
-      <div class="BodyContainer">
-        <div id="mapContainer">
-          <div ng-view></div>
+  <div class="wrapper">
+      <div class="TopNavContainer">
+        <dst-top-nav></dst-top-nav>
+      </div>
+      <div class="wholepage">
+        <div class="BodyContainer">
+          <div id="mapContainer">
+            <div ng-view></div>
+          </div>
+        </div>
+        <div class="sideNavContainer">
+          <dst-side-nav></dst-side-nav>
         </div>
       </div>
-      <div class="sideNavContainer">
-        <dst-side-nav></dst-side-nav>
-      </div>
+  </div>
+    <div class="footer" sticky-footer=".wrapper">      
     </div>
 
 
@@ -56,6 +60,7 @@
     <script src='../static/app/app.js'></script>
     <script src='../static/app/auth/auth.js'></script>
     <script src='../static/app/directives/dst_top_nav.js'></script>
+    <script src='../static/app/directives/dst_footer.js'></script>
     <script src='../static/app/services/relatives.js'></script>
     <script src='../static/app/services/d3Service.js'></script>
     <script src='../static/app/sidenav/sideNav.js'></script>
