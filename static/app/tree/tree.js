@@ -6,7 +6,7 @@ angular.module('genome.tree', [])
     return;
   }
   $scope.loaded = false;
-
+  console.log('hiiiii')
   $scope.relatives = [];
   $rootScope.rels = [];
   $scope.myData = [10,10,10,20];
@@ -15,13 +15,16 @@ angular.module('genome.tree', [])
   var boardWidth = $window.innerWidth;
   var relativeTree = {
                        'relationship': 'me',
+                       'similarity' : 1,
                        'children': [
                         {
                          'relationship': 'maternal_side',
+                         'similarity': 0.3,
                          'children': []
                         },
                         {
                           'relationship' : 'paternal_side',
+                          'similarity': 0.3,
                           'children' : []
                         }
                         ]
@@ -128,6 +131,7 @@ angular.module('genome.tree', [])
     $rootScope.view = $location.$$path;
   }
   whichView();
+
 
   //end ng data map
   $scope.popModal = {
@@ -245,13 +249,14 @@ angular.module('genome.tree', [])
       if(relative.relationship === 'me'){
         relative.similarity = 0.30;
       } else if(relative.relationship === 'paternal_side' || relative.relationship === 'maternal_side'){
+        
         relative.similarity = 0.25;
       }
 
       var similarity = (relative.similarity < 0.03 && relative.similarity) ? relative.similarity * 15000 : relative.similarity * 2000;
 
       if (similarRange > 0 && similarRange < 0.2) {
-        if (similarity < 0.01){
+        if (similarity <= 0.01){
           return similarity * 0.03;
         } else if (similarity > 0.01 && similarity < 0.012) {
           return similarity * 0.035;
