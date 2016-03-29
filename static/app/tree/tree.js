@@ -202,17 +202,6 @@ angular.module('genome.tree', [])
       .gravity(0.0)
       .size([width, height])
       .on('tick', tick)
-      // .on("tick", function(e) {
-      //   var q = d3.layout.tree(nodes),
-      //       i = 0,
-      //       n = nodes.length;
-
-      //   while (++i < n) q.visit(collide(nodes[i]));
-
-      //   svg.selectAll("circle")
-      //       .attr("cx", function(d) { return d.x; })
-      //       .attr("cy", function(d) { return d.y; });
-      // });
 
 
     //Grab the pool as a canvas for our bubbles
@@ -336,128 +325,137 @@ angular.module('genome.tree', [])
     }
 
 ///////////////////////////////////////////////
-function tick(e) {
-  var ly = 100;
+// function tick(e) {
+//   var ly = 100;
 
-  link.attr("x1", function(d) { return d.source.x; })
-      .attr("y1", function(d) { return d.source.y; })
-      .attr("x2", function(d) { return d.target.x; })
-      .attr("y2", function(d) { return d.target.y; });
+//   link.attr("x1", function(d) { return d.source.x; })
+//       .attr("y1", function(d) { return d.source.y; })
+//       .attr("x2", function(d) { return d.target.x; })
+//       .attr("y2", function(d) { return d.target.y; });
 
-  node.attr("cx", function(d) { return d.x; })
-      .attr("cy", function(d) { return d.y; });
+//   node.attr("cx", function(d) { return d.x; })
+//       .attr("cy", function(d) { return d.y; });
 
-  if (0) {
-    var dbg = d3.select("g");
-    dbg.selectAll("g").remove();
-    var dbg_scale_r = d3.scale.linear().range([2,30]);
-    var dbg_dmn = [1000, 1];
-    function dbg_domain(q, dbg_dmn) {
-      dbg_dmn[0] = Math.min(dbg_dmn[0], Math.max(1, Math.abs(q.charge)));
-      dbg_dmn[1] = Math.max(dbg_dmn[1], Math.max(1, Math.abs(q.charge)));
-      for (var i = q.nodes.length; --i >= 0; ) {
-        if (q.nodes[i])
-          dbg_domain(q.nodes[i], dbg_dmn);
-      }
-    }
-    dbg_domain(e.quadtree, dbg_dmn);
-    dbg_scale_r.domain(dbg_dmn);
+//   if (0) {
+//     var dbg = d3.select("g");
+//     dbg.selectAll("g").remove();
+//     var dbg_scale_r = d3.scale.linear().range([2,30]);
+//     var dbg_dmn = [1000, 1];
+//     function dbg_domain(q, dbg_dmn) {
+//       dbg_dmn[0] = Math.min(dbg_dmn[0], Math.max(1, Math.abs(q.charge)));
+//       dbg_dmn[1] = Math.max(dbg_dmn[1], Math.max(1, Math.abs(q.charge)));
+//       for (var i = q.nodes.length; --i >= 0; ) {
+//         if (q.nodes[i])
+//           dbg_domain(q.nodes[i], dbg_dmn);
+//       }
+//     }
+//     dbg_domain(e.quadtree, dbg_dmn);
+//     dbg_scale_r.domain(dbg_dmn);
 
-    function dbg_charge_r(c) {
-      return dbg_scale_r(Math.max(1, Math.abs(c)));
-    }
-    function draw_dbg(q) {
-      dbg.append("g")
-        .attr("cx", q.cx)
-        .attr("cy", q.cy)
-        .attr("r", dbg_charge_r(q.charge))
-        .style("fill", q.charge > 0 ? "green" : "red");
+//     function dbg_charge_r(c) {
+//       return dbg_scale_r(Math.max(1, Math.abs(c)));
+//     }
+//     function draw_dbg(q) {
+//       dbg.append("g")
+//         .attr("cx", q.cx)
+//         .attr("cy", q.cy)
+//         .attr("r", dbg_charge_r(q.charge))
+//         .style("fill", q.charge > 0 ? "green" : "red");
 
-      for (var i = q.nodes.length; --i >= 0; ) {
-        if (q.nodes[i])
-          draw_dbg(q.nodes[i]);
-      }
-    }
-    draw_dbg(e.quadtree);
-  }
+//       for (var i = q.nodes.length; --i >= 0; ) {
+//         if (q.nodes[i])
+//           draw_dbg(q.nodes[i]);
+//       }
+//     }
+//     draw_dbg(e.quadtree);
+//   }
 
-  // Apply the constraints; these will be effective in the next round:
-  // Apply important constraints; these will be effective in this round:
-  var ai = Math.max(0.1, 0.8 - e.alpha);
-  force.nodes().forEach(function(d, i) {
-    d.qx = d.x;
-    d.qy = d.y;
-    if (!d.fixed) {
-      var r = circle_radius(d) + 4, dx, dy;
+//   // Apply the constraints; these will be effective in the next round:
+//   // Apply important constraints; these will be effective in this round:
+//   var ai = Math.max(0.1, 0.8 - e.alpha);
+//   force.nodes().forEach(function(d, i) {
+//     d.qx = d.x;
+//     d.qy = d.y;
+//     if (!d.fixed) {
+//       var r = circle_radius(d) + 4, dx, dy;
 
-      // #1.0: hierarchy: same level nodes have to remain with a 1 LY band vertically:
-      // NOTE: do NOT force the coordinate EXACTLY as then the force annealing only works in X and nodes cannot pass another very well.
-      //       Instead, 'suggest' the new location...
-      if (d.children || d._children) {
-        dy = root.y + d.depth * ly;
-        d.y += (dy - d.y) * ai;
-      }
+//       // #1.0: hierarchy: same level nodes have to remain with a 1 LY band vertically:
+//       // NOTE: do NOT force the coordinate EXACTLY as then the force annealing only works in X and nodes cannot pass another very well.
+//       //       Instead, 'suggest' the new location...
+//       if (d.children || d._children) {
+//         dy = root.y + d.depth * ly;
+//         d.y += (dy - d.y) * ai;
+//       }
 
-      // #1: constraint all nodes to the visible screen:
-      //d.x = Math.min(width - r, Math.max(r, d.x));
-      //d.y = Math.min(height - r, Math.max(r, d.y));
+//       // #1: constraint all nodes to the visible screen:
+//       //d.x = Math.min(width - r, Math.max(r, d.x));
+//       //d.y = Math.min(height - r, Math.max(r, d.y));
 
-      // #1a: constraint all nodes to the visible screen: links
-      dx = Math.min(0, width - r - d.x) + Math.max(0, r - d.x);
-      dy = Math.min(0, height - r - d.y) + Math.max(0, r - d.y);
-      d.x += Math.max(-ly, Math.min(ly, dx));
-      d.y += Math.max(-ly, Math.min(ly, dy));
-      // #1b: constraint all nodes to the visible screen: charges ('repulse')
-      dx = Math.min(0, width - r - d.px) + Math.max(0, r - d.px);
-      dy = Math.min(0, height - r - d.py) + Math.max(0, r - d.py);
-      d.px += Math.max(-ly, Math.min(ly, dx));
-      d.py += Math.max(-ly, Math.min(ly, dy));
+//       // #1a: constraint all nodes to the visible screen: links
+//       dx = Math.min(0, width - r - d.x) + Math.max(0, r - d.x);
+//       dy = Math.min(0, height - r - d.y) + Math.max(0, r - d.y);
+//       d.x += Math.max(-ly, Math.min(ly, dx));
+//       d.y += Math.max(-ly, Math.min(ly, dy));
+//       // #1b: constraint all nodes to the visible screen: charges ('repulse')
+//       dx = Math.min(0, width - r - d.px) + Math.max(0, r - d.px);
+//       dy = Math.min(0, height - r - d.py) + Math.max(0, r - d.py);
+//       d.px += Math.max(-ly, Math.min(ly, dx));
+//       d.py += Math.max(-ly, Math.min(ly, dy));
 
-      // #1.5: edges have a rejection force:
-      if (01) {
-        dx = width / 2 - d.px;
-        var k = dx * dx * 4 / (width * width);
-        var charge = width / 10;
-        k *= e.alpha;
-        if (dx > 0) {
-          d.px -= charge * k;
-        } else {
-          d.px += charge * k;
-        }
-        dy = height / 2 - d.py;
-        k = dy * dy * 4 / (height * height);
-        charge = height / 10;
-        k *= e.alpha;
-        if (dy > 0) {
-          d.py -= charge * k;
-        } else {
-          d.py += charge * k;
-        }
-      }
+//       // #1.5: edges have a rejection force:
+//       if (01) {
+//         dx = width / 2 - d.px;
+//         var k = dx * dx * 4 / (width * width);
+//         var charge = width / 10;
+//         k *= e.alpha;
+//         if (dx > 0) {
+//           d.px -= charge * k;
+//         } else {
+//           d.px += charge * k;
+//         }
+//         dy = height / 2 - d.py;
+//         k = dy * dy * 4 / (height * height);
+//         charge = height / 10;
+//         k *= e.alpha;
+//         if (dy > 0) {
+//           d.py -= charge * k;
+//         } else {
+//           d.py += charge * k;
+//         }
+//       }
 
-      // #2: hierarchy means childs must be BELOW parents in Y direction:
-      // NOTE: do NOT force the coordinate EXACTLY as then the force annealing only works in X and nodes cannot pass another very well.
-      if (d.parent && !d.children) {
-        dy = d.parent.y + ly / 3;
-        dy = dy - d.y;
-        if (dy > 0) {
-          if (0) {
-            // extra: pull node towards point further below parent: right below it.
-            dx = d.parent.x - d.px;
-            d.px -= dx * ai * 0.1;
-          }
-          d.y += dy * ai;
-        }
-      }
-    } else {
-      // sticky drag
-      //d.fixed |= 8;
-    }
-    //d.px = d.x;
-    //d.py = d.y;
-  });
+//       // #2: hierarchy means childs must be BELOW parents in Y direction:
+//       // NOTE: do NOT force the coordinate EXACTLY as then the force annealing only works in X and nodes cannot pass another very well.
+//       if (d.parent && !d.children) {
+//         dy = d.parent.y + ly / 3;
+//         dy = dy - d.y;
+//         if (dy > 0) {
+//           if (0) {
+//             // extra: pull node towards point further below parent: right below it.
+//             dx = d.parent.x - d.px;
+//             d.px -= dx * ai * 0.1;
+//           }
+//           d.y += dy * ai;
+//         }
+//       }
+//     } else {
+//       // sticky drag
+//       //d.fixed |= 8;
+//     }
+//     //d.px = d.x;
+//     //d.py = d.y;
+//   });
+// }
+
+function tick() {
+  link.attr('x1', function(d) { return d.source.x; })
+      .attr('y1', function(d) { return d.source.y; })
+      .attr('x2', function(d) { return d.target.x; })
+      .attr('y2', function(d) { return d.target.y; });
+
+  node.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
 }
-
+    
 function color(d) {
   return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#fd8d3c";
 }
