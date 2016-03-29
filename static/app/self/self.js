@@ -10,7 +10,7 @@ angular.module('genome.self', [])
   whichView();
 
   $rootScope.removeHelix = function () {
-    d3.select("svg").remove();
+    d3.select("svg#helix").remove();
   }
 
     /* The 'FILLS' block will determine the availability of colors, balls and lines
@@ -68,7 +68,11 @@ angular.module('genome.self', [])
       z.domain(d3.extent(flat, function(d){ return d.z; }));
       return data;
   }
+  var exit = false;
   function draw () {
+    if(exit) {
+      return;
+    }
     var cont = container.selectAll("g").data(generateData());
     cont.exit().remove();
     var enter = cont.enter()
@@ -80,9 +84,6 @@ angular.module('genome.self', [])
             .enter()
             .append("circle")
             .attr("fill", "black")
-            .on("click", function () {
-                console.log('clicking on a ball!!!');
-              });
           d3.select(this).append('line')
               .attr("stroke", function (d, i) {
                 return fills[index%3];
@@ -128,12 +129,13 @@ angular.module('genome.self', [])
     };
 
     numX = $scope.outcomes.length;
+
     setInterval(draw, 25);
   });
 
 
   $rootScope.IntroOptions = {
-      steps:[{ 
+      steps:[{
           intro: "Welcome to your personal DNA helix. Hover your mouse over the spinning DNA helix bubbles for more information. You can close this walkthrough at any time."
         },
         {
@@ -176,6 +178,41 @@ angular.module('genome.self', [])
       doneLabel: 'Thanks'
   };
 
+  var remove = function() {
+    $('div.dna-info').remove();
+    d3.select("svg#helix")
+      .attr("width", 3000)
+
+    d3.selectAll("line")
+      .transition()
+      .duration(500)
+      .attr('y1', 200)
+      .attr('y2', 200)
+
+
+       d3.selectAll("circle")
+       .transition()
+       .duration(2000)
+           .attr("r", 5)
+           .attr("cx", function(d){return 120000 * d.x})
+           .attr("cy", 100)
+
+      // d3.selectAll("line")
+      //  .attr("x1", 200)
+      //  .attr("x2", 5000)
+
+      d3.selectAll("line")
+        .transition()
+        .delay(400)
+        .attr("x1", 3000)
+        .attr("x2", 5000)
+
+   }
+  $rootScope.transitionToPool = function(){
+    exit = true;
+    remove();
+    setTimeout(function(){$scope.$apply($location.path('/pool'));  $rootScope.removeHelix();}, 500);
+  }
 })
 
 .factory('SelfFactory', function ($http) {
