@@ -3,6 +3,7 @@ CLIENT_ID = 'fa431a127dcefc9e83b43db11f6b18f7'
 CLIENT_SECRET = '6bfd4276e702dfe709e1638a31ce2216'
 DATABASE_USERNAME=''
 DATABASE_PASSWORD=''
+SECRET_KEY='T4COTOWN'
 
 #Production Variables
 PROD_REDIRECT_URI = 'https://genomie.herokuapp.com/receive_code/'
