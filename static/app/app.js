@@ -9,6 +9,7 @@ var app = angular.module('genome', [
   'genome.auth',
   'genome.directive',
   'genome.footer',
+  'genome.about',
   'ngMaterial',
   'angular-intro'
 ])
@@ -34,6 +35,11 @@ var app = angular.module('genome', [
     .when('/self', {
       templateUrl: '/static/app/self/self.html',
       controller: 'SelfController',
+      authenticate: true
+    })
+    .when('/about', {
+      templateUrl: '/static/app/about/about.html',
+      controller: 'AboutController',
       authenticate: true
     })
     .otherwise({
