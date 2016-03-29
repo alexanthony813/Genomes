@@ -20,43 +20,25 @@ angular.module('genome.pool', ['angular-intro'])
             highlightOnHover: false
         },
         fills: {
-            'USA': '#4CAF50',
-            'RUS': '#4DB6AC',
-            'EUR': '#d62728',
-            'CAN': '#AB47BC',
-            'ASN': '#f44336',
-            'SAM': '#FFF59D',
-            'AUS': '#00838F',
-            'AFR': '#FB8C00',
-            defaultFill: '#607D8B'
-        },
-        data: {
-            'USA': {fillKey: 'USA'},
-            'RUS': {fillKey: 'RUS'},
-            'EUR': {fillKey: 'EUR'},
-            'CAN': {fillKey: 'CAN'},
-            'SAM': {fillKey: 'SAM'},
-            'AUS': {fillKey: 'AUS'},
-            'AFR': {fillKey: 'AFR'},
-            'ASIA': {fillKey: 'ASN'}
+            defaultFill: '#34495e'
         }
     });
 
     //create bubbles for each relative in the relative list, after parsing with makeNewBubbleData
     map.bubbles(relativesList, {
       popupTemplate: function (geo, data) {
-              return ['<div class="hoverinfo">' +  data.name,
-              '<br/>Relationship: ' +  data.relationship,
-              '<br/>Similarity: ' +  data.similarity,
-              '<br/>Residence: ' +  data.residence + '',
-              '</div>'].join('');
+          return ['<div class="hoverinfo">' +  data.name,
+          '<br/>Relationship: ' +  data.relationship,
+          '<br/>Similarity: ' +  data.similarity,
+          '<br/>Residence: ' +  data.residence + '',
+          '</div>'].join('');
       }
     });
   };
 
-   $scope.makeNewBubbleData = function() {
+  var makeNewBubbleData = function() {
     var geoInfo = {
-      'United States': [39.5, -98.43, 'USA'],
+      'United States': [36.5, -101.25, 'USA'],
       'Canada': [54.51, -100.1953, 'CAN'],
       'South America': [-11.2, -56.25, 'SAM'],
       'Europe': [48.4419, 19.07, 'EUR'],
@@ -66,6 +48,17 @@ angular.module('genome.pool', ['angular-intro'])
       'Australia': [-25.05, 134, 'AUS'],
       'Africa': [7.612, 18.6328, 'AFR']
     };
+
+    var fills = {
+        'USA': '#e74c3c',
+        'RUS': '#2ecc71',
+        'EUR': '#FFFC00',
+        'CAN': '#3498db',
+        'ASN': '#1abc9c',
+        'SAM': '#FFF59D',
+        'AUS': '#e67e22',
+        'AFR': '#d35400'
+    }
 
     for(var i = 0; i < $scope.relatives.length; i++) {
       for (var places in geoInfo) {
@@ -78,8 +71,12 @@ angular.module('genome.pool', ['angular-intro'])
             similarity: $scope.relatives[i].similarity,
             latitude: (geoInfo[places][0] + (Math.floor(Math.random() * 10)+1)),
             longitude: (geoInfo[places][1] + (Math.floor(Math.random() * 10)+1)),
-            fillKey: geoInfo[places][2],
-            radius: 7
+            borderColor: fills[geoInfo[places][2]],
+            borderWidth: 4,
+            fills: fills[geoInfo[places][2]],
+            radius: 7,
+            fillOpacity: 1,
+            popupOnHover: true
           })
         }
       }
@@ -115,7 +112,6 @@ angular.module('genome.pool', ['angular-intro'])
   }
   whichView();
   //End Toggle Side Nav Icons
-
   //Toggle Map
   var mapShowing = false;
 
@@ -321,7 +317,7 @@ angular.module('genome.pool', ['angular-intro'])
         }
       }
       if (similarRange >= 0.2 && similarRange < 0.5) {
-        if (similarity < 0.01){
+        if (similarity <= 0.01){
           similarity = 0.02;
         } else if (similarity > 0.01 && similarity < 0.015) {
           similarity = 0.025;
@@ -370,7 +366,7 @@ angular.module('genome.pool', ['angular-intro'])
       //Add relatives to rootScope to allow access within other controllers
       $rootScope.rels = relatives.data.relativeList;
       initialize();
-      $scope.makeNewBubbleData();
+      makeNewBubbleData();
     }, function(err) {
       console.error('Error retrieving relatives: ', err);
     });

@@ -4,6 +4,7 @@
 <div class="selfPageContainer">
   <div class="dna-info" >
     <div ng-show="current.rsid" class="snp-information" id="helix-path-2">
+        <div class="md-title" id="helix-path-title"> {{ current.title }} </div>
         <div class="md-subhead" id="helix-path-3"> At location <a ng-href="http://www.snpedia.com/index.php/{{current.rsid}}" target="_blank"> {{current.rsid}} </a></div>
         <div class="md-subhead" id="helix-path-4"> You have "{{ current.pair }}." </div>
         <div class="md-subhead" id="helix-path-5"> {{ current.outcome }} </div>

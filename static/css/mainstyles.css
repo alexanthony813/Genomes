@@ -49,6 +49,14 @@ body {
   border: 1px;
 }
 
+#helix-path-title {
+  padding-bottom: 5px;
+}
+
+#helix-path-5 {
+  padding-top: 5px;
+}
+
 .snp-information {
   max-width: 70%;
   word-wrap: normal;
