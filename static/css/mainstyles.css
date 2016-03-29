@@ -215,3 +215,8 @@ line.link {
   stroke: #9ecae1;
   stroke-width: 1.5px;
 }
+
+svg#treeSVG{
+  position: absolute;
+  margin-left: 20%;
+}

@@ -212,6 +212,7 @@ angular.module('genome.tree', [])
 
     //Grab the pool as a canvas for our bubbles
     var svg = d3.select('.tree').append('svg')
+      .attr('id', 'treeSVG')
       .attr('width', boardWidth + margin.left + margin.right)
       .attr('height', boardHeight + margin.top + margin.bottom);
 
