@@ -1,5 +1,5 @@
 angular.module('genome.self', [])
-.controller('SelfController', function ($scope, $cookies, $location, SelfFactory, d3Service, $rootScope, $timeout) {
+.controller('SelfController', function ($scope, $cookies, $location, SelfFactory, d3Service, $rootScope) {
 
   $scope.outcomes = $scope.outcomes || [];
   $scope.current = {};
