@@ -203,47 +203,50 @@ angular.module('genome.tree', [])
       .attr('width', boardWidth + margin.left + margin.right)
       .attr('height', boardHeight + margin.top + margin.bottom);
 
-    var link = svg.selectAll('.link');
-    var node = svg.selectAll('.node');
+    var link = svg.selectAll('.treeLink');
+    var node = svg.selectAll('.treeNode');
 
-    var nodes = flatten(relativeTree);
+    function update(){
+        var nodes = flatten(relativeTree);
+        
+        var links = d3.layout.tree().links(nodes);
+        // Restart the force layout.
+
+        force
+            .nodes(nodes)
+            .links(links)
+            .start();
+
+        link = link.data(links, function(d) { return d.target.id; });
+
+        link.exit().remove();
+
+        link.enter().insert('line', '.treeNode')
+            .attr('class', 'treeLink');
+
+        // Update nodes.
+        node = node.data(nodes, function(d) { return d.id; });
+
+        node.exit().remove();
+
+        var nodeEnter = node.enter().append('g')
+            .attr('class', 'treeNode')
+            .on('click', click)
+            .call(force.drag);
+
+        nodeEnter.append('circle')
+            .attr('fill', 'yellow')
+            .attr('r', relativeSize);
 
 
-    var links = d3.layout.tree().links(nodes);
+            // Update links.
 
-    // Restart the force layout.
-    force
-        .nodes(nodes)
-        .links(links)
-        .start();
+        nodeEnter.append('text')
+            .attr('dy', '.35em')
+            .text(function(d) { return d.relationship; });
 
-        // Update links.
-    link = link.data(links, function(d) { return d.target.id; });
-
-    link.exit().remove();
-
-    link.enter().insert('line', '.node')
-        .attr('class', 'link');
-
-    // Update nodes.
-    node = node.data(nodes, function(d) { return d.id; });
-
-    node.exit().remove();
-
-    var nodeEnter = node.enter().append('g')
-        .attr('class', 'node')
-        .on('click', click)
-        .call(force.drag);
-
-    nodeEnter.append('circle')
-        .attr('fill', 'yellow')
-        .attr('r', relativeSize)
-
-    nodeEnter.append('text')
-        .attr('dy', '.35em')
-        .text(function(d) { return d.relationship; });
-
-    node.select('circle')
+    }
+    update();
 
     function relativeSize(relative){
 
@@ -305,7 +308,6 @@ angular.module('genome.tree', [])
         }
       }
 
-      return 5
     }
 
     function tick() {
@@ -320,13 +322,15 @@ angular.module('genome.tree', [])
 
     // Toggle children on click.
     function click(d) {
-      if (d3.event.defaultPrevented) return; // ignore drag
-      if (d.children) {
-        d._children = d.children;
-        d.children = null;
-      } else {
-        d.children = d._children;
-        d._children = null;
+      if (!d3.event.defaultPrevented) {
+        if (d.children) {
+          d._children = d.children;
+          d.children = null;
+        } else {
+          d.children = d._children;
+          d._children = null;
+        }
+        update();
       }
     }
 
