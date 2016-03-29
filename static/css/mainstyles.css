@@ -34,7 +34,6 @@ body {
   display: flex;
 }
 
-
 .dnahelixcontainer {
   max-width: 100%;
   display: inline-block;
@@ -258,10 +257,6 @@ svg {
 
 svg.datamap {
   padding-top: 0px;
-}
-
-.side-nav-button {
-  cursor: pointer;
 }
 
 .node circle {
