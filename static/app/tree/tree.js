@@ -20,7 +20,7 @@ angular.module('genome.tree', [])
                           'children' : []
                         }  
                         ]
-                      }
+                      };
 
  //Grab relatives from the database, then initialize bubbles
   $scope.getRelatives = function() {
@@ -175,7 +175,6 @@ angular.module('genome.tree', [])
   };
 
 
-  // Create bubbles ////////////////////////////
   var createBubbles = function() {
     var range = [];
 
@@ -193,7 +192,18 @@ angular.module('genome.tree', [])
       .charge(-120)
       .gravity(0.05)
       .size([width, height])
-      .on('tick', tick);
+      .on('tick', tick)
+      // .on("tick", function(e) {
+      //   var q = d3.layout.tree(nodes),
+      //       i = 0,
+      //       n = nodes.length;
+
+      //   while (++i < n) q.visit(collide(nodes[i]));
+
+      //   svg.selectAll("circle")
+      //       .attr("cx", function(d) { return d.x; })
+      //       .attr("cy", function(d) { return d.y; });
+      // });
 
 
     //Grab the pool as a canvas for our bubbles
@@ -206,15 +216,27 @@ angular.module('genome.tree', [])
 
     function update(){
         var nodes = flatten(relativeTree);
-        
-        var links = d3.layout.tree().links(nodes);
+         
+        var tree = d3.layout.tree()
+                   // .nodeSize([1, 100])
+                   // .separation(function(a, b){
+                   //    var width = a.width + b.width;
+                   //    var distance = width/2 + 16;
+                   //    return distance;
+                   // });
+
+        var links = tree.links(nodes);
+                    
         // Restart the force layout.
 
         force
             .nodes(nodes)
             .links(links)
+            .linkStrength(1)
+            .linkDistance(90)
             .start();
 
+            // .theta(1)
         link = link.data(links, function(d) { return d.target.id; });
 
         link.exit().remove();
@@ -228,6 +250,7 @@ angular.module('genome.tree', [])
         node.exit().remove();
 
         var nodeEnter = node.enter().append('g')
+            .attr('padding', 50)
             .attr('class', '.node')
             .on('click', click)
             .call(force.drag);
@@ -251,6 +274,7 @@ angular.module('genome.tree', [])
       } else if(relative.relationship === 'paternal_side' || relative.relationship === 'maternal_side'){
         relative.similarity = 0.25;
       }
+
       var similarity = (relative.similarity < 0.03 && relative.similarity) ? relative.similarity * 15000 : relative.similarity * 2000;
 
       if (similarRange > 0 && similarRange < 0.2) {
@@ -300,14 +324,18 @@ angular.module('genome.tree', [])
           return similarity * 0.07;
         }
       }
-
     }
 
-    function tick() {
-      link.attr('x1', function(d) { return d.source.x; })
-          .attr('y1', function(d) { return d.source.y; })
-          .attr('x2', function(d) { return d.target.x; })
-          .attr('y2', function(d) { return d.target.y; });
+    function tick(e) {
+      var k = 2 * e.alpha;
+      link
+          .each(function(d) { 
+            console.log(d, d.source)
+            d.source.y -= k, d.target.y += k; })
+          .attr("x1", function(d) { return d.source.x; })
+          .attr("y1", function(d) { return d.source.y; })
+          .attr("x2", function(d) { return d.target.x; })
+          .attr("y2", function(d) { return d.target.y; });
 
       node.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
     }
@@ -432,6 +460,30 @@ angular.module('genome.tree', [])
                  .on('drag', dragmove)
                  .on('dragend', dropHandler);
     return drag;
+  }
+
+  function collide(node) {
+    var r = node.radius + 16,
+        nx1 = node.x - r,
+        nx2 = node.x + r,
+        ny1 = node.y - r,
+        ny2 = node.y + r;
+    return function(quad, x1, y1, x2, y2) {
+      if (quad.point && (quad.point !== node)) {
+        var x = node.x - quad.point.x,
+            y = node.y - quad.point.y,
+            l = Math.sqrt(x * x + y * y),
+            r = node.radius + quad.point.radius;
+        if (l < r) {
+          l = (l - r) / l * .5;
+          node.x -= x *= l;
+          node.y -= y *= l;
+          quad.point.x += x;
+          quad.point.y += y;
+        }
+      }
+      return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+    };
   }
 });
 
