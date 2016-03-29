@@ -20,7 +20,7 @@ angular.module('genome.pool', ['angular-intro'])
             highlightOnHover: false
         },
         fills: {
-            defaultFill: '#607D8B'
+            defaultFill: '#34495e'
         }
     });
 
@@ -38,7 +38,7 @@ angular.module('genome.pool', ['angular-intro'])
 
   var makeNewBubbleData = function() {
     var geoInfo = {
-      'United States': [39.5, -98.43, 'USA'],
+      'United States': [36.5, -101.25, 'USA'],
       'Canada': [54.51, -100.1953, 'CAN'],
       'South America': [-11.2, -56.25, 'SAM'],
       'Europe': [48.4419, 19.07, 'EUR'],
@@ -50,14 +50,14 @@ angular.module('genome.pool', ['angular-intro'])
     };
 
     var fills = {
-        'USA': '#4CAF50',
-        'RUS': '#4DB6AC',
-        'EUR': '#d62728',
-        'CAN': '#AB47BC',
-        'ASN': '#f44336',
+        'USA': '#e74c3c',
+        'RUS': '#2ecc71',
+        'EUR': '#FFFC00',
+        'CAN': '#3498db',
+        'ASN': '#1abc9c',
         'SAM': '#FFF59D',
-        'AUS': '#00838F',
-        'AFR': '#FB8C00'
+        'AUS': '#e67e22',
+        'AFR': '#d35400'
     }
 
     for(var i = 0; i < $scope.relatives.length; i++) {
@@ -118,12 +118,30 @@ angular.module('genome.pool', ['angular-intro'])
 
   var toggleMap = function() {
     if(!mapShowing) {
-      d3.selectAll("circle").attr("visibility", "hidden");
-      createMap();
+
+      d3.transition()
+      .duration(1000)
+      .ease('back')
+      .each(function () {
+        d3.selectAll('circle')
+        .transition()
+        .attr('visibility', 'hidden')
+        })
+
+      setTimeout(createMap, 200);
       mapShowing = true;
     } else {
-      initialize();
-      $rootScope.removeMap();
+      d3.transition()
+      .duration(1000)
+      .ease('back')
+      .each(function () {
+        d3.select("svg.datamap")
+        .transition()
+        .attr('visibility', 'hidden')
+        .remove();
+      })
+
+      setTimeout(initialize, 200);
       mapShowing = false;
     }
   }
