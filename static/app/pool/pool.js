@@ -387,12 +387,7 @@ angular.module('genome.pool', ['angular-intro'])
           element: document.querySelector('#path2'),
           intro: "Access the map view and the help menu from over here.",
           position: 'right'
-        },
-        {
-          element: document.querySelector('#test3'),
-          intro: "Here is the second thing in our stuff"
         }
-
       ],
       showStepNumbers: false,
       exitOnOverlayClick: true,
@@ -402,5 +397,5 @@ angular.module('genome.pool', ['angular-intro'])
       skipLabel: 'Exit',
       doneLabel: 'Thanks'
   };
-  
+
 });

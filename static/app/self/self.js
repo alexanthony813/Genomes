@@ -160,6 +160,11 @@ angular.module('genome.self', [])
           element: document.querySelector('#helix-path-6'),
           intro: "Click here to access your relatives pool.",
           position: 'bottom-middle-aligned'
+        },
+        {
+          element: document.querySelector('#helix-path-7'),
+          intro: "You can view the help menu at any time by clicking here.",
+          position: 'right'
         }
       ],
       showStepNumbers: false,
