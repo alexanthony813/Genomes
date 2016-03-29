@@ -56,6 +56,12 @@ Back-end
 - PostgreSQL
 - SQLAlchemy
 
+Testing/Automation
+- Mocha/Chai
+- Jasmine
+- Grunt
+
+
 
 =====================
 ## Meet The Engineers
