@@ -129,30 +129,6 @@ angular.module('genome.tree', [])
   }
   whichView();
 
-  $scope.showMap = false;
-  $rootScope.filterRegions = function() {
-    $scope.showMap = !$scope.showMap;
-  };
-
-  //ng data map
-  $scope.mapObject = {
-    scope: 'world',
-    options: {
-      width: 1110,
-      legendHeight: 60 // optionally set the padding for the legend
-    },
-    geographyConfig: {
-      highlighBorderColor: '#EAA9A8',
-      highlighBorderWidth: 2
-    },
-    fills: {
-      'HIGH': '#CC4731',
-      'MEDIUM': '#306596',
-      'LOW': '#667FAF',
-      'defaultFill': '#DDDDDD'
-    },
-  };
-
   //end ng data map
   $scope.popModal = {
     name: '',
