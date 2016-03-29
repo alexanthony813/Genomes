@@ -20,41 +20,23 @@ angular.module('genome.pool', ['angular-intro'])
             highlightOnHover: false
         },
         fills: {
-            // 'USA': '#4CAF50',
-            // 'RUS': '#4DB6AC',
-            // 'EUR': '#d62728',
-            // 'CAN': '#AB47BC',
-            // 'ASN': '#f44336',
-            // 'SAM': '#FFF59D',
-            // 'AUS': '#00838F',
-            // 'AFR': '#FB8C00',
             defaultFill: '#607D8B'
-        },
-        data: {
-            // 'USA': {fillKey: 'USA'},
-            // 'RUS': {fillKey: 'RUS'},
-            // 'EUR': {fillKey: 'EUR'},
-            // 'CAN': {fillKey: 'CAN'},
-            // 'SAM': {fillKey: 'SAM'},
-            // 'AUS': {fillKey: 'AUS'},
-            // 'AFR': {fillKey: 'AFR'},
-            'ASIA': {fillKey: 'ASN'}
         }
     });
 
     //create bubbles for each relative in the relative list, after parsing with makeNewBubbleData
     map.bubbles(relativesList, {
       popupTemplate: function (geo, data) {
-              return ['<div class="hoverinfo">' +  data.name,
-              '<br/>Relationship: ' +  data.relationship,
-              '<br/>Similarity: ' +  data.similarity,
-              '<br/>Residence: ' +  data.residence + '',
-              '</div>'].join('');
+          return ['<div class="hoverinfo">' +  data.name,
+          '<br/>Relationship: ' +  data.relationship,
+          '<br/>Similarity: ' +  data.similarity,
+          '<br/>Residence: ' +  data.residence + '',
+          '</div>'].join('');
       }
     });
   };
 
-   $scope.makeNewBubbleData = function() {
+  var makeNewBubbleData = function() {
     var geoInfo = {
       'United States': [39.5, -98.43, 'USA'],
       'Canada': [54.51, -100.1953, 'CAN'],
@@ -336,7 +318,7 @@ angular.module('genome.pool', ['angular-intro'])
         }
       }
       if (similarRange >= 0.2 && similarRange < 0.5) {
-        if (similarity < 0.01){
+        if (similarity <= 0.01){
           similarity = 0.02;
         } else if (similarity > 0.01 && similarity < 0.015) {
           similarity = 0.025;
@@ -385,7 +367,7 @@ angular.module('genome.pool', ['angular-intro'])
       //Add relatives to rootScope to allow access within other controllers
       $rootScope.rels = relatives.data.relativeList;
       initialize();
-      $scope.makeNewBubbleData();
+      makeNewBubbleData();
     }, function(err) {
       console.error('Error retrieving relatives: ', err);
     });
