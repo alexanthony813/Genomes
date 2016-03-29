@@ -1,4 +1,4 @@
-angular.module('genome.pool', [])
+angular.module('genome.pool', ['angular-intro'])
 .controller('PoolController', function($scope, d3Service, Relatives, $rootScope, $window, $location) {
 
   //Containers for Relatives' Data
@@ -85,7 +85,7 @@ angular.module('genome.pool', [])
 
   var moveBubblesToRegions = function() {
     d3.selectAll("circle").data($scope.circles).attr('r', function(d){return d.radius;});
-  }
+  };
 
     //Move Bubbles Back to Center of Page
    var replaceBubblesInCenter = function() {
@@ -93,7 +93,7 @@ angular.module('genome.pool', [])
         bubble['cx'] = bubble['oldCX'];
         bubble['cy'] = bubble['oldCY'];
         bubble['radius'] = bubble['oldRadius'];
-      })
+      });
       //Explicitly restate the force layout
       var nodes = $scope.circles;
       var force = d3.layout.force()
@@ -109,7 +109,7 @@ angular.module('genome.pool', [])
   //Toggle Side Nav Icons
   var whichView = function() {
     $rootScope.view = $location.$$path;
-  }
+  };
   whichView();
   //End Toggle Side Nav Icons
   //Toggle Map

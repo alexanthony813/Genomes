@@ -40,8 +40,6 @@ angular.module('genome.tree', [])
   //Initialize the page with a call to getRelatives
   $scope.getRelatives();
 
-
-
   function createTree(relatives){
     var family = {}
     relatives.forEach(function(relative){
@@ -238,14 +236,12 @@ angular.module('genome.tree', [])
             .attr('fill', 'yellow')
             .attr('r', relativeSize);
 
-
-            // Update links.
-
         nodeEnter.append('text')
             .attr('dy', '.35em')
             .text(function(d) { return d.relationship; });
 
     }
+
     update();
 
     function relativeSize(relative){
@@ -256,9 +252,6 @@ angular.module('genome.tree', [])
         relative.similarity = 0.25;
       }
       var similarity = (relative.similarity < 0.03 && relative.similarity) ? relative.similarity * 15000 : relative.similarity * 2000;
-
-
-
 
       if (similarRange > 0 && similarRange < 0.2) {
         if (similarity < 0.01){
@@ -319,7 +312,6 @@ angular.module('genome.tree', [])
       node.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
     }
 
-
     // Toggle children on click.
     function click(d) {
       if (!d3.event.defaultPrevented) {
@@ -348,8 +340,6 @@ angular.module('genome.tree', [])
       return nodes;
     }
   };
-//////////////////////////////////////////////////////////////////////
-
 
   //After grabbing relatives from the DB, create a bubbles array based on length of relatives array
   var initialize = function() {
@@ -423,26 +413,25 @@ angular.module('genome.tree', [])
     createBubbles($scope.circles);
   };
 
-
-    function dropHandler(d){
+  function dropHandler(d){
       // TODO: use  showRelative() here
-    }
+  }
 
-    function dragmove(d){
-        var node = this;
-        var translation = ['translate(', d3.event.x, ',', d3.event.y, ')'].join('')
-        var x = d3.event.x;
-        var y = d3.event.y;
-        var translation = ['translate(', x, ',', y, ')'].join('');
-        d3.select(node).attr('transform', translation);
-    }
+  function dragmove(d){
+      var node = this;
+      var translation = ['translate(', d3.event.x, ',', d3.event.y, ')'].join('')
+      var x = d3.event.x;
+      var y = d3.event.y;
+      var translation = ['translate(', x, ',', y, ')'].join('');
+      d3.select(node).attr('transform', translation);
+  }
 
-    function onDragDrop(dragmove, dropHandler){
-      var drag = d3.behavior.drag()
-                   .origin(function(d,i) { return {x:0, y:0}; })
-                   .on('drag', dragmove)
-                   .on('dragend', dropHandler);
-      return drag;
-    }
+  function onDragDrop(dragmove, dropHandler){
+    var drag = d3.behavior.drag()
+                 .origin(function(d,i) { return {x:0, y:0}; })
+                 .on('drag', dragmove)
+                 .on('dragend', dropHandler);
+    return drag;
+  }
 });
 

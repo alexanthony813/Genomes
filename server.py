@@ -54,7 +54,6 @@ def getUser():
 
 @app.route('/demo/')
 def makeDemoUser():
-    print 'makeDemoUser is being called yo'
     #Add demo user to DB if they don't already exist
     controller.create_demo_user()
     demo_profile_id = 'demo_id'
