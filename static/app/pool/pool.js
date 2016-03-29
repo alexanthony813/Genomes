@@ -112,36 +112,17 @@ angular.module('genome.pool', ['angular-intro'])
   }
   whichView();
   //End Toggle Side Nav Icons
-
   //Toggle Map
   var mapShowing = false;
 
   var toggleMap = function() {
     if(!mapShowing) {
-
-      d3.transition()
-      .duration(1000)
-      .ease('back')
-      .each(function () {
-        d3.selectAll('circle')
-        .transition()
-        .attr('visibility', 'hidden')
-        })
-
-      setTimeout(createMap, 200);
+      d3.selectAll("circle").attr("visibility", "hidden");
+      createMap();
       mapShowing = true;
     } else {
-      d3.transition()
-      .duration(1000)
-      .ease('back')
-      .each(function () {
-        d3.select("svg.datamap")
-        .transition()
-        .attr('visibility', 'hidden')
-        .remove();
-      })
-
-      setTimeout(initialize, 200);
+      initialize();
+      $rootScope.removeMap();
       mapShowing = false;
     }
   }
