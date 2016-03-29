@@ -134,17 +134,32 @@ angular.module('genome.self', [])
 
   $rootScope.IntroOptions = {
       steps:[{ 
-          // element: document.querySelector('#helix'),
-          intro: "Welcome to your personal DNA helix. Click on the bubbles for more information about your DNA."
+          intro: "Welcome to your personal DNA helix. Hover your mouse over the spinning DNA helix bubbles for more information. You can close this walkthrough at any time."
         },
         {
-          element: document.querySelector('#dna-info-id'),
-          intro: "Click this rocketship for no reason.",
-          position: 'right'
+          element: document.querySelector('#helix-path-2'),
+          intro: "Your DNA is made up of many nucleotide pairs. This box will display information about your individual genes.",
+          position: 'left'
         },
         {
-          element: document.querySelector('#test3'),
-          intro: "Here is the second thing in our stuff"
+          element: document.querySelector('#helix-path-3'),
+          intro: "This ID represents the specific location on your genome. You can click on the rsid link to find scientific articles about this information.",
+          position: 'left'
+        },
+        {
+          element: document.querySelector('#helix-path-4'),
+          intro: "These letters represent the specific <a href='en.wikipedia.org/wiki/Base_pair'> base pair</a> you have at this location.",
+          position: 'left'
+        },
+        {
+          element: document.querySelector('#helix-path-5'),
+          intro: "Here is a commonly reported outcome of having the specific base pair at this specific location. This is not medical advice. If you have any concern about this information, speak with a medical professional.",
+          position: 'left'
+        },
+        {
+          element: document.querySelector('#helix-path-6'),
+          intro: "Click here to access your relatives pool.",
+          position: 'bottom-middle-aligned'
         }
       ],
       showStepNumbers: false,
