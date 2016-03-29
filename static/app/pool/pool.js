@@ -125,7 +125,7 @@ angular.module('genome.pool', [])
       $rootScope.removeMap();
       mapShowing = false;
     }
-  }
+  };
 
   $rootScope.filterRegions = function() {
     toggleMap();
