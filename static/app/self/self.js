@@ -50,6 +50,7 @@ angular.module('genome.self', [])
           return [{ x: Math.cos(t),
                     y: d,
                     z: Math.sin(t),
+                    title: $scope.outcomes[d].title,
                     rsid: $scope.outcomes[d].rsid,
                     pair: $scope.outcomes[d].pair,
                     outcome: $scope.outcomes[d].outcome
@@ -57,6 +58,7 @@ angular.module('genome.self', [])
                   { x: Math.cos(t - Math.PI),
                     y: d,
                     z: Math.sin(t - Math.PI),
+                    title: $scope.outcomes[d].title,
                     rsid: $scope.outcomes[d].rsid,
                     pair: $scope.outcomes[d].pair,
                     outcome: $scope.outcomes[d].outcome
@@ -101,12 +103,13 @@ angular.module('genome.self', [])
           .attr("r",  function (d) { return z(d.z); })
           .attr("fill-opacity", function (d) { return z(d.z) / 10;})
           .attr("fill", function (d, i) { return fills[index%3]; })
+          .attr("title", function (d){ return d.title })
           .attr("rsid", function(d){ return d.rsid; })
           .attr("pair", function(d){ return d.pair; })
           .attr("outcome", function(d){ return d.outcome; })
           .on("mouseover", function (d, i) {
             // Using $scope.$apply to force angular to rerender once the scope has been updated with the current snp
-            $scope.$apply($scope.current = { rsid: d.rsid, pair: d.pair, outcome: d.outcome });
+            $scope.$apply($scope.current = { title: d.title, rsid: d.rsid, pair: d.pair, outcome: d.outcome });
           });
         d3.select(this)
             .select('line')
@@ -123,6 +126,7 @@ angular.module('genome.self', [])
     }
 
     $scope.current = {
+      title: 'Example Box',
       rsid: 'rs12345',
       pair: 'AA',
       outcome: 'A very interesting fact'
@@ -223,7 +227,6 @@ angular.module('genome.self', [])
       url: '/api/getsnps',
       data: userId
     }).then(function (snps) {
-      console.log('snps retrieved: ', snps);
       return snps.data.outcomes;
     }).catch(function (err) {
       console.error('An error occured retreiving your SNPs ', err);
