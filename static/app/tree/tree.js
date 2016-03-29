@@ -203,8 +203,8 @@ angular.module('genome.tree', [])
       .attr('width', boardWidth + margin.left + margin.right)
       .attr('height', boardHeight + margin.top + margin.bottom);
 
-    var link = svg.selectAll('.treeLink');
-    var node = svg.selectAll('.treeNode');
+    var link = svg.selectAll('.link');
+    var node = svg.selectAll('.node');
 
     function update(){
         var nodes = flatten(relativeTree);
@@ -221,8 +221,8 @@ angular.module('genome.tree', [])
 
         link.exit().remove();
 
-        link.enter().insert('line', '.treeNode')
-            .attr('class', 'treeLink');
+        link.enter().insert('line', '.node')
+            .attr('class', 'link');
 
         // Update nodes.
         node = node.data(nodes, function(d) { return d.id; });
@@ -230,7 +230,7 @@ angular.module('genome.tree', [])
         node.exit().remove();
 
         var nodeEnter = node.enter().append('g')
-            .attr('class', 'treeNode')
+            .attr('class', '.node')
             .on('click', click)
             .call(force.drag);
 
