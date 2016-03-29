@@ -15,6 +15,7 @@ import os
 #Initialize Flask application
 app = Flask(__name__)
 PORT = int(os.environ.get('PORT', 5000))
+app.config.from_object('config')
 is_prod = os.environ.get('IS_HEROKU', None)
 app.config.from_object('config')
 
@@ -23,20 +24,17 @@ if is_prod:
     CLIENT_ID = app.config.get('PROD_CLIENT_ID')
     CLIENT_SECRET = app.config.get('PROD_CLIENT_SECRET')
     REDIRECT_URI = app.config.get('PROD_REDIRECT_URI')
+    #set debug to false
 else:
     #Gather data from config.py
     BASE_CLIENT_URL = 'http://localhost:%s/'% PORT
     CLIENT_ID = app.config.get('CLIENT_ID')
     CLIENT_SECRET = app.config.get('CLIENT_SECRET')
     REDIRECT_URI = app.config.get('REDIRECT_URI')
-
+    #set debug to true and add to app declaration at bottom of file
 
 #Declaration of all necessary variables needed to perform 23AndMe API Call
-BASE_CLIENT_URL = 'http://localhost:%s/'% PORT
 DEFAULT_REDIRECT_URI = '%sreceive_code/'  % BASE_CLIENT_URL
-CLIENT_ID = app.config.get('CLIENT_ID')
-CLIENT_SECRET = app.config.get('CLIENT_SECRET')
-REDIRECT_URI = app.config.get('REDIRECT_URI')
 SNPS = ['rs12913832', 'rs8177374', 'rs1799971', 'rs806380', 'rs1800955', 'rs53576', 'rs1815739', 'rs6152', 'rs1800497', 'rs9939609', 'rs662799', 'rs17822931', 'rs4680', 'rs4988235', 'rs6025', 'rs7574865', 'rs1695', 'rs72921001', 'rs1537415', 'rs2472297', 'rs909525']
 DEFAULT_SCOPE = 'names basic email ancestry relatives genomes %s' % (' '.join(SNPS))
 BASE_API_URL = 'https://api.23andme.com/'
@@ -128,7 +126,6 @@ def getSnps():
 
 @app.route('/receive_code/')
 def receive_code():
-    print 'receive_code is being called'
     parameters = {
         'client_id': CLIENT_ID,
         'client_secret': CLIENT_SECRET,

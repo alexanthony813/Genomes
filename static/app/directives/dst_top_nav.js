@@ -11,10 +11,9 @@ angular.module('genome.directive', [])
       $scope.onselfpage = $location.$$path === '/self' ? true : false;
 
       $scope.getRelatives = function () {
+        $rootScope.transitionToPool();
         $scope.onpoolpage = true;
         $scope.onselfpage = false;
-        $rootScope.removeHelix();
-        $location.path('/pool');
       };
 
       $scope.getSelf = function () {

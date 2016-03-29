@@ -379,7 +379,7 @@ angular.module('genome.pool', ['angular-intro'])
   $scope.getRelatives();
 
   $rootScope.IntroOptions = {
-      steps:[{ 
+      steps:[{
           // element: document.querySelector('#test3'),
           intro: "Welcome to the Family Pool page. Each bubble represents a relative and is sized based on percentage of shared DNA. Click on the bubbles for more information."
         },
@@ -397,5 +397,4 @@ angular.module('genome.pool', ['angular-intro'])
       skipLabel: 'Exit',
       doneLabel: 'Thanks'
   };
-
 });
