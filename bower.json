@@ -33,5 +33,8 @@
     "datamaps": "^0.5.1",
     "intro.js": "^2.0.0",
     "angular-intro.js": "^2.0.0"
+  },
+  "resolutions": {
+    "angular": "~1.3.16"
   }
 }
