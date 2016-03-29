@@ -1,6 +1,12 @@
 angular.module('genome.tree', [])
 .controller('TreeController', function($scope, d3Service, Relatives, $rootScope, $window, $location
   ) {
+
+  if($scope.loaded){
+    return;
+  }
+  $scope.loaded = false;
+
   $scope.relatives = [];
   $rootScope.rels = [];
   $scope.myData = [10,10,10,20];
@@ -33,6 +39,7 @@ angular.module('genome.tree', [])
       $rootScope.rels = relatives.data.relativeList;
       createTree($scope.relatives);
       initialize();
+      $scope.loaded = true;
     }, function(err) {
       console.error('Error retrieving relatives: ', err);
     });
@@ -204,7 +211,7 @@ angular.module('genome.tree', [])
 
 
     //Grab the pool as a canvas for our bubbles
-    var svg = d3.select('.pool').append('svg')
+    var svg = d3.select('.tree').append('svg')
       .attr('width', boardWidth + margin.left + margin.right)
       .attr('height', boardHeight + margin.top + margin.bottom);
 

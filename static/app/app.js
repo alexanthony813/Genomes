@@ -45,7 +45,8 @@ var app = angular.module('genome', [
     })
     .when('/tree', {
       templateUrl: '/static/app/tree/tree.html',
-      controller: 'TreeController'
+      controller: 'TreeController',
+      authenticate: true
     })
     .otherwise({
       redirectTo : '/signin'
