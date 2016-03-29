@@ -3,6 +3,7 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
+  font-family: 'Lato';
 }
 
 .wholePage {
@@ -24,7 +25,14 @@ body {
   max-height: 100%;
   margin-top: 10%;
   float: left;
+  justify-content: center;
 }
+
+.side-nav-button {
+  cursor: pointer;
+  display: flex;
+}
+
 
 .dnahelixcontainer {
   max-width: 100%;
@@ -89,7 +97,7 @@ body {
 }
 
 .title{
-  text-align:center;
+  text-align: center;
 }
 
 .header-options {
@@ -109,10 +117,6 @@ svg#helix {
   margin-left: 30%;
 }
 
-.side-nav-button {
-  cursor: pointer;
-}
-
 /*POOL PAGE*/
 
 svg#mainCanvas {
@@ -124,13 +128,10 @@ svg#mainCanvas {
   max-height: 100%;
 }
 
-.pool {
-
-}
-
 #map {
   border: 1px solid #000;
 }
+
 .state {
   fill: #EEE;
   stroke: #DDD;
