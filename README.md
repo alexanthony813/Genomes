@@ -1,25 +1,26 @@
 # Genomie
 Genetic visualization application
 
-# Introduction 
+## Introduction 
 
 Genomie is a web application that provides beautiful data visualizations of hereditary information based on the information receieved from 23AndMe.com. Providing the user with a varieties of different views, anyone can easily interpret and understand their unique genetic information in an interactive and elegant way. Genomie provides clear and vibrant perspectives in multiple viewing environments for an optimized user experience. 
 
-# Questions and Issues
-For any issues, please refer to [**our issues page**](https://github.com/ThunderousFigs/Genomes/issues)
-Please direct any questions regarding Genomie to [**our wiki page**](https://github.com/ThunderousFigs/Genomes/wiki)
+<hr>
+## Table of Contents
 
-Thank you!
-
-**Table of Contents**
-
-  - [Installation](#installation)
   - [Example](#example)
+  - [Installation](#installation)
   - [Technologies](#technologies)
   - [Architecture](#architecture)
   	- [API Endpoints](#api)
   - [Contributing](#contributing)
   - [Meet the Engineers](#meet-the-engineers)
+  - [Questions and Issues](#questions-and-issues)
+
+==========
+## Example
+==========
+![alt tag](http://i68.tinypic.com/2d1nwi9.jpg)
 
 ===============
 ## Installation
@@ -45,11 +46,6 @@ You're good to go. Start the server with:
 ```
 $ npm start
 ```
-
-==========
-## Example
-==========
-![alt tag](http://i68.tinypic.com/2d1nwi9.jpg)
 
 ===============
 ## Technologies
@@ -118,4 +114,9 @@ Development Team
 - [**Chris Bassano**](https://github.com/christo4b)
 - [**Peter Lollo**](https://github.com/Peterlollo)
 
+## Questions and Issues
+For any issues, please refer to [**our issues page**](https://github.com/ThunderousFigs/Genomes/issues)
+Please direct any questions regarding Genomie to [**our wiki page**](https://github.com/ThunderousFigs/Genomes/wiki)
+
+Thank you!
 
