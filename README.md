@@ -14,11 +14,10 @@ Thank you!
   - [Installation](#installation)
   - [Example](#example)
   - [Technologies](#technologies)
-  - [Features](#features)
   - [Architecture](#architecture)
   	- [API Endpoints](#api)
   - [Contributing](#contributing)
-  - [Meet the engineers](#meet-the-engineers)
+  - [Meet the Engineers](#meet-the-engineers)
 
 ===============
 ## Installation
