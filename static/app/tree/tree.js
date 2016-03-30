@@ -2,14 +2,6 @@ angular.module('genome.tree', [])
 .controller('TreeController', function($scope, d3Service, Relatives, $rootScope, $window, $location
   ) {
 
-  if($scope.loaded){
-    return;
-  }
-  $scope.loaded = false;
-  console.log('hiiiii')
-  $scope.relatives = [];
-  $rootScope.rels = [];
-  $scope.circles = [];
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
   var relativeTree = {
@@ -43,7 +35,7 @@ angular.module('genome.tree', [])
     .linkDistance(30)
     .charge(-60)
     .gravity(0.0)
-    .size([width, height])
+    // .size([width, height])
     .on('tick', tick);
 
   //end ng data map
@@ -67,10 +59,9 @@ angular.module('genome.tree', [])
     .attr('id', 'treeSVG')
     .attr('width', boardWidth + margin.left + margin.right)
     .attr('height', boardHeight + margin.top + margin.bottom);
-
   var link = svg.selectAll('.link');
   var node = svg.selectAll('.node');
-    
+
  //Grab relatives from the database, then initialize bubbles
   $scope.getRelatives = function() {
     Relatives.getRelatives()
@@ -121,12 +112,12 @@ angular.module('genome.tree', [])
     family.maternalDistantRelatives = relatives.filter(function(relative){
       return checkIfDistant(relative) && relative.maternal_side;
     });
- 
+
 
     for(var prop in family){
       if(family[prop].length > 0){
         var which_side = (prop.search('maternal') === 0 ) ? 'maternal' : 'paternal';
-        insertRelatives(family[prop], which_side)        
+        insertRelatives(family[prop], which_side)
       }
     }
     function checkIfDistant(relative){
@@ -151,6 +142,7 @@ angular.module('genome.tree', [])
 
     function recursiveAdd(parentNode, newNodes){
       if(parentNode.children.length === 0){
+        //potential issue with slicing
         var first = (newNodes.length > 1) ? newNodes.slice(0, 2) : newNodes.slice(0, 1);
         first.forEach(function(node){
           parentNode.children.push(node);
@@ -183,10 +175,10 @@ angular.module('genome.tree', [])
           node.fixed = true;
         }
       });
-       
+
       var tree = d3.layout.tree();
       var links = tree.links(nodes);
-                  
+
       // Restart the force layout.
       force
           .nodes(nodes)
@@ -210,7 +202,7 @@ angular.module('genome.tree', [])
       var nodeEnter = node.enter().append('g')
           .attr('padding', 50)
           .attr('class', '.node')
-          .on('click', click)
+          //.on('click', click)
           .call(force.drag);
 
       nodeEnter.append('circle')
@@ -223,170 +215,18 @@ angular.module('genome.tree', [])
               return 'gray'
             }
           })
-          .attr('r', relativeSize);
+          .attr('r', '15');
 
       nodeEnter.append('text')
           .attr('dy', '.35em')
           .text(function(d) { return d.relationship; });
   }
 
-  var createBubbles = function() {
-    var range = [];
-
-    $scope.relatives.map(function (relative) {
-      range.push(relative.similarity);
-    }).sort(function (a, b) {
-      return b - a;
-    });
-
-    var similarRange = (range[0] - range[range.length-1]);
-
-
-    update();
-
-
-  };
-
-  function relativeSize(relative){
-
-    var range = [];
-
-    $scope.relatives.map(function (relative) {
-      range.push(relative.similarity);
-    }).sort(function (a, b) {
-      return b - a;
-    });
-
-    var similarRange = (range[0] - range[range.length-1]);
-
-    if(relative.relationship === 'me'){
-      relative.similarity = 0.30;
-    } else if(relative.relationship === 'paternal_side' || relative.relationship === 'maternal_side'){
-      
-      relative.similarity = 0.25;
-    }
-
-    var similarity = (relative.similarity < 0.03 && relative.similarity) ? relative.similarity * 15000 : relative.similarity * 2000;
-
-    if (similarRange > 0 && similarRange < 0.2) {
-      if (similarity <= 0.01){
-        return similarity * 0.03;
-      } else if (similarity > 0.01 && similarity < 0.012) {
-        return similarity * 0.035;
-      } else if (similarity >= 0.012 && similarity < 0.015) {
-        return similarity * 0.04;
-      } else if (similarity >= 0.015 && similarity < 0.02) {
-        return similarity * 0.05;
-      } else if (similarity >= 0.02 && similarity < 0.025) {
-        return similarity * 0.055;
-      } else if (similarity >= 0.025 && similarity < 0.04) {
-        return similarity * 0.06;
-      } else if (similarity >= 0.04 && similarity < 0.049) {
-        return similarity * 0.065;
-      } else if (similarity >= 0.05) {
-        return similarity * 0.07;
-      }
-    }
-
-    if (similarRange >= 0.2 && similarRange < 0.5) {
-      if (similarity < 0.01){
-        return similarity * 0.02;
-      } else if (similarity > 0.01 && similarity < 0.015) {
-        return similarity * 0.025;
-      } else if (similarity > 0.015 && similarity < 0.02) {
-        return similarity * 0.03;
-      } else if (similarity > 0.02 && similarity < 0.025) {
-        return similarity * 0.033;
-      } else if (similarity >= 0.025 && similarity < 0.035) {
-        return similarity * 0.037;
-      } else if (similarity >= 0.035 && similarity < 0.05) {
-        return similarity * 0.041;
-      } else if (similarity >= 0.05 && similarity < 0.065) {
-        return similarity * 0.045;
-      } else if (similarity >= 0.065 && similarity < 0.08) {
-        return similarity * 0.05;
-      } else if (similarity >= 0.08 && similarity < 0.09) {
-        return similarity * 0.055;
-      } else if (similarity > 0.1 && similarity < 0.15) {
-        return similarity * 0.06;
-      } else if (similarity > 0.15 && similarity < 0.2) {
-        return similarity * 0.065;
-      } else if (similarity >= 0.2) {
-        return similarity * 0.07;
-      }
-    }
-  }
-
-  function color(d) {
-    return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#fd8d3c";
-  }
-
-  function circle_radius(d) {
-    return d.children ? 4.5 : d.size > 0 ? Math.sqrt(d.size) / 10 : 2;
-  }
-
-  // Toggle children on click.
-  function click(d) {
-    // if (!d3.event.defaultPrevented) {
-    //   if (d.children) {
-    //     d._children = d.children;
-    //     d.children = null;
-    //   } else {
-    //     d.children = d._children;
-    //     d._children = null;
-    //   }
-    //   update();
-    // }
-  }
-
-  function dropHandler(d){
-      // TODO: use  showRelative() here
-  }
-
-  function dragmove(d){
-      var node = this;
-      var x = d3.event.x;
-      var y = d3.event.y;
-      var translation= ['translate(', x, ',', y, ')'].join('');
-      d3.select(node).attr('transform', translation);
-  }
-
-  function onDragDrop(dragmove, dropHandler){
-    var drag = d3.behavior.drag()
-                 .origin(function(d,i) { return {x:0, y:0}; })
-                 .on('drag', dragmove)
-                 .on('dragend', dropHandler);
-    return drag;
-  }
-
-  function collide(node) {
-    var r = node.radius + 16,
-        nx1 = node.x - r,
-        nx2 = node.x + r,
-        ny1 = node.y - r,
-        ny2 = node.y + r;
-    return function(quad, x1, y1, x2, y2) {
-      if (quad.point && (quad.point !== node)) {
-        var x = node.x - quad.point.x,
-            y = node.y - quad.point.y,
-            l = Math.sqrt(x * x + y * y),
-            r = node.radius + quad.point.radius;
-        if (l < r) {
-          l = (l - r) / l * .5;
-          node.x -= x *= l;
-          node.y -= y *= l;
-          quad.point.x += x;
-          quad.point.y += y;
-        }
-      }
-      return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
-    };
-  }
 
   function flatten(root) {
     var nodes = [], i = 0, depth = 0, level_widths = [1], max_width, max_depth = 1, kx, ky;
 
-    function recurse(node, parent, depth, x) {
+    var recurse = function(node, parent, depth, x) {
       if (node.children) {
         var w = level_widths[depth + 1] || 0;
         level_widths[depth + 1] = w + node.children.length;
@@ -395,9 +235,11 @@ angular.module('genome.tree', [])
           return p + recurse(v, node, depth + 1, w + i);
         }, 0);
       }
-      if (!node.id) node.id = ++i;
-      node.parent = parent;
-      node.depth = depth;
+      //if (!node.id) {
+        node.id = ++i;
+        node.parent = parent;
+        node.depth = depth;
+      //}
       //node.fixed = 8;
       if (!node.px && !node.fixed && 0) {
         node.y = depth;
@@ -441,87 +283,15 @@ angular.module('genome.tree', [])
         .attr('y1', function(d) { return d.source.y; })
         .attr('x2', function(d) { return d.target.x; })
         .attr('y2', function(d) { return d.target.y; });
- 
-    node.attr('transform', function(d) { 
+
+    node.attr('transform', function(d) {
       var nodeX = Math.max(radius, Math.min(width - radius, d.x));
       var nodeY = Math.max(radius, Math.min(width - radius, d.y))
-      return 'translate(' + nodeX + ',' + nodeY + ')'; 
+      return 'translate(' + nodeX + ',' + nodeY + ')';
     });
 
         // node.attr("cx", function(d) { return d.x = Math.max(radius, Math.min(width - radius, d.x)); })
         // .attr("cy", function(d) { return d.y = Math.max(radius, Math.min(height - radius, d.y)); });
   }
 
-    //After grabbing relatives from the DB, create a bubbles array based on length of relatives array
-  function initialize() {
-    //set up range of values in similarity between all relatives
-    var range = [];
-    $scope.relatives.map(function (relative) {
-      range.push(relative.similarity);
-    }).sort(function (a, b) {
-      return b - a;
-    });
-
-    for (var i = 0; i < $scope.relatives.length || 0; i++) {
-
-      var similarity = $scope.relatives[i].similarity;
-
-      var similarRange = (range[0] - range[range.length-1]);
-
-      if (similarRange > 0 && similarRange < 0.2) {
-        if (similarity < 0.01){
-          similarity = 0.03;
-        } else if (similarity > 0.01 && similarity < 0.012) {
-          similarity = 0.035;
-        } else if (similarity >= 0.012 && similarity < 0.015) {
-          similarity = 0.04;
-        } else if (similarity >= 0.015 && similarity < 0.02) {
-          similarity = 0.05;
-        } else if (similarity >= 0.02 && similarity < 0.025) {
-          similarity = 0.055;
-        } else if (similarity >= 0.025 && similarity < 0.04) {
-          similarity = 0.06;
-        } else if (similarity >= 0.04 && similarity < 0.049) {
-          similarity = 0.065;
-        } else if (similarity >= 0.05) {
-          similarity = 0.07;
-        }
-      }
-
-      if (similarRange >= 0.2 && similarRange < 0.5) {
-        if (similarity < 0.01){
-          similarity = 0.02;
-        } else if (similarity > 0.01 && similarity < 0.015) {
-          similarity = 0.025;
-        } else if (similarity > 0.015 && similarity < 0.02) {
-          similarity = 0.03;
-        } else if (similarity > 0.02 && similarity < 0.025) {
-          similarity = 0.033;
-        } else if (similarity >= 0.025 && similarity < 0.035) {
-          similarity = 0.037;
-        } else if (similarity >= 0.035 && similarity < 0.05) {
-          similarity = 0.041;
-        } else if (similarity >= 0.05 && similarity < 0.065) {
-          similarity = 0.045;
-        } else if (similarity >= 0.065 && similarity < 0.08) {
-          similarity = 0.05;
-        } else if (similarity >= 0.08 && similarity < 0.09) {
-          similarity = 0.055;
-        } else if (similarity > 0.1 && similarity < 0.15) {
-          similarity = 0.06;
-        } else if (similarity > 0.15 && similarity < 0.2) {
-          similarity = 0.065;
-        } else if (similarity >= 0.2) {
-          similarity = 0.07;
-        }
-      }
-
-      $scope.circles.push({
-        radius: similarity * 1000,
-        relative: $scope.relatives[i]
-      });
-    }
-    createBubbles($scope.circles);
-  };
 });
-
