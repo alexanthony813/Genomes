@@ -193,8 +193,9 @@ footer {
 .dna-info {
   float: right;
   height: 30%;
-  width: 50%;
+  width: 32%;
   margin-top: 5%;
+  margin-right: 15%;
   border-radius: 5px;
   border: 1px;
 }
@@ -208,7 +209,7 @@ footer {
 }
 
 .snp-information {
-  max-width: 81%;
+  max-width: 100%;
   word-wrap: normal;
   -moz-box-shadow: 10px 10px 5px #888;
   -webkit-box-shadow: 10px 10px 5px #888;
