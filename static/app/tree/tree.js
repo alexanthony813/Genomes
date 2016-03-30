@@ -80,7 +80,6 @@ angular.module('genome.tree', [])
       $scope.relatives = relatives.data.relativeList;
       //Add relatives to rootScope to allow access within other controllers
       $rootScope.rels = relatives.data.relativeList;
-      initialize();
       createTree($scope.relatives);
       update();
       $scope.loaded = true;
