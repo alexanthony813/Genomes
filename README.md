@@ -15,6 +15,7 @@ Thank you!
   - [Example](#example)
   - [Technologies](#technologies)
   - [Features](#features)
+  - [Architecture](#architecture)
   - [Meet the engineers](#meet-the-engineers)
   - [Contributing](#contributing)
 
@@ -61,6 +62,35 @@ Testing/Automation
 - Jasmine
 - Grunt
 
+===============
+## Architecture
+===============
+### High Level Architecture
+
+
+### Database Schema
+Database in Postgres, using SQLAlchemy
+![](http://i68.tinypic.com/23i6plz.jpg)
+
+======
+## API
+======
+##### Public End Points
+|Request|URL|Response|
+|---|---|---|
+|Log-in|/receive_code/|   |
+|Log-in Demo|/demo/|   |
+|Log-out|/logout|   |
+|Get User Info|/get_info/|userObj|
+|Get User Relatives|/api/relatives/|[RelativesObj...]|
+|Get/Post SNP Data|/api/getsnps|[SnpObj...]|
+
+##### Admin Only
+|Request|URL|Response|
+|---|---|---|
+|Access to 23&Me Individual data|/1/user/:userID|[userObj...]|
+|Access to 23&Me Genotype data|/1/genotype/|[genotypeObj...]|
+|Access to 23&Me Relative data|/1/relatives/:userID|[relativesObj...]|
 
 
 =====================
