@@ -5,8 +5,8 @@ angular.module('genome.sideNav', [])
     controller: function ($scope, $rootScope, $location, SelfFactory) {
       // $scope.expand = false;
       // $scope.target;
-      $scope.filterRegions = function () {
-        $rootScope.filterRegions();
+      $scope.showMap = function () {
+        $rootScope.showMap();
       };
 
     },

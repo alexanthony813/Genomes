@@ -86,29 +86,6 @@ angular.module('genome.pool', ['angular-intro'])
     }
   };
 
-  var moveBubblesToRegions = function() {
-    d3.selectAll("circle").data($scope.circles).attr('r', function(d){return d.radius;});
-  };
-
-    //Move Bubbles Back to Center of Page
-   var replaceBubblesInCenter = function() {
-      $scope.circles.forEach(function(bubble){
-        bubble['cx'] = bubble['oldCX'];
-        bubble['cy'] = bubble['oldCY'];
-        bubble['radius'] = bubble['oldRadius'];
-      });
-      //Explicitly restate the force layout
-      var nodes = $scope.circles;
-      var force = d3.layout.force()
-      .nodes(nodes)
-      .size([width, height])
-      .gravity(0)
-      .charge(0)
-      .on("tick", tick)
-      .start();
-      d3.selectAll("circle").data($scope.circles).attr('r', function(d){return d.radius;}).call(force.drag);
-  };
-
   //Toggle Side Nav Icons
   var whichView = function() {
     $rootScope.view = $location.$$path;
@@ -116,21 +93,13 @@ angular.module('genome.pool', ['angular-intro'])
   whichView();
   //End Toggle Side Nav Icons
   //Toggle Map
-  var mapShowing = false;
 
-  var toggleMap = function() {
-    if(!mapShowing) {
-      d3.selectAll("circle").attr("visibility", "hidden");
-      createMap();
-      mapShowing = true;
-    } else {
-      initialize();
-      $rootScope.removeMap();
-      mapShowing = false;
-    }
-  };
-
-  $rootScope.filterRegions = function() {
+  $rootScope.showMap = function() {
+    d3.selectAll("circle").attr("visibility", "hidden");
+    d3.selectAll("nodes").attr("visibility", "hidden");
+    d3.selectAll("lines").attr("visibility", "hidden");
+    $rootScope.showMap = true;
+    createMap();
     toggleMap();
   };
 
@@ -149,15 +118,15 @@ angular.module('genome.pool', ['angular-intro'])
   };
 
   //pop up message displaying relative data when user clicks on a bubble
-  var showRelative = function(bubble) {
-    $scope.popModal.name = bubble.relative.first_name + ' ' + bubble.relative.last_name;
-    $scope.popModal.similarity = (bubble.relative.similarity*100).toFixed(2) + "% of your DNA";
-    $scope.popModal.relationship = bubble.relative.relationship  || "Unknown";
-    $scope.popModal.age = bubble.relative.birth_year ? (new Date().getFullYear() - bubble.relative.birth_year) : "Unknown";
-    $scope.popModal.image = bubble.relative.picture_url || '../../../static/assets/hipDNA.png';
-    $scope.popModal.ancestry = bubble.relative.ancestry || "Unknown";
-    $scope.popModal.birthplace = bubble.relative.birthplace  || "Unknown";
-  };
+  // var showRelative = function(bubble) {
+  //   $scope.popModal.name = bubble.relative.first_name + ' ' + bubble.relative.last_name;
+  //   $scope.popModal.similarity = (bubble.relative.similarity*100).toFixed(2) + "% of your DNA";
+  //   $scope.popModal.relationship = bubble.relative.relationship  || "Unknown";
+  //   $scope.popModal.age = bubble.relative.birth_year ? (new Date().getFullYear() - bubble.relative.birth_year) : "Unknown";
+  //   $scope.popModal.image = bubble.relative.picture_url || '../../../static/assets/hipDNA.png';
+  //   $scope.popModal.ancestry = bubble.relative.ancestry || "Unknown";
+  //   $scope.popModal.birthplace = bubble.relative.birthplace  || "Unknown";
+  // };
   //End Pop Modal
 
   //Force and Bubble Layout Settings
