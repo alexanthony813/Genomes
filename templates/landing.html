@@ -11,15 +11,11 @@
     <!-- HEADER START -->
     <header id="header">
       <div class="content">
-        <div id="logo"><a href=""> GENOMIE </a></div>
+        <div id="logo">GENOMIE</div>
         <nav id="nav">
          <ul>
            <li class="remove" onclick="location.href='/demo/'" class="login-button">DEMO</li>
-           <li><a href="#slide1" class="active" title="Next Section">HOME</a></li>
-           <li><a href="#slide2" title="Next Section">LEARN</a></li>
-           <li><a href="#slide3" title="Next Section">FIND RELATIVES</a></li>
-           <li><a href="#slide4" title="Next Section">HISTORY</a></li>
-           <li><a href="#slide5" title="Next Section">START</a></li>
+           <li class="remove" onclick="location.href='{{ auth_url }}'" class="login-button">LOG IN WITH 23andMe</li>
          </ul>
         </nav>
       </div>
@@ -31,6 +27,10 @@
         <div class="landingHeader">
           <p>VISUALIZE</p>
           <p>YOUR GENES</p>
+        </div>
+        <div class="login-area">
+          <img src="/static/assets/23logo2.png" align="left"/ type="button" value="Log in with 23andMe" onclick="location.href='{{ auth_url }}'" class="login-button">
+          <img src="//media.indiedb.com/images/articles/1/159/158317/auto/20140509082052-Button_play.png" align="left"/ type="button" onclick="location.href='/demo/'" class="login-button">
         </div>
       </div>
     </div>
@@ -61,9 +61,8 @@
     <div id="slide5">
       <div class="content">
         <div class="quotes_container">
-          <h3 class="quotes">Log in with 23andMe if you have an account. Or take the app for a test drive with anonymous data.</h3>
           <div class="login-area">
-              <img src="https://p2.zdassets.com/hc/theme_assets/110137/200043004/icn_logo_retina.png" align="left"/ type="button" value="Log in with 23andMe" onclick="location.href='{{ auth_url }}'" class="login-button">
+              <img src="/static/assets/23logo2.png" align="left"/ type="button" value="Log in with 23andMe" onclick="location.href='{{ auth_url }}'" class="login-button">
 
               <img src="//media.indiedb.com/images/articles/1/159/158317/auto/20140509082052-Button_play.png" align="left"/ type="button" onclick="location.href='/demo/'" class="login-button">
 
@@ -96,15 +95,15 @@
         var j = 0;
         var delay = 2000; //millisecond delay between cycles
         function cycleThru(){
-                var jmax = $("ul#cyclelist li").length -1;
-                $("ul#cyclelist li:eq(" + j + ")")
-                        .animate({"opacity" : "1"} ,400)
-                        .animate({"opacity" : "1"}, delay)
-                        .animate({"opacity" : "0"}, 400, function(){
-                                (j == jmax) ? j=0 : j++;
-                                cycleThru();
-                        });
-                };
+          var jmax = $("ul#cyclelist li").length -1;
+          $("ul#cyclelist li:eq(" + j + ")")
+            .animate({"opacity" : "1"} ,400)
+            .animate({"opacity" : "1"}, delay)
+            .animate({"opacity" : "0"}, 400, function(){
+              j = (j == jmax) ? 0 : j++;
+              cycleThru();
+            });
+         }
         cycleThru();
       });
       // scrollQuotes
