@@ -135,9 +135,10 @@ angular.module('genome.self', [])
       title: 'Example Box',
       rsid: 'rs12345',
       pair: 'AA',
-      outcome: 'A very interesting fact',
-      video: '<iframe width="560" height="315" src="https://www.youtube.com/embed/zwibgNGe4aY" frameborder="0" allowfullscreen></iframe>'
+      outcome: 'A very interesting fact'
     };
+
+    $('div.youtubevidbox').append('<iframe width="420" height="315" src="https://www.youtube.com/embed/zwibgNGe4aY" frameborder="0" allowfullscreen></iframe>');
 
     numX = $scope.outcomes.length;
 
