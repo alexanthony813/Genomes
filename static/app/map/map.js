@@ -1,5 +1,11 @@
 angular.module('genome.map', ['angular-intro'])
 .controller('MapController', function($scope, d3Service, Relatives, $rootScope, $window, $location) {
+
+  var whichView = function() {
+    $rootScope.view = $location.$$path;
+  };
+  whichView();
+
   var relativesList = [];
   $scope.relatives = $rootScope.rels;
 
