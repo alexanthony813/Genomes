@@ -1,6 +1,19 @@
 angular.module('genome.tree', [])
 .controller('TreeController', function($scope, d3Service, Relatives, $rootScope, $window, $location
   ) {
+
+  var whichView = function() {
+    $rootScope.view = $location.$$path;
+  };
+  whichView();
+  $scope.showTree = function(){
+    $rootScope.curPage = '/tree';
+    $location.path('/tree/');
+  }
+  $scope.showMap = function(){
+    $rootScope.curPage = '/map';
+    $location.path('/map/');
+  }
   $scope.popModal = {
     name: '',
     similarity: '',
@@ -19,6 +32,26 @@ angular.module('genome.tree', [])
     $scope.popModal.birthplace = bubble.birthplace  || "Unknown";
   };
   //End Pop Modal
+
+  $rootScope.IntroOptions = {
+      steps:[{
+          // element: document.querySelector('#test3'),
+          intro: "Welcome to your Family Tree! Every bubble represents one of your relatives. Click the bubbles for more info!"
+        },
+        {
+          element: document.querySelector('#path2'),
+          intro: "See a map of your relatives here.",
+          position: 'right'
+        }
+      ],
+      showStepNumbers: false,
+      exitOnOverlayClick: true,
+      exitOnEsc:true,
+      nextLabel: '<strong><span style="color:green">Next</span></strong>',
+      prevLabel: '<span style="color:red">Previous</span>',
+      skipLabel: 'Exit',
+      doneLabel: 'Thanks'
+  };
 
 ////////////TREE STARTS HERE///////////////
   var boardHeight = $window.innerHeight;
@@ -67,8 +100,8 @@ angular.module('genome.tree', [])
   //Grab the tree as a canvas for our bubbles
   var svg = d3.select('.tree').append('svg')
     .attr('id', 'treeSVG')
-    .attr('width', boardWidth + margin.left + margin.right)
-    .attr('height', boardHeight + margin.top + margin.bottom);
+    .attr('width', boardWidth - margin.left - margin.right)
+    .attr('height', boardHeight - margin.top - margin.bottom);
   var link = svg.selectAll('.link');
   var node = svg.selectAll('.node');
 
@@ -229,10 +262,8 @@ angular.module('genome.tree', [])
           .attr("data-target", "#myModal")
           .attr("data-toggle", "modal")
           .on('click', function(bubble){
-            console.log('bubble', bubble);
-            $scope.$apply(
-          showRelative(bubble)
-        );})
+            $scope.$apply(showRelative(bubble));
+          })
 
       nodeEnter.append('text')
           .attr('dy', '.35em')

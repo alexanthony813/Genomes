@@ -1,8 +1,8 @@
 <section class="side-nav" id="path2" ng-hide="curPage === '/about'">
 	<div class="poolViewOptions" ng-controller="TreeController">
-   <!--  <a href="#/map/"><img src="../../../static/assets/globe.png" type="button" ng-click="showMap()" class="side-nav-button"/></a> -->
+    <img src="../../../static/assets/globe.png" type="button" ng-click="showMap()" class="side-nav-button" ng-show="curPage === '/tree'"/>
   <!--   <a href="#/tree/"> -->
-    <img src="../../../static/assets/tree.png" type="button" class="side-nav-button"/>
+    <img src="../../../static/assets/tree.png" type="button" class="side-nav-button" ng-click="showTree()" ng-show="curPage === '/map'"/>
    <!--  </a> -->
   </div>
 </section>

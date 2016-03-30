@@ -1,7 +1,14 @@
 angular.module('genome.map', ['angular-intro'])
 .controller('MapController', function($scope, d3Service, Relatives, $rootScope, $window, $location) {
-
+  var relativesList = [];
   $scope.relatives = $rootScope.rels;
+
+  var svg = d3.select('.mapCanvas').append("svg")
+    .attr("fill", "transparent")
+    .attr("width", $window.innerWidth)
+    .attr("height", $window.innerHeight)
+    .attr("id", "mainCanvas")
+    .append("g")
 
   var createMap = function () {
     var map = new Datamap({
@@ -74,4 +81,19 @@ angular.module('genome.map', ['angular-intro'])
     }
   };
 
+  //Grab relatives from the database, then initialize bubbles
+   $scope.getRelatives = function() {
+     Relatives.getRelatives()
+     //Can refactor to return the promise values within the relatives factory if so desired
+     .then(function(relatives) {
+       //Refactor? potentially redundant addition of relatives to $scope and $rootScope.
+       $scope.relatives = relatives.data.relativeList;
+       makeNewBubbleData();
+       createMap();
+     }, function(err) {
+       console.error('Error retrieving relatives: ', err);
+     });
+   };
+   //Initialize the page with a call to getRelatives
+   $scope.getRelatives();
 });
