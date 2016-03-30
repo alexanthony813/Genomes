@@ -16,8 +16,9 @@ Thank you!
   - [Technologies](#technologies)
   - [Features](#features)
   - [Architecture](#architecture)
-  - [Meet the engineers](#meet-the-engineers)
+  	- [API Endpoints](#api)
   - [Contributing](#contributing)
+  - [Meet the engineers](#meet-the-engineers)
 
 ===============
 ## Installation
@@ -92,6 +93,11 @@ Database in Postgres, using SQLAlchemy
 |Access to 23&Me Genotype data|/1/genotype/|[genotypeObj...]|
 |Access to 23&Me Relative data|/1/relatives/:userID|[relativesObj...]|
 
+===============
+## Contributing
+===============
+Genomie was built using waffle.io as the project organization tool.
+Please visit [here](gitflow.md) for our workflow guidelines.
 
 =====================
 ## Meet The Engineers
