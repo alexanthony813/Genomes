@@ -2,6 +2,7 @@
 
 describe('Routing', function () {
   var $route;
+  var AuthController;
 
   beforeEach(function(){
     module('genome');
@@ -11,15 +12,21 @@ describe('Routing', function () {
       // $location = $injector.get('$location');
       // $routeParams = $injector.get('$routeParams');
       $route = $injector.get('$route');
+      // AuthController = $injector.get('AuthController')
+      console.log('piggy piggy piggy ',$route.routes['/self']);
     });
   });
 
 
   it('Should have /signin route, template, and controller', function () {
     expect($route.routes['/']).to.be.defined;
-    expect($route.routes['/'].controller).to.equal('AuthController');
-    expect($route.routes['/'].templateUrl).to.equal('/');
-    // expect($route).to.exist;
+    expect($route.routes['/'].redirectTo).to.equal('/self');
+    expect($route.routes['/signin'].controller).to.equal('AuthController');
+    expect($route.routes['/signin'].templateUrl).to.equal('/');
   });
   
+  it('Should make proper http requests', function(){
+    
+  })
+
 });
