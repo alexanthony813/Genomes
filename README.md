@@ -23,7 +23,7 @@ Thank you!
 ===============
 ## Installation
 ===============
-Please install Python/Flask dependencies
+Please install Python/Flask dependencies within the root directory
 ```
 $ virtualenv .
 $ source bin/activate
@@ -32,7 +32,12 @@ $ pip install -r requirements.txt
 
 Next, install the client-side dependencies
 ```
+$ sudo npm install -g bower
 $ bower install
+```
+**For testing**
+```
+$ npm install
 ```
 
 You're good to go. Start the server with:
