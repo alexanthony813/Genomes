@@ -7,24 +7,26 @@ angular.module('genome.directive', [])
       $scope.user_first_name = $cookies.user_first_name;
       $scope.expand = false;
 
-      $scope.onpoolpage = $location.$$path === '/pool' ? true : false;
+      $scope.ontreepage = $location.$$path === '/tree' ? true : false;
       $scope.onselfpage = $location.$$path === '/self' ? true : false;
 
       $scope.getRelatives = function () {
-        $rootScope.curPage = '/pool';
-        $scope.onpoolpage = true;
+        $rootScope.curPage = '/tree';
+        $scope.ontreepage = true;
         $scope.onselfpage = false;
         if($location.$$path === '/self'){
           $rootScope.transitionToPool();
         }
-        $location.path('/pool')
+        $location.path('/tree')
       };
 
       $scope.getSelf = function () {
         $rootScope.curPage = '/self';
         $scope.onselfpage = true;
-        $scope.onpoolpage = false;
-        $rootScope.removeMap();
+        $scope.ontreepage = false;
+        if($rootScope.mapShowing){
+          $rootScope.removeMap();
+        }
         $location.path('/self');
       };
     },

@@ -1,6 +1,6 @@
 var app = angular.module('genome', [
   'genome.tree',
-  'genome.pool',
+  'genome.map',
   'genome.self',
   'genome.relatives',
   'ngRoute',
@@ -28,9 +28,9 @@ var app = angular.module('genome', [
       templateUrl: '/templates/landing.html',
       authenticate: true
     })
-    .when('/pool', {
-      templateUrl: '/static/app/pool/pool.html',
-      controller: 'PoolController',
+    .when('/map', {
+      templateUrl: '/static/app/map/map.html',
+      controller: 'MapController',
       authenticate: true
     })
     .when('/self', {

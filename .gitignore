@@ -14,12 +14,10 @@ node_modules/
 npm-debug.log
 
 #unwanted files
-/config.py
-config.py
+
 production_config.py
 npm-debug.log
 server/static/scripts/main.js
-config.py
 server/static/img/
 
 # Distribution / packaging
@@ -39,7 +37,6 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
-server/config.py
 bin/
 logfile
 

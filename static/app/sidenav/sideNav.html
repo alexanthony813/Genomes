@@ -1,9 +1,12 @@
 <section class="side-nav" id="path2" ng-hide="curPage === '/about'">
-	<div class="poolViewOptions" ng-controller="PoolController">
-    <img src="../../../static/assets/globe.png" type="button" ng-click="filterRegions()" class="side-nav-button" ng-show="view === '/pool'"/>
-    <a href="#/tree/"><img src="../../../static/assets/tree.png" type="button" class="side-nav-button" ng-show="view === '/pool'"/></a>
-  </div>
-  <div class="treeViewOptions" ng-controller="TreeController">
-    <a href="#/pool/" ><img src="../../../static/assets/pool.png" type="button" class="side-nav-button" ng-show="currentLocation() === '/tree'"/></a>
+	<div class="poolViewOptions" ng-controller="TreeController">
+    <img src="../../../static/assets/globe.png" type="button" ng-click="showMap()" class="side-nav-button" ng-show="view === '/tree'"/>
+  <!--   <a href="#/tree/"> -->
+    <img src="../../../static/assets/tree.png" type="button" class="side-nav-button" ng-click="showTree()" ng-show="view === '/map'"/>
+   <!--  </a> -->
   </div>
 </section>
+
+<!-- <div class="treeViewOptions" ng-controller="TreeController">
+  <a href="#/pool/" ><img src="../../../static/assets/pool.png" type="button" class="side-nav-button" ng-show="currentLocation() === '/tree'"/></a>
+</div> -->
