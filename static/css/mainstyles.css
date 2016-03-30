@@ -1,6 +1,7 @@
 body {
   display: inline-block;
   width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
   font-family: 'Lato';
@@ -87,6 +88,71 @@ body {
   display: flex;
   justify-content: space-between;
   background-color: #34495e;
+}
+
+.footer {
+   position:fixed;
+   left:0px;
+   bottom:0px;
+   height:20px;
+   width:100%;
+   background-color: #34495e;
+   color: #D0F8FF;
+}
+
+.copyright {
+  padding-left: 1%;
+  max-width: 100%;
+  width: 25%;
+}
+
+.footerContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 100%;
+}
+
+.footerLinks {
+  width: 11%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding-left: 1%;
+  padding-right: 1%;
+  float: right;
+}
+
+#heart {
+  padding-left: 1%;
+  padding-right: 2%;
+}
+
+.aboutLink {
+  padding-right: 10%;
+}
+
+.githubLink {
+  background-image:url('../../static/assets/githubicon.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+.aboutimages {
+  position: absolute;
+  height: 200px;
+  width: 400px;
+  margin-top: 10%;
+  margin-left: 35%;
+}
+
+.teammatePic {
+  max-width: 400px;
+  max-height: 500px;
 }
 
 .greetings {
