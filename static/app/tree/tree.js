@@ -9,7 +9,6 @@ angular.module('genome.tree', [])
   console.log('hiiiii')
   $scope.relatives = [];
   $rootScope.rels = [];
-  $scope.myData = [10,10,10,20];
   $scope.circles = [];
   var boardHeight = $window.innerHeight;
   var boardWidth = $window.innerWidth;
@@ -31,10 +30,17 @@ angular.module('genome.tree', [])
                       };
   var root = relativeTree;
 
+  var width = boardWidth;
+  var height = boardHeight;
+
+  var padding = 5;
+
+  var radius = 6;
+
   //Add d3 force effect to layout
   var force = d3.layout.force()
     .linkDistance(30)
-    .charge(-120)
+    .charge(-60)
     .gravity(0.0)
     .size([width, height])
     .on('tick', tick);
@@ -54,15 +60,6 @@ angular.module('genome.tree', [])
     bottom: 50,
     left: 50
   };
-
-  var width = 1000 - margin.left - margin.right;
-  var height = 1000 - margin.top - margin.bottom;
-
-  var padding = 5;
-
-  var radius = d3.scale.sqrt().range([0, 12]);
-
-  var colorScheme = ['#1abc9c', '#2ecc71', '#f1c40f', '#27ae60', '#3498db', '#9b59b6', '#2980b9','#8e44ad','#e67e22','#d35400','#e74c3c', '#c0392b', '#bdc3c7', '#f39c12', '#95a5a6'];
 
   //Grab the pool as a canvas for our bubbles
   var svg = d3.select('.tree').append('svg')
@@ -171,35 +168,21 @@ angular.module('genome.tree', [])
     }
   }
 
-  var whichView = function() {
-    $rootScope.view = $location.$$path;
-  };
-  whichView();
-
-
-
-  //pop up message displaying relative data when user clicks on a bubble
-  var showRelative = function(bubble) {
-    $scope.popModal.name = bubble.relative.first_name + ' ' + bubble.relative.last_name;
-    $scope.popModal.similarity = (bubble.relative.similarity*100).toFixed(2) + '% of your DNA';
-    $scope.popModal.relationship = bubble.relative.relationship  || 'Unknown';
-    $scope.popModal.age = bubble.relative.birth_year ? (new Date().getFullYear() - bubble.relative.birth_year) : 'Unknown';
-    $scope.popModal.image = bubble.relative.picture_url || '../../../static/assets/hipDNA.png';
-    $scope.popModal.ancestry = bubble.relative.ancestry || 'Unknown';
-    $scope.popModal.birthplace = bubble.relative.birthplace  || 'Unknown';
-  };
-
   function update(){
       var nodes = flatten(relativeTree);
       nodes.forEach(function(node){
         if(node.x === undefined){
-          console.log('node',node)
-          node.x = 50;
-        } 
-        if(node.y === undefined){
-          node.y = 50;
+          node.x = width / 10;
         }
-      })
+        if(node.y === undefined){
+          node.y = height / 10;
+        }
+        if(node.relationship === 'me'){
+          node.x = width / 2;
+          node.y = height / 2;
+          node.fixed = true
+        }
+      });
        
       var tree = d3.layout.tree();
       var links = tree.links(nodes);
@@ -452,10 +435,13 @@ angular.module('genome.tree', [])
         .attr('y2', function(d) { return d.target.y; });
  
     node.attr('transform', function(d) { 
-      var nodeX = d.x;
-      var nodeY = d.y;
+      var nodeX = Math.max(radius, Math.min(width - radius, d.x));
+      var nodeY = Math.max(radius, Math.min(width - radius, d.y))
       return 'translate(' + nodeX + ',' + nodeY + ')'; 
     });
+
+        // node.attr("cx", function(d) { return d.x = Math.max(radius, Math.min(width - radius, d.x)); })
+        // .attr("cy", function(d) { return d.y = Math.max(radius, Math.min(height - radius, d.y)); });
   }
 
     //After grabbing relatives from the DB, create a bubbles array based on length of relatives array
