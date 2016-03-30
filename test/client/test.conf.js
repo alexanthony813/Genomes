@@ -4,15 +4,15 @@ module.exports = function(config) {
   config.set({
 
     // base path, that will be used to resolve files and exclude
-    basePath: '..',
+    basePath: './',
 
     hostname: '127.0.0.1',
 
 
     // frameworks to use
-    frameworks: ['jasmine'],
+    frameworks: ['mocha', 'chai', 'jasmine'],
 
-    plugins: ['karma-jasmine', 'karma-chrome-launcher'],
+    plugins: ['karma-jasmine', 'karma-chrome-launcher', 'karma-mocha', 'karma-chai'],
 
 
     // list of files / patterns to load in the browser

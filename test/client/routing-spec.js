@@ -4,17 +4,21 @@ describe('Routing', function () {
   // var $route;
   beforeEach(module('genome'));
 
-  beforeEach(inject(function ($injector) {
-    $route = $injector.get('$route')
-  }));
+  
+  describe('Fasho yo', function(){
+    var $route;
 
-  describe('on success,', function($route) {
+    beforeEach(inject(function (_$route_) {
+      $route = _$route_;
+    }));
+
     it('Should have /signin route, template, and controller', function () {
       // expect($route.routes['/']).to.be.defined;
       // expect($route.routes['/'].controller).to.equal('AuthController');
       // expect($route.routes['/'].templateUrl).to.equal('/');
+      // expect($route).to.exist;
     });
-  });
+  })
   
 });
 
