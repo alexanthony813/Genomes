@@ -1,7 +1,7 @@
  describe('Routing', function () {
   var $route;
-  var AuthController;
-
+  var $httpBackend;
+  
   beforeEach(function(){
     module('genome');
 
