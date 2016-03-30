@@ -12,7 +12,7 @@ module.exports = function(config) {
     // frameworks to use
     frameworks: ['jasmine'],
 
-    plugins: ['karma-jasmine', 'karma-phantomjs-launcher'],
+    plugins: ['karma-jasmine', 'karma-chrome-launcher'],
 
 
     // list of files / patterns to load in the browser
@@ -60,7 +60,7 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
 
 
     // If browser does not capture in given timeout [ms], kill it
