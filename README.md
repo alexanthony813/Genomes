@@ -66,7 +66,7 @@ Testing/Automation
 ## Architecture
 ===============
 ### High Level Architecture
-
+![](http://i64.tinypic.com/2zpp661.png)
 
 ### Database Schema
 Database in Postgres, using SQLAlchemy
