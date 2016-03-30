@@ -4,20 +4,21 @@ angular.module('genome.directive', [])
 
   return {
     controller: function($scope, $cookies, $rootScope, $location, SelfFactory) {
+      //Refactor all pool variables to tree variables
       $scope.user_first_name = $cookies.user_first_name;
       $scope.expand = false;
 
-      $scope.onpoolpage = $location.$$path === '/pool' ? true : false;
+      $scope.onpoolpage = $location.$$path === '/tree' ? true : false;
       $scope.onselfpage = $location.$$path === '/self' ? true : false;
 
       $scope.getRelatives = function () {
-        $rootScope.curPage = '/pool';
+        $rootScope.curPage = '/tree';
         $scope.onpoolpage = true;
         $scope.onselfpage = false;
         if($location.$$path === '/self'){
           $rootScope.transitionToPool();
         }
-        $location.path('/pool')
+        $location.path('/tree')
       };
 
       $scope.getSelf = function () {
