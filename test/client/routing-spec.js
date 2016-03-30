@@ -24,9 +24,5 @@ describe('Routing', function () {
     expect($route.routes['/signin'].controller).to.equal('AuthController');
     expect($route.routes['/signin'].templateUrl).to.equal('/');
   });
-  
-  it('Should make proper http requests', function(){
-    
-  })
 
 });
