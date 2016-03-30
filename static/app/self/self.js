@@ -148,45 +148,40 @@ angular.module('genome.self', [])
 
   $rootScope.IntroOptions = {
       steps:[{
-          intro: "Welcome to your personal DNA helix. Hover your mouse over the spinning DNA helix bubbles for more information. You can close this walkthrough at any time."
+          intro: "Welcome to your personal DNA helix. You can hover your mouse over the spinning DNA helix bubbles for information about your DNA."
         },
         {
           element: document.querySelector('#helix-path-2'),
-          intro: "Your DNA is made up of many nucleotide pairs. This box will display information about your individual genes.",
+          intro: "This box will display information about your DNA.",
           position: 'left'
         },
         {
           element: document.querySelector('#helix-path-3'),
-          intro: "This ID represents the specific location on your genome. You can click on the rsid link to find scientific articles about this information.",
+          intro: "This ID represents the specific location on your genome. You can click on the link to find scientific articles about this information.",
           position: 'left'
         },
         {
           element: document.querySelector('#helix-path-4'),
-          intro: "These letters represent the specific <a href='en.wikipedia.org/wiki/Base_pair'> base pair</a> you have at this location.",
+          intro: "These letters represent the specific<a href='en.wikipedia.org/wiki/Base_pair'> nucleotide base pair</a> you have at this location.",
           position: 'left'
         },
         {
           element: document.querySelector('#helix-path-5'),
-          intro: "Here is a commonly reported outcome of having the specific base pair at this specific location. This is not medical advice. If you have any concern about this information, speak with a medical professional.",
+          intro: "Here is a commonly reported outcome of having the specific base pair at this specific location.",
           position: 'left'
         },
         {
-          element: document.querySelector('#helix-path-6'),
-          intro: "Click here to access your relatives pool.",
-          position: 'bottom-middle-aligned'
-        },
-        {
           element: document.querySelector('#helix-path-7'),
-          intro: "You can view the help menu at any time by clicking here.",
-          position: 'right'
+          intro: "Use these buttons if you want to use this walkthrough or sign out.",
+          position: 'left'
         }
       ],
       showStepNumbers: false,
       exitOnOverlayClick: true,
       exitOnEsc:true,
       nextLabel: '<strong><span style="color:green">Next</span></strong>',
-      prevLabel: '<span style="color:red">Previous</span>',
-      skipLabel: 'Exit',
+      prevLabel: 'Previous',
+      skipLabel: '<span style="color:red">Exit</span>',
       doneLabel: 'Thanks'
   };
   //This function collapses the helix for a visual transition into the Pool Page.
