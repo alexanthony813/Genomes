@@ -11,6 +11,8 @@ Please direct any questions regarding Genomie to [**our wiki page**](https://git
 
 Thank you!
 
+**Table of Contents**
+
   - [Installation](#installation)
   - [Example](#example)
   - [Technologies](#technologies)
