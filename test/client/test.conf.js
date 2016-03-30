@@ -17,11 +17,13 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      '../static/lib/jQuery/dist/jquery.min.js',
-      '../static/lib/angular/angular.min.js',
-      '../static/lib/angular-mocks/angular-mocks.js',
-      '../static/app/**/*.js',
-      './client/routing-spec.js'
+      '../../static/lib/angular/angular.min.js',
+      '../../static/lib/angular-mocks/angular-mocks.js',
+      '../../static/lib/jQuery/dist/jquery.min.js',
+      '../../static/lib/angular-cookies/angular-cookies.js',
+      '../../static/lib/angular-route/angular-route.js',
+      '../../static/app/**/*.js',
+      '../client/routing-spec.js'
     ],
 
 
@@ -49,7 +51,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // Start these browsers, currently available:

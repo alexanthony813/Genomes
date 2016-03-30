@@ -1,24 +1,19 @@
 'use strict';
-
 describe('Routing', function () {
-  // var $route;
+  var $route;
+
   beforeEach(module('genome'));
 
-  
-  describe('Fasho yo', function(){
-    var $route;
+  inject(function ($route) {
+    $route = $injector.get('$route');
+  });
 
-    beforeEach(inject(function (_$route_) {
-      $route = _$route_;
-    }));
-
-    it('Should have /signin route, template, and controller', function () {
-      // expect($route.routes['/']).to.be.defined;
-      // expect($route.routes['/'].controller).to.equal('AuthController');
-      // expect($route.routes['/'].templateUrl).to.equal('/');
-      // expect($route).to.exist;
-    });
-  })
+  it('Should have /signin route, template, and controller', function () {
+    expect($route.routes['/']).to.be.defined;
+    expect($route.routes['/'].controller).to.equal('AuthController');
+    expect($route.routes['/'].templateUrl).to.equal('/');
+    expect($route).to.exist;
+  });
   
 });
 
