@@ -1,15 +1,16 @@
 // 'use strict';
 
 describe('Routing', function () {
+  var $route;
 
   beforeEach(function(){
     module('genome');
 
-    angular.mock.inject(function () {
+    inject(function ($injector) {
       // $routeProvider = $injector.get('$routeProvider');
       // $location = $injector.get('$location');
       // $routeParams = $injector.get('$routeParams');
-      // $route = _$httpBackend_;
+      $route = $injector.get('$route');
     });
   });
 
@@ -19,7 +20,7 @@ describe('Routing', function () {
     // expect($route.routes['/'].controller).to.equal('AuthController');
     // expect($route.routes['/'].templateUrl).to.equal('/');
     // expect($routeProvider).to.exist;
-    expect(true).to.exist;
+    expect($route).to.exist;
   });
   
 });
