@@ -10,19 +10,25 @@ module.exports = function(config) {
 
 
     // frameworks to use
-    frameworks: ['mocha', 'chai', 'jasmine'],
+    frameworks: ['mocha', 'chai'],
 
-    plugins: ['karma-jasmine', 'karma-chrome-launcher', 'karma-mocha', 'karma-chai'],
+    plugins: ['karma-phantomjs-launcher', 'karma-mocha', 'karma-chai'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      '../../static/lib/angular/angular.min.js',
+      '../../static/lib/angular/angular.js',
       '../../static/lib/angular-mocks/angular-mocks.js',
-      '../../static/lib/jQuery/dist/jquery.min.js',
-      '../../static/lib/angular-cookies/angular-cookies.js',
       '../../static/lib/angular-route/angular-route.js',
+      '../../static/lib/angular-intro.js/src/angular-intro.js',
+      '../../static/lib/angular-cookies/angular-cookies.js',
+      '../../static/lib/jQuery/dist/jquery.min.js',
+      'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js',
+      'http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js',
+      'https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js',
       '../../static/app/**/*.js',
+      '../../static/app/app.js',
       '../client/routing-spec.js'
     ],
 
@@ -51,7 +57,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
+    autoWatch: false,
 
 
     // Start these browsers, currently available:
@@ -62,7 +68,7 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
 
     // If browser does not capture in given timeout [ms], kill it
