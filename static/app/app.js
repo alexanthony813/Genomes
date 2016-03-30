@@ -30,7 +30,7 @@ var app = angular.module('genome', [
     })
     .when('/pool', {
       templateUrl: '/static/app/pool/pool.html',
-      controller: 'PoolController', //TODO : need to figure out why this is being loaded twice
+      controller: 'PoolController',
       authenticate: true
     })
     .when('/self', {
