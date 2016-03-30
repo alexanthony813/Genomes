@@ -11,6 +11,7 @@ angular.module('genome.directive', [])
       $scope.onselfpage = $location.$$path === '/self' ? true : false;
 
       $scope.getRelatives = function () {
+        $rootScope.curPage = '/pool';
         $scope.onpoolpage = true;
         $scope.onselfpage = false;
         if($location.$$path === '/self'){
@@ -20,7 +21,7 @@ angular.module('genome.directive', [])
       };
 
       $scope.getSelf = function () {
-        $rootScope.curPage = '/self'
+        $rootScope.curPage = '/self';
         $scope.onselfpage = true;
         $scope.onpoolpage = false;
         $rootScope.removeMap();
