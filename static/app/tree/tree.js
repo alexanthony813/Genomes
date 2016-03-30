@@ -28,6 +28,7 @@ angular.module('genome.tree', [])
                         }
                         ]
                       };
+
   var root = relativeTree;
 
   var width = boardWidth;
@@ -180,7 +181,7 @@ angular.module('genome.tree', [])
         if(node.relationship === 'me'){
           node.x = width / 2;
           node.y = height / 2;
-          node.fixed = true
+          node.fixed = true;
         }
       });
        
@@ -214,7 +215,15 @@ angular.module('genome.tree', [])
           .call(force.drag);
 
       nodeEnter.append('circle')
-          .attr('fill', 'yellow')
+          .attr('fill', function(d){
+            if(d.maternal_side || d.relationship === 'maternal_side'){
+              return 'pink';
+            } else if(d.paternal_side || d.relationship === 'paternal_side'){
+              return 'cyan';
+            } else {
+              return 'gray'
+            }
+          })
           .attr('r', relativeSize);
 
       nodeEnter.append('text')
@@ -319,16 +328,16 @@ angular.module('genome.tree', [])
 
   // Toggle children on click.
   function click(d) {
-    if (!d3.event.defaultPrevented) {
-      if (d.children) {
-        d._children = d.children;
-        d.children = null;
-      } else {
-        d.children = d._children;
-        d._children = null;
-      }
-      update();
-    }
+    // if (!d3.event.defaultPrevented) {
+    //   if (d.children) {
+    //     d._children = d.children;
+    //     d.children = null;
+    //   } else {
+    //     d.children = d._children;
+    //     d._children = null;
+    //   }
+    //   update();
+    // }
   }
 
   function dropHandler(d){
