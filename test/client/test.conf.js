@@ -26,6 +26,7 @@ module.exports = function(config) {
       'http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js',
       'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js',
       'https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js',
+      '../../static/app/services/*.js',
       '../../static/app/**/*.js',
       '../../static/app/app.js',
       '../client/routing-spec.js',
