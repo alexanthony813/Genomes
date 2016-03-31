@@ -6,7 +6,6 @@
 |[Log-in Demo](routing.md#demo)|GET /demo/|
 |[Log-out current user](routing.md#log-out)|POST /logout|
 |[Get User Info](routing.md#get-user-info)|GET /currentuser_info/|
-
 |[Get User Relatives](routing.md#relatives)|POST /api/relatives/|
 |[Get User's SNP Data](routing.md#snpdata)|POST /api/snp_data|
 
@@ -23,10 +22,6 @@
 Redirects back to server after acquiring access token after User approves OAuth permissions
 
 ### Example Request
-```bash
-curl -H 'Accept: auth-url' -H 'Authorization: OAuth <access_token>' \
-
-
 ```bash
 curl -H 'Accept: auth-url' -H 'Authorization: OAuth <access_token>' \
 -X GET https://BASE_API_URL + 
