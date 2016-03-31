@@ -1,4 +1,5 @@
 var app = angular.module('genome', [
+  'genome.treeService',
   'genome.tree',
   'genome.map',
   'genome.self',

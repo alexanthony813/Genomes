@@ -29,7 +29,8 @@ module.exports = function(config) {
       '../../static/app/**/*.js',
       '../../static/app/app.js',
       '../client/routing-spec.js',
-      '../client/self-spec.js'
+      '../client/self-spec.js',
+      '../client/tree-spec.js'
     ],
 
 
@@ -56,7 +57,7 @@ module.exports = function(config) {
     browsers: ['PhantomJS'],
 
     // If browser does not capture in given timeout [ms], kill it
-    captureTimeout: 10000,
+    captureTimeout: 100001,
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
