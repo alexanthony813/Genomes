@@ -16,28 +16,55 @@ angular.module('genome.map', ['angular-intro'])
     .attr("id", "mainCanvas")
     .append("g")
 
-  var createMap = function () {
+  var createMap = function (rotationNums) {
     map = new Datamap({
         element: document.getElementById('mainCanvas'),
         scope: 'world',
+        projection: 'orthographic',
         geographyConfig: {
             popupOnHover: false,
             highlightOnHover: false
         },
         fills: {
             defaultFill: '#34495e'
+        },
+        projectionConfig: {
+          rotation: rotationNums
+        },
+        bubblesConfig: {
+          popupOnHover: false,
+          animate: false,
+          highlightOnHover: false
         }
     });
+    map.graticule();
     createBubbleHover();
     //create bubbles for each relative in the relative list, after parsing with makeNewBubbleData
   };
+
+  var yaw = 90;
+  var roll = -17;
+
+  var keepSpinning = function () {
+    $('svg.datamap').remove();
+    createMap([yaw+=1, roll])
+  };
+  
+  $rootScope.killGlobe = function () {
+    $('svg.datamap').remove();
+  };
+  
+  setInterval(keepSpinning, 25);
+
+
   var createBubbleHover = function() {
     map.bubbles(relativesList, {
       popupTemplate: function (geo, data) {
           return '<div>relatives</div>'
       }
     });
-  }
+  };
+
   var makeNewBubbleData = function() {
     var geoInfo = {
       'United States': [36.5, -101.25, 'USA'],
@@ -52,14 +79,7 @@ angular.module('genome.map', ['angular-intro'])
     };
 
     var fills = {
-        'USA': '#e74c3c',
-        'RUS': '#2ecc71',
-        'EUR': '#FFFC00',
-        'CAN': '#3498db',
-        'ASN': '#1abc9c',
-        'SAM': '#FFF59D',
-        'AUS': '#e67e22',
-        'AFR': '#d35400'
+        'USA': '#FFFC00'
     }
 
     for(var i = 0; i < $scope.relatives.length; i++) {
@@ -73,9 +93,8 @@ angular.module('genome.map', ['angular-intro'])
             similarity: $scope.relatives[i].similarity,
             latitude: (geoInfo[places][0] + (Math.floor(Math.random() * 10)+1)),
             longitude: (geoInfo[places][1] + (Math.floor(Math.random() * 10)+1)),
-            borderColor: fills[geoInfo[places][2]],
+            borderColor: fills['USA'],
             borderWidth: 4,
-            fills: fills[geoInfo[places][2]],
             radius: 7,
             fillOpacity: 1,
             popupOnHover: false
