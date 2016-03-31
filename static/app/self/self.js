@@ -136,8 +136,11 @@ angular.module('genome.self', [])
             .attr("y1", y(d[0].y));
       });
   }
-
+  console.log($cookies.user_profile_id);
+  
   SelfFactory.getSnps($cookies.user_profile_id).then(function (outcomes) {
+    $scope.allOutcomes = outcomes; //for testing purposes only
+    console.log('allOutcomes!!!!',$scope.allOutcomes)
     for (var key in outcomes) {
       $scope.outcomes.push(outcomes[key]);
     }
@@ -242,7 +245,6 @@ angular.module('genome.self', [])
       url: '/api/getsnps',
       data: userId
     }).then(function (snps) {
-      console.log(snps.data);
       return snps.data.outcomes;
     }).catch(function (err) {
       console.error('An error occured retreiving your SNPs ', err);
