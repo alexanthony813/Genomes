@@ -95,8 +95,8 @@ angular.module('genome.self', [])
       .append("g")
       .on('mouseenter', function(d, i){
         var children = d3.selectAll(this.children);
-        d3.select(this).transition().duration(400).attr('r', 25);
-        children.transition().duration(400).attr('r', 25);
+        d3.select(this).transition().duration(400).attr('r', 20);
+        children.transition().duration(400).attr('r', 20);
       })
       .on('click', function (d, i) {
 
