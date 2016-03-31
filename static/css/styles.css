@@ -157,12 +157,12 @@ h3 {
 }
 
 #slide2{
-  background-color: #fff;
+  background-color: #FFC48C;
   color: #333333;
   height: 300px;
   margin: 0 auto;
   overflow: hidden;
-  padding: 200px 0;
+  padding: 100px 0 200px 0;
 }
 
 #slide3{
@@ -181,7 +181,7 @@ h3 {
 }
 
 #slide5{
-background: url(../../static/assets/stars_1.jpeg) 50% 0 no-repeat fixed;
+background: url(../../static/assets/jellyfish-crop.gif) 50% 0 no-repeat fixed;
 height: 200px;
 margin: 0 auto;
 padding: 250px 0;
