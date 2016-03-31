@@ -19,12 +19,10 @@ Genomie is a web application that provides beautiful data visualizations of here
 
 ==========
 ## Example
-==========
 ![alt tag](http://i67.tinypic.com/2wce5wl.gif)
 
 ===============
 ## Installation
-===============
 Please install Python/Flask dependencies within the root directory
 ```
 $ virtualenv .
@@ -49,7 +47,6 @@ $ npm start
 
 ===============
 ## Technologies
-===============
 Front-end
 - AngularJS 
 - Angular-Material
@@ -67,7 +64,6 @@ Testing/Automation
 
 ===============
 ## Architecture
-===============
 ### High Level Architecture
 ![](http://i64.tinypic.com/2zpp661.png)
 
@@ -77,7 +73,6 @@ Database in Postgres, using SQLAlchemy
 
 ======
 ## API
-======
 ##### Public End Points
 |Request|URL|Response|
 |---|---|---|
@@ -85,25 +80,23 @@ Database in Postgres, using SQLAlchemy
 |Log-in Demo|/demo/|   |
 |Log-out|/logout|   |
 |Get User Info|/get_info/|userObj|
-|Get User Relatives|/api/relatives/|[RelativesObj...]|
-|Get/Post SNP Data|/api/getsnps|[SnpObj...]|
+|Get User Relatives|/api/relatives/|{RelativesObj}|
+|Get/Post SNP Data|/api/getsnps|{SnpObj}|
 
 ##### Admin Only
 |Request|URL|Response|
 |---|---|---|
-|Access to 23&Me Individual data|/1/user/:userID|[userObj...]|
-|Access to 23&Me Genotype data|/1/genotype/|[genotypeObj...]|
-|Access to 23&Me Relative data|/1/relatives/:userID|[relativesObj...]|
+|Access to 23&Me Individual data|/1/user/:userID|{userObj}|
+|Access to 23&Me Genotype data|/1/genotype/|{genotypeObj}|
+|Access to 23&Me Relative data|/1/relatives/:userID|{relativesObj}|
 
 ===============
 ## Contributing
-===============
 Genomie was built using waffle.io as the project organization tool.
 Please visit [here](gitflow.md) for our workflow guidelines.
 
 =====================
 ## Meet The Engineers
-=====================
 Product Owner 
 - [**Gar Lee**](https://github.com/LeeGar)
 
