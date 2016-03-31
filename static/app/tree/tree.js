@@ -283,7 +283,9 @@ angular.module('genome.tree', ['genome.treeService'])
               return;
             } else {
               circle
+                .transition()
                 .attr('r', function(bubble){return bubble.radius * 2})
+                .attr('opacity', '0.9')
             }
           })
           .on('mouseout', function(bubble){
@@ -293,7 +295,10 @@ angular.module('genome.tree', ['genome.treeService'])
               || bubble.relationship === 'paternal_side') {
               return;
             } else {
-              circle.attr('r', function(bubble){return bubble.radius});
+              circle
+                .transition()
+                .attr('r', function(bubble){return bubble.radius})
+                .attr('opacity', 1)
             }
           })
           .attr("data-target", function(bubble){
@@ -328,7 +333,19 @@ angular.module('genome.tree', ['genome.treeService'])
           .attr('dy', '.35em')
           .attr('dx', '-2em')
           .attr('class', 'treeBubbleText')
-          .text(function(d) { return d.relationship; });
+          .text(function(d) {
+            if(d.relationship.toLowerCase() === 'distant relative'){
+              return 'Distant';
+            } else if(d.relationship.toLowerCase() === 'maternal_side') {
+              return 'Maternal Side'
+            } else if(d.relationship.toLowerCase() === 'paternal_side') {
+              return 'Paternal Side'
+            } else if(d.relationship.toLowerCase() === 'me') {
+              return 'Me'
+            } else {
+              return d.relationship;
+              }
+            });
   }
 
   function tick(e) {
