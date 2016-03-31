@@ -129,6 +129,8 @@ angular.module('genome.tree', ['genome.treeService'])
 
   var family = {};
   function createTree(relatives){
+    var family = {};
+    var randomSideAssignment = false;
     relatives.forEach(function(relative){
       relative.children = [];
       relative.name = relative.relationship;
@@ -158,6 +160,30 @@ angular.module('genome.tree', ['genome.treeService'])
       return checkIfDistant(relative) && relative.maternal_side;
     });
 
+    relatives.forEach(function(relative){
+      if(relative.maternal_side === false && relative.paternal_side === false) {
+        if(randomSideAssignment){
+          relative.paternal_side = true;
+          family.paternalFirstCousins = family.paternalFirstCousins || [];
+          if(family.paternalFirstCousins.length >= 2) {
+            family.paternalOtherCousins = family.paternalOtherCousins || [];
+            family.paternalOtherCousins.push(relative);
+          } else {
+            family.paternalFirstCousins.push(relative);
+          }
+        } else {
+          family.maternalFirstCousins = family.maternalFirstCousins || [];
+          relative.maternal_side = true;
+          if(family.maternalFirstCousins.length >= 2) {
+            family.maternalOtherCousins = family.maternalOtherCousins || [];
+            family.maternalOtherCousins.push(relative);
+          } else {
+            family.maternalFirstCousins.push(relative);
+          }
+        }
+        randomSideAssignment = !randomSideAssignment;
+      }
+    })
 
     for(var prop in family){
       if(family[prop].length > 0){
@@ -273,6 +299,8 @@ angular.module('genome.tree', ['genome.treeService'])
               return '#F9690E';
             } else if(d.paternal_side){
               return '#BF55EC';
+            } else {
+              return '#F9690E';
             }
           })
           .attr('r', function(bubble) {

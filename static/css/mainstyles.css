@@ -93,10 +93,6 @@ hr {
   line-height: 20px;
 }
 
-/*.poolButtons {
-  margin-left: 10%;
-}
-*/
 .view-selection {
   text-align: center;
 }
@@ -314,4 +310,16 @@ svg#treeSVG{
 .treeBubbleText {
   font-size: 1em;
   font-family: 'Lato';
+}
+
+.background-image {
+  background-color: #EEEEEE;
+  height: 100%;
+}
+
+h1 {
+  margin-top: 0px;
+  text-align: center;
+  font-family: 'Lato';
+  font-size: 40px;
 }
