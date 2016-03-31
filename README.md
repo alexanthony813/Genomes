@@ -81,15 +81,26 @@ Database in Postgres, using SQLAlchemy
 |Log-in|/receive_code/|   |
 |Log-in Demo|/demo/|   |
 |Log-out|/logout|   |
-|Get User Info|/get_info/|{userObj}|
+|Get User Info|/currentuser_info/|
+{
+	"user_profile_id": p49zlsg2,
+	"user_first_name": "Foo"
+	"user_last_name": "Bar"
+	"user_data": [
+		{
+		sex: 'M/F',
+		location: 'United States'
+	}
+	] 
+}|
 |Get User Relatives|/api/relatives/|{RelativesObj}|
-|Get/Post SNP Data|/api/getsnps|{SnpObj}|
+|Get/Post SNP Data|/api/snp_data|{SnpObj}|
 
 ##### Admin Only
 |Request|URL|Response|
 |---|---|---|
-|Access to 23&Me Individual data|/1/user/:userID|{userObj}|
-|Access to 23&Me Genotype data|/1/genotype/|{genotypeObj}|
+|Access to 23&Me Individual data|/1/user/:userID|{}|
+|Access to 23&Me Genotype data|/1/genotype/:userID|{genotypeObj}|
 |Access to 23&Me Relative data|/1/relatives/:userID|{relativesObj}|
 
 ===============
