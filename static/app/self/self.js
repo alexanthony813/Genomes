@@ -185,7 +185,7 @@ angular.module('genome.self', [])
         },
         {
           element: document.querySelector('#helix-path-6'),
-          intro: "You can use these buttons to nagivate between this page and your relative tree.",
+          intro: "You can use these buttons to navigate between this page and your relative tree.",
           position: 'bottom'
         },
         {
