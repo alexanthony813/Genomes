@@ -40,7 +40,7 @@ describe('TreeController', function(){
 
   it('Should getRelatives', function(){
     $httpBackend.flush();
-    // JSON.stringify($scope.relatives)
+
     expect($scope.relatives[0].birth_year).to.equal(1977);
     expect($scope.relatives[1].first_name).to.equal('Wilder B.');
     expect($scope.relatives[2].last_name).to.equal("O'Donnell");

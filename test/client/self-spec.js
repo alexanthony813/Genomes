@@ -13,7 +13,6 @@ describe('SelfController', function(){
 
 
   afterEach(inject(function ($httpBackend) {
-    $httpBackend.flush();
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
   }));
@@ -29,7 +28,7 @@ describe('SelfController', function(){
     $cookies = $injector.get('$cookies');
     $cookies.user_profile_id = 'demo_id';
     $controller = $injector.get('$controller');
-    $httpBackend.whenPOST('/api/getsnps').respond(200, '')
+    $httpBackend.whenPOST('/api/getsnps').respond(200, outcomes)
 
     createController = function () {
       return $controller('SelfController', {
@@ -45,15 +44,24 @@ describe('SelfController', function(){
   }));
 
   it('Should getsnps', function(){
-    console.log($cookies);
-    expect($scope.allOutcomes).to.deep.equal(outcomes)
-  })
+    $httpBackend.flush();
+
+    expect($scope.allOutcomes[0].outcome).to.equal("There are high chances that you may lack empathy");
+    expect($scope.allOutcomes[19].title).to.equal("Eye Color");
+    expect($scope.allOutcomes[1].rsid).to.equal("rs1815739");
+    expect($scope.allOutcomes[2].pair).to.equal("GG");
+    expect($scope.allOutcomes[20].title).to.equal("Dopamine and stress");
+  });
 
   it('Should have a self factory', function () {
+    $httpBackend.flush();
+
     expect(SelfFactory).to.exist;
   });
 
   it('Should have a method `getSnps`', function () {
+    $httpBackend.flush();
+
     expect(SelfFactory.getSnps).to.be.a('function');
   });
 
