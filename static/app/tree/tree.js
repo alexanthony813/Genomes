@@ -84,9 +84,9 @@ angular.module('genome.tree', [])
 
   //Add d3 force effect to layout
   var force = d3.layout.force()
-    .linkDistance(30)
-    .charge(-500)
-    .gravity(0)
+    .linkDistance(70)
+    .charge(-120)
+    .gravity(0.0)
     // .size([width, height])
     .on('tick', tick);
 
@@ -103,7 +103,7 @@ angular.module('genome.tree', [])
     .attr('width', boardWidth - margin.left - margin.right)
     .attr('height', boardHeight - margin.top - margin.bottom);
   var link = svg.selectAll('.link');
-  var node = svg.selectAll('.node');
+  var node = svg.selectAll('.node').call(force.drag);
 
  //Grab relatives from the database, then initialize bubbles
   $scope.getRelatives = function() {
@@ -208,20 +208,24 @@ angular.module('genome.tree', [])
       nodes.forEach(function(node){
         if(node.x === undefined){
           node.x = width / 10;
+          node.radius = 30;
         }
         if(node.y === undefined){
           node.y = height / 10;
         }
         if(node.relationship === 'me'){
+          node.radius = 40;
           node.x = width / 3;
           node.y = 100;
           node.fixed = true;
         } else if(node.relationship === 'paternal_side'){
           node.x = width / 3 + 100;
           node.y = 300;
+          node.radius = 50;
         } else if(node.relationship === 'maternal_side'){
           node.x = width / 3 - 100;
           node.y = 300;
+          node.radius = 50;
         }
       });
 
@@ -265,14 +269,16 @@ angular.module('genome.tree', [])
             }
           })
           .attr('r', function(bubble) {
-            if(bubble.relationship === 'paternal_side'
-              || bubble.relationship === 'maternal_side'){
-              return '50';
-            } else if(bubble.relationship === 'me') {
-              return '40';
-            } else {
-              return '30';
-            }
+           return bubble.radius + 10;
+          })
+          .on('mouseover', function(bubble){
+            var circle = d3.select(this);
+            circle
+              .attr('r', function(bubble){return bubble.radius * 2})
+          })
+          .on('mouseout', function(bubble){
+            var circle = d3.select(this);
+            circle.attr('r', function(bubble){return bubble.radius});
           })
           .attr("data-target", function(bubble){
             if(bubble.relationship === 'me'
@@ -299,6 +305,7 @@ angular.module('genome.tree', [])
               $scope.$apply(showRelative(bubble));
             }
           })
+
 
       nodeEnter.append('text')
           .attr('dy', '.35em')
