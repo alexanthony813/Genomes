@@ -31,7 +31,7 @@ angular.module('genome.tree', ['genome.treeService'])
     $scope.popModal.similarity = (bubble.similarity*100).toFixed(2) + "% of your DNA";
     $scope.popModal.relationship = bubble.relationship  || "Unknown";
     $scope.popModal.age = bubble.birth_year ? (new Date().getFullYear() - bubble.birth_year) : "Unknown";
-    $scope.popModal.image = bubble.picture_url || '../../../static/assets/hipDNA.png';
+    $scope.popModal.image = (bubble.sex === 'Male') ? '../../../static/assets/male.jpg' : '../../../static/assets/female.jpg';
     $scope.popModal.ancestry = bubble.ancestry || "Unknown";
     $scope.popModal.birthplace = bubble.birthplace  || "Unknown";
   };
