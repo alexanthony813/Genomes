@@ -84,11 +84,12 @@ angular.module('genome.tree', [])
 
   //Add d3 force effect to layout
   var force = d3.layout.force()
-    .linkDistance(30)
-    .charge(-60)
+    .linkDistance(70)
+    .charge(-120)
     .gravity(0.0)
     // .size([width, height])
-    .on('tick', tick);
+    .on('tick', tick)
+    .start();
 
   var margin = {
     top: 50,
@@ -208,14 +209,24 @@ angular.module('genome.tree', [])
       nodes.forEach(function(node){
         if(node.x === undefined){
           node.x = width / 10;
+          node.radius = 30;
         }
         if(node.y === undefined){
-          node.y = height / 10;
+          node.y = height;
         }
         if(node.relationship === 'me'){
-          node.x = width / 2;
-          node.y = height / 2;
+          node.radius = 40;
+          node.x = width / 3;
+          node.y = 100;
           node.fixed = true;
+        } else if(node.relationship === 'paternal_side'){
+          node.x = width / 3 + 200;
+          node.y = 300;
+          node.radius = 50;
+        } else if(node.relationship === 'maternal_side'){
+          node.x = width / 3 - 200;
+          node.y = 300;
+          node.radius = 50;
         }
       });
 
@@ -245,28 +256,61 @@ angular.module('genome.tree', [])
       var nodeEnter = node.enter().append('g')
           .attr('padding', 50)
           .attr('class', '.node')
-          //.on('click', click)
-          .call(force.drag);
 
       nodeEnter.append('circle')
           .attr('fill', function(d){
             if(d.maternal_side || d.relationship === 'maternal_side'){
-              return 'pink';
+              return '#F9690E';
             } else if(d.paternal_side || d.relationship === 'paternal_side'){
-              return 'cyan';
+              return '#BF55EC';
             } else {
-              return 'gray'
+              return '#5C97BF'
             }
           })
-          .attr('r', '15')
-          .attr("data-target", "#myModal")
-          .attr("data-toggle", "modal")
-          .on('click', function(bubble){
-            $scope.$apply(showRelative(bubble));
+          .attr('r', function(bubble) {
+           return bubble.radius + 10;
           })
+          .on('mouseover', function(bubble){
+            var circle = d3.select(this);
+            circle
+              .attr('r', function(bubble){return bubble.radius * 2})
+          })
+          .on('mouseout', function(bubble){
+            var circle = d3.select(this);
+            circle.attr('r', function(bubble){return bubble.radius});
+          })
+          .attr("data-target", function(bubble){
+            if(bubble.relationship === 'me'
+              || bubble.relationship === 'paternal_side'
+              || bubble.relationship === 'maternal_side'){
+              return null;
+            } else {
+              return "#myModal";
+            }
+          })
+          .attr("data-toggle", function(bubble){
+            if(bubble.relationship === 'me'
+              || bubble.relationship === 'paternal_side'
+              || bubble.relationship === 'maternal_side'){
+              return null;
+            } else {
+              return "modal";
+            }
+          })
+          .on('click', function(bubble){
+            if(bubble.relationship === 'me') {
+              return;
+            } else {
+              $scope.$apply(showRelative(bubble));
+            }
+          })
+          .call(force.drag)
+
 
       nodeEnter.append('text')
           .attr('dy', '.35em')
+          .attr('dx', '-2em')
+          .attr('class', 'treeBubbleText')
           .text(function(d) { return d.relationship; });
   }
 
@@ -326,11 +370,25 @@ angular.module('genome.tree', [])
     return nodes;
   }
 
-  function tick() {
-    link.attr('x1', function(d) { return d.source.x; })
-        .attr('y1', function(d) { return d.source.y; })
-        .attr('x2', function(d) { return d.target.x; })
-        .attr('y2', function(d) { return d.target.y; });
+  function tick(e) {
+    var k = 6 * e.alpha;
+
+       // Push sources up and targets down to form a weak tree.
+       link
+           .each(function(d) { d.source.y -= k, d.target.y += k; })
+           .attr("x1", function(d) { return d.source.x; })
+           .attr("y1", function(d) { return d.source.y; })
+           .attr("x2", function(d) { return d.target.x; })
+           .attr("y2", function(d) { return d.target.y; });
+
+       // node
+       //     .attr("cx", function(d) { return d.x; })
+       //     .attr("cy", function(d) { return d.y; });
+
+    // link.attr('x1', function(d) { return d.source.x; })
+    //     .attr('y1', function(d) { return d.source.y; })
+    //     .attr('x2', function(d) { return d.target.x; })
+    //     .attr('y2', function(d) { return d.target.y; });
 
     node.attr('transform', function(d) {
       var nodeX = Math.max(radius, Math.min(width - radius, d.x));

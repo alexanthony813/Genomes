@@ -15,7 +15,7 @@
         <nav id="nav">
          <ul>
            <li class="remove" onclick="location.href='/demo/'" class="login-button">DEMO</li>
-           <li class="remove" onclick="location.href='{{ auth_url }}'" class="login-button">LOG IN WITH 23andMe</li>
+           <li class="remove" onclick="location.href='{{ auth_url }}'" class="login-button">LOGIN WITH<img src="/static/assets/23andme_logo_white.png" align="right" type="button" value="Log in with 23andMe" onclick="location.href='{{ auth_url }}'" class="login-button shrink"></li>
          </ul>
         </nav>
       </div>
@@ -27,10 +27,6 @@
         <div class="landingHeader">
           <p>VISUALIZE</p>
           <p>YOUR GENES</p>
-        </div>
-        <div class="login-area">
-          <img src="/static/assets/23logo2.png" align="left"/ type="button" value="Log in with 23andMe" onclick="location.href='{{ auth_url }}'" class="login-button">
-          <img src="//media.indiedb.com/images/articles/1/159/158317/auto/20140509082052-Button_play.png" align="left"/ type="button" onclick="location.href='/demo/'" class="login-button">
         </div>
       </div>
     </div>
@@ -46,7 +42,6 @@
       <div class="content">
         <div class="quotes_container">
           <h3 id="darken" class="quotes">Find distant relatives around the world. Who knows? Maybe this time next year you'll visit your 3rd cousin in Hungary. </h3>
-          <img src="../static/assets/norman.png" align="left"/> <h4 id="darken" class="quote_subtitle_white">Your cousin?</h4>
         </div>
       </div>
      </div>
@@ -54,7 +49,7 @@
       <div class="content">
         <div class="quotes_container">
           <h3 class="quotes">“The nitrogen in our DNA, the calcium in our teeth, the iron in our blood, the carbon in our apple pies were made in the interiors of collapsing stars. We are made of starstuff.”</h3>
-          <img src="../static/assets/dr-seuss.png" align="left"/> <h4 class="quote_subtitle_gray">Carl Sagan</h4>
+          <img src="../static/assets/Carl_Sagan_1980.jpg" align="left" class="circular"/> <h4 class="quote_subtitle_gray">Carl Sagan</h4>
         </div>
       </div>
      </div>
@@ -62,24 +57,12 @@
       <div class="content">
         <div class="quotes_container">
           <div class="login-area">
-<<<<<<< 4ae841715195379eb3c147a042cc956883ceb71c
-              <img src="/static/assets/23logo2.png" align="left"/ type="button" value="Log in with 23andMe" onclick="location.href='{{ auth_url }}'" class="login-button">
+              <img src="/static/assets/23logo2.png" align="left"/ type="button" value="Log in with 23andMe" onclick="location.href='{{ auth_url }}'" class="login-button-bottom">
 
-              <img src="//media.indiedb.com/images/articles/1/159/158317/auto/20140509082052-Button_play.png" align="left"/ type="button" onclick="location.href='/demo/'" class="login-button">
-
-=======
-            <div>
-              <img src="../static/assets/bob.png" align="left"/ type="button" onclick="location.href='/demo/'" class="login-button">
-              <h4 class="author_name_white">Log in as 'Lilly Demo'</h4>
-            </div>
-            <div>
-              <img src="../static/assets/norman.png" align="left"/ type="button" value="Log in with 23andMe" onclick="location.href='{{ auth_url }}'" class="login-button">
-              <h4 class="author_name_white">Log in with 23andMe</h4>
-            </div>
->>>>>>> Fixed merge conflicts
+              <img src="/static/assets/demo_button.png" align="left"/ type="button" onclick="location.href='/demo/'" class="login-button-bottom">
           </div>
         </div>
-          <div id="copyright"><a href="//www.github.com/ThunderousFigs/Genomie">Copyright Genomie.com </a></div>
+          <div id="copyright"><a href="//www.github.com/ThunderousFigs/Genomes">Copyright Genomie.com </a></div>
       </div>
     </div>
     <script src="../static/lib/jQuery/dist/jquery.min.js"></script>

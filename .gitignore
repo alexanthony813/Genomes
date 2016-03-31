@@ -8,19 +8,19 @@ staticfiles
 .env
 # C extensions
 *.so
-
+.DS_Store
 #Node modules
 node_modules/
 npm-debug.log
 
 #unwanted files
-
-production_config.py
+config.py
 npm-debug.log
 server/static/scripts/main.js
 server/static/img/
 
 # Distribution / packaging
+
 .Python
 env/
 build/

@@ -320,7 +320,7 @@ angular.module('genome.pool', ['angular-intro'])
         cx: $window.innerWidth/3.5,
         cy: $window.innerHeight/2,
         color: colorScheme[Math.floor(Math.random() * colorScheme.length)],
-        radius: similarity * 1000,
+        radius: 40,
         relative: $scope.relatives[i]
       });
     }
