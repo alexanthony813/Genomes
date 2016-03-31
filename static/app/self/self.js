@@ -17,6 +17,15 @@ angular.module('genome.self', [])
     d3.select("svg#helix").remove();
   };
 
+  $rootScope.$watch(function () {
+      return location.hash;
+  }, function (value) {
+     if($location.$$path === '/self'){
+       $('svg.datamap').remove();
+     } else if($location.$$path === '/tree'){
+       d3.select("svg#helix").remove();
+     }
+  });
 
   $scope.fills = fills;
 
@@ -144,7 +153,6 @@ angular.module('genome.self', [])
           .attr("y1", y(d[0].y));
     });
   }
-
   SelfFactory.getSnps($cookies.user_profile_id).then(function (outcomes) {
     $scope.allOutcomes = outcomes; //for testing purposes only
 
