@@ -49,13 +49,13 @@ angular.module('genome.map', ['angular-intro'])
     $('svg.datamap').remove();
     createMap([yaw+=1, roll])
   };
-
   
-  setInterval(keepSpinning, 25);
-
   $rootScope.killGlobe = function () {
     $('svg.datamap').remove();
   };
+  
+  setInterval(keepSpinning, 25);
+
 
   var createBubbleHover = function() {
     map.bubbles(relativesList, {
