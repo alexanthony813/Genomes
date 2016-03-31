@@ -161,7 +161,7 @@ angular.module('genome.self', [])
 
   $rootScope.IntroOptions = {
       steps:[{
-          intro: "Welcome to your personal DNA helix. You can hover your mouse over the spinning DNA helix bubbles for information about your DNA."
+          intro: "Welcome to your personal double helix. You can hover your mouse over the spinning double helix bubbles for information about your DNA."
         },
         {
           element: document.querySelector('#helix-path-2'),
