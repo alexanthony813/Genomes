@@ -26,10 +26,12 @@ module.exports = function(config) {
       'http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js',
       'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js',
       'https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js',
+      '../../static/app/services/*.js',
       '../../static/app/**/*.js',
       '../../static/app/app.js',
       '../client/routing-spec.js',
-      '../client/self-spec.js'
+      '../client/self-spec.js',
+      '../client/tree-spec.js'
     ],
 
 
@@ -56,7 +58,7 @@ module.exports = function(config) {
     browsers: ['PhantomJS'],
 
     // If browser does not capture in given timeout [ms], kill it
-    captureTimeout: 10000,
+    captureTimeout: 100001,
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit

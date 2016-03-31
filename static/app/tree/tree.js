@@ -1,19 +1,23 @@
-angular.module('genome.tree', [])
-.controller('TreeController', function($scope, d3Service, Relatives, $rootScope, $window, $location
+angular.module('genome.tree', ['genome.treeService'])
+.controller('TreeController', function(TreeService, $scope, d3Service, Relatives, $rootScope, $window, $location
   ) {
 
   var whichView = function() {
     $rootScope.view = $location.$$path;
   };
+
   whichView();
+
   $scope.showTree = function(){
     $rootScope.curPage = '/tree';
     $location.path('/tree/');
-  }
+  };
+
   $scope.showMap = function(){
     $rootScope.curPage = '/map';
     $location.path('/map/');
-  }
+  };
+
   $scope.popModal = {
     name: '',
     similarity: '',
@@ -21,7 +25,7 @@ angular.module('genome.tree', [])
     relationship: '',
     age: 0
   };
-  //pop up message displaying relative data when user clicks on a bubble
+
   var showRelative = function(bubble) {
     $scope.popModal.name = bubble.first_name + ' ' + bubble.last_name;
     $scope.popModal.similarity = (bubble.similarity*100).toFixed(2) + "% of your DNA";
@@ -31,7 +35,6 @@ angular.module('genome.tree', [])
     $scope.popModal.ancestry = bubble.ancestry || "Unknown";
     $scope.popModal.birthplace = bubble.birthplace  || "Unknown";
   };
-  //End Pop Modal
 
   $rootScope.IntroOptions = {
       steps:[{
@@ -126,8 +129,8 @@ angular.module('genome.tree', [])
   $scope.getRelatives();
 
 
+  var family = {};
   function createTree(relatives){
-    var family = {};
     relatives.forEach(function(relative){
       relative.children = [];
       relative.name = relative.relationship;
@@ -205,7 +208,7 @@ angular.module('genome.tree', [])
   }
 
   function update(){
-      var nodes = flatten(relativeTree);
+      var nodes = TreeService.flatten(relativeTree);
       nodes.forEach(function(node){
         if(node.x === undefined){
           node.x = width / 10;
@@ -314,62 +317,6 @@ angular.module('genome.tree', [])
           .text(function(d) { return d.relationship; });
   }
 
-
-  function flatten(root) {
-    var nodes = [], i = 0, depth = 0, level_widths = [1], max_width, max_depth = 1, kx, ky;
-
-    var recurse = function(node, parent, depth, x) {
-      if (node.children) {
-        var w = level_widths[depth + 1] || 0;
-        level_widths[depth + 1] = w + node.children.length;
-        max_depth = Math.max(max_depth, depth + 1);
-        node.size = node.children.reduce(function(p, v, i) {
-          return p + recurse(v, node, depth + 1, w + i);
-        }, 0);
-      }
-      //if (!node.id) {
-        node.id = ++i;
-        node.parent = parent;
-        node.depth = depth;
-      //}
-      //node.fixed = 8;
-      if (!node.px && !node.fixed && 0) {
-        node.y = depth;
-        node.x = x;
-      }
-      nodes.push(node);
-      return node.size;
-    }
-
-    root.size = recurse(root, null, 0, 0);
-
-    if (0) {
-      // now correct/balance the x positions:
-      max_width = 1;
-      for (i = level_widths.length; --i > 0; ) {
-        max_width = Math.max(max_width, level_widths[i]);
-      }
-      kx = (width - 20) / max_width;
-      ky = (height - 20) / max_depth;
-      for (i = nodes.length; --i >= 0; ) {
-        var node = nodes[i];
-        if (!node.px && !node.fixed) {
-          var kkx = kx * max_width / level_widths[node.depth];
-          node.y *= ky;
-          //node.y += 10 + ky / 2;
-          node.x *= kkx;
-          node.x += 10 + kkx / 2;
-          node.x = width / 2;
-
-          node.qx = node.px = node.x;
-          node.qy = node.py = node.y;
-        }
-      }
-    }
-
-    return nodes;
-  }
-
   function tick(e) {
     var k = 6 * e.alpha;
 
@@ -381,23 +328,10 @@ angular.module('genome.tree', [])
            .attr("x2", function(d) { return d.target.x; })
            .attr("y2", function(d) { return d.target.y; });
 
-       // node
-       //     .attr("cx", function(d) { return d.x; })
-       //     .attr("cy", function(d) { return d.y; });
-
-    // link.attr('x1', function(d) { return d.source.x; })
-    //     .attr('y1', function(d) { return d.source.y; })
-    //     .attr('x2', function(d) { return d.target.x; })
-    //     .attr('y2', function(d) { return d.target.y; });
-
     node.attr('transform', function(d) {
       var nodeX = Math.max(radius, Math.min(width - radius, d.x));
-      var nodeY = Math.max(radius, Math.min(width - radius, d.y))
+      var nodeY = Math.max(radius, Math.min(width - radius, d.y));
       return 'translate(' + nodeX + ',' + nodeY + ')';
     });
-
-        // node.attr("cx", function(d) { return d.x = Math.max(radius, Math.min(width - radius, d.x)); })
-        // .attr("cy", function(d) { return d.y = Math.max(radius, Math.min(height - radius, d.y)); });
   }
-
 });

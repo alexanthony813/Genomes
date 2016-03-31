@@ -138,6 +138,8 @@ angular.module('genome.self', [])
   }
 
   SelfFactory.getSnps($cookies.user_profile_id).then(function (outcomes) {
+    $scope.allOutcomes = outcomes; //for testing purposes only
+
     for (var key in outcomes) {
       $scope.outcomes.push(outcomes[key]);
     }
