@@ -88,7 +88,8 @@ angular.module('genome.tree', [])
     .charge(-120)
     .gravity(0.0)
     // .size([width, height])
-    .on('tick', tick);
+    .on('tick', tick)
+    .start();
 
   var margin = {
     top: 50,
@@ -103,7 +104,7 @@ angular.module('genome.tree', [])
     .attr('width', boardWidth - margin.left - margin.right)
     .attr('height', boardHeight - margin.top - margin.bottom);
   var link = svg.selectAll('.link');
-  var node = svg.selectAll('.node').call(force.drag);
+  var node = svg.selectAll('.node');
 
  //Grab relatives from the database, then initialize bubbles
   $scope.getRelatives = function() {
@@ -211,7 +212,7 @@ angular.module('genome.tree', [])
           node.radius = 30;
         }
         if(node.y === undefined){
-          node.y = height / 10;
+          node.y = height;
         }
         if(node.relationship === 'me'){
           node.radius = 40;
@@ -219,11 +220,11 @@ angular.module('genome.tree', [])
           node.y = 100;
           node.fixed = true;
         } else if(node.relationship === 'paternal_side'){
-          node.x = width / 3 + 100;
+          node.x = width / 3 + 200;
           node.y = 300;
           node.radius = 50;
         } else if(node.relationship === 'maternal_side'){
-          node.x = width / 3 - 100;
+          node.x = width / 3 - 200;
           node.y = 300;
           node.radius = 50;
         }
@@ -255,8 +256,6 @@ angular.module('genome.tree', [])
       var nodeEnter = node.enter().append('g')
           .attr('padding', 50)
           .attr('class', '.node')
-          //.on('click', click)
-          .call(force.drag);
 
       nodeEnter.append('circle')
           .attr('fill', function(d){
@@ -305,6 +304,7 @@ angular.module('genome.tree', [])
               $scope.$apply(showRelative(bubble));
             }
           })
+          .call(force.drag)
 
 
       nodeEnter.append('text')
@@ -370,11 +370,25 @@ angular.module('genome.tree', [])
     return nodes;
   }
 
-  function tick() {
-    link.attr('x1', function(d) { return d.source.x; })
-        .attr('y1', function(d) { return d.source.y; })
-        .attr('x2', function(d) { return d.target.x; })
-        .attr('y2', function(d) { return d.target.y; });
+  function tick(e) {
+    var k = 6 * e.alpha;
+
+       // Push sources up and targets down to form a weak tree.
+       link
+           .each(function(d) { d.source.y -= k, d.target.y += k; })
+           .attr("x1", function(d) { return d.source.x; })
+           .attr("y1", function(d) { return d.source.y; })
+           .attr("x2", function(d) { return d.target.x; })
+           .attr("y2", function(d) { return d.target.y; });
+
+       // node
+       //     .attr("cx", function(d) { return d.x; })
+       //     .attr("cy", function(d) { return d.y; });
+
+    // link.attr('x1', function(d) { return d.source.x; })
+    //     .attr('y1', function(d) { return d.source.y; })
+    //     .attr('x2', function(d) { return d.target.x; })
+    //     .attr('y2', function(d) { return d.target.y; });
 
     node.attr('transform', function(d) {
       var nodeX = Math.max(radius, Math.min(width - radius, d.x));

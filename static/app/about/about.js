@@ -1,7 +1,10 @@
 angular.module('genome.about', ['ui.bootstrap'])
 
 .controller('AboutController', function ($scope, $rootScope, $location) {
-
+   var whichView = function() {
+    $rootScope.view = $location.$$path;
+  }
+  whichView();
 	$scope.showTeam = function () {
 
 	}

@@ -1,6 +1,6 @@
 angular.module('genome.map', ['angular-intro'])
 .controller('MapController', function($scope, d3Service, Relatives, $rootScope, $window, $location) {
-
+  var map;
   var whichView = function() {
     $rootScope.view = $location.$$path;
   };
@@ -17,7 +17,7 @@ angular.module('genome.map', ['angular-intro'])
     .append("g")
 
   var createMap = function () {
-    var map = new Datamap({
+    map = new Datamap({
         element: document.getElementById('mainCanvas'),
         scope: 'world',
         geographyConfig: {
@@ -28,18 +28,16 @@ angular.module('genome.map', ['angular-intro'])
             defaultFill: '#34495e'
         }
     });
+    createBubbleHover();
     //create bubbles for each relative in the relative list, after parsing with makeNewBubbleData
+  };
+  var createBubbleHover = function() {
     map.bubbles(relativesList, {
       popupTemplate: function (geo, data) {
-          return ['<div class="hoverinfo">' +  data.name,
-          '<br/>Relationship: ' +  data.relationship,
-          '<br/>Similarity: ' +  data.similarity,
-          '<br/>Residence: ' +  data.residence + '',
-          '</div>'].join('');
+          return '<div>relatives</div>'
       }
     });
-  };
-
+  }
   var makeNewBubbleData = function() {
     var geoInfo = {
       'United States': [36.5, -101.25, 'USA'],
@@ -80,7 +78,7 @@ angular.module('genome.map', ['angular-intro'])
             fills: fills[geoInfo[places][2]],
             radius: 7,
             fillOpacity: 1,
-            popupOnHover: true
+            popupOnHover: false
           })
         }
       }

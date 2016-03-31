@@ -16,7 +16,7 @@
   </div>
 
   <div class="header-options" id="helix-path-7">
-    <div class="helpbtn">
+    <div class="helpbtn" ng-hide="view === '/about'">
       <img src="../../../static/assets/question.png" type="button" title="Help" ng-intro-options="IntroOptions" ng-click="CallMe()" class="side-nav-button"  ng-intro-method="CallMe" ng-show="view === '/tree'"/>
       <img src="../../../static/assets/question.png" type="button" id="helix-path-7" title="Help" ng-intro-autostart="true" ng-intro-options="IntroOptions" ng-click="CallMe()" ng-intro-method="CallMe" class="side-nav-button" ng-show="view === '/self'"/>
     </div>
