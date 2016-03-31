@@ -222,10 +222,10 @@ svg#helix {
 
 svg#mainCanvas {
   position: absolute;
-  margin-left: 10%;
-  width: 90%;
+  margin-left: 12%;
+  width: 88%;
   height: 100%;
-  max-width: 90%;
+  max-width: 88%;
   max-height: 100%;
 }
 
