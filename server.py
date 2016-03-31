@@ -92,7 +92,7 @@ def getRelatives():
         #Grab only relatives who match the relatives in the user_relatives_ids storage
         if relative.serialize()['id'] in user_relatives_ids:
             finalRelatives.append(relative.serialize())
-
+    print jsonify({'relativeList' : finalRelatives})
     return jsonify({'relativeList' : finalRelatives})
 
 

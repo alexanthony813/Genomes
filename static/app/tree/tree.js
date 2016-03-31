@@ -115,6 +115,7 @@ angular.module('genome.tree', ['genome.treeService'])
     Relatives.getRelatives()
     //Can refactor to return the promise values within the relatives factory if so desired
     .then(function(relatives) {
+
       //Refactor? potentially redundant addition of relatives to $scope and $rootScope.
       $scope.relatives = relatives.data.relativeList;
       //Add relatives to rootScope to allow access within other controllers
