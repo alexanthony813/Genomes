@@ -16,10 +16,11 @@ angular.module('genome.map', ['angular-intro'])
     .attr("id", "mainCanvas")
     .append("g")
 
-  var createMap = function () {
+  var createMap = function (rotationNums) {
     map = new Datamap({
         element: document.getElementById('mainCanvas'),
         scope: 'world',
+        projection: 'orthographic',
         geographyConfig: {
             popupOnHover: false,
             highlightOnHover: false
@@ -27,22 +28,43 @@ angular.module('genome.map', ['angular-intro'])
         fills: {
             defaultFill: '#34495e'
         },
+        projectionConfig: {
+          rotation: rotationNums
+        },
         bubblesConfig: {
           popupOnHover: false,
           animate: false,
           highlightOnHover: false
         }
     });
+    map.graticule();
     createBubbleHover();
     //create bubbles for each relative in the relative list, after parsing with makeNewBubbleData
   };
+
+  var yaw = 90;
+  var roll = -17;
+
+  var keepSpinning = function () {
+    $('svg.datamap').remove();
+    createMap([yaw+=1, roll])
+  };
+
+  
+  setInterval(keepSpinning, 25);
+
+  $rootScope.killGlobe = function () {
+    $('svg.datamap').remove();
+  };
+
   var createBubbleHover = function() {
     map.bubbles(relativesList, {
       popupTemplate: function (geo, data) {
           return '<div>relatives</div>'
       }
     });
-  }
+  };
+
   var makeNewBubbleData = function() {
     var geoInfo = {
       'United States': [36.5, -101.25, 'USA'],
