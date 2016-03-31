@@ -25,7 +25,7 @@ angular.module('genome.tree', ['genome.treeService'])
     relationship: '',
     age: 0
   };
-  //pop up message displaying relative data when user clicks on a bubble
+
   var showRelative = function(bubble) {
     $scope.popModal.name = bubble.first_name + ' ' + bubble.last_name;
     $scope.popModal.similarity = (bubble.similarity*100).toFixed(2) + "% of your DNA";
@@ -35,7 +35,6 @@ angular.module('genome.tree', ['genome.treeService'])
     $scope.popModal.ancestry = bubble.ancestry || "Unknown";
     $scope.popModal.birthplace = bubble.birthplace  || "Unknown";
   };
-  //End Pop Modal
 
   $rootScope.IntroOptions = {
       steps:[{
@@ -115,7 +114,6 @@ angular.module('genome.tree', ['genome.treeService'])
     Relatives.getRelatives()
     //Can refactor to return the promise values within the relatives factory if so desired
     .then(function(relatives) {
-
       //Refactor? potentially redundant addition of relatives to $scope and $rootScope.
       $scope.relatives = relatives.data.relativeList;
       //Add relatives to rootScope to allow access within other controllers
@@ -319,9 +317,6 @@ angular.module('genome.tree', ['genome.treeService'])
           .text(function(d) { return d.relationship; });
   }
 
-
-
-
   function tick(e) {
     var k = 6 * e.alpha;
 
@@ -332,15 +327,6 @@ angular.module('genome.tree', ['genome.treeService'])
            .attr("y1", function(d) { return d.source.y; })
            .attr("x2", function(d) { return d.target.x; })
            .attr("y2", function(d) { return d.target.y; });
-
-       // node
-       //     .attr("cx", function(d) { return d.x; })
-       //     .attr("cy", function(d) { return d.y; });
-
-    // link.attr('x1', function(d) { return d.source.x; })
-    //     .attr('y1', function(d) { return d.source.y; })
-    //     .attr('x2', function(d) { return d.target.x; })
-    //     .attr('y2', function(d) { return d.target.y; });
 
     node.attr('transform', function(d) {
       var nodeX = Math.max(radius, Math.min(width - radius, d.x));

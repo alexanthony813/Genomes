@@ -92,11 +92,11 @@ def getRelatives():
         #Grab only relatives who match the relatives in the user_relatives_ids storage
         if relative.serialize()['id'] in user_relatives_ids:
             finalRelatives.append(relative.serialize())
-    print jsonify({'relativeList' : finalRelatives})
+
     return jsonify({'relativeList' : finalRelatives})
 
 
-@app.route('/api/getsnps', methods=['POST', 'GET'])
+@app.route('/api/getsnps', methods=['POST', 'GET'])  #we should take out 'GET'?
 def getSnps():
 
     decoded = jwt.decode(request.cookies.get('token'), app.config.get('SECRET_KEY'), algorithms=['HS256'])
