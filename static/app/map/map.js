@@ -14,7 +14,7 @@ angular.module('genome.map', ['angular-intro'])
     .attr("width", $window.innerWidth)
     .attr("height", $window.innerHeight)
     .attr("id", "mainCanvas")
-    .append("g")
+    .append("g");
 
   var createMap = function (rotationNums) {
     map = new Datamap({
@@ -47,20 +47,20 @@ angular.module('genome.map', ['angular-intro'])
 
   var keepSpinning = function () {
     $('svg.datamap').remove();
-    createMap([yaw+=1, roll])
+    createMap([yaw+=1, roll]);
   };
   
   $rootScope.killGlobe = function () {
     $('svg.datamap').remove();
   };
   
-  setInterval(keepSpinning, 25);
+  $rootScope.globeSpin = setInterval(keepSpinning, 25);
 
 
   var createBubbleHover = function() {
     map.bubbles(relativesList, {
       popupTemplate: function (geo, data) {
-          return '<div>relatives</div>'
+          return '<div>relatives</div>';
       }
     });
   };
@@ -80,7 +80,7 @@ angular.module('genome.map', ['angular-intro'])
 
     var fills = {
         'USA': '#FFFC00'
-    }
+    };
 
     for(var i = 0; i < $scope.relatives.length; i++) {
       for (var places in geoInfo) {
@@ -98,7 +98,7 @@ angular.module('genome.map', ['angular-intro'])
             radius: 7,
             fillOpacity: 1,
             popupOnHover: false
-          })
+          });
         }
       }
     }
