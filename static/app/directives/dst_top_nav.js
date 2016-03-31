@@ -12,6 +12,7 @@ angular.module('genome.directive', [])
 
       $scope.getRelatives = function () {
         $rootScope.curPage = '/tree';
+        clearInterval($rootScope.globeSpin);
         $scope.ontreepage = true;
         $scope.onselfpage = false;
         if($location.$$path === '/self'){
@@ -19,11 +20,11 @@ angular.module('genome.directive', [])
         } else {
           $location.path('/tree')
         }
-        // $location.path('/tree')
       };
 
       $scope.getSelf = function () {
         $rootScope.curPage = '/self';
+        clearInterval($rootScope.globeSpin);
         $scope.onselfpage = true;
         $scope.ontreepage = false;
         if($rootScope.mapShowing){
