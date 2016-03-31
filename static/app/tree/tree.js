@@ -258,15 +258,18 @@ angular.module('genome.tree', ['genome.treeService'])
       var nodeEnter = node.enter().append('g')
           .attr('padding', 50)
           .attr('class', '.node')
+          .call(force.drag)
 
       nodeEnter.append('circle')
           .attr('fill', function(d){
-            if(d.maternal_side || d.relationship === 'maternal_side'){
-              return '#F9690E';
-            } else if(d.paternal_side || d.relationship === 'paternal_side'){
-              return '#BF55EC';
-            } else {
+            if(d.relationship === 'maternal_side'
+              || d.relationship === 'paternal_side'
+              || d.relationship === 'me') {
               return '#5C97BF'
+            } else if(d.maternal_side){
+              return '#F9690E';
+            } else if(d.paternal_side){
+              return '#BF55EC';
             }
           })
           .attr('r', function(bubble) {
@@ -274,12 +277,24 @@ angular.module('genome.tree', ['genome.treeService'])
           })
           .on('mouseover', function(bubble){
             var circle = d3.select(this);
-            circle
-              .attr('r', function(bubble){return bubble.radius * 2})
+            if(bubble.relationship === 'me'
+              || bubble.relationship === 'maternal_side'
+              || bubble.relationship === 'paternal_side') {
+              return;
+            } else {
+              circle
+                .attr('r', function(bubble){return bubble.radius * 2})
+            }
           })
           .on('mouseout', function(bubble){
             var circle = d3.select(this);
-            circle.attr('r', function(bubble){return bubble.radius});
+            if(bubble.relationship === 'me'
+              || bubble.relationship === 'maternal_side'
+              || bubble.relationship === 'paternal_side') {
+              return;
+            } else {
+              circle.attr('r', function(bubble){return bubble.radius});
+            }
           })
           .attr("data-target", function(bubble){
             if(bubble.relationship === 'me'
@@ -306,7 +321,7 @@ angular.module('genome.tree', ['genome.treeService'])
               $scope.$apply(showRelative(bubble));
             }
           })
-          .call(force.drag)
+
 
 
       nodeEnter.append('text')
