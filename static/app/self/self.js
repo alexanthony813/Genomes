@@ -228,7 +228,7 @@ angular.module('genome.self', [])
   $rootScope.transitionToPool = function(){
     exit = true;
     remove();
-    setTimeout(function(){$scope.$apply($location.path('/pool'));  $rootScope.removeHelix();}, 500);
+    setTimeout(function(){$scope.$apply($location.path('/tree'));  $rootScope.removeHelix();}, 500);
   };
 
 }])
