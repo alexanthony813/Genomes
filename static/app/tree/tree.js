@@ -56,8 +56,10 @@ angular.module('genome.tree', ['genome.treeService'])
   };
 
 ////////////TREE STARTS HERE///////////////
-  var boardHeight = $window.innerHeight;
-  var boardWidth = $window.innerWidth;
+  var height = $window.innerHeight;
+  var width = $window.innerWidth;
+  var svgWidth = 8/10 * width;
+  var svgHeight = 8/10 * height;
   var relativeTree = {
                        'relationship': 'me',
                        'similarity' : 1,
@@ -83,9 +85,6 @@ angular.module('genome.tree', ['genome.treeService'])
     left: 50
   };
 
-  var width = boardWidth - margin.right - margin.left;
-  var height = boardHeight - margin.top - margin.bottom;
-
   var padding = 5;
 
   var radius = 40;
@@ -103,8 +102,8 @@ angular.module('genome.tree', ['genome.treeService'])
   //Grab the tree as a canvas for our bubbles
   var svg = d3.select('.tree').append('svg')
     .attr('id', 'treeSVG')
-    .attr('width', boardWidth - margin.left - margin.right)
-    .attr('height', boardHeight - margin.top - margin.bottom);
+    .attr('width', svgWidth)
+    .attr('height', svgHeight);
   var link = svg.selectAll('.link');
   var node = svg.selectAll('.node');
 
@@ -225,18 +224,18 @@ angular.module('genome.tree', ['genome.treeService'])
         } else if(node.relationship === 'paternal_side'){
           node.x = width / 3 + 200;
           node.y = 300;
-          node.radius = 50;
+          node.radius = 40;
           node.fixed = true;
         } else if(node.relationship === 'maternal_side'){
           node.x = width / 3 - 200;
           node.y = 300;
           node.fixed = true;
-          node.radius = 50;
+          node.radius = 40;
         }
       });
 
       var tree = d3.layout.tree()
-                   .separation(function(a,b){ return 10/ a.depth});
+                   .separation(function(a,b){ return 100/a.depth});
       var links = tree.links(nodes);
 
       // Restart the force layout.
@@ -363,9 +362,9 @@ angular.module('genome.tree', ['genome.treeService'])
       .attr("y2", function(d) { return d.target.y; });
 
     node
-      .attr('transform', function(d) {
-      var nodeX = Math.max(radius, Math.min(width - radius, d.x));
-      var nodeY = Math.max(radius, Math.min(width - radius, d.y));
+    .attr('transform', function(d) {
+      var nodeX = Math.max(radius, Math.min(svgWidth - radius, d.x));
+      var nodeY = Math.max(radius, Math.min(svgHeight - radius, d.y))
       return 'translate(' + nodeX + ',' + nodeY + ')';
     });
   }
