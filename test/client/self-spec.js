@@ -44,18 +44,17 @@ describe('SelfController', function(){
     createController();
   }));
 
-      // $httpBackend.whenGET('/api/getsnps').respond(1, '')
-    it('Should getsnps', function(){
-      console.log($cookies);
-      expect($scope.allOutcomes).to.deep.equal(outcomes)
-    })
+  it('Should getsnps', function(){
+    console.log($cookies);
+    expect($scope.allOutcomes).to.deep.equal(outcomes)
+  })
 
-    it('Should have a self factory', function () {
-      expect(SelfFactory).to.exist;
-    });
+  it('Should have a self factory', function () {
+    expect(SelfFactory).to.exist;
+  });
 
-    it('Should have a method `getSnps`', function () {
-      expect(SelfFactory.getSnps).to.be.a('function');
-    });
+  it('Should have a method `getSnps`', function () {
+    expect(SelfFactory.getSnps).to.be.a('function');
+  });
 
 });
