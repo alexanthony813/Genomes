@@ -76,29 +76,29 @@ angular.module('genome.tree', ['genome.treeService'])
                       };
 
   var root = relativeTree;
-
-  var width = boardWidth;
-  var height = boardHeight;
-
-  var padding = 5;
-
-  var radius = 6;
-
-  //Add d3 force effect to layout
-  var force = d3.layout.force()
-    .linkDistance(70)
-    .charge(-120)
-    .gravity(0.0)
-    // .size([width, height])
-    .on('tick', tick)
-    .start();
-
   var margin = {
     top: 50,
     right: 50,
     bottom: 50,
     left: 50
   };
+
+  var width = boardWidth - margin.right - margin.left;
+  var height = boardHeight - margin.top - margin.bottom;
+
+  var padding = 5;
+
+  var radius = 40;
+
+  //Add d3 force effect to layout
+  var force = d3.layout.force()
+    .linkDistance(200)
+    .charge(-120)
+    .gravity(0.0)
+    .size([width, height])
+    .on('tick', tick)
+    .start();
+
 
   //Grab the tree as a canvas for our bubbles
   var svg = d3.select('.tree').append('svg')
@@ -210,29 +210,33 @@ angular.module('genome.tree', ['genome.treeService'])
       var nodes = TreeService.flatten(relativeTree);
       nodes.forEach(function(node){
         if(node.x === undefined){
-          node.x = width / 10;
+          // node.x = width / 10;
           node.radius = 30;
         }
         if(node.y === undefined){
-          node.y = height;
+          // node.y = height;
         }
         if(node.relationship === 'me'){
           node.radius = 40;
           node.x = width / 3;
           node.y = 100;
           node.fixed = true;
+          link.distance = 10;
         } else if(node.relationship === 'paternal_side'){
           node.x = width / 3 + 200;
           node.y = 300;
           node.radius = 50;
+          node.fixed = true;
         } else if(node.relationship === 'maternal_side'){
           node.x = width / 3 - 200;
           node.y = 300;
+          node.fixed = true;
           node.radius = 50;
         }
       });
 
-      var tree = d3.layout.tree();
+      var tree = d3.layout.tree()
+                   .separation(function(a,b){ return 10/ a.depth});
       var links = tree.links(nodes);
 
       // Restart the force layout.
@@ -333,6 +337,7 @@ angular.module('genome.tree', ['genome.treeService'])
           .attr('dy', '.35em')
           .attr('dx', '-2em')
           .attr('class', 'treeBubbleText')
+          .attr('pointer-events', 'none')
           .text(function(d) {
             if(d.relationship.toLowerCase() === 'distant relative'){
               return 'Distant';
@@ -350,16 +355,15 @@ angular.module('genome.tree', ['genome.treeService'])
 
   function tick(e) {
     var k = 6 * e.alpha;
+    link
+      .each(function(d) { d.source.y -= k, d.target.y += k; })
+      .attr("x1", function(d) { return d.source.x; })
+      .attr("y1", function(d) { return d.source.y; })
+      .attr("x2", function(d) { return d.target.x; })
+      .attr("y2", function(d) { return d.target.y; });
 
-       // Push sources up and targets down to form a weak tree.
-       link
-           .each(function(d) { d.source.y -= k, d.target.y += k; })
-           .attr("x1", function(d) { return d.source.x; })
-           .attr("y1", function(d) { return d.source.y; })
-           .attr("x2", function(d) { return d.target.x; })
-           .attr("y2", function(d) { return d.target.y; });
-
-    node.attr('transform', function(d) {
+    node
+      .attr('transform', function(d) {
       var nodeX = Math.max(radius, Math.min(width - radius, d.x));
       var nodeY = Math.max(radius, Math.min(width - radius, d.y));
       return 'translate(' + nodeX + ',' + nodeY + ')';
