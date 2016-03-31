@@ -175,13 +175,18 @@ angular.module('genome.self', [])
         },
         {
           element: document.querySelector('#helix-path-4'),
-          intro: "These letters represent the specific<a href='en.wikipedia.org/wiki/Base_pair'> nucleotide base pair</a> you have at this location.",
+          intro: "These letters represent the specific nucleotide base pair you have at this location.",
           position: 'left'
         },
         {
           element: document.querySelector('#helix-path-5'),
           intro: "Here is a commonly reported outcome of having the specific base pair at this specific location.",
           position: 'left'
+        },
+        {
+          element: document.querySelector('#helix-path-6'),
+          intro: "You can use these buttons to nagivate between this page and your relative tree.",
+          position: 'bottom'
         },
         {
           element: document.querySelector('#helix-path-7'),
