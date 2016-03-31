@@ -16,8 +16,10 @@ angular.module('genome.directive', [])
         $scope.onselfpage = false;
         if($location.$$path === '/self'){
           $rootScope.transitionToPool();
+        } else {
+          $location.path('/tree')
         }
-        $location.path('/tree')
+        // $location.path('/tree')
       };
 
       $scope.getSelf = function () {

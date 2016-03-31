@@ -85,8 +85,8 @@ angular.module('genome.tree', [])
   //Add d3 force effect to layout
   var force = d3.layout.force()
     .linkDistance(30)
-    .charge(-60)
-    .gravity(0.0)
+    .charge(-500)
+    .gravity(0)
     // .size([width, height])
     .on('tick', tick);
 
@@ -213,9 +213,15 @@ angular.module('genome.tree', [])
           node.y = height / 10;
         }
         if(node.relationship === 'me'){
-          node.x = width / 2;
-          node.y = height / 2;
+          node.x = width / 3;
+          node.y = 100;
           node.fixed = true;
+        } else if(node.relationship === 'paternal_side'){
+          node.x = width / 3 + 100;
+          node.y = 300;
+        } else if(node.relationship === 'maternal_side'){
+          node.x = width / 3 - 100;
+          node.y = 300;
         }
       });
 
@@ -251,22 +257,53 @@ angular.module('genome.tree', [])
       nodeEnter.append('circle')
           .attr('fill', function(d){
             if(d.maternal_side || d.relationship === 'maternal_side'){
-              return 'pink';
+              return '#F9690E';
             } else if(d.paternal_side || d.relationship === 'paternal_side'){
-              return 'cyan';
+              return '#BF55EC';
             } else {
-              return 'gray'
+              return '#5C97BF'
             }
           })
-          .attr('r', '15')
-          .attr("data-target", "#myModal")
-          .attr("data-toggle", "modal")
+          .attr('r', function(bubble) {
+            if(bubble.relationship === 'paternal_side'
+              || bubble.relationship === 'maternal_side'){
+              return '50';
+            } else if(bubble.relationship === 'me') {
+              return '40';
+            } else {
+              return '30';
+            }
+          })
+          .attr("data-target", function(bubble){
+            if(bubble.relationship === 'me'
+              || bubble.relationship === 'paternal_side'
+              || bubble.relationship === 'maternal_side'){
+              return null;
+            } else {
+              return "#myModal";
+            }
+          })
+          .attr("data-toggle", function(bubble){
+            if(bubble.relationship === 'me'
+              || bubble.relationship === 'paternal_side'
+              || bubble.relationship === 'maternal_side'){
+              return null;
+            } else {
+              return "modal";
+            }
+          })
           .on('click', function(bubble){
-            $scope.$apply(showRelative(bubble));
+            if(bubble.relationship === 'me') {
+              return;
+            } else {
+              $scope.$apply(showRelative(bubble));
+            }
           })
 
       nodeEnter.append('text')
           .attr('dy', '.35em')
+          .attr('dx', '-2em')
+          .attr('class', 'treeBubbleText')
           .text(function(d) { return d.relationship; });
   }
 

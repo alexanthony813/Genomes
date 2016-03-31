@@ -25,6 +25,7 @@ body {
   flex-direction: column;
   max-height: 100%;
   margin-top: 10%;
+  margin-left: 20px;
   float: left;
   justify-content: center;
 }
@@ -54,7 +55,7 @@ hr {
   border: 0;
   clear:both;
   display:block;
-  width: 96%;               
+  width: 96%;
   background-color:#2c3e50;
   height: 1px;
 }
@@ -88,10 +89,10 @@ hr {
   line-height: 20px;
 }
 
-.poolButtons {
+/*.poolButtons {
   margin-left: 10%;
 }
-
+*/
 .view-selection {
   text-align: center;
 }
@@ -204,6 +205,10 @@ hr {
   text-align: center;
 }
 
+.modal-title {
+  text-align: center;
+}
+
 svg#helix {
   position: absolute;
   margin-left: 30%;
@@ -299,5 +304,10 @@ line.link {
 
 svg#treeSVG{
   position: absolute;
-  margin-left: 20%;
+  margin-left: 15%;
+}
+
+.treeBubbleText {
+  font-size: 1em;
+  font-family: 'Lato';
 }
