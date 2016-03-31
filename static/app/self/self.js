@@ -17,15 +17,14 @@ angular.module('genome.self', [])
     d3.select("svg#helix").remove();
   };
 
-  $scope.$watch(function () {
-      return location.hash
+  $rootScope.$watch(function () {
+      return location.hash;
   }, function (value) {
      if($location.$$path === '/self'){
-       console.log('self')
+       $('svg.datamap').remove();
      } else if($location.$$path === '/tree'){
-       console.log('tree')
+       d3.select("svg#helix").remove();
      }
-     // $rootScope.removeHelix()
   });
 
   $scope.fills = fills;
