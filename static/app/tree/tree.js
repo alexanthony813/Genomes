@@ -1,6 +1,5 @@
 angular.module('genome.tree', ['genome.treeService'])
-.controller('TreeController', function(TreeService, $scope, d3Service, Relatives, $rootScope, $window, $location
-  ) {
+.controller('TreeController', function(TreeService, $scope, d3Service, Relatives, $rootScope, $window, $location) {
 
   var whichView = function() {
     $rootScope.view = $location.$$path;
@@ -38,12 +37,11 @@ angular.module('genome.tree', ['genome.treeService'])
 
   $rootScope.IntroOptions = {
       steps:[{
-          // element: document.querySelector('#test3'),
           intro: "Welcome to your Family Tree! Every bubble represents one of your relatives. Click the bubbles for more info!"
         },
         {
           element: document.querySelector('#path2'),
-          intro: "See a map of your relatives here.",
+          intro: "See a map of your relatives' birth country by clicking on this button.",
           position: 'right'
         }
       ],
