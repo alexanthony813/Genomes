@@ -76,32 +76,22 @@ Database in Postgres, using SQLAlchemy
 ======
 ## API
 ##### Public End Points
-|Request|URL|Response|
-|---|---|---|
-|Log-in|/receive_code/|   |
-|Log-in Demo|/demo/|   |
-|Log-out|/logout|   |
-|Get User Info|/currentuser_info/|
-{
-	"user_profile_id": p49zlsg2,
-	"user_first_name": "Foo"
-	"user_last_name": "Bar"
-	"user_data": [
-		{
-		sex: 'M/F',
-		location: 'United States'
-	}
-	] 
-}|
-|Get User Relatives|/api/relatives/|{RelativesObj}|
-|Get/Post SNP Data|/api/snp_data|{SnpObj}|
+|Description|Endpoint|
+|---|---|
+|[Log-in OAuth](routing.md#log-in)|GET /receive_code/|
+|[Log-in Demo](routing.md#demo)|GET /demo/|
+|[Log-out current user](routing.md#log-out)|POST /logout|
+|[Get User Info](routing.md#get-user-info)|GET /currentuser_info/|
+
+|[Get User Relatives](routing.md#relatives)|POST /api/relatives/|
+|[Get User's SNP Data](routing.md#snpdata)|POST /api/snp_data|
 
 ##### Admin Only
-|Request|URL|Response|
-|---|---|---|
-|Access to 23&Me Individual data|/1/user/:userID|{}|
-|Access to 23&Me Genotype data|/1/genotype/:userID|{genotypeObj}|
-|Access to 23&Me Relative data|/1/relatives/:userID|{relativesObj}|
+|Description|Endpoint|
+|---|---|
+|[Access to 23&Me Individual data](routing.md#get-individual-data)|/1/user/:userID|
+|[Access to 23&Me Genotype data](routing.md#get-genotype-data)|/1/genotype/:userID|
+|[Access to 23&Me Relative data](routing.md#get-relative-data)|/1/relatives/:userID|
 
 ===============
 ## Contributing
