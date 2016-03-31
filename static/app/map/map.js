@@ -54,8 +54,7 @@ angular.module('genome.map', ['angular-intro'])
     $('svg.datamap').remove();
   };
   
-  $rootScope.globeSpin = setInterval(keepSpinning, 25);
-
+  $rootScope.globeSpin = setInterval(keepSpinning, 40);
 
   var createBubbleHover = function() {
     map.bubbles(relativesList, {
