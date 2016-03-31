@@ -26,6 +26,11 @@ angular.module('genome.map', ['angular-intro'])
         },
         fills: {
             defaultFill: '#34495e'
+        },
+        bubblesConfig: {
+          popupOnHover: false,
+          animate: false,
+          highlightOnHover: false
         }
     });
     createBubbleHover();
@@ -52,14 +57,7 @@ angular.module('genome.map', ['angular-intro'])
     };
 
     var fills = {
-        'USA': '#e74c3c',
-        'RUS': '#2ecc71',
-        'EUR': '#FFFC00',
-        'CAN': '#3498db',
-        'ASN': '#1abc9c',
-        'SAM': '#FFF59D',
-        'AUS': '#e67e22',
-        'AFR': '#d35400'
+        'USA': '#FFFC00'
     }
 
     for(var i = 0; i < $scope.relatives.length; i++) {
@@ -73,9 +71,8 @@ angular.module('genome.map', ['angular-intro'])
             similarity: $scope.relatives[i].similarity,
             latitude: (geoInfo[places][0] + (Math.floor(Math.random() * 10)+1)),
             longitude: (geoInfo[places][1] + (Math.floor(Math.random() * 10)+1)),
-            borderColor: fills[geoInfo[places][2]],
+            borderColor: fills['USA'],
             borderWidth: 4,
-            fills: fills[geoInfo[places][2]],
             radius: 7,
             fillOpacity: 1,
             popupOnHover: false

@@ -18,6 +18,10 @@ body {
   flex-grow: 3;
 }
 
+.mapIntro {
+  text-align: center;
+}
+
 .sideNavContainer {
   align-self: flex-start;
   display: flex;
