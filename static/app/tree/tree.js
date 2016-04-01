@@ -385,10 +385,12 @@ angular.module('genome.tree', ['genome.treeService'])
           .attr('dy', '.35em')
           .attr('dx', function(d){
             //take out ugly tri-pipes with helper function
-            if(d.relationship === 'me'
-              || d.relationship === 'paternal_side'
-              || d.relationship === 'maternal_side'){
-              return '-1.55em'
+            if(d.relationship === 'maternal_side'){
+              return '-1.90em'
+            } else if(d.relationship === 'paternal_side'){
+              return '-1.80em'
+            } else if(d.relationship === 'me'){
+              return '-0.65em'
             } else {
               return '-1.5em'
             }
