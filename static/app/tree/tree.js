@@ -107,7 +107,6 @@ angular.module('genome.tree', ['genome.treeService'])
       $rootScope.rels = relatives.data.relativeList;
       createTree($scope.relatives);
       nodes = TreeService.flatten(relativeTree);
-      console.log($scope.relatives.length)
       links = tree.links(nodes);
 
       //Add d3 force effect to layout
