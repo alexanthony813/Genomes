@@ -107,7 +107,7 @@ angular.module('genome.tree', ['genome.treeService'])
       $rootScope.rels = relatives.data.relativeList;
       createTree($scope.relatives);
       nodes = TreeService.flatten(relativeTree);
-      console.log(nodes.length)
+      console.log($scope.relatives.length)
       links = tree.links(nodes);
 
       //Add d3 force effect to layout
@@ -265,17 +265,17 @@ angular.module('genome.tree', ['genome.treeService'])
           node.radius = 40;
           node.x = width / 3;
           node.y = 100;
-          // node.fixed = true;
+          node.fixed = true;
           link.distance = 10;
         } else if(node.relationship === 'paternal_side'){
           node.x = width / 3 + 200;
           node.y = 300;
           node.radius = 40;
-          // node.fixed = true;
+          node.fixed = true;
         } else if(node.relationship === 'maternal_side'){
           node.x = width / 3 - 200;
           node.y = 300;
-          // node.fixed = true;
+          node.fixed = true;
           node.radius = 40;
         }
       });
@@ -404,10 +404,10 @@ angular.module('genome.tree', ['genome.treeService'])
        .attr("y2", function(d) { return d.target.y; });
     
     console.log('links', links)
-    links.forEach(function(d, i) {
-      d.source.y -= k;
-      d.target.y += k;
-    });
+    // links.forEach(function(d, i) {
+    //   d.source.y -= k;
+    //   d.target.y += k;
+    // });
 
     node.attr('transform', function(d) {
       var nodeX = Math.max(radius, Math.min(width - radius, d.x));
