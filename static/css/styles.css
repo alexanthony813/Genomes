@@ -178,12 +178,12 @@ h3 {
 }
 
 #slide5{
-background: url(../../static/assets/stars5.jpeg) 50% 0 no-repeat fixed;
-height: 450px;
-margin: 0 auto;
-padding: 250px 0;
-color: #fff;
-background-size: cover;
+  background: url(../../static/assets/stars5.jpeg) 50% 0 no-repeat fixed;
+  height: 450px;
+  margin: 0 auto;
+  padding: 250px 0;
+  color: #fff;
+  background-size: cover;
 }
 
 #copyright {
