@@ -7,13 +7,13 @@ angular.module('genome.tree', ['genome.treeService'])
 
   whichView();
 
-  $scope.showTree = function(){
+  $rootScope.showTree = function(){
     clearInterval($rootScope.globeSpin);
     $rootScope.curPage = '/tree';
     $location.path('/tree/');
   };
 
-  $scope.showMap = function(){
+  $rootScope.showMap = function(){
     $rootScope.curPage = '/map';
     $location.path('/map/');
   };
