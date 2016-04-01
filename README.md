@@ -1,11 +1,11 @@
 # Genomie
 Genetic visualization application
 
-Please visit [**our deployed website**](http://genomie.herokuapp.com)
+Please visit [**our deployed website**](http://genomie.herokuapp.com).
 
 ## Introduction 
 
-Genomie is a web application that provides beautiful data visualizations of hereditary information based on the information receieved from 23AndMe.com. Providing the user with a varieties of different views, anyone can easily interpret and understand their unique genetic information in an interactive and elegant way. Genomie provides clear and vibrant perspectives in multiple viewing environments for an optimized user experience. 
+Genomie is a web application that provides beautiful data visualizations of hereditary information based on the information received from 23AndMe.com. Providing the user with a varieties of different views, anyone can easily interpret and understand their unique genetic information in an interactive and elegant way. Genomie provides clear and vibrant perspectives in multiple viewing environments for an optimized user experience. 
 
 <hr>
 ## Table of Contents
@@ -83,7 +83,7 @@ Database in Postgres, using SQLAlchemy
 |[Log-out current user](routing.md#log-out)|POST /logout|
 |[Get User Info](routing.md#get-user-info)|GET /currentuser_info/|
 |[Get User Relatives](routing.md#relatives)|POST /api/relatives|
-|[Get User's SNP Data](routing.md#snpdata)|POST /api/snp_data|
+|[Get User's SNP Data](routing.md#snpdata)|POST /api/snp_data/|
 
 ##### Admin Only
 |Description|Endpoint|
