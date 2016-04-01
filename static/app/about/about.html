@@ -1,7 +1,9 @@
 <div class="aboutpage">
 	<div class="teamlist" ng-repeat="image in images">
 		<div class="eachguy">
-		<div class="eachname"> {{ image.name }} </div>
+		<a href={{image.link}} target="_blank">
+      <div class="eachname"> {{ image.name }} </div>
+    </a>
 		<img class="teammatePic" src="{{ image.pic }}">
 		</div>
 	</div>
