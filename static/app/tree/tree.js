@@ -89,14 +89,45 @@ angular.module('genome.tree', ['genome.treeService'])
 
   var radius = 40;
 
-  //Add d3 force effect to layout
-  var force = d3.layout.force()
-    .linkDistance(200)
-    .charge(-120)
-    .gravity(0.0)
-    .size([width, height])
-    .on('tick', tick)
-    .start();
+
+  var nodes;
+  var tree;
+  var links;
+  var force;
+
+  //Grab relatives from the database, then initialize bubbles
+  $scope.getRelatives = function() {
+    Relatives.getRelatives()
+    //Can refactor to return the promise values within the relatives factory if so desired
+    .then(function(relatives) {
+      //Refactor? potentially redundant addition of relatives to $scope and $rootScope.
+      $scope.relatives = relatives.data.relativeList;
+      //Add relatives to rootScope to allow access within other controllers
+      $rootScope.rels = relatives.data.relativeList;
+      createTree($scope.relatives);
+      nodes = TreeService.flatten(relativeTree);
+
+      //Add d3 force effect to layout
+      force = d3.layout.force()
+            .linkDistance(200)
+            .charge(-120)
+            .gravity(0.0)
+            .size([width, height])
+            .on('tick', tick)
+            .start();
+
+      update();
+            
+      $scope.loaded = true;
+    }, function(err) {
+      console.error('Error retrieving relatives: ', err);
+    });
+  };
+
+  //Initialize the page with a call to getRelatives
+  var family = {};
+  $scope.getRelatives();
+
 
 
   //Grab the tree as a canvas for our bubbles
@@ -107,29 +138,10 @@ angular.module('genome.tree', ['genome.treeService'])
   var link = svg.selectAll('.link');
   var node = svg.selectAll('.node');
 
- //Grab relatives from the database, then initialize bubbles
-  $scope.getRelatives = function() {
-    Relatives.getRelatives()
-    //Can refactor to return the promise values within the relatives factory if so desired
-    .then(function(relatives) {
-      //Refactor? potentially redundant addition of relatives to $scope and $rootScope.
-      $scope.relatives = relatives.data.relativeList;
-      //Add relatives to rootScope to allow access within other controllers
-      $rootScope.rels = relatives.data.relativeList;
-      createTree($scope.relatives);
-      update();
-      $scope.loaded = true;
-    }, function(err) {
-      console.error('Error retrieving relatives: ', err);
-    });
-  };
-  //Initialize the page with a call to getRelatives
-  $scope.getRelatives();
 
 
-  var family = {};
   function createTree(relatives){
-    var family = {};
+
     var randomSideAssignment = false;
     relatives.forEach(function(relative){
       relative.children = [];
@@ -232,7 +244,6 @@ angular.module('genome.tree', ['genome.treeService'])
   }
 
   function update(){
-      var nodes = TreeService.flatten(relativeTree);
       nodes.forEach(function(node){
         if(node.x === undefined){
           node.radius = 30;
@@ -259,9 +270,9 @@ angular.module('genome.tree', ['genome.treeService'])
         }
       });
 
-      var tree = d3.layout.tree()
+      tree = d3.layout.tree()
                    .separation(function(a,b){ return 100/a.depth});
-      var links = tree.links(nodes);
+      links = tree.links(nodes);
 
       // Restart the force layout.
       force
@@ -381,22 +392,19 @@ angular.module('genome.tree', ['genome.treeService'])
 
   function tick(e) {
     var k = 6 * e.alpha;
-    
-       link
-           .each(function(d) { d.source.y -= k, d.target.y += k; })
-           .attr("x1", function(d) { return d.source.x; })
-           .attr("y1", function(d) { return d.source.y; })
-           .attr("x2", function(d) { return d.target.x; })
-           .attr("y2", function(d) { return d.target.y; });
 
+   link
+       .each(function(d) { d.source.y -= k, d.target.y += k; })
+       .attr("x1", function(d) { return d.source.x; })
+       .attr("y1", function(d) { return d.source.y; })
+       .attr("x2", function(d) { return d.target.x; })
+       .attr("y2", function(d) { return d.target.y; });
 
-    // d3.select(nodes)
-
-    // .each(function(d, i) {
-    //   console.log(d);
-    //   // d.source.y -= k;
-    //   // d.target.y += k;
-    // });
+    links.forEach(function(d, i) {
+      console.log(d)
+      d.source.y -= k;
+      d.target.y += k;
+    });
 
     node.attr('transform', function(d) {
       var nodeX = Math.max(radius, Math.min(width - radius, d.x));
