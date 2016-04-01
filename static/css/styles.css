@@ -154,7 +154,7 @@ h3 {
 }
 
 #slide2{
-  background-color: #FFC48C;
+  background-color: #C5EFF7;
   color: #333333;
   height: 300px;
   margin: 0 auto;
@@ -178,25 +178,25 @@ h3 {
 }
 
 #slide5{
-background: url(../../static/assets/jellyfish-crop.gif) 50% 0 no-repeat fixed;
-height: 200px;
+background: url(../../static/assets/stars5.jpeg) 50% 0 no-repeat fixed;
+height: 450px;
 margin: 0 auto;
 padding: 250px 0;
 color: #fff;
 background-size: cover;
 }
 
-#copyright { 
-  color: #fff; 
-  font-family:"Wellfleet"; 
-  font-size: 14px; 
-  margin-top: 100px; 
-  text-align: center; 
+#copyright {
+  color: #fff;
+  font-family:"Wellfleet";
+  font-size: 14px;
+  margin-top: 100px;
+  text-align: center;
 }
 
-#copyright a { 
-  text-decoration: none; 
-  color: #fff; 
+#copyright a {
+  text-decoration: none;
+  color: #fff;
 }
 
 .landingHeader {
