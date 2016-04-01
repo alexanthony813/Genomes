@@ -24,7 +24,7 @@ describe('TreeController', function(){
     $scope = $rootScope.$new();
     Relatives = $injector.get('Relatives');
 
-    $httpBackend.whenGET('/api/relatives/').respond(200, relativeList);
+    $httpBackend.whenGET('/user/relativesinfo/').respond(200, relativeList);
     $controller = $injector.get('$controller');
     createController = function(){
       return $controller('TreeController', {

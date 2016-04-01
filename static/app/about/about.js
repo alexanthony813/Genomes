@@ -1,32 +1,26 @@
-angular.module('genome.about', ['ui.bootstrap'])
+angular.module('genome.about', [])
 
 .controller('AboutController', function ($scope, $rootScope, $location) {
    var whichView = function() {
     $rootScope.view = $location.$$path;
   }
   whichView();
-	$scope.showTeam = function () {
 
-	}
 	$scope.images = [{
 			name: 'Gar Lee',
-	    pic: '../../../static/assets/gar.png',
-	    description: 'Kewl, awesome, humble, guy'
+	    pic: '../../../static/assets/gar.png'
 	  },
 	  {
 	  	name: 'Peter Lollo',
-	    pic: '../../static/assets/peter.png',
-	    description: 'jesus, smart, hilarious, calm'
+	    pic: '../../static/assets/peter.png'
 	  },
 	  {
 	  	name: 'Alex Anthony',
-	    pic: '../../static/assets/alex.jpg',
-	    description: 'outgoing, mindful, intelligent, caring'
+	    pic: '../../static/assets/alex.jpg'
 	  },
 	  {
 	  	name: 'Chris Bassano',
-	    pic: '../../static/assets/chris.jpg',
-	    description: 'genuine, hard-working, dedicated, meatballs'
+	    pic: '../../static/assets/chris.jpg'
 	  }];
 
 })
