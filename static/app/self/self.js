@@ -263,7 +263,7 @@ angular.module('genome.self', [])
   var getSnps = function (userId) {
     return $http({
       method: 'POST',
-      url: '/api/snp_data/',
+      url: '/user/snpinfo/',
       data: userId
     }).then(function (snps) {
       return snps.data.outcomes;

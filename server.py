@@ -43,7 +43,7 @@ def home():
     return render_template('landing.html', auth_url=auth_url)
 
 
-@app.route('/currentuser_info/')
+@app.route('/user/basicinfo/')
 def getUser():
     response = make_response(render_template('index.html'))
     return response
@@ -66,7 +66,7 @@ def makeDemoUser():
 
 #Refactor this route to take a userProfileID after the trailing slash with some syntax like: '<%s UserID >''
 #i.e. the equivalent of '/:userId' with node/express servers
-@app.route('/api/relatives/')
+@app.route('/user/relativesinfo/')
 #return all the relatives. Refactor to only return the relatives specific to the current User
 def getRelatives():
 
@@ -96,7 +96,7 @@ def getRelatives():
     return jsonify({'relativeList' : finalRelatives})
 
 
-@app.route('/api/snp_data', methods=['POST', 'GET'])  #we should take out 'GET'?
+@app.route('/api/snp_data/', methods=['POST', 'GET'])  #we should take out 'GET'?
 def getSnps():
 
     decoded = jwt.decode(request.cookies.get('token'), app.config.get('SECRET_KEY'), algorithms=['HS256'])

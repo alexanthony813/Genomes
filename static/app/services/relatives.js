@@ -4,7 +4,7 @@ angular.module('genome.relatives', [])
   getRelatives = function(){
     return $http({
       method: 'GET',
-      url: '/api/relatives/'
+      url: '/user/relativesinfo/'
     })
   }
 
