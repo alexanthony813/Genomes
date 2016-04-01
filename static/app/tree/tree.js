@@ -113,7 +113,7 @@ angular.module('genome.tree', ['genome.treeService'])
       //Add d3 force effect to layout
       force = d3.layout.force()
             .linkDistance(200)
-            .charge(-120)
+            .charge(-160)
             .gravity(0.0)
             .size([width, height])
             .on('tick', tick)
@@ -290,8 +290,6 @@ angular.module('genome.tree', ['genome.treeService'])
           .linkDistance(90)
           .start();
 
-//could be it
-
 
       // Update nodes.
       node = node.data(nodes, function(d) { return d.id; });
@@ -342,7 +340,7 @@ angular.module('genome.tree', ['genome.treeService'])
             } else {
               circle
                 .transition()
-                .attr('r', function(bubble){return bubble.radius})
+                .attr('r', function(bubble){return 25;})
                 .attr('opacity', 1)
             }
           })
@@ -411,8 +409,8 @@ angular.module('genome.tree', ['genome.treeService'])
     // });
 
     node.attr('transform', function(d) {
-      var nodeX = Math.max(radius, Math.min(width - radius, d.x));
-      var nodeY = Math.max(radius, Math.min(width - radius, d.y));
+      var nodeX = Math.max(radius, Math.min(svgWidth - radius, d.x));
+      var nodeY = Math.max(radius, Math.min(svgHeight - radius, d.y));
       return 'translate(' + nodeX + ',' + nodeY + ')';
     });
   }

@@ -2,7 +2,6 @@ angular.module('genome.treeService', [])
 .factory('TreeService', function(){
 
   function flatten(root) {
-    console.log('grooot',root)
     var nodes = [], i = 0, depth = 0, level_widths = [1], max_width, max_depth = 1, kx, ky;
 
     var recurse = function(node, parent, depth, x) {
