@@ -41,7 +41,7 @@ curl -H 'Accept: auth-url' -H 'Authorization: OAuth <access_token>' \
 Allows visitors to access site as a demo user
 
 ### Example Request
-```json
+```bash
 {
 	'demo_profile_id': 'demo_id',
 	'demo_first_name': 'Foo',
@@ -60,7 +60,7 @@ Allows visitors to access site as a demo user
 Logs out user from session and clears cookies/cache
 
 ### Example Request
-```json
+```bash
 {
 	'user_profile_id': 'profile_id',
 	'headers': {
