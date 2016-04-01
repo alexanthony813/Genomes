@@ -235,11 +235,10 @@ angular.module('genome.tree', ['genome.treeService'])
       var nodes = TreeService.flatten(relativeTree);
       nodes.forEach(function(node){
         if(node.x === undefined){
-          // node.x = width / 10;
           node.radius = 30;
         }
         if(node.y === undefined){
-          // node.y = height;
+          node.radius = 30;
         }
         if(node.relationship === 'me'){
           node.radius = 40;

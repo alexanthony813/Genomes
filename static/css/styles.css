@@ -149,7 +149,7 @@ h3 {
   color: #fff;
   height: 600px;
   margin: 0;
-  padding: 80px 0 260px 0;
+  padding: 200px 0 260px 0;
   background-size: cover;
 }
 
@@ -178,12 +178,12 @@ h3 {
 }
 
 #slide5{
-background: url(../../static/assets/stars5.jpeg) 50% 0 no-repeat fixed;
-height: 450px;
-margin: 0 auto;
-padding: 250px 0;
-color: #fff;
-background-size: cover;
+  background: url(../../static/assets/stars5.jpeg) 50% 0 no-repeat fixed;
+  height: 450px;
+  margin: 0 auto;
+  padding: 250px 0;
+  color: #fff;
+  background-size: cover;
 }
 
 #copyright {
@@ -235,11 +235,9 @@ background-size: cover;
 }
 
 .login-button-bottom {
-  max-height: 50%;
-  max-width: 50%;
   display: block;
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 300px;
+  max-height: 300px;
   margin-left: 100px;
   margin-right: 100px;
   cursor: pointer;
