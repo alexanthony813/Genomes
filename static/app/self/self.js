@@ -32,8 +32,10 @@ angular.module('genome.self', [])
     /* The 'FILLS' block will determine the availability of colors, balls and lines
      * and what quantity and other attributes the d3 plot should contain */
   var fills = ['#E74C3C', '#3498DB', '#2ECC71'],
-    h = 800,
-    w = 150,
+    //h = 800,
+    //w = 150,
+    h = window.innerHeight - 100;
+    w = window.innerWidth / 9;
     numX = 0,
     numY = 0,
     speed = 0.01,
@@ -251,9 +253,10 @@ angular.module('genome.self', [])
   $rootScope.transitionToPool = function(){
     exit = true;
     remove();
-    setTimeout(function(){$scope.$apply($location.path('/tree'));  $rootScope.removeHelix();}, 500);
+    setTimeout(function(){
+      $scope.$apply($location.path('/tree'));
+      $rootScope.removeHelix();}, 500);
   };
-
 }])
 .factory('SelfFactory', function ($http) {
 /**

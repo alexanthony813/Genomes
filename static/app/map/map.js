@@ -12,7 +12,7 @@ angular.module('genome.map', ['angular-intro'])
   var svg = d3.select('.mapCanvas').append("svg")
     .attr("fill", "transparent")
     .attr("width", $window.innerWidth)
-    .attr("height", $window.innerHeight)
+    .attr("height", $window.innerHeight - 500)
     .attr("id", "mainCanvas")
     .append("g");
 
@@ -49,11 +49,11 @@ angular.module('genome.map', ['angular-intro'])
     $('svg.datamap').remove();
     createMap([yaw+=1, roll]);
   };
-  
+
   $rootScope.killGlobe = function () {
     $('svg.datamap').remove();
   };
-  
+
   $rootScope.globeSpin = setInterval(keepSpinning, 40);
 
   var createBubbleHover = function() {

@@ -31,7 +31,7 @@ angular.module('genome.tree', ['genome.treeService'])
     $scope.popModal.similarity = (bubble.similarity*100).toFixed(2) + "% of your DNA";
     $scope.popModal.relationship = bubble.relationship  || "Unknown";
     $scope.popModal.age = bubble.birth_year ? (new Date().getFullYear() - bubble.birth_year) : "Unknown";
-    $scope.popModal.image = bubble.picture_url || '../../../static/assets/hipDNA.png';
+    $scope.popModal.image = (bubble.sex === 'Male') ? '../../../static/assets/male.jpg' : '../../../static/assets/female.jpg';
     $scope.popModal.ancestry = bubble.ancestry || "Unknown";
     $scope.popModal.birthplace = bubble.birthplace  || "Unknown";
   };
@@ -56,8 +56,10 @@ angular.module('genome.tree', ['genome.treeService'])
   };
 
 ////////////TREE STARTS HERE///////////////
-  var boardHeight = $window.innerHeight;
-  var boardWidth = $window.innerWidth;
+  var height = $window.innerHeight;
+  var width = $window.innerWidth;
+  var svgWidth = 8/10 * width;
+  var svgHeight = 8/10 * height;
   var relativeTree = {
                        'relationship': 'me',
                        'similarity' : 1,
@@ -76,23 +78,6 @@ angular.module('genome.tree', ['genome.treeService'])
                       };
 
   var root = relativeTree;
-
-  var width = boardWidth;
-  var height = boardHeight;
-
-  var padding = 5;
-
-  var radius = 6;
-
-  //Add d3 force effect to layout
-  var force = d3.layout.force()
-    .linkDistance(70)
-    .charge(-120)
-    .gravity(0.0)
-    // .size([width, height])
-    .on('tick', tick)
-    .start();
-
   var margin = {
     top: 50,
     right: 50,
@@ -100,11 +85,25 @@ angular.module('genome.tree', ['genome.treeService'])
     left: 50
   };
 
+  var padding = 5;
+
+  var radius = 40;
+
+  //Add d3 force effect to layout
+  var force = d3.layout.force()
+    .linkDistance(200)
+    .charge(-120)
+    .gravity(0.0)
+    .size([width, height])
+    .on('tick', tick)
+    .start();
+
+
   //Grab the tree as a canvas for our bubbles
   var svg = d3.select('.tree').append('svg')
     .attr('id', 'treeSVG')
-    .attr('width', boardWidth - margin.left - margin.right)
-    .attr('height', boardHeight - margin.top - margin.bottom);
+    .attr('width', svgWidth)
+    .attr('height', svgHeight);
   var link = svg.selectAll('.link');
   var node = svg.selectAll('.node');
 
@@ -130,6 +129,8 @@ angular.module('genome.tree', ['genome.treeService'])
 
   var family = {};
   function createTree(relatives){
+    var family = {};
+    var randomSideAssignment = false;
     relatives.forEach(function(relative){
       relative.children = [];
       relative.name = relative.relationship;
@@ -159,6 +160,30 @@ angular.module('genome.tree', ['genome.treeService'])
       return checkIfDistant(relative) && relative.maternal_side;
     });
 
+    relatives.forEach(function(relative){
+      if(relative.maternal_side === false && relative.paternal_side === false) {
+        if(randomSideAssignment){
+          relative.paternal_side = true;
+          family.paternalFirstCousins = family.paternalFirstCousins || [];
+          if(family.paternalFirstCousins.length >= 2) {
+            family.paternalOtherCousins = family.paternalOtherCousins || [];
+            family.paternalOtherCousins.push(relative);
+          } else {
+            family.paternalFirstCousins.push(relative);
+          }
+        } else {
+          family.maternalFirstCousins = family.maternalFirstCousins || [];
+          relative.maternal_side = true;
+          if(family.maternalFirstCousins.length >= 2) {
+            family.maternalOtherCousins = family.maternalOtherCousins || [];
+            family.maternalOtherCousins.push(relative);
+          } else {
+            family.maternalFirstCousins.push(relative);
+          }
+        }
+        randomSideAssignment = !randomSideAssignment;
+      }
+    })
 
     for(var prop in family){
       if(family[prop].length > 0){
@@ -210,29 +235,33 @@ angular.module('genome.tree', ['genome.treeService'])
       var nodes = TreeService.flatten(relativeTree);
       nodes.forEach(function(node){
         if(node.x === undefined){
-          node.x = width / 10;
+          // node.x = width / 10;
           node.radius = 30;
         }
         if(node.y === undefined){
-          node.y = height;
+          // node.y = height;
         }
         if(node.relationship === 'me'){
           node.radius = 40;
           node.x = width / 3;
           node.y = 100;
           node.fixed = true;
+          link.distance = 10;
         } else if(node.relationship === 'paternal_side'){
           node.x = width / 3 + 200;
           node.y = 300;
-          node.radius = 50;
+          node.radius = 40;
+          node.fixed = true;
         } else if(node.relationship === 'maternal_side'){
           node.x = width / 3 - 200;
           node.y = 300;
-          node.radius = 50;
+          node.fixed = true;
+          node.radius = 40;
         }
       });
 
-      var tree = d3.layout.tree();
+      var tree = d3.layout.tree()
+                   .separation(function(a,b){ return 100/a.depth});
       var links = tree.links(nodes);
 
       // Restart the force layout.
@@ -258,15 +287,20 @@ angular.module('genome.tree', ['genome.treeService'])
       var nodeEnter = node.enter().append('g')
           .attr('padding', 50)
           .attr('class', '.node')
+          .call(force.drag)
 
       nodeEnter.append('circle')
           .attr('fill', function(d){
-            if(d.maternal_side || d.relationship === 'maternal_side'){
+            if(d.relationship === 'maternal_side'
+              || d.relationship === 'paternal_side'
+              || d.relationship === 'me') {
+              return '#5C97BF'
+            } else if(d.maternal_side){
               return '#F9690E';
-            } else if(d.paternal_side || d.relationship === 'paternal_side'){
+            } else if(d.paternal_side){
               return '#BF55EC';
             } else {
-              return '#5C97BF'
+              return '#F9690E';
             }
           })
           .attr('r', function(bubble) {
@@ -274,12 +308,29 @@ angular.module('genome.tree', ['genome.treeService'])
           })
           .on('mouseover', function(bubble){
             var circle = d3.select(this);
-            circle
-              .attr('r', function(bubble){return bubble.radius * 2})
+            if(bubble.relationship === 'me'
+              || bubble.relationship === 'maternal_side'
+              || bubble.relationship === 'paternal_side') {
+              return;
+            } else {
+              circle
+                .transition()
+                .attr('r', function(bubble){return bubble.radius * 2})
+                .attr('opacity', '0.9')
+            }
           })
           .on('mouseout', function(bubble){
             var circle = d3.select(this);
-            circle.attr('r', function(bubble){return bubble.radius});
+            if(bubble.relationship === 'me'
+              || bubble.relationship === 'maternal_side'
+              || bubble.relationship === 'paternal_side') {
+              return;
+            } else {
+              circle
+                .transition()
+                .attr('r', function(bubble){return bubble.radius})
+                .attr('opacity', 1)
+            }
           })
           .attr("data-target", function(bubble){
             if(bubble.relationship === 'me'
@@ -306,30 +357,42 @@ angular.module('genome.tree', ['genome.treeService'])
               $scope.$apply(showRelative(bubble));
             }
           })
-          .call(force.drag)
+
 
 
       nodeEnter.append('text')
           .attr('dy', '.35em')
           .attr('dx', '-2em')
           .attr('class', 'treeBubbleText')
-          .text(function(d) { return d.relationship; });
+          .attr('pointer-events', 'none')
+          .text(function(d) {
+            if(d.relationship.toLowerCase() === 'distant relative'){
+              return 'Distant';
+            } else if(d.relationship.toLowerCase() === 'maternal_side') {
+              return 'Maternal Side'
+            } else if(d.relationship.toLowerCase() === 'paternal_side') {
+              return 'Paternal Side'
+            } else if(d.relationship.toLowerCase() === 'me') {
+              return 'Me'
+            } else {
+              return d.relationship;
+              }
+            });
   }
 
   function tick(e) {
     var k = 6 * e.alpha;
+    link
+      .each(function(d) { d.source.y -= k, d.target.y += k; })
+      .attr("x1", function(d) { return d.source.x; })
+      .attr("y1", function(d) { return d.source.y; })
+      .attr("x2", function(d) { return d.target.x; })
+      .attr("y2", function(d) { return d.target.y; });
 
-       // Push sources up and targets down to form a weak tree.
-       link
-           .each(function(d) { d.source.y -= k, d.target.y += k; })
-           .attr("x1", function(d) { return d.source.x; })
-           .attr("y1", function(d) { return d.source.y; })
-           .attr("x2", function(d) { return d.target.x; })
-           .attr("y2", function(d) { return d.target.y; });
-
-    node.attr('transform', function(d) {
-      var nodeX = Math.max(radius, Math.min(width - radius, d.x));
-      var nodeY = Math.max(radius, Math.min(width - radius, d.y));
+    node
+    .attr('transform', function(d) {
+      var nodeX = Math.max(radius, Math.min(svgWidth - radius, d.x));
+      var nodeY = Math.max(radius, Math.min(svgHeight - radius, d.y))
       return 'translate(' + nodeX + ',' + nodeY + ')';
     });
   }
