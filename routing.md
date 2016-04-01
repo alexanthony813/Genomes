@@ -2,9 +2,9 @@
 
 |Description|Endpoint|
 |---|---|
-|[Log-in OAuth](routing.md#get-receive-code)|GET /receive_code/|
+|[Log-in OAuth](routing.md#get-receivecode)|GET /receive_code/|
 |[Log-in Demo](routing.md#post-demo)|POST /demo/|
-|[Log-out current user](routing.md#logout)|POST /logout|
+|[Log-out current user](routing.md#post-logout)|POST /logout|
 |[Get User Info](routing.md#get-currentuserinfo)|GET /currentuser_info/|
 |[Get User Relatives](routing.md#post-apirelatives)|POST /api/relatives/|
 |[Get User's SNP Data](routing.md#post-apisnpdata)|POST /api/snp_data/|
@@ -71,4 +71,20 @@ Logs out user from session and clears cookies/cache
 }
 ```
 
+## `GET /currentuser_info/`
+
+Fetches the basic information of the current authorized user
+
+### Example Response
+```json
+{
+  "user": {
+  	"profile_id": 1738,
+    "first_name": "Foo",
+    "last_name": "Bar",
+    "location": "United States",
+    "picture_url": ""
+    }
+}
+```
 
