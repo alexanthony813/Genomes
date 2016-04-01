@@ -381,17 +381,26 @@ angular.module('genome.tree', ['genome.treeService'])
 
   function tick(e) {
     var k = 6 * e.alpha;
-    link
-      .each(function(d) { d.source.y -= k, d.target.y += k; })
-      .attr("x1", function(d) { return d.source.x; })
-      .attr("y1", function(d) { return d.source.y; })
-      .attr("x2", function(d) { return d.target.x; })
-      .attr("y2", function(d) { return d.target.y; });
+    
+       link
+           .each(function(d) { d.source.y -= k, d.target.y += k; })
+           .attr("x1", function(d) { return d.source.x; })
+           .attr("y1", function(d) { return d.source.y; })
+           .attr("x2", function(d) { return d.target.x; })
+           .attr("y2", function(d) { return d.target.y; });
 
-    node
-    .attr('transform', function(d) {
-      var nodeX = Math.max(radius, Math.min(svgWidth - radius, d.x));
-      var nodeY = Math.max(radius, Math.min(svgHeight - radius, d.y))
+
+    // d3.select(nodes)
+
+    // .each(function(d, i) {
+    //   console.log(d);
+    //   // d.source.y -= k;
+    //   // d.target.y += k;
+    // });
+
+    node.attr('transform', function(d) {
+      var nodeX = Math.max(radius, Math.min(width - radius, d.x));
+      var nodeY = Math.max(radius, Math.min(width - radius, d.y));
       return 'translate(' + nodeX + ',' + nodeY + ')';
     });
   }
