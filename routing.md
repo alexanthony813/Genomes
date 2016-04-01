@@ -2,7 +2,7 @@
 
 |Description|Endpoint|
 |---|---|
-|[Log-in OAuth](routing.md#get-receivecode)|GET /receive_code/|
+|[Log-in OAuth](routing.md#get-receive_code)|GET /receive_code/|
 |[Log-in Demo](routing.md#post-demo)|POST /demo/|
 |[Log-out current user](routing.md#post-logout)|POST /logout|
 |[Get User Info](routing.md#get-currentuserinfo)|GET /currentuser_info/|
@@ -87,4 +87,59 @@ Fetches the basic information of the current authorized user
     }
 }
 ```
+
+## `POST /api/relatives/`
+
+Gathers information about the current user's relatives
+
+### Example Request
+```bash
+{
+	'user_profile_id': 'profile_id',
+	'headers': {
+		'cookie': {
+			'token': 'asj238xlzhs_uw28hzbhslsm8es9'
+		}
+	}
+}
+```
+
+### Example Response
+```json
+{
+	'user_profile_id': 'profile_id',
+	'relatives': [
+		relative1: {
+			'first_name': "Foo",
+			'last_name': "Bar",
+			'sex': "m/f",
+			'residence': "California",
+			'similarity': 0.25,
+			'maternal_side': False,
+			'paternal_side': True,
+			'birth_year': 1992,
+			'relationship': "Brother",
+			"birthplace": "United States",
+			"ancestry": "Northwestern Europe",
+			"picture_url": ""
+		},
+		relative2: {
+			'first_name': "Foo2",
+			'last_name': "Bar2",
+			'sex': "m/f",
+			'residence': "California",
+			'similarity': 0.25,
+			'maternal_side': False,
+			'paternal_side': True,
+			'birth_year': 1990,
+			'relationship': "Sister",
+			"birthplace": "United States",
+			"ancestry": "Northwestern Europe",
+			"picture_url": ""
+		},
+		...
+	]
+}
+```
+
 
