@@ -81,16 +81,16 @@ Database in Postgres, using SQLAlchemy
 |[Log-in OAuth](routing.md#get-receive_code)|GET /receive_code/|
 |[Log-in Demo](routing.md#post-demo)|POST /demo/|
 |[Log-out current user](routing.md#post-logout)|POST /logout|
-|[Get User Info](routing.md#get-currentuserinfo)|GET /currentuser_info/|
+|[Get User Info](routing.md#get-currentuser_info)|GET /currentuser_info/|
 |[Get User Relatives](routing.md#post-apirelatives)|POST /api/relatives/|
-|[Get User's SNP Data](routing.md#post-apisnpdata)|POST /api/snp_data/|
+|[Get User's SNP Data](routing.md#post-apisnp_data)|POST /api/snp_data/|
 
 ##### Admin Only
 |Description|Endpoint|
 |---|---|
-|[Access to 23&Me Individual data](routing.md#get-individual-data)|/1/user/:userID|
-|[Access to 23&Me Genotype data](routing.md#get-genotype-data)|/1/genotype/:userID|
-|[Access to 23&Me Relative data](routing.md#get-relative-data)|/1/relatives/:userID|
+|[Access to 23&Me Individual data](routing.md#get-1userid)|GET /1/user/:userID|
+|[Access to 23&Me Genotype data](routing.md#get-1genotypeuserid)|GET /1/genotype/:userID|
+|[Access to 23&Me Relative data](routing.md#get-1relativesuserid)|GET /1/relatives/:userID|
 
 ===============
 ## Contributing
