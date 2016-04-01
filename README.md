@@ -81,9 +81,9 @@ Database in Postgres, using SQLAlchemy
 |[Log-in OAuth](routing.md#get-receive_code)|GET /receive_code/|
 |[Log-in Demo](routing.md#post-demo)|POST /demo/|
 |[Log-out current user](routing.md#post-logout)|POST /logout|
-|[Get User Info](routing.md#get-currentuser_info)|GET /currentuser_info/|
-|[Get User Relatives](routing.md#post-apirelatives)|POST /api/relatives/|
-|[Get User's SNP Data](routing.md#post-apisnp_data)|POST /api/snp_data/|
+|[Get User Info](routing.md#get-userbasicinfo)|GET /user/basicinfo/|
+|[Get User Relatives](routing.md#post-userrelativesinfo)|POST /user/relativesinfo/|
+|[Get User's SNP Data](routing.md#post-usersnpinfo)|POST /user/snpinfo/|
 
 ##### Admin Only
 |Description|Endpoint|

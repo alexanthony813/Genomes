@@ -96,7 +96,7 @@ def getRelatives():
     return jsonify({'relativeList' : finalRelatives})
 
 
-@app.route('/api/snp_data/', methods=['POST', 'GET'])  #we should take out 'GET'?
+@app.route('/user/snpinfo/', methods=['POST', 'GET'])  #we should take out 'GET'?
 def getSnps():
 
     decoded = jwt.decode(request.cookies.get('token'), app.config.get('SECRET_KEY'), algorithms=['HS256'])
