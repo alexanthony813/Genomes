@@ -88,7 +88,7 @@ Database in Postgres, using SQLAlchemy
 ##### Admin Only
 |Description|Endpoint|
 |---|---|
-|[Access to 23&Me Individual data](routing.md#get-1userid)|GET /1/user/:userID|
+|[Access to 23&Me Individual data](routing.md#get-1useruserid)|GET /1/user/:userID|
 |[Access to 23&Me Genotype data](routing.md#get-1genotypeuserid)|GET /1/genotype/:userID|
 |[Access to 23&Me Relative data](routing.md#get-1relativesuserid)|GET /1/relatives/:userID|
 
