@@ -8,19 +8,23 @@ angular.module('genome.about', [])
 
 	$scope.images = [{
 			name: 'Gar Lee',
-	    pic: '../../../static/assets/gar.png'
+	    pic: '../../../static/assets/gar.png',
+	    link: 'https://github.com/LeeGar'
 	  },
 	  {
 	  	name: 'Peter Lollo',
-	    pic: '../../static/assets/peter.png'
+	    pic: '../../static/assets/peterGit.jpeg',
+	    link: 'https://github.com/peterlollo'
 	  },
 	  {
 	  	name: 'Alex Anthony',
-	    pic: '../../static/assets/alex.jpg'
+	    pic: '../../static/assets/alexGit.jpeg',
+	    link: 'https://github.com/alexanthony813'
 	  },
 	  {
 	  	name: 'Chris Bassano',
-	    pic: '../../static/assets/chris.jpg'
+	    pic: '../../static/assets/chrisGit.jpeg',
+	    link: 'https://github.com/christo4b'
 	  }];
 
 })
