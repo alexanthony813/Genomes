@@ -2,12 +2,12 @@
 
 |Description|Endpoint|
 |---|---|
-|[Log-in OAuth](routing.md#log-in)|GET /receive_code/|
-|[Log-in Demo](routing.md#demo)|POST /demo/|
-|[Log-out current user](routing.md#log-out)|POST /logout|
-|[Get User Info](routing.md#get-user-info)|GET /currentuser_info/|
-|[Get User Relatives](routing.md#relatives)|POST /api/relatives/|
-|[Get User's SNP Data](routing.md#snpdata)|POST /api/snp_data/|
+|[Log-in OAuth](routing.md#get-receive-code)|GET /receive_code/|
+|[Log-in Demo](routing.md#post-demo)|POST /demo/|
+|[Log-out current user](routing.md#logout)|POST /logout|
+|[Get User Info](routing.md#get-currentuserinfo)|GET /currentuser_info/|
+|[Get User Relatives](routing.md#post-apirelatives)|POST /api/relatives/|
+|[Get User's SNP Data](routing.md#post-apisnpdata)|POST /api/snp_data/|
 
 ##### Admin Only
 |Description|Endpoint|
@@ -43,12 +43,12 @@ Allows visitors to access site as a demo user
 ### Example Request
 ```json
 {
-	demo_profile_id: 'demo_id',
-	demo_first_name: 'Foo',
-	demo_last_name: 'Bar'
-	demo_data: [
-		sex: 'm/f',
-		rs_id: 'demo_basepairs',
+	'demo_profile_id': 'demo_id',
+	'demo_first_name': 'Foo',
+	'demo_last_name': 'Bar'
+	'demo_data': [
+		'sex': 'm/f',
+		'rs_id': 'demo_basepairs',
 		...
 	]
 }
@@ -62,10 +62,10 @@ Logs out user from session and clears cookies/cache
 ### Example Request
 ```json
 {
-	user_profile_id: 'profile_id',
-	headers: {
-		cookie: {
-			token: 'asj238xlzhs_uw28hzbhslsm8es9'
+	'user_profile_id': 'profile_id',
+	'headers': {
+		'cookie': {
+			'token': 'asj238xlzhs_uw28hzbhslsm8es9'
 		}
 	}
 }
