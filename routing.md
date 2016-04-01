@@ -5,9 +5,9 @@
 |[Log-in OAuth](routing.md#get-receive_code)|GET /receive_code/|
 |[Log-in Demo](routing.md#post-demo)|POST /demo/|
 |[Log-out current user](routing.md#post-logout)|POST /logout|
-|[Get User Info](routing.md#get-currentuserinfo)|GET /currentuser_info/|
+|[Get User Info](routing.md#get-currentuser_info)|GET /currentuser_info/|
 |[Get User Relatives](routing.md#post-apirelatives)|POST /api/relatives/|
-|[Get User's SNP Data](routing.md#post-apisnpdata)|POST /api/snp_data/|
+|[Get User's SNP Data](routing.md#post-apisnp_data)|POST /api/snp_data/|
 
 ##### Admin Only
 |Description|Endpoint|
@@ -136,6 +136,44 @@ Gathers information about the current user's relatives
 			"birthplace": "United States",
 			"ancestry": "Northwestern Europe",
 			"picture_url": ""
+		}},
+		...
+	]
+}
+```
+
+## `POST /api/snp_data/`
+
+Gathers DNA information for current user
+
+### Example Request
+```bash
+{
+	'user_profile_id': 'profile_id',
+	'headers': {
+		'cookie': {
+			'token': 'asj238xlzhs_uw28hzbhslsm8es9'
+		}
+	}
+}
+```
+
+### Example Response
+```json
+{
+	"user_profile_id": "profile_id",
+	"body": [
+		{"rs270831": {
+			"title": "Lactose Intolerance",
+			"dna_pair": "AA",
+			"outcome": "You have a high likelihood of being lactose intolerant",
+			"video": "4UvzSuP_Tzd"
+		}},
+		{"rs812202": {
+			"title": "Cilantro",
+			"dna_pair": "GG",
+			"outcome": "You are likely to experience a dislike for cilantro, may taste like soap",
+			"video": "TZs309snmr"
 		}},
 		...
 	]
