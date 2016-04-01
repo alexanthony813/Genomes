@@ -158,22 +158,22 @@ angular.module('genome.tree', ['genome.treeService'])
       relative.name = relative.relationship;
     });
     family.paternalCloseRelatives = relatives.filter(function(relative){
-      return !relative.relationship.match('Cousin') && !relative.relationship.match('Distant') && relative.paternal_side
+      return !relative.relationship.match('Cousin') && !relative.relationship.match('Distant') && relative.paternal_side;
     });
     family.maternalCloseRelatives = relatives.filter(function(relative){
-      return !relative.relationship.match('Cousin') && !relative.relationship.match('Distant') && relative.maternal_side
+      return !relative.relationship.match('Cousin') && !relative.relationship.match('Distant') && relative.maternal_side;
     });
     family.paternalFirstCousins = relatives.filter(function(relative){
-      return relative.relationship.match('1st Cousin') && relative.paternal_side
+      return relative.relationship.match('1st Cousin') && relative.paternal_side;
     });
     family.maternalFirstCousins = relatives.filter(function(relative){
-      return relative.relationship.match('1st Cousin') && relative.maternal_side
+      return relative.relationship.match('1st Cousin') && relative.maternal_side;
     });
     family.paternalOtherCousins = relatives.filter(function(relative){
-      return relative.relationship.match('2nd Cousin') && relative.relationship.match('3rd Cousin') && relative.paternal_side
+      return (relative.relationship.match('2nd Cousin') || relative.relationship.match('3rd Cousin')) && relative.paternal_side;
     });
     family.maternalOtherCousins = relatives.filter(function(relative){
-      return relative.relationship.match('2nd Cousin') && relative.relationship.match('3rd Cousin') && relative.maternal_side;
+      return (relative.relationship.match('2nd Cousin') || relative.relationship.match('3rd Cousin')) && relative.maternal_side;
     });
     family.paternalDistantRelatives = relatives.filter(function(relative){
       return checkIfDistant(relative) && relative.paternal_side;
@@ -205,49 +205,44 @@ angular.module('genome.tree', ['genome.treeService'])
         }
         randomSideAssignment = !randomSideAssignment;
       }
-    })
+    });
 
     for(var prop in family){
       if(family[prop].length > 0){
         var which_side = (prop.search('maternal') === 0 ) ? 'maternal' : 'paternal';
-        insertRelatives(family[prop], which_side)
+        insertRelatives(family[prop], which_side);
       }
     }
     function checkIfDistant(relative){
       return family.paternalCloseRelatives.indexOf(relative) < 0 && family.maternalCloseRelatives.indexOf(relative) < 0 && family.paternalFirstCousins.indexOf(relative) < 0 &&
-      family.maternalFirstCousins.indexOf(relative) < 0 && family.paternalOtherCousins.indexOf(relative) < 0 && family.maternalOtherCousins.indexOf(relative) < 0
+      family.maternalFirstCousins.indexOf(relative) < 0 && family.paternalOtherCousins.indexOf(relative) < 0 && family.maternalOtherCousins.indexOf(relative) < 0;
     }
   }
 
 
   function insertRelatives(relatives, side){
-    //use recursion to find whichever level to go to
     var maternalBranch = relativeTree['children'][0];
     var paternalBranch = relativeTree['children'][1];
 
     if(side === 'maternal'){
-      //start recursion here
       recursiveAdd(maternalBranch, relatives);
     } else {
-      //start recursion here
       recursiveAdd(paternalBranch, relatives);
     }
 
     function recursiveAdd(parentNode, newNodes){
       if(parentNode.children.length === 0){
-        //potential issue with slicing
-        var first = (newNodes.length > 1) ? newNodes.slice(0, 2) : newNodes.slice(0, 1);
+        var first = (newNodes.length > 1) ? newNodes.slice(0, 2) : newNodes;
         first.forEach(function(node){
           parentNode.children.push(node);
         });
       } else {
-        var firstRandomIndex = Math.floor(Math.random() * parentNode.children.length);
-        var secondRandomIndex = Math.floor(Math.random() * parentNode.children.length);
-        var half_length = Math.ceil(newNodes.length / 2);
-        var leftSide = newNodes.slice(0,half_length);
-        var rightSide = newNodes.slice(half_length,  newNodes.length);
-        recursiveAdd(parentNode.children[firstRandomIndex], leftSide);
-        recursiveAdd(parentNode.children[secondRandomIndex], rightSide);
+        var firstTwo = (newNodes.length > 1) ? newNodes.slice(0, 2) : newNodes;
+        var theRest = newNodes.slice(2,  newNodes.length);
+       recursiveAdd(parentNode.children[0], firstTwo);
+        if(parentNode.children[1]){
+          recursiveAdd(parentNode.children[1], theRest);
+        }
       }
 
     }
@@ -368,7 +363,7 @@ angular.module('genome.tree', ['genome.treeService'])
             } else {
               $scope.$apply(showRelative(bubble));
             }
-          })
+          });
 
 
 
@@ -402,7 +397,7 @@ angular.module('genome.tree', ['genome.treeService'])
        .attr("x2", function(d) { return d.target.x; })
        .attr("y2", function(d) { return d.target.y; });
     
-    console.log('links', links)
+    // console.log('links', links)
     // links.forEach(function(d, i) {
     //   d.source.y -= k;
     //   d.target.y += k;
