@@ -1,4 +1,4 @@
-angular.module('genome.about', ['ui.bootstrap'])
+angular.module('genome.about', [])
 
 .controller('AboutController', function ($scope, $rootScope, $location) {
    var whichView = function() {
