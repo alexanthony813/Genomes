@@ -256,27 +256,27 @@ angular.module('genome.tree', ['genome.treeService'])
   function update(){
       nodes.forEach(function(node){
         if(node.x === undefined){
-          node.radius = 30;
+          node.radius = 15;
         }
         if(node.y === undefined){
-          node.radius = 30;
+          node.radius = 15;
         }
         if(node.relationship === 'me'){
-          node.radius = 40;
-          node.x = width / 3;
-          node.y = 100;
+          node.radius = 20;
+          node.x = 670;
+          node.y = 460;
           node.fixed = true;
           link.distance = 10;
         } else if(node.relationship === 'paternal_side'){
-          node.x = width / 3 + 200;
-          node.y = 300;
-          node.radius = 40;
+          node.x = 900;
+          node.y = 400;
+          node.radius = 20;
           node.fixed = true;
         } else if(node.relationship === 'maternal_side'){
-          node.x = width / 3 - 200;
-          node.y = 300;
+          node.x = 430;
+          node.y = 390;
           node.fixed = true;
-          node.radius = 40;
+          node.radius = 20;
         }
       });
 
@@ -285,6 +285,7 @@ angular.module('genome.tree', ['genome.treeService'])
       force
           .nodes(nodes)
           .links(links)
+          .charge(-290)
           .linkStrength(1)
           .linkDistance(90)
           .start();
