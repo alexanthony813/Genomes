@@ -90,8 +90,9 @@ angular.module('genome.tree', ['genome.treeService'])
   var radius = 40;
 
 
+  var tree = d3.layout.tree()
+                   .separation(function(a,b){ return 100/a.depth;});
   var nodes;
-  var tree;
   var links;
   var force;
 
@@ -106,6 +107,8 @@ angular.module('genome.tree', ['genome.treeService'])
       $rootScope.rels = relatives.data.relativeList;
       createTree($scope.relatives);
       nodes = TreeService.flatten(relativeTree);
+      console.log(nodes.length)
+      links = tree.links(nodes);
 
       //Add d3 force effect to layout
       force = d3.layout.force()
@@ -115,6 +118,13 @@ angular.module('genome.tree', ['genome.treeService'])
             .size([width, height])
             .on('tick', tick)
             .start();
+
+      link = link.data(links, function(d) { return d.target.id; });
+
+      link.exit().remove();
+
+      link.enter().insert('line', '.node')
+          .attr('class', 'link');
 
       update();
             
@@ -255,24 +265,21 @@ angular.module('genome.tree', ['genome.treeService'])
           node.radius = 40;
           node.x = width / 3;
           node.y = 100;
-          node.fixed = true;
+          // node.fixed = true;
           link.distance = 10;
         } else if(node.relationship === 'paternal_side'){
           node.x = width / 3 + 200;
           node.y = 300;
           node.radius = 40;
-          node.fixed = true;
+          // node.fixed = true;
         } else if(node.relationship === 'maternal_side'){
           node.x = width / 3 - 200;
           node.y = 300;
-          node.fixed = true;
+          // node.fixed = true;
           node.radius = 40;
         }
       });
 
-      tree = d3.layout.tree()
-                   .separation(function(a,b){ return 100/a.depth});
-      links = tree.links(nodes);
 
       // Restart the force layout.
       force
@@ -282,12 +289,8 @@ angular.module('genome.tree', ['genome.treeService'])
           .linkDistance(90)
           .start();
 
-      link = link.data(links, function(d) { return d.target.id; });
+//could be it
 
-      link.exit().remove();
-
-      link.enter().insert('line', '.node')
-          .attr('class', 'link');
 
       // Update nodes.
       node = node.data(nodes, function(d) { return d.id; });
@@ -379,11 +382,11 @@ angular.module('genome.tree', ['genome.treeService'])
             if(d.relationship.toLowerCase() === 'distant relative'){
               return 'Distant';
             } else if(d.relationship.toLowerCase() === 'maternal_side') {
-              return 'Maternal Side'
+              return 'Maternal Side';
             } else if(d.relationship.toLowerCase() === 'paternal_side') {
-              return 'Paternal Side'
+              return 'Paternal Side';
             } else if(d.relationship.toLowerCase() === 'me') {
-              return 'Me'
+              return 'Me';
             } else {
               return d.relationship;
               }
@@ -399,9 +402,9 @@ angular.module('genome.tree', ['genome.treeService'])
        .attr("y1", function(d) { return d.source.y; })
        .attr("x2", function(d) { return d.target.x; })
        .attr("y2", function(d) { return d.target.y; });
-
+    
+    console.log('links', links)
     links.forEach(function(d, i) {
-      console.log(d)
       d.source.y -= k;
       d.target.y += k;
     });
