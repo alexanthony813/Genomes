@@ -112,8 +112,8 @@ angular.module('genome.tree', ['genome.treeService'])
 
       //Add d3 force effect to layout
       force = d3.layout.force()
-            .linkDistance(200)
-            .charge(-160)
+            .linkDistance(180)
+            .charge(-180)
             .gravity(0.0)
             .size([width, height])
             .on('tick', tick)
@@ -145,6 +145,7 @@ angular.module('genome.tree', ['genome.treeService'])
     .attr('id', 'treeSVG')
     .attr('width', svgWidth)
     .attr('height', svgHeight);
+
   var link = svg.selectAll('.link');
   var node = svg.selectAll('.node');
 
@@ -239,7 +240,7 @@ angular.module('genome.tree', ['genome.treeService'])
       } else {
         var firstTwo = (newNodes.length > 1) ? newNodes.slice(0, 2) : newNodes;
         var theRest = newNodes.slice(2,  newNodes.length);
-       recursiveAdd(parentNode.children[0], firstTwo);
+        recursiveAdd(parentNode.children[0], firstTwo);
         if(parentNode.children[1]){
           recursiveAdd(parentNode.children[1], theRest);
         }
@@ -290,10 +291,52 @@ angular.module('genome.tree', ['genome.treeService'])
       node = node.data(nodes, function(d) { return d.id; });
 
       node.exit().remove();
+      
+       // var drag = d3.behavior.drag()
+
+    // var node_drag = d3.behavior.drag()
+        // .on("dragstart", dragstart)
+        // .on("drag", dragmove)
+        // .on("dragend", dragend);
+
+    // function dragstart(d, i) {
+    //   console.log('start')
+    //     force.stop() // stops the force auto positioning before you start dragging
+    // }
+
+    // function dragmove(d, i) {
+    //   console.log('move')
+    //     d.px += d3.event.dx;
+    //     d.py += d3.event.dy;
+    //     d.x += d3.event.dx;
+    //     d.y += d3.event.dy; 
+    //     tick(); // this is the key to make it work together with updating both px,py,x,y on d !
+    // }
+
+    // function dragend(d, i) {
+    //   console.log('end')
+    //     d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
+    //     tick();
+    //     force.resume();
+    // }
 
       var nodeEnter = node.enter().append('g')
           .attr('padding', 50)
           .attr('class', '.node')
+          .on('mousedown', function(){
+            nodes.forEach(function(node){
+              if(node.relationship === 'paternal_side' || node.relationship === 'me' || node.relationship === 'maternal_side'){
+                node.fixed = false;
+              }
+            })
+          })
+          .on('mouseup', function(){
+            nodes.forEach(function(node){
+              if(node.relationship === 'paternal_side' || node.relationship === 'me' || node.relationship === 'maternal_side'){
+                node.fixed = true;
+              }
+            })
+          })
           .call(force.drag)
 
       nodeEnter.append('circle')
@@ -363,7 +406,9 @@ angular.module('genome.tree', ['genome.treeService'])
             } else {
               $scope.$apply(showRelative(bubble));
             }
-          });
+          })
+          // .call(force.drag)
+
 
 
 
