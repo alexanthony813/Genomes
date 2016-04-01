@@ -109,7 +109,7 @@ Gathers information about the current user's relatives
 {
 	"user_profile_id": "profile_id",
 	"relatives": [
-		"relative1": {
+		{"relative1": {
 			"first_name": "Foo",
 			"last_name": "Bar",
 			"sex": "m/f",
@@ -122,8 +122,8 @@ Gathers information about the current user's relatives
 			"birthplace": "United States",
 			"ancestry": "Northwestern Europe",
 			"picture_url": ""
-		},
-		"relative2": {
+		}},
+		{"relative2": {
 			"first_name": "Foo2",
 			"last_name": "Bar2",
 			"sex": "m/f",
@@ -136,7 +136,7 @@ Gathers information about the current user's relatives
 			"birthplace": "United States",
 			"ancestry": "Northwestern Europe",
 			"picture_url": ""
-		},
+		}},
 		...
 	]
 }
