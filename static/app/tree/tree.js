@@ -258,21 +258,21 @@ angular.module('genome.tree', ['genome.treeService'])
           node.radius = 15;
         }
         if(node.relationship === 'me'){
-          node.radius = 20;
-          node.x = 670;
-          node.y = 460;
+          node.radius = 27;
+          node.x = 465;
+          node.y = 600;
           node.fixed = true;
           link.distance = 10;
         } else if(node.relationship === 'paternal_side'){
-          node.x = 900;
-          node.y = 400;
-          node.radius = 20;
+          node.x = 580;
+          node.y = 460;
+          node.radius = 27;
           node.fixed = true;
         } else if(node.relationship === 'maternal_side'){
-          node.x = 430;
-          node.y = 390;
+          node.x = 360;
+          node.y = 460;
           node.fixed = true;
-          node.radius = 20;
+          node.radius = 27;
         }
       });
 
@@ -379,27 +379,33 @@ angular.module('genome.tree', ['genome.treeService'])
               $scope.$apply(showRelative(bubble));
             }
           })
-          // .call(force.drag)
-
-
 
 
       nodeEnter.append('text')
           .attr('dy', '.35em')
-          .attr('dx', '-2em')
+          .attr('dx', function(d){
+            //take out ugly tri-pipes with helper function
+            if(d.relationship === 'me'
+              || d.relationship === 'paternal_side'
+              || d.relationship === 'maternal_side'){
+              return '-1.55em'
+            } else {
+              return '-1.5em'
+            }
+          })
           .attr('class', 'treeBubbleText')
           .attr('pointer-events', 'none')
           .text(function(d) {
             if(d.relationship.toLowerCase() === 'distant relative'){
               return 'Distant';
             } else if(d.relationship.toLowerCase() === 'maternal_side') {
-              return 'Maternal Side';
+              return 'Maternal';
             } else if(d.relationship.toLowerCase() === 'paternal_side') {
-              return 'Paternal Side';
+              return 'Paternal';
             } else if(d.relationship.toLowerCase() === 'me') {
               return 'Me';
             } else {
-              return d.relationship;
+              return 'Cousin';
               }
             });
   }
