@@ -252,19 +252,19 @@ angular.module('genome.tree', ['genome.treeService'])
   function update(){
       nodes.forEach(function(node){
         if(node.x === undefined){
-          node.radius = 15;
+          node.radius = 16;
         }
         if(node.y === undefined){
-          node.radius = 15;
+          node.radius = 16;
         }
         if(node.relationship === 'me'){
           node.radius = 27;
-          node.x = 465;
+          node.x = 475;
           node.y = 550;
           node.fixed = true;
           link.distance = 10;
         } else if(node.relationship === 'paternal_side'){
-          node.x = 580;
+          node.x = 600;
           node.y = 410;
           node.radius = 27;
           node.fixed = true;
@@ -351,7 +351,7 @@ angular.module('genome.tree', ['genome.treeService'])
               circle
                 .transition()
                 .attr('r', function(bubble){return 25;})
-                .attr('opacity', 1)
+                .attr('opacity', 1);
             }
           })
           .attr("data-target", function(bubble){
@@ -386,13 +386,13 @@ angular.module('genome.tree', ['genome.treeService'])
           .attr('dx', function(d){
             //take out ugly tri-pipes with helper function
             if(d.relationship === 'maternal_side'){
-              return '-1.90em'
+              return '-1.90em';
             } else if(d.relationship === 'paternal_side'){
-              return '-1.80em'
+              return '-1.80em';
             } else if(d.relationship === 'me'){
-              return '-0.65em'
+              return '-0.65em';
             } else {
-              return '-1.5em'
+              return '-1.60em';
             }
           })
           .attr('class', 'treeBubbleText')
@@ -407,7 +407,7 @@ angular.module('genome.tree', ['genome.treeService'])
             } else if(d.relationship.toLowerCase() === 'me') {
               return 'Me';
             } else {
-              return 'Cousin';
+              return (d.relationship.search('Cousin') !== -1) ? 'Cousin' : d.relationship;
               }
             });
   }
@@ -416,7 +416,7 @@ angular.module('genome.tree', ['genome.treeService'])
     var k = 6 * e.alpha;
 
    link
-       .each(function(d) { d.source.y -= k, d.target.y += k; })
+       .each(function(d) { d.source.y -= k, d.target.y += k;})
        .attr("x1", function(d) { return d.source.x; })
        .attr("y1", function(d) { return d.source.y; })
        .attr("x2", function(d) { return d.target.x; })
