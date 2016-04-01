@@ -78,12 +78,12 @@ Database in Postgres, using SQLAlchemy
 ##### Public End Points
 |Description|Endpoint|
 |---|---|
-|[Log-in OAuth](routing.md#log-in)|GET /receive_code/|
-|[Log-in Demo](routing.md#demo)|GET /demo/|
-|[Log-out current user](routing.md#log-out)|POST /logout|
-|[Get User Info](routing.md#get-user-info)|GET /currentuser_info/|
-|[Get User Relatives](routing.md#relatives)|POST /api/relatives|
-|[Get User's SNP Data](routing.md#snpdata)|POST /api/snp_data/|
+|[Log-in OAuth](routing.md#get-receive_code)|GET /receive_code/|
+|[Log-in Demo](routing.md#post-demo)|POST /demo/|
+|[Log-out current user](routing.md#post-logout)|POST /logout|
+|[Get User Info](routing.md#get-currentuserinfo)|GET /currentuser_info/|
+|[Get User Relatives](routing.md#post-apirelatives)|POST /api/relatives/|
+|[Get User's SNP Data](routing.md#post-apisnpdata)|POST /api/snp_data/|
 
 ##### Admin Only
 |Description|Endpoint|
