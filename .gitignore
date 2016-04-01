@@ -22,6 +22,7 @@ server/static/img/
 # Distribution / packaging
 
 .Python
+config.py
 env/
 build/
 develop-eggs/
