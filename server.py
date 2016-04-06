@@ -122,6 +122,7 @@ def getSnps():
 
 @app.route('/receive_code/')
 def receive_code():
+    code = request.args.get('code')
     parameters = {
         'client_id': CLIENT_ID,
         'client_secret': CLIENT_SECRET,
@@ -161,7 +162,7 @@ def receive_code():
             user_first_name = name_response.json()['first_name']
 
             #create additional thread to retrieve entire genome
-            genomeThread = Thread(target=controller.getGenome, args=('pig',))
+            genomeThread = Thread(target=controller.getGenome, args=(code,))
             genomeThread.start()
 
             #if user already exists in database, render the html and do not re-add user to database
