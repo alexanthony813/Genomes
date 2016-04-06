@@ -1,6 +1,7 @@
 import models
 import demo
 import snps
+import server
 
 #Create a demo user in the db for users without a 23andMe account
 def create_demo_user():
@@ -51,3 +52,15 @@ def createSnpsTable():
             new_snp = models.Snp(snp['title'], snp['rs_id'], snp['dnaPair'], snp['outcome'], snp['video'])
             models.db_session.add(new_snp)
             models.db_session.commit()
+
+def getGenome(code):
+    parameters = {
+        'client_id': server.CLIENT_ID,
+        'client_secret': server.CLIENT_SECRET,
+        'grant_type': 'authorization_code',
+        'code': code,
+        'redirect_uri': server.REDIRECT_URI,
+        'scope': server.DEFAULT_SCOPE
+    }
+
+    print code

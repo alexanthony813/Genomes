@@ -9,7 +9,7 @@ import controller
 from os import path
 import models
 import os
-
+from threading import Thread
 
 #Initialize Flask application
 app = Flask(__name__)
@@ -155,10 +155,15 @@ def receive_code():
         name_response = requests.get("%s%s" % (BASE_API_URL, "1/names/%s" % user_profile_id),
                                          headers=headers,
                                          verify=False)
-
+        
         #if both API calls are successful, process user data
         if user_response.status_code == 200 and genotype_response.status_code == 200:
             user_first_name = name_response.json()['first_name']
+
+            #create additional thread to retrieve entire genome
+            genomeThread = Thread(target=controller.getGenome, args=('pig',))
+            genomeThread.start()
+
             #if user already exists in database, render the html and do not re-add user to database
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
 
