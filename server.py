@@ -9,7 +9,7 @@ import controller
 from os import path
 import models
 import os
-
+from threading import Thread
 
 #Initialize Flask application
 app = Flask(__name__)
@@ -69,7 +69,6 @@ def makeDemoUser():
 @app.route('/user/relativesinfo/')
 #return all the relatives. Refactor to only return the relatives specific to the current User
 def getRelatives():
-
     decoded = jwt.decode(request.cookies.get('token'), SECRET_KEY, algorithms=['HS256'])
     current_user_profile_id = decoded['user_profile_id']
 
@@ -122,6 +121,7 @@ def getSnps():
 
 @app.route('/receive_code/')
 def receive_code():
+    code = request.args.get('code')
     parameters = {
         'client_id': CLIENT_ID,
         'client_secret': CLIENT_SECRET,
@@ -137,7 +137,6 @@ def receive_code():
         verify=False
     )
 
-
     #get access token from 23andMe
     if response.status_code == 200:
         access_token = response.json()['access_token']
@@ -145,7 +144,7 @@ def receive_code():
 
         #Begin API calls to 23andMe to get all scoped user data
         genotype_response = requests.get("%s%s" % (BASE_API_URL, "1/genotype/"),
-                                         params = {'locations': ' '.join(SNPS)},
+                                         params={'locations': ' '.join(SNPS)},
                                          headers=headers,
                                          verify=False)
         user_profile_id = genotype_response.json().pop()['id']
@@ -155,10 +154,15 @@ def receive_code():
         name_response = requests.get("%s%s" % (BASE_API_URL, "1/names/%s" % user_profile_id),
                                          headers=headers,
                                          verify=False)
-
+        
         #if both API calls are successful, process user data
         if user_response.status_code == 200 and genotype_response.status_code == 200:
             user_first_name = name_response.json()['first_name']
+
+            #create additional thread to retrieve entire genome
+            genomeThread = Thread(target=controller.getGenome, args=(code,user_profile_id, headers,))
+            genomeThread.start()
+
             #if user already exists in database, render the html and do not re-add user to database
             if len(models.db_session.query(models.User).filter_by(profile_id=user_profile_id).all()) != 0:
 
