@@ -161,7 +161,7 @@ angular.module('genome.self', [])
     }
 
     $scope.current = {
-      title: 'Example Box',
+      title: 'Example',
       rsid: 'rs12345',
       pair: 'AA',
       outcome: 'A very interesting fact'
