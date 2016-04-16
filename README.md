@@ -21,7 +21,7 @@ Genomie is a web application that provides beautiful data visualizations of here
 
 ==========
 ## Example
-![alt tag](http://i65.tinypic.com/2w2r214.gif)
+![alt tag](http://i67.tinypic.com/2hewtn9.gif)
 
 ===============
 ## Installation
